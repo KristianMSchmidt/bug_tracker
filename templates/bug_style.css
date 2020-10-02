@@ -1,0 +1,163 @@
+body {
+  margin: 0;
+}
+
+/* style for divs within wrapper */
+.wrapper {
+  display: grid;
+  grid-template-columns: 11fr 80fr;
+  grid-template-rows: 1fr 20fr;
+  grid-gap: 0em;
+  justify-items: stretch; /*default */
+  align-items: stretch; /*default */
+  padding: 0em;
+  width: 100vw;
+  height: 100vh;
+}
+
+.upper-left-corner {
+  background-color: lightsteelblue;
+  grid-column: 1;
+  grid-row: 1;
+  padding: 0.35em 0.25em 0 0.25em; /*top, right, botton, left */
+}
+
+.upper-left-corner p {
+  display: inline;
+  font-size: 0.9em;
+}
+
+#username {
+  font-size: 0.7em;
+  font-family: Georgia, "Times New Roman", Times, serif;
+}
+
+.sidebar {
+  background-color: lightsteelblue;
+  padding-top: 1.7em;
+  grid-column: 1;
+  grid-row: 2;
+}
+
+.header {
+  background-color: lightslategray;
+  grid-column: 2;
+  grid-row: 1;
+  padding-left: 0.6em;
+  padding-top: 0.6em;
+  padding-bottom: 0em;
+}
+
+.header > p {
+  display: inline;
+  font-size: 0.9em;
+}
+
+.main {
+  grid-column: 2;
+  grid-row: 2;
+  padding: 2em;
+  font-size: 1em;
+  text-align: center;
+  background-color: #f2f2f2;
+  border: 3px solid green;
+}
+
+.sidebar a {
+  padding: 0.25em 0.3em 1em 0.3em; /*top, right, botton, left */
+  text-decoration: none;
+  font-size: 1em;
+  color: black;
+  display: block;
+}
+
+.sidebar a:hover {
+  color: black; /* white; */
+  background-color: #a0b2c9;
+}
+
+table,
+th,
+td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+
+.loginerror {
+  color: red;
+}
+
+.loginsucces {
+  color: lightgreen;
+}
+
+.button_that_looks_like_link {
+  background: none !important;
+  border: none;
+  padding: 0 !important;
+  /*optional*/
+  font-family: arial, sans-serif;
+  /*input has OS specific font-family*/
+  color: #069;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.signin_button {
+  color: white;
+  background-color: #4285f4;
+  width: 13em;
+  height: 2em;
+  border: 0;
+  margin-top: 0.8em;
+}
+
+.signin_button:focus {
+  background-color: #2a66c9;
+  outline: none;
+  border: 0;
+}
+
+/* Dropdown menu */
+.dropbtn {
+  background-color: inherit;
+  border: none;
+  color: #303030;
+  font-size: 0.9em;
+  cursor: pointer;
+}
+
+.dropbtn:hover,
+.dropbtn:focus {
+  color: black; /* #606a79; */
+}
+
+.dropdown {
+  float: right;
+  position: relative;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 10em;
+  overflow: auto;
+  box-shadow: 0em 0.25em 0.5em 0em rgba(0, 0, 0, 0.2);
+  z-index: 1;
+}
+
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown a:hover {
+  background-color: #ddd;
+}
+
+.show {
+  display: block;
+}
