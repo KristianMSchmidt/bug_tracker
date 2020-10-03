@@ -56,11 +56,9 @@ body {
 .main {
   grid-column: 2;
   grid-row: 2;
-  padding: 2em;
+  padding-left: 0em;
   font-size: 1em;
   text-align: center;
-  background-color: #f2f2f2;
-  border: 3px solid green;
 }
 
 .sidebar a {
@@ -116,6 +114,39 @@ td {
   background-color: #2a66c9;
   outline: none;
   border: 0;
+}
+
+.dashboard_wrapper {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 2fr 1fr;
+  padding-right: 0em;
+  padding-top: 1em;
+  padding-bottom: 0em;
+  padding-left: 7em;
+  gap: 1em;
+  margin: 0em;
+  float: center;
+}
+
+.dashboard_wrapper > div {
+  padding: 0em;
+  padding-top: 0.5em;
+  width: 25em;
+  height: 15em;
+  /*border: 1px solid black; */
+  background-color: white;
+}
+
+.dashboard_wrapper > div > h3 {
+  margin-top: 0.1em;
+  border: 1px solid black;
+  color: black; /*red*/
+  background-color: aquamarine;
+}
+
+.hidden {
+  display: none;
 }
 
 /* Dropdown menu */
