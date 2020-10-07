@@ -56,11 +56,12 @@
 
                 <div class="sidebar">
                     <a class="active" href="dashboard.php"><i class="fa fa-fw fa-home"></i>Dashboard</a>
-                    <a href="#show_users.php"><i class="fa fa-fw fa-users"></i>Manage Roles</a>
-                    <a href="show_projects.php"><i class="fa fa-fw fa-user-plus"></i>Manage Users </a>
+                    <a href="manage_role_assignment.php"><i class="fa fa-fw fa-users"></i>Manage Role Assignment</a>
+
+                    <a href="show_users.php"><i class="fa fa-fw fa-users"></i>Manage Role Assignment</a>
+                    <a href="show_projects.php"><i class="fa fa-fw fa-user-plus"></i>Manage Project Users </a>
                     <a href="#contact"><i class="fa fa-fw fa-industry"></i>My Projects</a>
                     <a href="#contact"><i class="fa fa-fw fa-ticket"></i>My Tickets</a>
-                    <a href="#contact"><i class="fa fa-fw fa-user"></i>User Profile</a>
                 </div>
 
                 <div class="header">
@@ -72,8 +73,9 @@
                             USER ACTIONS</button>
 
                         <div id="myDropdown1" class="dropdown-content one">
-                            <a href="#about">My Profile</a>
-                            <a href="includes/logout.inc.php">Log Out</a>
+                            <a href="#about">Profile</a>
+                            <a href="#about">Settings</a>
+                            <a href="includes/logout.inc.php">Log out</a>
                         </div>
                     </div>
 
@@ -90,6 +92,4 @@
 
                 </div>
 
-                <div class="main">
-
-                <?php endif ?>
+            <?php endif ?>
