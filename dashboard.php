@@ -66,6 +66,7 @@ if (!isset($_SESSION['username'])) {
                                 'rgba(217, 30, 24, 1)',
                                 'rgba(150, 40, 27, 1)',
                             ],
+
                             borderColor: [
                                 '',
                                 '',
