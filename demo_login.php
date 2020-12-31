@@ -3,7 +3,7 @@ require 'templates/ui_frame.php';
 ?>
 
 <div class="main">
-    <h2> Demo_User Login </h2>
+    <h2> Demo Login </h2>
 
     <style>
         .demo-login_wrapper {
@@ -23,27 +23,26 @@ require 'templates/ui_frame.php';
 
     <div class="demo-login_wrapper">
 
-        <form class="hidden" id="dev_login" action="includes/login.inc.php" method="POST">
-            <input type="hidden" name="user_login" value="Demo_Developer">
+        <form class="hidden" id="admin_login" action="includes/login.inc.php" method="POST">
+            <input type="hidden" name="user_login" value="Demo Admin">
             <input type="hidden" name="password" value="stjerne">
             <input type="hidden" name="login_submit" value="">
         </form>
-
 
         <form class="hidden" id="pm_login" action="includes/login.inc.php" method="POST">
-            <input type="hidden" name="user_login" value="Demo_Project_Manager">
+            <input type="hidden" name="user_login" value="Demo Project Manager">
             <input type="hidden" name="password" value="stjerne">
             <input type="hidden" name="login_submit" value="">
         </form>
 
-        <form class="hidden" id="admin_login" action="includes/login.inc.php" method="POST">
-            <input type="hidden" name="user_login" value="Demo_Admin">
+        <form class="hidden" id="dev_login" action="includes/login.inc.php" method="POST">
+            <input type="hidden" name="user_login" value="Demo Developer">
             <input type="hidden" name="password" value="stjerne">
             <input type="hidden" name="login_submit" value="">
         </form>
 
         <form class="hidden" id="submitter_login" action="includes/login.inc.php" method="POST">
-            <input type="hidden" name="user_login" value="Demo_Submitter">
+            <input type="hidden" name="user_login" value="Demo Submitter">
             <input type="hidden" name="password" value="stjerne">
             <input type="hidden" name="login_submit" value="">
         </form>
@@ -81,8 +80,8 @@ require 'templates/ui_frame.php';
     </div>
 
     <p>Have an account? <a href="login.php">Sign in</a>
+</div> <!-- div.main -->
+</div> <!-- div.wrapper-->
+</body>
 
-        <?php
-        require 'templates/footer.php';
-
-        ?>
+</html>

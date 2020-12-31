@@ -40,7 +40,6 @@ if (isset($_SESSION['username'])) {
     <p>Create an account? <a href="signup.php">Sign Up</a></p>
 
     <p>Sign in as a <a href="demo_login.php">Demo User</a></p>
-
-    <?php
-    require "templates/footer.php";
-    ?>
+</div> <!-- div.main -->
+</div> <!-- div.wrapper-->
+</body>

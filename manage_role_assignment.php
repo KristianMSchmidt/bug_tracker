@@ -53,10 +53,9 @@ if (!isset($_SESSION['username'])) {
         </div>
         <div>rewew</div>
     </div><!-- end of mur_wrapper -->
-</div><!-- end of main-->
+</div><!-- main.div -->
+</div>
+<!--div.wrapper-->
+</body>
 
-
-<?php
-require 'templates/footer.php';
-
-?>
+</html>

@@ -44,7 +44,6 @@ if (!isset($_POST['login_submit'])) {
             //does the entered password match the hashed password in the database?;
             $psw_check = password_verify($password, $password_db); //boolean
 
-
             if ($psw_check == false) {
                 // wrong password
                 //error message: Invalid username or password

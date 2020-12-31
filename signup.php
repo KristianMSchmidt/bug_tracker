@@ -53,8 +53,8 @@ require "templates/ui_frame.php";
         <input type="submit" name="signup_submit" value="SIGN UP"><br>
 
     </form>
-</div>
+</div><!-- main.div -->
+</div> <!-- div.wrapper-->
+</body>
 
-<?php
-require "templates/footer.php";
-?>
+</html>

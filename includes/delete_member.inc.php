@@ -23,10 +23,7 @@
             echo 'query error: '. mysqli_error($conn);
             exit();
         }
-
-
 	}
 
 	// free result from memory and close connection
 	mysqli_close($conn);
-?>  

@@ -1,7 +1,7 @@
 <?php
 require 'templates/ui_frame.php';
 
-if (!$_SESSION['role'] == '2') {
+if (!$_SESSION['role'] == '1') {
     //Only users logged in as admins will see this page
     header('Location: login.php');
     exit();
@@ -42,26 +42,27 @@ $users = mysqli_fetch_all($result, MYSQLI_ASSOC);
                 <td><?php echo $user['email'] ?></td>
                 <td><?php echo $role_str[$user['role']] ?></td>
                 <td>
-                    <?php if (!($user['username'] == "Demo_Developer" ||
-                        $user['username'] == "Demo_Admin" ||
-                        $user['username'] == "Demo_Project_Manager")) : ?>
+                    <?php if (!($user['username'] == "Demo Admin" ||
+                        $user['username'] == "Demo Project Manager" ||
+                        $user['username'] == "Demo Developer" ||
+                        $user['username'] == "Demo Submitter")) : ?>
 
                         <form action="includes/update_role.inc.php" method="POST">
                             <select name="<?php echo $user['username'] ?>">
                                 <?php if ($user['role'] == '1') : ?>
                                     <option value=1 selected="selected">Admin</option>
-                                    <option value=2 admin">Developer</option>
-                                    <option value=3 project_manager">Project Manager</option>
+                                    <option value=2>Project Manager</option>
+                                    <option value=3>Developer</option>
                                 <?php endif; ?>
                                 <?php if ($user['role'] == '2') : ?>
                                     <option value=1>Admin</option>
-                                    <option value=2 selected="selected">Developer</option>
-                                    <option value=3>Project Manager</option>
+                                    <option value=2 selected="selected">Project Manager</option>
+                                    <option value=3>Developer</option>
                                 <?php endif; ?>
                                 <?php if ($user['role'] == '3') : ?>
-                                    <option value=1>Developer</option>
-                                    <option value=2>Admin</option>
-                                    <option value=3 selected="selected">Project Manager</option>
+                                    <option value=1>Admin</option>
+                                    <option value=2>Project Manager</option>
+                                    <option value=3 selected="selected">Developer</option>
                                 <?php endif; ?>
                             </select>
                             <input type="submit" value="Update" name="update_role">
@@ -69,7 +70,7 @@ $users = mysqli_fetch_all($result, MYSQLI_ASSOC);
                     <?php endif; ?>
                 </td>
                 <td><?php echo $user['created_at'] ?></td>
-                <td><?php echo $user['last_update'] ?></td>
+                <td><?php echo $user['updated_at'] ?></td>
                 <td><?php echo get_username($user['updated_by']) ?></td>
 
                 <td>
@@ -93,7 +94,8 @@ $users = mysqli_fetch_all($result, MYSQLI_ASSOC);
     // close connection
     mysqli_close($conn);
     ?>
+</div><!-- main.div -->
+</div> <!-- div.wrapper-->
+</body>
 
-    <?php
-    require 'templates/footer.php';
-    ?>
+</html>
