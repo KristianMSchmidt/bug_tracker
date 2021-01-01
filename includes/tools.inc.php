@@ -1,4 +1,12 @@
+
 <?php
+/* Im not sure if these lookup tables are smart. I could do clever join queries instead 
+I hvert fald burde jeg slå disse ting op i databasen i stedet for at hardcode dem. Så bliver det jo
+opdateret, når databasen bliver opdateret
+*/
+
+
+/* bør erstattes af simpel select * from user_roles */
 $role_str = array(
     1 => 'Admin',
     2 => 'Project Manager',
@@ -6,7 +14,7 @@ $role_str = array(
     4 => 'Submitter',
     null => 'Null'
 );
-
+/* bør erstattes af simpel select * from ticket_priorities */
 $priority_str = array(
     5 => 'Low',
     6 => 'Medium',

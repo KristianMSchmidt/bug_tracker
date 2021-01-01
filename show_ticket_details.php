@@ -13,7 +13,21 @@ $project_name = $_GET['project_name'];
 $project_id = $_GET['project_id'];
 
 // write query for ticket
-$sql = "SELECT * FROM tickets WHERE ticket_id = '$ticket_id' ";
+$sql = "SELECT title as ticket_title, 
+                description as ticket_description, 
+                tickets.created_at, 
+                username as assigned_developer, 
+                priority, 
+                ticket_priority_name, 
+                ticket_status_name
+        FROM tickets 
+        JOIN users
+        ON tickets.developer_assigned = users.user_id
+        JOIN ticket_priorities
+        ON tickets.priority = ticket_priorities.ticket_priority_id
+        JOIN ticket_status_types
+        ON tickets.status = ticket_status_types.ticket_status_id
+        WHERE ticket_id = {$_GET['ticket_id']}";
 
 // make query and get result
 $result = mysqli_query($conn, $sql);
@@ -27,24 +41,26 @@ $ticket = mysqli_fetch_all($result, MYSQLI_ASSOC)[0];
 
     <table style="width:100%">
         <tr>
-            <th>title</th>
+            <th>ticket title</th>
             <th>description</th>
             <th>project name</th>
             <th>assigned developer</th>
             <th>ticket status</th>
-            <th>Ticket type</th>
+            <th>ticket type</th>
+            <th>ticket priority</th>
             <th>submitter</th>
             <th>created_at</th>
         </tr>
 
         <tr>
-            <td><?php echo $ticket['title'] ?></td>
-            <td><?php echo $ticket['ticket_description'] ?></td>
+            <td><?php echo $ticket['ticket_title']; ?></td>
+            <td><?php echo $ticket['ticket_description']; ?></td>
             <td><?php echo "<a href = 'show_project_details.php?id={$project_id}'>{$project_name}</a>"; ?></td>
-            <td><?php echo get_username($ticket['developer_assigned']) ?></td>
-            <td><?php echo $ticket_status_str[$ticket['status']] ?></td>
-            <td><?php echo $ticket_type_str[$ticket['ticket_type']] ?></td>
-            <td><?php echo get_username($ticket['submitter']) ?></td>
+            <td><?php echo $ticket['developer_assigned']; ?></td>
+            <td><?php echo $ticket['ticket_status_name']; ?></td>
+            <td><?php echo $ticket['ticket_type_name'];  ?></td>
+            <td><?php echo $ticket['ticket_priority_name'];  ?></td>
+            <td><?php echo $ticket['submitter']; ?></td>
             <td><?php echo $ticket['created_at'] ?></td>
         </tr>
     </table>

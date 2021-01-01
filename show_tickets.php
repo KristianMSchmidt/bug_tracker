@@ -36,7 +36,7 @@ $tickets = mysqli_fetch_all($result, MYSQLI_ASSOC);
             <th>assigned developer</th>
             <th>ticket status</th>
             <th>Ticket type</th>
-            <th>Prioryty</th>
+            <th>Priority</th>
             <th>submitter</th>
             <th>created_at</th>
         </tr>

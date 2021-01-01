@@ -36,7 +36,6 @@ if (isset($_SESSION['username'])) {
     </form>
 
 
-    <p>Forgot your <a href="recover_password.php">Password</a>?</p>
     <p>Create an account? <a href="signup.php">Sign Up</a></p>
 
     <p>Sign in as a <a href="demo_login.php">Demo User</a></p>

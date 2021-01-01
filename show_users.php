@@ -1,7 +1,7 @@
 <?php
 require 'templates/ui_frame.php';
 
-if (!$_SESSION['role'] == '1') {
+if (!$_SESSION['role_name'] == '1') {
     //Only users logged in as admins will see this page
     header('Location: login.php');
     exit();
@@ -10,7 +10,9 @@ if (!$_SESSION['role'] == '1') {
 include('includes/db_connect.inc.php');
 
 // write query for all users
-$sql = 'SELECT * FROM users';
+$sql = "SELECT user_id, username, email, created_at, updated_at, updated_by, role_name 
+        FROM users LEFT JOIN user_roles
+        ON users.role = user_roles.role_id";
 
 // make query and get result
 $result = mysqli_query($conn, $sql);
@@ -40,7 +42,7 @@ $users = mysqli_fetch_all($result, MYSQLI_ASSOC);
                 <td><?php echo $user['user_id'] ?></td>
                 <td><?php echo $user['username'] ?></td>
                 <td><?php echo $user['email'] ?></td>
-                <td><?php echo $role_str[$user['role']] ?></td>
+                <td><?php echo $user['role_name'] ?></td>
                 <td>
                     <?php if (!($user['username'] == "Demo Admin" ||
                         $user['username'] == "Demo Project Manager" ||

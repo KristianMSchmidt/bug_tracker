@@ -1,8 +1,8 @@
 <?php
 require "templates/ui_frame.php";
 
-if (!($role_str[$_SESSION['role']] == "Admin" || $role_str[$_SESSION['role']] == "Project Manager")) {
-    echo "<p class='logi    nerror'>Tickets can only be added by admin or project manager<p>";
+if (!($_SESSION['role_name'] == "Admin" || $_SESSION['role_name'] == "Project Manager")) {
+    echo "<p class='logi    nerror'>Tickets can only be added by admins or project managers<p>";
     exit();
 }
 

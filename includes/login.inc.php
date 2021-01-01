@@ -21,7 +21,11 @@ if (!isset($_POST['login_submit'])) {
         //prepared statements is a better way to protect database than mysqli_real_escape_string
         //https://www.youtube.com/watch?v=I4JYwRIjX6c
 
-        $sql = "SELECT * FROM users WHERE (username ='$user_login' OR email='$user_login')";
+        $sql =
+            "SELECT * 
+             FROM users JOIN user_roles
+             ON users.role = user_roles.role_id 
+             WHERE (username ='$user_login' OR email='$user_login')";
 
         $result = mysqli_query($conn, $sql);
 
@@ -55,8 +59,7 @@ if (!isset($_POST['login_submit'])) {
                 $_SESSION['username'] = $user['username'];
                 $_SESSION['user_email'] = $user['email'];
                 $_SESSION['user_id'] = $user['user_id'];
-                $_SESSION['role'] = $user['role'];
-
+                $_SESSION['role_name'] = $user['role_name'];
                 header('Location: ../dashboard.php?login=succes');
                 exit();
             }

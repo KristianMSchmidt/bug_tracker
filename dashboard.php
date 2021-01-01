@@ -256,8 +256,7 @@ if (!isset($_SESSION['username'])) {
                 "SELECT COUNT(tickets.ticket_id) as count, users.username
                 FROM tickets RIGHT JOIN users ON tickets.developer_assigned = users.user_id
                 GROUP BY tickets.developer_assigned
-                ORDER BY count(tickets.ticket_id) DESC
-                LIMIT 5;";
+                ORDER BY count(tickets.ticket_id) DESC";
 
             // make query and get result
             $result = mysqli_query($conn, $sql);

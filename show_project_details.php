@@ -59,8 +59,7 @@ $project = mysqli_fetch_all($result, MYSQLI_ASSOC)[0];
     // write query for all projects
     //This can be done in many different ways: https://stackoverflow.com/questions/7364969/how-to-filter-sql-results-in-a-has-many-through-relation
     $sql = "SELECT *
-            FROM users
-            JOIN project_enrollments
+            FROM users JOIN project_enrollments
             USING (user_id)
             WHERE project_enrollments.project_id = $project_id";
 
@@ -82,7 +81,6 @@ $project = mysqli_fetch_all($result, MYSQLI_ASSOC)[0];
             <th>username</th>
             <th>email</th>
             <th>role</th>
-
         </tr>
 
         <?php foreach ($enrollments as $enrollment) : ?>
