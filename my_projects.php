@@ -47,7 +47,10 @@ mysqli_close($conn);
 
     <form action=" create_project.php">
         <input type="submit" value="CREATE NEW PROJECT" style="float:right" class="signin_button">
+        <input type="submit" value="CREATE NEW PROJECT" class="btn btn-primary">
+
     </form>
+
     <br>
     <h2>Your Projects</h2>
 

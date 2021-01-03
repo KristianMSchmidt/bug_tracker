@@ -40,4 +40,5 @@ if (isset($_SESSION['username'])) {
     <p>Sign in as a <a href="demo_login.php">Demo User</a></p>
 </div> <!-- div.main -->
 </div> <!-- div.wrapper-->
+
 </body>

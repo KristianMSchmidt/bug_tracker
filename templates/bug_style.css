@@ -1,6 +1,6 @@
 body {
   margin: 0;
-  font-family: sans-serif;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
 /* style for divs within wrapper */
@@ -8,15 +8,15 @@ body {
   display: -ms-grid;
   display: grid;
   -ms-grid-columns: 12fr 80fr;
-      grid-template-columns: 12fr 80fr;
+  grid-template-columns: 12fr 80fr;
   -ms-grid-rows: 1fr 20fr;
-      grid-template-rows: 1fr 20fr;
+  grid-template-rows: 1fr 20fr;
   grid-gap: 0em;
   justify-items: stretch;
   /*default */
   -webkit-box-align: stretch;
-      -ms-flex-align: stretch;
-          align-items: stretch;
+  -ms-flex-align: stretch;
+  align-items: stretch;
   /*default */
   padding: 0em;
   width: 100vw;
@@ -73,7 +73,7 @@ body {
   -ms-grid-row: 2;
   grid-row: 2;
   -webkit-box-shadow: 5px 5px 5px grey;
-          box-shadow: 5px 5px 5px grey;
+  box-shadow: 5px 5px 5px grey;
 }
 
 .sidebar a:active {
@@ -170,9 +170,9 @@ th {
   display: -ms-grid;
   display: grid;
   -ms-grid-columns: 1fr 1fr;
-      grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr 1fr;
   -ms-grid-rows: 1fr 1fr;
-      grid-template-rows: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
   padding-right: 0em;
   padding-top: 1em;
   padding-bottom: 0em;
@@ -186,9 +186,9 @@ th {
   display: -ms-grid;
   display: grid;
   -ms-grid-columns: 2fr 3fr;
-      grid-template-columns: 2fr 3fr;
+  grid-template-columns: 2fr 3fr;
   -ms-grid-rows: 1fr 10fr;
-      grid-template-rows: 1fr 10fr;
+  grid-template-rows: 1fr 10fr;
   padding-right: 0em;
   padding-top: 1em;
   padding-bottom: 0em;
@@ -247,7 +247,7 @@ th {
   max-height: 20em;
   overflow-y: scroll;
   -webkit-box-shadow: 0em 0.25em 0.5em 0em rgba(0, 0, 0, 0.2);
-          box-shadow: 0em 0.25em 0.5em 0em rgba(0, 0, 0, 0.2);
+  box-shadow: 0em 0.25em 0.5em 0em rgba(0, 0, 0, 0.2);
   z-index: 1;
 }
 
