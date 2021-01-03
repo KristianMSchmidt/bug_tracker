@@ -24,7 +24,7 @@ if (!isset($_POST['login_submit'])) {
         $sql =
             "SELECT * 
              FROM users JOIN user_roles
-             ON users.role = user_roles.role_id 
+             ON users.role_id = user_roles.role_id 
              WHERE (username ='$user_login' OR email='$user_login')";
 
         $result = mysqli_query($conn, $sql);

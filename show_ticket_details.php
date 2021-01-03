@@ -78,7 +78,7 @@ $ticket = mysqli_fetch_all($result, MYSQLI_ASSOC)[0];
     $sql = "SELECT username, user_id 
             FROM users 
             WHERE
-            users.role = 2 
+            users.role_id = 2 
             AND
             user_id != {$ticket['developer_assigned']}
             AND user_id IN 

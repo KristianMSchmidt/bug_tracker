@@ -13,7 +13,6 @@ if (!isset($_SESSION['username'])) {
 
 <div class="main">
     <div class="dashboard_wrapper">
-
         <div>
             <!-- Ticket Priority chart -->
             <canvas id="priority_chart"></canvas>
@@ -329,108 +328,6 @@ if (!isset($_SESSION['username'])) {
 
             <h3>Most Busy Users (# of Tickets)</h3>
         </div> <!-- End of Most Busy Users chart -->
-
-        <div>
-            <!-- Least busy users chart -->
-            <canvas id="least_busy_users_chart"></canvas>
-
-            <?php
-            //query 
-            $sql =
-                "SELECT COUNT(tickets.ticket_id) as count, users.username
-                FROM tickets RIGHT JOIN users ON tickets.developer_assigned = users.user_id
-                GROUP BY tickets.developer_assigned
-                ORDER BY count(tickets.ticket_id) ASC
-                LIMIT 6;";
-
-            // make query and get result
-            $result = mysqli_query($conn, $sql);
-
-            if (!$result) {
-                //error message: A database error occured
-                echo 'query error: ' . mysqli_error($conn);
-                exit();
-            }
-
-            // fetch the resulting rows as an associative array
-            $rows = mysqli_fetch_all($result, MYSQLI_ASSOC);
-            ?>
-
-            <script>
-                var ctx = document.getElementById('least_busy_users_chart').getContext('2d');
-                var myChart = new Chart(ctx, {
-                    type: 'doughnut',
-                    data: {
-                        labels: [<?php foreach ($rows as $row) {
-                                        echo "'{$row['username']}',";
-                                    } ?>],
-
-                        datasets: [{
-                            label: '# T',
-                            data: [<?php foreach ($rows as $row) {
-                                        echo "'{$row['count']}',";
-                                    } ?>],
-
-                            backgroundColor: [
-                                'rgba(255, 99, 132, 0.2)',
-                                'rgba(54, 162, 235, 0.2)',
-                                'rgba(255, 206, 86, 0.2)',
-                                'rgba(75, 192, 192, 0.2)',
-                                'rgba(153, 102, 255, 0.2)',
-                                'rgba(255, 159, 64, 0.2)'
-                            ],
-                            borderColor: [
-                                'rgba(255, 99, 132, 1)',
-                                'rgba(54, 162, 235, 1)',
-                                'rgba(255, 206, 86, 1)',
-                                'rgba(75, 192, 192, 1)',
-                                'rgba(153, 102, 255, 1)',
-                                'rgba(255, 159, 64, 1)'
-                            ],
-                            borderWidth: 1
-                        }]
-                    },
-                    options: {
-                        legend: {
-                            display: true
-                        }
-                    },
-                    scales: {
-                        xAxes: [{
-                            stacked: true,
-                            beginAtZero: true,
-                            scaleLabel: {
-                                labelString: 'Month'
-                            },
-                            ticks: {
-                                stepSize: 1,
-                                min: 0,
-                                autoSkip: false
-                            }
-                        }]
-                    }
-                });
-            </script>
-
-            <h3>Least Busy Users (# of Tickets)</h3>
-        </div> <!-- End of Lest Busy Users Load chart -->
-
-        <!-- ROD SOM SKAL FJERNES SENERE -->
-        <div>
-            <form action="show_users.php">
-                <input type="submit" name="show_users_submit" value="show users"><br>
-            </form><br>
-
-            <form action="show_projects.php">
-                <input type="submit" name="show_projects_submit" value="show projects"><br>
-            </form><br>
-
-            <form action="show_tickets.php">
-                <input type="submit" name="show_tickets_submit" value="show tickets"><br>
-            </form><br>
-
-            <h3>Rod</h3>
-        </div>
     </div> <!-- end of div.dashboard_wrapper -->
 </div> <!-- div.main -->
 </div> <!-- div.wrapper-->

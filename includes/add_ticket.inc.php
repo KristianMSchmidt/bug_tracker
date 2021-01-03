@@ -1,8 +1,7 @@
 <?php
-require 'tools.inc.php';
 session_start();
 
-if(!isset($_POST["add_ticket_submit"])){
+if (!isset($_POST["add_ticket_submit"])) {
     header('location: ../dashboard.php');
     exit();
 }
@@ -18,33 +17,30 @@ $status = $_POST['ticket_status'];
 $type = $_POST['ticket_type'];
 $submitter = $_SESSION['user_id'];
 
-if(empty($ticket_title)){
+if (empty($ticket_title)) {
     //error message: Fill in title fields
     header("Location: ../add_ticket.php?error=notitle&project_id={$project_id}&project_name={$project_name}");
     exit();
-}
+} else {
 
-else{
-   
     // escape sql chars
     $ticket_title = mysqli_real_escape_string($conn, $ticket_title);
     $ticket_description = mysqli_real_escape_string($conn, $ticket_descriptiton);
-   
+
     // create sql    
 
     $sql = "INSERT INTO tickets(title, ticket_description, priority, ticket_type, status, submitter, project_id) 
             VALUES('$ticket_title','$ticket_description', '$priority', '$status', '$type', '$submitter', '$project_id')";
 
     // save to db and check
-    if(mysqli_query($conn, $sql)){
+    if (mysqli_query($conn, $sql)) {
 
         // success
         header("Location: ../show_project_details.php?id={$project_id}&addticket=succes");
         exit();
-    } 
-    else{
+    } else {
         //database error
-        echo('query error: '. mysqli_error($conn));
+        echo ('query error: ' . mysqli_error($conn));
         exit();
     }
 }

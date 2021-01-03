@@ -1,11 +1,12 @@
 body {
   margin: 0;
+  font-family: sans-serif;
 }
 
 /* style for divs within wrapper */
 .wrapper {
   display: grid;
-  grid-template-columns: 11fr 80fr;
+  grid-template-columns: 12fr 80fr;
   grid-template-rows: 1fr 20fr;
   grid-gap: 0em;
   justify-items: stretch; /*default */
@@ -77,11 +78,11 @@ body {
 }
 
 .main {
+  -ms-grid-column: 2;
   grid-column: 2;
+  -ms-grid-row: 2;
   grid-row: 2;
-  padding-left: 0em;
   font-size: 1em;
-  text-align: center;
 }
 
 .sidebar a {
@@ -96,12 +97,15 @@ body {
   color: white;
   background-color: #a0b2c9;
 }
-
 table,
 th,
 td {
   border: 1px solid black;
   border-collapse: collapse;
+}
+
+th {
+  text-align: left;
 }
 
 .loginerror {
@@ -110,6 +114,7 @@ td {
 
 .loginsucces {
   color: lightgreen;
+  font-weight: bold;
 }
 
 .button_that_looks_like_link {
@@ -152,6 +157,18 @@ td {
   float: center;
 }
 
+.project_details_wrapper {
+  display: grid;
+  grid-template-columns: 2fr 3fr;
+  grid-template-rows: 1fr 10fr;
+  padding-right: 0em;
+  padding-top: 1em;
+  padding-bottom: 0em;
+  padding-left: 2em;
+  gap: 1em;
+  margin: 0em;
+  float: center;
+}
 .dashboard_wrapper > div {
   padding: 0em;
   padding-top: 0.5em;

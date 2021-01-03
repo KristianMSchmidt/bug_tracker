@@ -2,7 +2,7 @@
 require 'templates/ui_frame.php';
 ?>
 
-<div class="main">
+<div class="main" style="text-align: center">
     <h2> Demo Login </h2>
 
     <style>
@@ -22,6 +22,7 @@ require 'templates/ui_frame.php';
     </style>
 
     <div class="demo-login_wrapper">
+
 
         <form class="hidden" id="admin_login" action="includes/login.inc.php" method="POST">
             <input type="hidden" name="user_login" value="Demo Admin">
@@ -51,10 +52,20 @@ require 'templates/ui_frame.php';
         <div></div>
 
         <div>
+            <a href="#" class="fa fa-fw fa-user fa-3x" style="color:black" onclick="document.getElementById('admin_login').submit()">
+            </a>
+            <p>Admin</p>
+        </div>
+
+        <div>
             <a href=" #" class="fa fa-fw fa-user fa-3x" style="color:red" onclick="document.getElementById('dev_login').submit()">
             </a>
             <p>Developer</p>
         </div>
+
+
+        <div></div>
+        <div></div>
 
         <div>
             <a href="#" class="fa fa-fw fa-user fa-3x" style="color:green" onclick="document.getElementById('pm_login').submit()">
@@ -62,14 +73,6 @@ require 'templates/ui_frame.php';
             <p>Project Manager</p>
         </div>
 
-        <div></div>
-        <div></div>
-
-        <div>
-            <a href="#" class="fa fa-fw fa-user fa-3x" style="color:black" onclick="document.getElementById('admin_login').submit()">
-            </a>
-            <p>Admin</p>
-        </div>
 
         <div>
             <a href="#" class="fa fa-fw fa-user fa-3x" style="color:blue" onclick="document.getElementById('submitter_login').submit()">

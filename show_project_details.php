@@ -5,201 +5,121 @@ if (!isset($_SESSION['username'])) {
     header('Location: login.php');
     exit();
 }
-if (!($_GET['id'])) {
-    header('Location: show_projects.php');
+
+if (!($_POST['project_id'])) {
+    header('Location: my_projects.php');
     exit();
 }
-
-
-//Only admins will see the following
-
 include('includes/db_connect.inc.php');
-$project_id = $_GET['id'];
 
-// write query for all projects
-$sql = "SELECT * FROM projects WHERE id = '$project_id' ";
+// query all personal enrolled in this project
+$sql =
+    "select users.username, users.email, role_name
+    from users 
+    join project_enrollments on users.user_id = project_enrollments.user_id
+    join user_roles on user_roles.role_id = users.role_id
+    where project_enrollments.project_id = {$_POST['project_id']}";
 
 // make query and get result
 $result = mysqli_query($conn, $sql);
 
 // fetch the resulting rows as an associative array
-$project = mysqli_fetch_all($result, MYSQLI_ASSOC)[0];
+$users = mysqli_fetch_all($result, MYSQLI_ASSOC);
+
+
+// query all tickets in this project
+$sql =
+    "SELECT 
+        tickets.title,
+        tickets.created_at,
+        ticket_priorities.ticket_priority_name,
+        ticket_status_types.ticket_status_name,
+        ticket_types.ticket_type_name,
+        s.username AS submitter_name,  /* alias necessary */
+        d.username AS developer_name   /* alias necessary */
+        FROM tickets 
+        JOIN users s ON tickets.submitter = s.user_id
+        JOIN users d ON tickets.developer_assigned = d.user_id
+        JOIN projects ON tickets.project = projects.project_id
+        JOIN ticket_status_types ON tickets.type = ticket_status_types.ticket_status_id
+        JOIN ticket_priorities ON tickets.priority = ticket_priorities.ticket_priority_id
+        JOIN ticket_types ON tickets.type =ticket_types.ticket_type_id
+        WHERE tickets.project = {$_POST['project_id']}";
+
+// make query and get result
+$result = mysqli_query($conn, $sql);
+
+// fetch the resulting rows as an associative array
+$tickets = mysqli_fetch_all($result, MYSQLI_ASSOC);
+
 ?>
-<div class="main">
+<div class="main"">
+    <div style=" color:white; width:90%; background-color:orange;margin:1em; margin: 0 auto; margin-top: 0.5em; padding: 0.05em; padding-left:1em; padding-bottom:1em;">
+    <h3 style="margin-bottom:0em;margin-top:0.5em;padding-top:0em;">Details for Project #<?php echo $_POST['project_id'] ?></h3>
+    <a style="color:white" href="my_projects.php">Back to list</a>
+    <a style="color:white; padding:0.5em;" href="">Edit</a>
+</div>
+<div class="project_details_wrapper">
+    <div style="border:1px solid black; margin-left:3em; ">
+        <p style="margin-bottom:0.2em;margin-top:0;">Project Name:</p>
+        <h4 style="margin:0; margin-left:1em;"><?php echo $_POST['project_name'] ?></h4>
+    </div>
+    <div style=" border:1px solid black">
+        <p style="margin-bottom:0.2em;margin-top:0; ">Project Description</p>
+        <h4 style="margin:0; margin-left:1em;"><?php echo $_POST['project_description'] ?></h4>
+    </div>
 
-    <h2>Project: <?php echo $project['project_name'] ?></h2>
-
-    <table style="width:100%">
-        <tr>
-            <th>project_id</th>
-            <th>project name</th>
-            <th>description</th>
-            <th>created by</th>
-            <th>created_at</th>
-        </tr>
-
-        <tr>
-            <td><?php echo $project['id'] ?></td>
-            <td><?php echo $project['project_name'] ?></td>
-            <td><?php echo $project['project_description'] ?></td>
-            <td><?php echo $project['created_by'] ?></td>
-            <td><?php echo $project['created_at'] ?></td>
-        </tr>
-    </table>
-
-    <?php
-    // free result from memory (good practice)
-    mysqli_free_result($result);
-    ?>
-
-
-    <h2>Assigned personnel: </h2>
-
-    <?php
-    // write query for all projects
-    //This can be done in many different ways: https://stackoverflow.com/questions/7364969/how-to-filter-sql-results-in-a-has-many-through-relation
-    $sql = "SELECT *
-            FROM users JOIN project_enrollments
-            USING (user_id)
-            WHERE project_enrollments.project_id = $project_id";
-
-    //I understand this better: 
-    $sql2 = "SELECT * 
-             FROM users
-             WHERE users.user_id IN (SELECT user_id FROM project_enrollments WHERE project_id = $project_id)";
-
-
-    // make query and get result
-    $result = mysqli_query($conn, $sql2);
-
-    // fetch the resulting rows as an associative array
-    $enrollments = mysqli_fetch_all($result, MYSQLI_ASSOC);
-    ?>
-
-    <table style="width:20%">
-        <tr>
-            <th>username</th>
-            <th>email</th>
-            <th>role</th>
-        </tr>
-
-        <?php foreach ($enrollments as $enrollment) : ?>
+    <div style="background-color:beige">
+        <div style="color:white; width:85%; background-color:orange;margin:1em; margin: 0 auto;  margin-top: 0.5em; padding: 0.05em; padding-left:1em;">
+            <h3 style="margin-bottom:0em;margin-top:0.5em;padding-top:0em;">Assigned personer</h3>
+            <p style="margin-top:0;">Current Users on this project</p>
+        </div>
+        <br>
+        <table style="width:95%; margin:0 auto;">
             <tr>
-                <td><?php echo $enrollment['username'] ?></td>
-                <td><?php echo $enrollment['email'] ?></td>
-                <td><?php echo $role_str[$enrollment['role']] ?></td>
-                <td>
-                    <form action="includes/end_project_enrollment.inc.php" method="POST">
-                        <input type="hidden" name="user_id" value="<?php echo $enrollment['user_id'] ?>">
-                        <input type="hidden" name="project_id" value="<?php echo $project_id ?>">
-                        <input type="submit" value="Un-assign" name="unassign_from_project_submit">
-                    </form>
-                </td>
-
+                <th>User Name</th>
+                <th>Email</th>
+                <th>Role</th>
             </tr>
-        <?php endforeach; ?>
-    </table>
 
-
-    <h2>Delete project</h2>
-
-    <form action="includes/delete_project.inc.php" method="POST">
-        <input type="hidden" name="delete_project_w_id" value="<?php echo $project_id ?>">
-        <input type="submit" name="delete_project_submit" value="Delete project">
-    </form>
-
-
-    <h2>Add staff to this project: </h2>
-    <p>Search persons: _____</p>
-    <?php
-    //selecct users not already enrolled in this project
-    $sql3 = "SELECT * 
-            FROM users
-            WHERE users.user_id NOT IN (SELECT user_id FROM project_enrollments WHERE project_id = $project_id)";
-
-    // make query and get result
-    $result = mysqli_query($conn, $sql3);
-
-    // fetch the resulting rows as an associative array
-    $not_enrolled_users = mysqli_fetch_all($result, MYSQLI_ASSOC);
-    ?>
-
-    <nav>
-        <ul>
-            <?php foreach ($not_enrolled_users as $user) : ?>
-                <li>
-                    <?php echo $user['username'] ?>
-                    <form style="display:inline" action="includes/assign_to_project.inc.php" method="POST">
-                        <input type="hidden" name="user_id" value="<?php echo $user['user_id']; ?>">
-                        <input type="hidden" name="project_id" value="<?php echo $project_id; ?>">
-                        <input type="submit" value="Assign to project" name="assign_user_submit">
-                    </form>
-                </li>
+            <?php foreach ($users as $user) : ?>
+                <tr>
+                    <td><?php echo $user['username'] ?></td>
+                    <td><?php echo $user['email'] ?></td>
+                    <td><?php echo $user['role_name'] ?></td>
+                </tr>
             <?php endforeach; ?>
-        </ul>
-    </nav>
+        </table>
+    </div>
 
-
-    <h2>Tickets for this project: </h2>
-    <p>Search tickets: _____</p>
-    <?php
-    //select tickets for this project
-    // 
-    $sql = "SELECT * 
-            FROM tickets
-            WHERE tickets.project_id = $project_id";
-
-    // make query and get result
-    $result = mysqli_query($conn, $sql);
-
-    // fetch the resulting rows as an associative array
-    $tickets = mysqli_fetch_all($result, MYSQLI_ASSOC);
-    ?>
-
-    <table>
-        <tr>
-            <th>Ticket Title</th>
-            <th>Priority</th>
-            <th>Status</th>
-        </tr>
-
-        <?php foreach ($tickets as $ticket) : ?>
+    <div style=" background-color:beige">
+        <div style="color:white; width:90%; background-color:orange;margin:1em; margin: 0 auto;  margin-top: 0.5em; padding: 0.05em; padding-left:1em;">
+            <h3 style="margin-bottom:0em;margin-top:0.5em;padding-top:0em;">Tickets for this project</h3>
+            <p style="margin-top:0;">Condensed Ticket Details</p>
+        </div>
+        <br>
+        <table style="min-width:95%; margin:0 auto;">
             <tr>
-                <td><?php echo $ticket['title'] ?> </td>
-                <td><?php echo $priority_str[$ticket['priority']] ?> </td>
-                <td><?php echo $ticket_status_str[$ticket['status']] ?> </td>
+                <th>Title</th>
+                <th>Submitter</th>
+                <th>Developer</th>
+                <th>Status</th>
+                <th>Created</th>
+            </tr>
 
-                <!-- show details button -->
-                <td>
-                    <form style="display:inline" action="show_ticket_details.php" method="GET">
-                        <input type="hidden" name="ticket_id" value="<?php echo $ticket['ticket_id']; ?>">
-                        <input type="hidden" name="project_name" value="<?php echo $project['project_name']; ?>">
-                        <input type="hidden" name="project_id" value="<?php echo $project_id ?>">
-                        <input type="submit" value="Details" name="show_ticket_details_submit">
-                    </form>
-                </td>
+            <?php foreach ($tickets as $ticket) : ?>
+                <tr>
+                    <td><?php echo $ticket['title'] ?></td>
+                    <td><?php echo $ticket['submitter_name'] ?></td>
+                    <td><?php echo $ticket['developer_name'] ?></td>
+                    <td><?php echo $ticket['ticket_status_name'] ?></td>
+                    <td><?php echo $ticket['created_at'] ?></td>
+                    <th><a href="#">More Details</a></th>
+                </tr>
             <?php endforeach; ?>
-
-    </table>
-
-
-    <h2>Add ticket to project: </h2>
-    <form action="add_ticket.php?>" method="GET">
-        <input type=hidden name="project_id" value="<?php echo $project_id ?>">
-        <input type=hidden name="project_name" value="<?php echo $project['project_name'] ?>">
-        <input type="submit" value="Add ticket" name="add_ticket_submit">
-    </form>
-
-    <?php
-    // close connection
-    mysqli_close($conn);
-    ?>
-
-    <?php
-    // free result from memory (good practice)
-    mysqli_free_result($result);
-    ?>
-
+        </table>
+    </div>
+</div> <!-- dashboard_wrapper -->
 </div><!-- main.div -->
 </div> <!-- div.wrapper-->
 </body>

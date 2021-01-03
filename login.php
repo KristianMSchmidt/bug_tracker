@@ -7,8 +7,7 @@ if (isset($_SESSION['username'])) {
 }
 ?>
 
-
-<div class="main">
+<div class="main" style="margin-left:4em; margin-right:4em;text-align:center;">
     <h2>Log in</h2>
 
     <?php

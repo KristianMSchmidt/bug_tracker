@@ -16,7 +16,7 @@ if (!isset($_POST['update_role'])) {
     $admin_id = $_SESSION['user_id'];
 
     // make sql
-    $sql = "UPDATE users SET role = '$new_role', updated_at = NOW(), updated_by='$admin_id'
+    $sql = "UPDATE users SET role_id = '$new_role', updated_at = NOW(), updated_by='$admin_id'
                 WHERE username = '$username'";
 
     // save to db and check

@@ -70,8 +70,6 @@
             foreach ($notifications as $n) {
                 $unseen += $n['unseen'];
             }
-            require 'includes/tools.inc.php';
-
             ?>
 
             <form class="hidden" id="seen_notifications_form" action="includes/seen_notifications.inc.php" method="POST">
@@ -98,8 +96,8 @@
                     <a class="active" href="dashboard.php"><i class="fa fa-fw fa-home"></i>Dashboard</a>
                     <a href="manage_role_assignment.php"><i class="fa fa-fw fa-users"></i>Manage User Roles</a>
                     <a href="show_projects.php"><i class="fa fa-fw fa-user-plus"></i>Manage Project Users </a>
-                    <a href="#contact"><i class="fa fa-fw fa-industry"></i>My Projects</a>
-                    <a href="#contact"><i class="fa fa-fw fa-ticket"></i>My Tickets</a>
+                    <a href="my_projects.php"><i class="fa fa-fw fa-industry"></i>My Projects</a>
+                    <a href="my_tickets.php"><i class="fa fa-fw fa-ticket"></i>My Tickets</a>
                 </div>
 
                 <div class="header">
@@ -123,7 +121,7 @@
                             USER ACTIONS</button>
 
                         <div id="myDropdown1" class="dropdown-content one">
-                            <a href="profile.php">Profile settings</a>
+                            <a href="profile_settings.php">Profile settings</a>
                             <a href="includes/logout.inc.php">Log out</a>
                         </div>
                     </div>
@@ -162,11 +160,11 @@
                             <?php foreach ($notifications as $notification) : ?>
                                 <?php
                                 if ($notification['notification_type'] == 1) {
-                                    echo '<a href="profile.php">';
+                                    echo '<a href="profile_settings.php">';
                                 } elseif ($notification['notification_type'] == 2) {
-                                    echo '<a href="mytickets.php">';
+                                    echo '<a href="my_tickets.php">';
                                 } elseif ($notification['notification_type'] == 3) {
-                                    echo '<a href="myprojects.php">';
+                                    echo '<a href="my_projects.php">';
                                 }
                                 ?>
                                 <?php echo '<b>' . $notification["created_by"] . '</b>'; ?>

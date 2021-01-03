@@ -12,7 +12,7 @@ include('includes/db_connect.inc.php');
 // write query for all users
 $sql = "SELECT user_id, username, email, created_at, updated_at, updated_by, role_name 
         FROM users LEFT JOIN user_roles
-        ON users.role = user_roles.role_id";
+        ON users.role_id = user_roles.role_id";
 
 // make query and get result
 $result = mysqli_query($conn, $sql);
