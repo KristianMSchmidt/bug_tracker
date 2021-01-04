@@ -13,17 +13,17 @@ if (isset($_SESSION['username'])) {
     <?php
     if (isset($_GET['signedup'])) {
         //User has just signed succesfully up
-        echo '<p class="loginsucces">You have succesfully signed up. Now login?</p>';
+        echo '<p class="succes">You have succesfully signed up. Now login?</p>';
     }
 
     if (isset($_GET['error'])) {
         //user has tried to login but there is an error     
         if ($_GET['error'] == 'emptyfields') {
-            echo '<p class="loginerror">Fill in all fields</p>';
+            echo '<p class="error">Fill in all fields</p>';
         } else if ($_GET['error'] == 'db_error') {
-            echo '<p class="loginerror">A database error occured</p>';
+            echo '<p class="error">A database error occured</p>';
         } else if ($_GET['error'] == 'invalid') {
-            echo '<p class="loginerror">Invalid username or password</p>';
+            echo '<p class="error">Invalid username or password</p>';
         }
     }
     ?>
@@ -41,4 +41,13 @@ if (isset($_SESSION['username'])) {
 </div> <!-- div.main -->
 </div> <!-- div.wrapper-->
 
+
+<script>
+    let width = (window.innerWidth > 0) ? window.innerWidth : screen.width;
+
+    if (width < 850) {
+        console.log("TO SMALL");
+        document.getElementsByTagName("body")[0].innerHTML = "<p style='margin:5px;padding:2px'>This app is not yet ready for small screens.</p>";
+    }
+</script>
 </body>

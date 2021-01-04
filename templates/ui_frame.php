@@ -1,16 +1,27 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bug_Tracker</title>
-    <link rel="stylesheet" href="templates/bug_style.css">
-    <!-- Load an icon library -->
-    <!-- https://fontawesome.com/v4.7.0/icons/ -->
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <script src="templates/dropdown.js"></script>
-</head>
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="templates/css/bug_style.css">
+
+    <!-- Optional JavaScript (suggested to import this and end of body -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <!-- Custom dropdown script -->
+    <script src="templates/js/dropdown.js"></script>
 
 <body>
 
@@ -20,16 +31,17 @@
 
     <?php if (!isset($_SESSION['username'])) : ?>
         <!-- user is not logged in -->
-        <div class="wrapper">
+        <div class="grid-container">
             <div class="upper-left-corner">
-                <div style="text-align:center">
-                    <i class="fa fa-fw fa-bug fa-lg"></i>
-                    <p>WELCOME</p>
-                    <br>
-                    <p id="username">to Bug_Tracker</p>
+                <div style="text-align:center; padding: 1px; line-height:10px"">
+                    <i class=" fa fa-fw fa-bug fa-lg"></i>
+                    <p>Welcome</p>
+                </div>
+                <div style="font-size:12px;text-align:center;">
+                    <p style="font-size:12px;text-align:center;">To Bug_Tracker</p>
                 </div>
             </div>
-            <div class="header">
+            <div class="header">&nbsp;
             </div>
             <div class="sidebar">
             </div>
@@ -82,13 +94,14 @@
                 document.getElementById("form_input_page_name").value = page_name;
             </script>
 
-            <div class="wrapper">
+            <div class="grid-container">
                 <div class="upper-left-corner">
-                    <div style="text-align:center">
-                        <i class="fa fa-fw fa-bug fa-lg"></i>
-                        <p>WELCOME</p>
-                        <br>
-                        <p id="username"><?php echo $_SESSION['username']; ?></p>
+                    <div style="text-align:center; padding: 1px; line-height:10px"">
+                        <i class=" fa fa-fw fa-bug fa-lg"></i>
+                        <p>Welcome</p>
+                    </div>
+                    <div style="font-size:12px;text-align:center;">
+                        <p style="font-size:12px;text-align:center;"><?php echo $_SESSION['username']; ?></p>
                     </div>
                 </div>
 
@@ -101,7 +114,10 @@
                 </div>
 
                 <div class="header">
-                    <p>Logged in as <b><?php echo $_SESSION['role_name']; ?></b></p>
+                    <p>
+                        Logged in as
+                        <b><?php echo $_SESSION['role_name']; ?></b>
+                    </p>
 
                     <style>
                         .fa {
@@ -118,7 +134,8 @@
                             <span class="fa-stack fa-1x">
                                 <i class=" fa fa-user fa-stack-1x fa-inverse"></i>
                             </span>
-                            USER ACTIONS</button>
+                            USER ACTIONS
+                        </button>
 
                         <div id="myDropdown1" class="dropdown-content one">
                             <a href="profile_settings.php">Profile settings</a>

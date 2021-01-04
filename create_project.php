@@ -10,7 +10,7 @@ require "templates/ui_frame.php";
     $title = $description = "";
 
     if (isset($_GET['createprojectsucces'])) {
-        echo '<p class="loginsucces">Your project was added to the database</p>';
+        echo '<p class="succes">Your project was added to the database</p>';
     }
 
     if (isset($_GET['error'])) {
@@ -19,11 +19,11 @@ require "templates/ui_frame.php";
         $title = htmlspecialchars($_GET['title']);
         $description = htmlspecialchars($_GET['description']);
         if ($_GET['error'] == 'notitle') {
-            echo '<p class="loginerror">Your project needs a title</p>';
+            echo '<p class="error">Your project needs a title</p>';
         } elseif ($_GET['error'] == 'nodescription') {
-            echo '<p class="loginerror">Your project needs a description</p>';
+            echo '<p class="error">Your project needs a description</p>';
         } elseif ($_GET['error'] == 'titleexists') {
-            echo '<p class="loginerror">There is already a project with that title in the database</p>';
+            echo '<p class="error">There is already a project with that title in the database</p>';
         }
     }
     ?>
