@@ -1,4 +1,6 @@
 <?php
+//session_start();
+//session_destroy();
 if (isset($_SESSION['username'])) {
     //User is already logged in
     header('location: dashboard.php');
@@ -6,6 +8,8 @@ if (isset($_SESSION['username'])) {
 } else {
     require "templates/ui_frame.php";
 }
+
+
 ?>
 
 <div class="main"">

@@ -49,8 +49,8 @@
         <?php else : ?>
             <!-- user is logged in -->
             <?php
-            include('includes/db_connect.inc.php');
-            include('includes/human_timing.inc.php');
+            include('../includes/db_connect.inc.php');
+            include('../includes/human_timing.inc.php');
 
             $sql =
                 "SELECT unseen, notification, notification_type, notifications.created_at, notifications.user_id, username as created_by
@@ -81,7 +81,7 @@
             }
             ?>
 
-            <form class="hidden" id="seen_notifications_form" action="includes/seen_notifications.inc.php" method="POST">
+            <form class="hidden" id="seen_notifications_form" action="../includes/seen_notifications.inc.php" method="POST">
                 <input type="hidden" name="user_id" value=<?php echo $_SESSION['user_id'] ?>>
                 <input type="hidden" name="page_name" value="" id="form_input_page_name">
             </form>
@@ -124,11 +124,11 @@
 
                         <div id="myDropdown1" class="dropdown-content one">
                             <a href="profile_settings.php">Profile settings</a>
-                            <a href="includes/logout.inc.php">Log out</a>
+                            <a href="../includes/logout.inc.php">Log out</a>
                         </div>
                     </div>
 
-                    <form class="hidden" id="notifications_form" action="includes/remove_notifications.inc.php" method="POST">
+                    <form class="hidden" id="notifications_form" action="../includes/remove_notifications.inc.php" method="POST">
                         <input type="hidden" name="user_id" value="Demo Admin">
                     </form>
 

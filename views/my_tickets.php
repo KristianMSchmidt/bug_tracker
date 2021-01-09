@@ -5,12 +5,9 @@ Project Managers will see all tickets to the projects they are enrolled in
 Developers will see all tickets that they are assigned to as 'assigned developer'
 Submitters will see all tickets they have submitted
 */
-require 'templates/ui_frame.php';
 
-if (!isset($_SESSION['username'])) {
-    header('Location: login.php');
-    exit();
-}
+require('includes/check_login.inc.php');
+require('templates/ui_frame.php');
 
 // connect to db
 include('includes/db_connect.inc.php');

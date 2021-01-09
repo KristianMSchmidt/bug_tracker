@@ -1,7 +1,7 @@
 <?php
 
 if (!isset($_POST['login_submit'])) {
-    header('Location: ../login.php');
+    header('Location: ..views/login.php');
     exit();
 } else {
     require "db_connect.inc.php";
@@ -11,7 +11,7 @@ if (!isset($_POST['login_submit'])) {
 
     if (empty($user_login) || empty($password)) {
         //error message: Fill in all fields
-        header('Location: ../login.php?error=emptyfields');
+        header('Location: ../views/login.php?error=emptyfields');
         exit();
     } else {
         require "db_connect.inc.php";
@@ -31,12 +31,12 @@ if (!isset($_POST['login_submit'])) {
 
         if (!$result) {
             //error message: A database error occured
-            header('Location: ../login.php?error=db_error');
+            header('Location: ../views/login.php?error=db_error');
             exit();
         } elseif (mysqli_num_rows($result) == 0) {
             // user_login is not in database
             //error message: Invalid username or password
-            header('Location: ../login.php?error=invalid');
+            header('Location: ../views/login.php?error=invalid');
             exit();
         } else {
             // fetch result in array format
@@ -51,7 +51,7 @@ if (!isset($_POST['login_submit'])) {
             if ($psw_check == false) {
                 // wrong password
                 //error message: Invalid username or password
-                header('Location: ../login.php?error=invalid');
+                header('Location: ../views/login.php?error=invalid');
                 exit();
             } else {
                 // login is succesfull
@@ -60,7 +60,7 @@ if (!isset($_POST['login_submit'])) {
                 $_SESSION['user_email'] = $user['email'];
                 $_SESSION['user_id'] = $user['user_id'];
                 $_SESSION['role_name'] = $user['role_name'];
-                header('Location: ../dashboard.php?login=succes');
+                header('Location: ../views/dashboard.php?login=succes');
                 exit();
             }
         }

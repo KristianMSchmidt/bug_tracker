@@ -24,25 +24,25 @@ require 'templates/ui_frame.php';
     <div class="demo-login_wrapper">
 
 
-        <form class="hidden" id="admin_login" action="includes/login.inc.php" method="POST">
+        <form class="hidden" id="admin_login" action="../includes/login.inc.php" method="POST">
             <input type="hidden" name="user_login" value="Demo Admin">
             <input type="hidden" name="password" value="stjerne">
             <input type="hidden" name="login_submit" value="">
         </form>
 
-        <form class="hidden" id="pm_login" action="includes/login.inc.php" method="POST">
+        <form class="hidden" id="pm_login" action="../includes/login.inc.php" method="POST">
             <input type="hidden" name="user_login" value="Demo Project Manager">
             <input type="hidden" name="password" value="stjerne">
             <input type="hidden" name="login_submit" value="">
         </form>
 
-        <form class="hidden" id="dev_login" action="includes/login.inc.php" method="POST">
+        <form class="hidden" id="dev_login" action="..includes/login.inc.php" method="POST">
             <input type="hidden" name="user_login" value="Demo Developer">
             <input type="hidden" name="password" value="stjerne">
             <input type="hidden" name="login_submit" value="">
         </form>
 
-        <form class="hidden" id="submitter_login" action="includes/login.inc.php" method="POST">
+        <form class="hidden" id="submitter_login" action="..includes/login.inc.php" method="POST">
             <input type="hidden" name="user_login" value="Demo Submitter">
             <input type="hidden" name="password" value="stjerne">
             <input type="hidden" name="login_submit" value="">

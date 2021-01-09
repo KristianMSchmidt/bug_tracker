@@ -1,5 +1,6 @@
 <?php
 /*
+    Database handler
     This class should only takes care of database connections. 
 */
 

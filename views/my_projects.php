@@ -1,7 +1,11 @@
     <?php
     require('includes/check_login.inc.php');
+    include('includes/autoLoader.inc.php');
     require('templates/ui_frame.php');
-    require('includes/fetch_my_projects.inc.php');
+    $modelObj = new Model;
+    $projects = $modelObj->getProjectsByUserId($_SESSION['user_id']);
+
+    //require('includes/fetch_my_projects.inc.php');
     ?>
 
     <div class="main">
