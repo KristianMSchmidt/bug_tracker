@@ -16,7 +16,7 @@ if (!($_SESSION['role_name'] == "Admin" || $_SESSION['role_name'] == "Project Ma
 
     if (isset($_GET['error'])) {
         if ($_GET['error'] == 'notitle') {
-            echo '<p class="error">Your project needs a title</p>';
+            echo '<p class="text-danger">Your project needs a title</p>';
         }
     }
     ?>

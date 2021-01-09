@@ -1,4 +1,3 @@
-/* Very nice sql tutorial https://www.youtube.com/watch?v=HXV3zeQKqGY&t=8243s */
 SHOW DATABASES;
 DROP DATABASE IF EXISTS test;
 CREATE DATABASE test;
@@ -27,7 +26,7 @@ CREATE TABLE users(
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, 
     updated_at TIMESTAMP NULL ON UPDATE CURRENT_TIMESTAMP,
     updated_by INT,
-    FOREIGN KEY (role) REFERENCES user_roles(role_id) ON DELETE SET NULL ON UPDATE SET NULL,
+    FOREIGN KEY (role_id) REFERENCES user_roles(role_id) ON DELETE SET NULL ON UPDATE SET NULL,
     FOREIGN KEY (updated_by) REFERENCES users(user_id) ON DELETE SET NULL ON UPDATE SET NULL
 );
 DESCRIBE users;
@@ -154,6 +153,9 @@ INSERT INTO project_enrollments(user_id, project_id) VALUES(7, 2);
 INSERT INTO project_enrollments(user_id, project_id) VALUES(6, 5);
 INSERT INTO project_enrollments(user_id, project_id) VALUES(5, 2);
 INSERT INTO project_enrollments(user_id, project_id) VALUES(12, 6);
+
+INSERT INTO project_enrollments(user_id, project_id) VALUES(15, 6);
+INSERT INTO project_enrollments(user_id, project_id) VALUES(15, 5);
 
 SELECT * FROM project_enrollments;
 
@@ -484,4 +486,3 @@ INSERT INTO notifications(user_id, notification_type, unseen, created_by) VALUES
 INSERT INTO notifications(user_id, notification_type, unseen, created_by) VALUES(15, 2, true, 8); 
 
 select * from notifications;
-

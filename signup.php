@@ -8,7 +8,7 @@ require "templates/ui_frame.php";
 
     <?php
     if (isset($_GET['signupsucces'])) {
-        echo '<p class="succes">You signed up succesfully. Now you can login:</p>';
+        echo '<p class="text-succes">You signed up succesfully. Now you can login:</p>';
     }
 
     $username = $email = "";
@@ -21,21 +21,21 @@ require "templates/ui_frame.php";
         $email = htmlspecialchars($_GET['email']);
 
         if ($_GET['error'] == 'emptyfields') {
-            echo '<p class="error">Fill in all fields</p>';
+            echo '<p class="text-danger">Fill in all fields</p>';
         } else if ($_GET['error'] == 'invalidusername') {
-            echo '<p class="error">Invalid username</p>';
+            echo '<p class="text-danger">Invalid username</p>';
         } else if ($_GET['error'] == 'db_error') {
-            echo '<p class="error">A database error occured</p>';
+            echo '<p class="text-danger">A database error occured</p>';
         } else if ($_GET['error'] == 'usernametaken') {
-            echo '<p class="error">A user already has this username</p>';
+            echo '<p class="text-danger">A user already has this username</p>';
         } else if ($_GET['error'] == 'invalidmail') {
-            echo '<p class="error">Invalid email</p>';
+            echo '<p class="text-danger">Invalid email</p>';
         } else if ($_GET['error'] == 'invalidpsw') {
-            echo '<p class="error">Password is not valid</p>';
+            echo '<p class="text-danger">Password is not valid</p>';
         } else if ($_GET['error'] == 'pwsrepeat') {
-            echo '<p class="error">The two entered passwords were not identical</p>';
+            echo '<p class="text-danger">The two entered passwords were not identical</p>';
         } else if ($_GET['error'] == 'mailtaken') {
-            echo '<p class="error">There is already a user with this email adress</p>';
+            echo '<p class="text-danger">There is already a user with this email adress</p>';
         }
     }
     ?>

@@ -1,11 +1,6 @@
 # Bug Tracker Project - PHP, MYSQL
 
-Demo:
-https://www.youtube.com/watch?v=eWl8VtuXQFM&t=839s
-For more inspiration:
-https://www.youtube.com/watch?v=eWl8VtuXQFM&t=839s
+I've build this project from scratch - including relational database design, login systen and frontend.
 
-Ideer:
-
-- feature: lav css -> scss
-- hvis lille skærm: Not ready for small screen
+During design and development, I tried to simulate the functionality of the bugtracking system
+presented in this demo:https://www.youtube.com/watch?v=eWl8VtuXQFM&t=839s

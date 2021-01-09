@@ -1,37 +1,38 @@
 <?php
-require "templates/ui_frame.php";
 if (isset($_SESSION['username'])) {
     //User is already logged in
     header('location: dashboard.php');
     exit();
+} else {
+    require "templates/ui_frame.php";
 }
 ?>
 
-<div class="main" style="margin-left:4em; margin-right:4em;text-align:center;">
+<div class="main"">
     <h2>Log in</h2>
 
     <?php
     if (isset($_GET['signedup'])) {
         //User has just signed succesfully up
-        echo '<p class="succes">You have succesfully signed up. Now login?</p>';
+        echo '<p class="text-succes">You have succesfully signed up. Now login?</p>';
     }
 
     if (isset($_GET['error'])) {
         //user has tried to login but there is an error     
         if ($_GET['error'] == 'emptyfields') {
-            echo '<p class="error">Fill in all fields</p>';
+            echo '<p class="text-danger">Fill in all fields</p>';
         } else if ($_GET['error'] == 'db_error') {
-            echo '<p class="error">A database error occured</p>';
+            echo '<p class="text-danger">A database error occured</p>';
         } else if ($_GET['error'] == 'invalid') {
-            echo '<p class="error">Invalid username or password</p>';
+            echo '<p class="text-danger">Invalid username or password</p>';
         }
     }
     ?>
 
-    <form action="includes/login.inc.php" method="POST">
-        <input type="text" name="user_login" placeholder="username or email"><br>
-        <input name="password" placeholder="password"><br>
-        <input class="signin_button" type="submit" name="login_submit" value="SIGN IN">
+    <form action=" includes/login.inc.php" method="POST">
+    <input type="text" name="user_login" placeholder="username or email"><br>
+    <input name="password" placeholder="password"><br>
+    <input class="signin_button" type="submit" name="login_submit" value="SIGN IN">
     </form>
 
 

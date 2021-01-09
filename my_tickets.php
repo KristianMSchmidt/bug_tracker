@@ -12,7 +12,6 @@ if (!isset($_SESSION['username'])) {
     exit();
 }
 
-
 // connect to db
 include('includes/db_connect.inc.php');
 
@@ -48,6 +47,7 @@ elseif ($_SESSION['role_name'] == 'Submitter') :
     $sql .= " WHERE tickets.submitter = {$_SESSION['user_id']}";
 endif;
 
+// latest project at top
 $sql .= " ORDER BY tickets.created_at DESC";
 
 

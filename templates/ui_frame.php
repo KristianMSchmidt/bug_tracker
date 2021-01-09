@@ -21,14 +21,14 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     <!-- Custom dropdown script -->
-    <script src="templates/js/dropdown.js"></script>
+    <script src="templates/js/main.js"></script>
 
 <body>
-
     <?php
-    session_start(); //this will start/resume session on all scripts with this header
+    if (!isset($_SESSION)) {
+        session_start();
+    }
     ?>
-
     <?php if (!isset($_SESSION['username'])) : ?>
         <!-- user is not logged in -->
         <div class="grid-container">
@@ -75,9 +75,6 @@
             // fetch the resulting rows as an associative array
             $notifications = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
-            // free result from memory and close connection
-            mysqli_close($conn);
-
             $unseen = 0;
             foreach ($notifications as $n) {
                 $unseen += $n['unseen'];
@@ -106,11 +103,11 @@
                 </div>
 
                 <div class="sidebar">
-                    <a class="active" href="dashboard.php"><i class="fa fa-fw fa-home"></i>Dashboard</a>
-                    <a href="manage_role_assignment.php"><i class="fa fa-fw fa-users"></i>Manage User Roles</a>
-                    <a href="show_projects.php"><i class="fa fa-fw fa-user-plus"></i>Manage Project Users </a>
-                    <a href="my_projects.php"><i class="fa fa-fw fa-industry"></i>My Projects</a>
-                    <a href="my_tickets.php"><i class="fa fa-fw fa-ticket"></i>My Tickets</a>
+                    <a class="active" href="dashboard.php"><i class="fa fa-fw fa-home"></i> Dashboard</a>
+                    <a href="manage_role_assignment.php"><i class="fa fa-fw fa-users"></i> Manage User Roles</a>
+                    <a href="show_projects.php"><i class="fa fa-fw fa-user-plus"></i> Manage Project Users</a>
+                    <a href="my_projects.php"><i class="fa fa-fw fa-industry"></i> My Projects</a>
+                    <a href="my_tickets.php"><i class="fa fa-fw fa-ticket"></i> My Tickets</a>
                 </div>
 
                 <div class="header">
@@ -119,23 +116,11 @@
                         <b><?php echo $_SESSION['role_name']; ?></b>
                     </p>
 
-                    <style>
-                        .fa {
-                            color: #303030;
-                        }
-
-                        .fa:hover,
-                        .fa:focus {
-                            color: black;
-                        }
-                    </style>
                     <div class="dropdown">
                         <button onclick="myFunction1()" class="dropbtn one">
                             <span class="fa-stack fa-1x">
                                 <i class=" fa fa-user fa-stack-1x fa-inverse"></i>
-                            </span>
-                            USER ACTIONS
-                        </button>
+                            </span>USER ACTIONS</button>
 
                         <div id="myDropdown1" class="dropdown-content one">
                             <a href="profile_settings.php">Profile settings</a>
@@ -147,12 +132,6 @@
                         <input type="hidden" name="user_id" value="Demo Admin">
                     </form>
 
-                    <script>
-                        function remove_notifications() {
-                            document.getElementById("seen_notifications_form").submit();
-                        }
-                    </script>
-
                     <div class="dropdown">
 
                         <?php
@@ -160,16 +139,11 @@
                             echo "<button onclick='remove_notifications()' class='dropbtn two'>
                                     <span id = 'bell' class='fa-stack fa-1x has-badge' data-count={$unseen}>
                                         <i class='fa fa-bell fa-stack-1x fa-inverse'></i>
-                                    </span>
-                                NOTIFICATIONS
-                                </button>";
+                                    </span>NOTIFICATIONS</button>";
                         } else {
                             echo "<button onclick='myFunction2()' class='dropbtn two'>
-                                    <span class='fa-stack fa-1x'>
-                                      <i class='fa fa-bell fa-stack-1x fa-inverse'></i>
-                                     </span>
-                                    NOTIFICATIONS
-                                  </button>";
+                            <span class='fa-stack fa-1x'><i class='fa fa-bell fa-stack-1x fa-inverse'>
+                            </i></span>NOTIFICATIONS</button>";
                         }
                         ?>
 

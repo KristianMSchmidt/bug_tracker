@@ -1,15 +1,20 @@
 <?php
-require 'templates/ui_frame.php';
+
+session_start();
 
 if (!isset($_SESSION['username'])) {
     header('Location: login.php');
     exit();
 }
 
-if (!($_POST['project_id'])) {
+if (!isset($_POST['project_id'])) {
+    echo "No project id";
+    exit();
     header('Location: my_projects.php');
     exit();
 }
+require 'templates/ui_frame.php';
+
 include('includes/db_connect.inc.php');
 
 // query all personal enrolled in this project

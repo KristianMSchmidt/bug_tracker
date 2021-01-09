@@ -1,4 +1,9 @@
-/* To do: Refactor the below code. 
+function remove_notifications() {
+    document.getElementById("seen_notifications_form").submit();
+}
+
+
+/* To do: Refactor the below code (better names ect) */
 
 /* When the user clicks on the button, toggle between hiding and showing the dropdown content */
 function myFunction1() {
