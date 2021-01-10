@@ -1,10 +1,10 @@
 <?php
 
 /*
-    This is the only class that is allowed to directly interact with database. 
+    This is the only class that is allowed to directly interact with the database. 
 */
 
-class Model extends Dbh
+class Users extends Dbh
 {
     protected function getUsers()
     {

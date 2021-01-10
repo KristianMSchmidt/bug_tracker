@@ -1,4 +1,5 @@
 <?php
+
 // Automatically include classes when needed
 
 spl_autoload_register('myAutoLoader');

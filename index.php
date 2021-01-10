@@ -1,9 +1,7 @@
+<?php
 
-  <?php
-  session_start();
-  if (!isset($_SESSION['username'])) {
-    header("location: views/login.php");
-    exit();
-  } else {
-    header("location: views/dashboard.php");
-  }
+include('views/layout/nav_bars.view.php');
+
+include('includes/contr.inc.php');
+
+include('views/layout/closing_tags.view.php');
