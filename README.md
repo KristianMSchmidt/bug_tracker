@@ -11,3 +11,5 @@ classes: MyClassName (camel case)
 class files: myclassname.class.php
 other files: lower_with_under
 functions/methods: lower_with_under
+
+always exit() after header(location:)

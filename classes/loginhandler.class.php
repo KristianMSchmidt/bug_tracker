@@ -1,10 +1,13 @@
 <?php
+include_once('../includes/set_session_vars.inc.php');
+include_once('../includes/auto_loader.inc.php');
 
 class LoginHandler
 {
-
   private $data;
-  private $errors = [];
+  private $input_errors = [];
+  private $login_error = "";
+  private $login_succes = False;
   private static $fields = ['username', 'pwd'];
 
   public function __construct($post_data)
@@ -12,9 +15,8 @@ class LoginHandler
     $this->data = $post_data;
   }
 
-  public function validate_form()
+  public function process_input()
   {
-
     foreach (self::$fields as $field) {
       if (!array_key_exists($field, $this->data)) {
         trigger_error("'$field' is not present in the data");
@@ -24,16 +26,17 @@ class LoginHandler
 
     $this->validate_username();
     $this->validate_pwd();
-    return $this->errors;
-  }
 
-  public function authenticate_user()
-  {
-    session_start();
-    $_SESSION['username'] = 'Kristian';
-    return true;
-  }
+    if (!$this->input_errors) {
+      $this->login_attempt();
+    }
 
+    return array(
+      'input_errors' => $this->input_errors,
+      'login_error' => $this->login_error,
+      'login_succes' => $this->login_succes
+    );
+  }
 
   private function validate_username()
   {
@@ -41,11 +44,7 @@ class LoginHandler
     $val = trim($this->data['username']);
 
     if (empty($val)) {
-      $this->addError('username', 'Please fill in username');
-    } else {
-      if (!preg_match('/^[a-zA-Z0-9]{6,12}$/', $val)) {
-        $this->addError('username', 'username must be 6-12 chars & alphanumeric');
-      }
+      $this->add_input_error('username', 'Please fill in username');
     }
   }
 
@@ -55,12 +54,29 @@ class LoginHandler
     $val = trim($this->data['pwd']);
 
     if (empty($val)) {
-      $this->addError('pwd', 'Please fill in password');
+      $this->add_input_error('pwd', 'Please fill in password');
     }
   }
 
-  private function addError($key, $val)
+  private function add_input_error($key, $val)
   {
-    $this->errors[$key] = $val;
+    $this->input_errors[$key] = $val;
+  }
+
+  private function login_attempt()
+  {
+    $this->login_error = 'Wrong username or password';
+    $user_model = new Users();
+    $pwd = $this->data['pwd'];
+    $user = $user_model->get_user_by_username($this->data['username']);
+    if ($user) {
+      $pwd_db = $user['password'];
+      $psw_check = password_verify($pwd, $pwd_db);
+      if ($psw_check) {
+        $this->login_succes = True;
+        $this->login_error = '';
+        set_session_vars($user);
+      }
+    }
   }
 }

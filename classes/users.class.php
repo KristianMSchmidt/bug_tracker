@@ -6,7 +6,7 @@
 
 class Users extends Dbh
 {
-    protected function getUsers()
+    protected function get_users()
     {
         $sql  = "SELECT * FROM users";
         $stmt = $this->connect()->query($sql); //stmt is a "PDO Stamement Object"
@@ -14,8 +14,29 @@ class Users extends Dbh
         return $results;
     }
 
-    protected function getUsersByRoleID($role_id)
+    public function get_user_by_username($username)
+    {
+        $sql = "SELECT * 
+             FROM users JOIN user_roles
+             ON users.role_id = user_roles.role_id 
+             WHERE username = ?";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute([$username]); //stmt is a "PDO Stamement Object"
+        $results = $stmt->fetch();
+        return $results;
+    }
 
+    public function get_user_by_email($email)
+    {
+        $sql = "SELECT * FROM users WHERE email = ?";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute([$email]); //stmt is a "PDO Stamement Object"
+        $results = $stmt->fetch();
+        return $results;
+    }
+
+
+    protected function get_users_by_role_id($role_id)
     {
         $sql  = "SELECT * FROM users WHERE role_id = {$role_id}?";
         $stmt = $this->connect()->query($sql);
@@ -23,7 +44,8 @@ class Users extends Dbh
         return $results;
     }
 
-    protected function setUser($username, $pwd, $email, $role_id)
+
+    public function set_user($username, $pwd, $email, $role_id)
     {
 
         $sql = "INSERT INTO users(username, password, email, role_id)
@@ -33,7 +55,7 @@ class Users extends Dbh
         $stmt->execute([$username, $pwd, $email, $role_id]);
     }
 
-    public function getProjectsByUserId($user_id)
+    public function get_projects_by_user_id($user_id)
     {
         $sql = "SELECT 
                 projects.project_id,
