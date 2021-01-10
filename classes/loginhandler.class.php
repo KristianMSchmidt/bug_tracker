@@ -1,18 +1,18 @@
 <?php
 
-class LoginFormValidator
+class LoginHandler
 {
 
   private $data;
   private $errors = [];
-  private static $fields = ['username', 'email'];
+  private static $fields = ['username', 'pwd'];
 
   public function __construct($post_data)
   {
     $this->data = $post_data;
   }
 
-  public function validateForm()
+  public function validate_form()
   {
 
     foreach (self::$fields as $field) {
@@ -22,18 +22,26 @@ class LoginFormValidator
       }
     }
 
-    $this->validateUsername();
-    $this->validateEmail();
+    $this->validate_username();
+    $this->validate_pwd();
     return $this->errors;
   }
 
-  private function validateUsername()
+  public function authenticate_user()
+  {
+    session_start();
+    $_SESSION['username'] = 'Kristian';
+    return true;
+  }
+
+
+  private function validate_username()
   {
 
     $val = trim($this->data['username']);
 
     if (empty($val)) {
-      $this->addError('username', 'username cannot be empty');
+      $this->addError('username', 'Please fill in username');
     } else {
       if (!preg_match('/^[a-zA-Z0-9]{6,12}$/', $val)) {
         $this->addError('username', 'username must be 6-12 chars & alphanumeric');
@@ -41,17 +49,13 @@ class LoginFormValidator
     }
   }
 
-  private function validateEmail()
+  private function validate_pwd()
   {
 
-    $val = trim($this->data['email']);
+    $val = trim($this->data['pwd']);
 
     if (empty($val)) {
-      $this->addError('email', 'email cannot be empty');
-    } else {
-      if (!filter_var($val, FILTER_VALIDATE_EMAIL)) {
-        $this->addError('email', 'email must be a valid email address');
-      }
+      $this->addError('pwd', 'Please fill in password');
     }
   }
 
