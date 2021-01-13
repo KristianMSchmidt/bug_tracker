@@ -1,23 +1,18 @@
 <?php
 
-session_start();
-session_unset();
-session_destroy();
-require('../includes/auto_loader.inc.php');
-//require('../includes/redirect_logged_in_to_dashboard.php');
-
 if (isset($_POST['signup_submit'])) {
+    include_once('../includes/auto_loader.inc.php');
     $signup_handler = new SignUpHandler($_POST);
     $feedback = $signup_handler->process_input();
-    print_r($feedback);
     if ($feedback['signup_succes']) {
         header('location:dashboard.php');
         exit();
     }
 }
-?>
 
-<?php include('layout/nav_bars.php'); ?>
+include('shared/ui_frame.php');
+
+?>
 
 <div class="main"">
     <h2>Sign Up</h2>
@@ -53,4 +48,4 @@ if (isset($_POST['signup_submit'])) {
     </form>
 
 </div>
-<?php include('layout/closing_tags.php') ?>
+<?php include('shared/closing_tags.php') ?>

@@ -1,0 +1,255 @@
+$primary-bg-color: lightsteelblue;
+$secondary-bg-color: #a0b2c9;
+
+* {
+  box-sizing: border-box; //paddings and borders should not change box sizes
+}
+
+body,
+html {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  height: 100%;
+}
+
+/*    **************** ( top nav-bar, sidebar, and main ) ***************************** */
+
+/* Top nav bar */
+.my_navbar {
+  display: flex;
+  flex-direction: row;
+  /*height: 70px; */
+  align-items: center; // vertically centers items in the navbar
+  background-color: #343a40;
+  color: #6c757d;
+
+  .nav_list {
+    list-style: none; /*Don't show 'list-dots' of any type! */
+    li {
+      a {
+        transition: all 0.3s ease 0s;
+      }
+    }
+  }
+  ul {
+    padding-left: 0;
+    &.flatten {
+      li {
+        display: inline;
+      }
+    }
+  }
+  .branding_area {
+    display: flex;
+    flex-direction: row;
+    padding-left: 1rem;
+    flex: 5; // relative with of this ares. Should be same number as sidebar
+    align-items: center; // Alignment along cross-axis
+    .logo {
+      font-size: 1.1rem;
+      font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+    }
+  }
+  .main_nav {
+    display: flex;
+    flex-direction: row;
+    flex: 30;
+    align-items: center; //Alignment along cross-axis
+    padding-right: 0em;
+    padding-left: 1em;
+    .left_main_nav {
+      margin-right: auto; //Makes it flow to the left
+    }
+    .dropdown {
+      position: relative;
+      display: inline-block;
+      .dropbtn {
+        background-color: inherit;
+        border: none;
+        margin-left: 0;
+        color: black; //#303030;
+        font-size: 1em;
+        padding-left: 1em;
+        padding-right: 1em;
+        cursor: pointer;
+        outline: none;
+
+        &:hover,
+        :focus {
+          /*color: white;*/
+          border: 0;
+          outline: none;
+        }
+        &:visited {
+          border: 0;
+          outline: none;
+        }
+
+        i {
+          margin: 0;
+          padding: 0;
+        }
+        .fa-stack[data-count]:after {
+          position: absolute;
+          right: 0%;
+          top: 1%;
+          content: attr(data-count);
+          font-size: 60%;
+          padding: 0.5em;
+          border-radius: 999px;
+          line-height: 0.75em;
+          color: white;
+          background: rgba(255, 0, 0, 0.85);
+          text-align: center;
+          font-weight: bold;
+        }
+      }
+
+      .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: white; // #f1f1f1;
+        max-height: 20em;
+        min-width: 14em;
+
+        box-shadow: 0em 0.25em 0.5em 0em rgba(0, 0, 0, 0.2);
+        z-index: 1;
+
+        &.notifications {
+          right: 0;
+          overflow-y: scroll;
+        }
+
+        &.user_actions {
+          right: 0;
+          overflow-y: scroll;
+        }
+
+        a {
+          color: black;
+          padding: 12px 16px;
+          text-decoration: none;
+          display: block;
+          &:hover {
+            background-color: #f1f1f1; // #ddd;
+          }
+        }
+      }
+      .hidden {
+        display: none;
+      }
+
+      .show {
+        display: block;
+      }
+    }
+  }
+}
+
+.sidebar_and_main_container {
+  flex: 1; //Will make this area fill out the entire container
+  display: flex;
+  flex-direction: row;
+  background-color: white;
+
+  .sidebar {
+    display: flex;
+    flex-direction: column;
+    flex: 5; /* how much of the flexbox space should the sidebar take, relative to main area*/
+    /*align-items: center;*/
+    background-color: lightsteelblue;
+    line-height: 1rem;
+    a {
+      padding: 1em 0.7em 1rem 0.7rem; /*top, right, bottom, left */
+      text-decoration: none;
+      font-size: 0.88em;
+      color: black;
+      display: block;
+      &.active {
+        background-color: #a0b2c9;
+      }
+      &:hover {
+        color: white;
+        background-color: #a0b2c9;
+      }
+    }
+  }
+
+  .main {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* horizoantal alignment of content */
+    justify-content: center; /* vertical alignment  of content*/
+    flex: 30; /* how much of the flexbox space should the main area take, relative to sidebar */
+  }
+}
+
+@media only screen and (max-width: 1050px) {
+  .my_navbar {
+    .branding_area {
+      flex: 7;
+    }
+  }
+  .sidebar_and_main_container {
+    .sidebar {
+      flex: 7;
+    }
+  }
+}
+
+@media only screen and (max-width: 900px) {
+  .my_navbar {
+    .branding_area {
+      flex: 8;
+    }
+  }
+  .sidebar_and_main_container {
+    .sidebar {
+      flex: 8;
+    }
+  }
+}
+@media only screen and (max-width: 800px) {
+  .my_navbar {
+    flex-direction: column;
+    height: auto;
+    .main_nav {
+      width: 92%;
+      padding-right: 0;
+      padding-left: 0;
+    }
+  }
+  .sidebar_and_main_container {
+    flex-direction: column;
+
+    .sidebar {
+      flex: 1;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-evenly;
+    }
+  }
+
+  .branding_area {
+    display: none;
+  }
+}
+
+@media only screen and (max-width: 340px) {
+  .sidebar_and_main_container {
+    flex-direction: column;
+
+    .sidebar {
+      flex-direction: column;
+      align-items: stretch;
+    }
+  }
+
+  .branding_area {
+    display: none;
+  }
+  .hide_xsmall {
+    display: none;
+  }
+}

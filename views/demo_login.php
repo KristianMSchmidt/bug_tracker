@@ -1,7 +1,5 @@
 <?php
-require('../includes/auto_loader.inc.php');
 session_start();
-session_destroy();
 if (isset($_SESSION['username'])) {
     // User already logged in -> Go to dashboard
     header('location: dashboard.php');
@@ -9,8 +7,7 @@ if (isset($_SESSION['username'])) {
 }
 ?>
 
-
-<?php include('layout/nav_bars.php'); ?>
+<?php include('shared/ui_frame.php'); ?>
 
 <div class="main" style="text-align: center">
     <h2> Demo Login </h2>
@@ -94,4 +91,4 @@ if (isset($_SESSION['username'])) {
 
     <p>Have an account? <a href="login.php">Sign in</a>
 </div>
-<?php include('layout/closing_tags.php') ?>
+<?php include('shared/closing_tags.php') ?>
