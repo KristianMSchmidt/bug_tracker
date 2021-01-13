@@ -28,7 +28,8 @@ if (isset($_SESSION['username'])) {
     <link href="../static/styles/font-awesome/css/all.css" rel="stylesheet">
     <!-- custom css -->
     <link rel="stylesheet" href="../static/styles/main.css">
-
+    <!-- JS chart library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.bundle.min.js"></script>
 </head>
 
 <body>

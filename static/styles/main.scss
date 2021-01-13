@@ -177,11 +177,64 @@ html {
   }
 
   .main {
+    flex: 30; /* how much of the flexbox space should the main area take, relative to sidebar */
     display: flex;
     flex-direction: column;
-    align-items: center; /* horizoantal alignment of content */
-    justify-content: center; /* vertical alignment  of content*/
-    flex: 30; /* how much of the flexbox space should the main area take, relative to sidebar */
+    .row {
+      .col {
+        &-1 {
+          flex: 1;
+        }
+        &-2 {
+          flex: 2;
+        }
+        &-3 {
+          flex: 3;
+        }
+      }
+    }
+    &.dashboard {
+      .row {
+        display: flex;
+        flex: 1;
+        flex-direction: row;
+        justify-content: stretch;
+        align-items: stretch;
+      }
+
+      .col {
+        display: flex;
+        flex: 1;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        color: red;
+      }
+    }
+    &.layout {
+      .row {
+        display: flex;
+        flex: 1;
+        flex-direction: row;
+        justify-content: stretch;
+        align-items: stretch;
+      }
+
+      .col {
+        display: flex;
+        flex: 1;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        color: red;
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 800px) {
+  .row {
+    flex-direction: column;
   }
 }
 

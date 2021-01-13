@@ -1,12 +1,250 @@
 <?php
 include('../includes/login_check.inc.php');
 include('shared/ui_frame.php');
+include_once('../includes/auto_loader.inc.php');
+
+$ticket_model = new Tickets();
+$priorities = $ticket_model->get_ticket_priority_count();
+$statuses = $ticket_model->get_ticket_status_count();
+$types = $ticket_model->get_tickets_type_count();
+$ticket_model = null; //would get deleted automatically anyway after end of script.
+$user_model = new Users();
+$users = $user_model->get_most_busy_users();
 ?>
 
-<div class="main">
-    <h2>Dashboard</h2>
-    Lorem ipsum dolor sit amet consectetur adipisicing elit. Aperiam totam dignissimos, possimus odio qui sint, consectetur atque molestias, placeat tempora deserunt ullam? Unde nesciunt dignissimos quae quos veritatis doloremque, incidunt maxime est soluta velit eum ratione animi temporibus natus asperiores magnam consequatur! Eligendi, ullam iure asperiores saepe animi laboriosam reiciendis error laborum sed illum, rem aperiam! Magni, error. Consequatur, fugit? Temporibus suscipit nulla qui neque deleniti? Fugit reprehenderit facilis id sapiente voluptatem sequi earum reiciendis dolorum, fugiat repellat illo ipsam, voluptatibus ex impedit pariatur asperiores consequuntur dicta, sint quidem neque iste incidunt quasi cupiditate! Adipisci sint autem itaque odio, quam magni excepturi ratione nemo repellendus vitae assumenda quisquam porro in eaque quos nesciunt vero incidunt maxime! Neque, quae! Veritatis aut totam molestias, provident, eligendi voluptas id, non dolorem deleniti aliquid sed blanditiis quis. Magnam tempore corrupti aperiam debitis, minus nam reprehenderit fugit labore sunt neque alias consequuntur ab nesciunt exercitationem facere non esse provident inventore eum? Distinctio, totam! Iusto sapiente voluptatum expedita quos magnam aut quibusdam dolor sed ratione. Esse vero odio quia officia quibusdam earum voluptatem alias quis, ipsum ipsa soluta ea? Suscipit a aperiam ipsam perferendis dolorum minus beatae. Ad nobis temporibus consequatur quod aspernatur. Magnam rerum ipsa nisi, sint eveniet animi accusantium tempore deleniti consequuntur tenetur, doloremque dolores. Mollitia corporis molestias excepturi, eveniet, enim nobis et quaerat eius magni voluptas quasi laboriosam magnam consectetur in! Laboriosam architecto sequi nostrum, magnam ea commodi, fugit esse illo officiis natus porro error saepe, quaerat molestiae qui iure consectetur omnis ad. Odio quod fugiat eveniet dolor sed labore expedita, perferendis ratione ut, aspernatur natus similique ea libero quis saepe illum voluptas quaerat neque? Alias voluptatibus, vero, tenetur quod repudiandae ratione accusamus eius debitis quae pariatur amet error dolore quia reiciendis rerum nemo maiores. Facere vero voluptas iusto. Vero dicta accusantium dolores, ut laboriosam aliquam tenetur pariatur ad veritatis repellat beatae maxime fuga? Aspernatur incidunt accusantium ex id alias maxime doloribus hic consectetur. Mollitia officia iure sunt quod quas deleniti amet. Nesciunt ad nostrum minus ex quisquam iusto aliquam harum fugit illo earum? Hic sapiente vero earum sed harum velit, minima incidunt! Accusamus quia expedita deserunt molestias quae dolore ipsa at excepturi, sit, totam, libero esse numquam nihil eum quis voluptates. Possimus hic, earum a ducimus sunt quisquam aperiam et sint quidem provident, ab rem fugit facilis corporis eligendi libero at. Omnis eum dolor, sunt ratione expedita tenetur sapiente, quia praesentium eaque animi voluptatum excepturi labore unde perspiciatis dignissimos aperiam esse maiores beatae. Et, nemo facilis sit ab quidem deserunt nam natus atque veritatis quibusdam alias reprehenderit nesciunt illo recusandae sequi consequuntur, veniam porro ad minima earum quis perspiciatis vel ducimus? Id recusandae molestias optio quia quo ab dignissimos quasi error velit, quisquam maxime facere, pariatur repellendus inventore! Id accusantium nihil culpa excepturi neque dolorum quis velit vitae earum maiores eveniet animi tempora quia veritatis, dolorem a numquam nobis, fuga sint praesentium corporis et fugit odit. Veniam hic rerum dignissimos quis est quae distinctio aperiam animi officia? Soluta tempora tenetur facilis ea.
+<div class="main dashboard">
+    <div class="row">
+        <div class="col">
+            <canvas id="priority_chart"></canvas>
+        </div>
+        <div class="col">
+            <canvas id="status_chart"></canvas>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <canvas id="type_chart"></canvas>
+        </div>
+        <div class="col">
+            <canvas id="top_busy_users_chart"></canvas>
+        </div>
+    </div>
 </div>
+
+<script>
+    var ctx = document.getElementById('type_chart').getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: [<?php foreach ($types as $type) {
+                            echo "'{$type['ticket_type_name']}',";
+                        } ?>],
+
+            datasets: [{
+                label: '# of Tickets',
+                //data: [12, 19, 3, 5],
+                data: [<?php foreach ($types as $type) {
+                            echo "'{$type['COUNT(tickets.ticket_id)']}',";
+                        } ?>],
+
+                backgroundColor: [
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(37, 116, 169, 1)',
+                    'rgba(31, 58, 147, 1)',
+                    'rgba(1, 50, 67, 1)'
+                ],
+                borderColor: [
+                    '', '', '', '',
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            title: {
+                display: true,
+                text: 'Tickets by Type'
+            },
+            legend: {
+                display: false
+            },
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+        }
+    });
+</script>
+
+
+<script>
+    var ctx = document.getElementById('status_chart').getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ['Open', 'Closed', 'In Progress', 'Info Required'],
+            /* labels: [<?php foreach ($statuses as $status) {
+                            echo "'{$status['status']}',";
+                        } ?>],*/
+
+            datasets: [{
+                label: '# of Tickets',
+                //data: [12, 19, 3, 10],
+                data: [<?php foreach ($statuses as $status) {
+                            echo "'{$status['count']}',";
+                        } ?>],
+
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            legend: {
+                display: false
+            },
+            title: {
+                display: true,
+                text: 'Tickets by Status'
+            },
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+        }
+    });
+</script>
+
+
+<script>
+    var ctx = document.getElementById('priority_chart').getContext('2d');
+    //  Chart.defaults.global.title.position = 'bottom';
+
+    var myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            /* labels: ['Low','Medium', 'High', 'Urgent'], */
+            labels: [<?php foreach ($priorities as $priority) {
+                            echo "'{$priority['ticket_priority_name']}',";
+                        } ?>],
+
+            datasets: [{
+                label: '# of Tickets',
+                /* data: [12, 19, 3, 5], */
+                data: [<?php foreach ($priorities as $priority) {
+                            echo "'{$priority['count']}',";
+                        } ?>],
+
+                backgroundColor: [
+                    'rgba(255, 148, 120, 1)',
+                    'rgba(242, 38, 19, 1)',
+                    'rgba(217, 30, 24, 1)',
+                    'rgba(150, 40, 27, 1)',
+                ],
+                borderColor: [
+                    '',
+                    '',
+                    '',
+                    '',
+                ],
+
+                borderWidth: 1
+            }]
+        },
+        options: {
+            title: {
+                display: true,
+                text: 'Tickets by Priority'
+            },
+            legend: {
+                display: false
+            },
+
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+        }
+    });
+</script>
+
+<script>
+    var ctx = document.getElementById('top_busy_users_chart').getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+            labels: [<?php foreach ($users as $user) {
+                            echo "'{$user['username']}',";
+                        } ?>],
+
+            datasets: [{
+                label: '# T',
+                data: [<?php foreach ($users as $user) {
+                            echo "'{$user['count']}',";
+                        } ?>],
+
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(255, 159, 64, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            title: {
+                display: true,
+                text: 'Most Busy Users (# Tickets)'
+            },
+            legend: {
+                display: true
+            }
+        },
+        scales: {
+            xAxes: [{
+                stacked: true,
+                beginAtZero: true,
+                scaleLabel: {
+                    labelString: 'Month'
+                },
+                ticks: {
+                    stepSize: 1,
+                    min: 0,
+                    autoSkip: false
+                }
+            }]
+        }
+    });
+</script>
 
 <?php include('shared/closing_tags.php') ?>
 
