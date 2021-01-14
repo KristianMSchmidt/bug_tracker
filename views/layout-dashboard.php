@@ -12,40 +12,28 @@ $user_model = new Users();
 $users = $user_model->get_most_busy_users();
 ?>
 
+<div class="main">
+    <div class="layout">
+        <div class="row">
+            <div class="card" style="flex:1">
+                <canvas id="priority_chart"></canvas>
+            </div>
 
-<style>
-    alko {
-        width: 120px;
-        height: 20px;
-        position: relative;
-        background: blue;
-
-    }
-
-    canvas {
-        width: 80%;
-        height: 80%;
-    }
-</style>
-
-
-<div class="main layout">
-
-    <div class=row style="background-color:aquamarine;">
-        <div class="col alko" style="background-color:blue">
-            <canvas id="priority_chart" style="background-color:green"></canvas>
+            <div class="card" style="flex:1">
+                <canvas id="pt"></canvas>
+            </div>
         </div>
 
-        <div class="col alko">
-            <canvas id="pt" style="background-color:green"></canvas>
-        </div>
-    </div>
-    <div class=row style="background-color:brown">
-        <div class="col alko" style="background-color:blue">
-            <canvas id="ptxx" style="background-color:white"></canvas>
-        </div>
-        <div class="col alko" style="background-color:blue">
-            <canvas id="y" style="background-color:white    "></canvas>
+        <div class="row">
+
+            <div class="card" style="flex:1">
+                <canvas id="ptxx"></canvas>
+            </div>
+
+            <div class="card" style="flex:1">
+                <canvas id="y" style="background-color:white"></canvas>
+            </div>
+
         </div>
 
     </div>
@@ -106,6 +94,8 @@ $users = $user_model->get_most_busy_users();
         }
     });
 </script>
+
+
 <script>
     var ctx = document.getElementById('ptxx').getContext('2d');
     //  Chart.defaults.global.title.position = 'bottom';
@@ -269,29 +259,4 @@ $users = $user_model->get_most_busy_users();
         }
     });
 </script>
-
-<script>
-    var canvas = document.getElementById('priority_chart');
-    fitToContainer(canvas);
-
-    var canvas = document.getElementById('y');
-    fitToContainer(canvas);
-
-    var canvas = document.getElementById('pt');
-    fitToContainer(canvas);
-
-    var canvas = document.getElementById('ptxx');
-    fitToContainer(canvas);
-
-    function fitToContainer(canvas) {
-        // Make it visually fill the positioned parent
-        canvas.style.width = '100%';
-        canvas.style.height = '100%';
-        // ...then set the internal size to match
-        canvas.width = canvas.offsetWidth;
-        canvas.height = canvas.offsetHeight;
-    }
-</script>
-
-
 <?php include('shared/closing_tags.php') ?>

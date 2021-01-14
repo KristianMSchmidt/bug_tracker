@@ -12,22 +12,31 @@ $user_model = new Users();
 $users = $user_model->get_most_busy_users();
 ?>
 
-<div class="main dashboard">
-    <div class="row">
-        <div class="col">
-            <canvas id="priority_chart"></canvas>
+
+<div class="main">
+    <div class="dashboard">
+        <div class="row">
+            <div class="card" style="flex:1">
+                <canvas id="priority_chart"></canvas>
+            </div>
+
+            <div class="card" style="flex:1">
+                <canvas id="status_chart"></canvas>
+            </div>
         </div>
-        <div class="col">
-            <canvas id="status_chart"></canvas>
+
+        <div class="row">
+
+            <div class="card" style="flex:1">
+                <canvas id="type_chart"></canvas>
+            </div>
+
+            <div class="card" style="flex:1">
+                <canvas id="top_busy_users_chart"></canvas>
+            </div>
+
         </div>
-    </div>
-    <div class="row">
-        <div class="col">
-            <canvas id="type_chart"></canvas>
-        </div>
-        <div class="col">
-            <canvas id="top_busy_users_chart"></canvas>
-        </div>
+
     </div>
 </div>
 

@@ -43,9 +43,10 @@ if (isset($_SESSION['username'])) {
         </div>
         <div class="main_nav">
             <?php if (isset($_SESSION['username'])) : ?>
-                <p class="left_main_nav">Logged in as
+                <p class="left_main_nav" style="color:black;">Logged in as
                     <?php echo $_SESSION['role_name'] ?>
                 </p>
+                <!-- <p style="color:black;">Albert Einstein</p> -->
 
                 <div class="dropdown">
                     <!-- notifications dropdown btn -->
