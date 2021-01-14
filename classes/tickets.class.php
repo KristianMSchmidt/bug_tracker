@@ -1,6 +1,7 @@
 <?php
 class Tickets extends Dbh
 {
+
     public function get_ticket_priority_count()
     {
         $sql = "SELECT COUNT(tickets.ticket_id) AS count, 
@@ -29,6 +30,7 @@ class Tickets extends Dbh
         $results = $stmt->fetchAll();
         return $results;
     }
+
     public function get_tickets_type_count()
     {
         $sql = "SELECT 

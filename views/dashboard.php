@@ -1,6 +1,5 @@
 <?php
 include('../includes/login_check.inc.php');
-include('shared/ui_frame.php');
 include_once('../includes/auto_loader.inc.php');
 
 $ticket_model = new Tickets();
@@ -10,7 +9,10 @@ $types = $ticket_model->get_tickets_type_count();
 $ticket_model = null; //would get deleted automatically anyway after end of script.
 $user_model = new Users();
 $users = $user_model->get_most_busy_users();
+
 ?>
+
+<?php include('shared/ui_frame.php'); ?>
 
 
 <div class="main">
@@ -205,26 +207,17 @@ $users = $user_model->get_most_busy_users();
                         } ?>],
 
             datasets: [{
-                label: '# T',
+                label: '# Tickets',
                 data: [<?php foreach ($users as $user) {
                             echo "'{$user['count']}',";
                         } ?>],
 
                 backgroundColor: [
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(255, 206, 86, 0.2)',
-                    'rgba(75, 192, 192, 0.2)',
-                    'rgba(153, 102, 255, 0.2)',
-                    'rgba(255, 159, 64, 0.2)'
-                ],
-                borderColor: [
-                    'rgba(255, 99, 132, 1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 206, 86, 1)',
-                    'rgba(75, 192, 192, 1)',
-                    'rgba(153, 102, 255, 1)',
-                    'rgba(255, 159, 64, 1)'
+                    '#FEDEBE',
+                    'rgba(255, 148, 120, 1)',
+                    'rgba(242, 38, 19, 1)',
+                    'rgba(217, 30, 24, 1)',
+                    'rgba(150, 40, 27, 1)',
                 ],
                 borderWidth: 1
             }]
@@ -232,7 +225,7 @@ $users = $user_model->get_most_busy_users();
         options: {
             title: {
                 display: true,
-                text: 'Most Busy Users (# Tickets)'
+                text: 'Most Busy Users (# Tickets in Progress)'
             },
             legend: {
                 display: true

@@ -32,25 +32,25 @@ if (isset($_SESSION['username'])) {
 
 
         <form class="hidden" id="admin_login" action="login.php" method="POST">
-            <input type="hidden" name="username" value="VisitorOne">
+            <input type="hidden" name="username" value="DemoAdmin">
             <input type="hidden" name="pwd" value="stjerne">
             <input type="hidden" name="login_submit" value="">
         </form>
 
         <form class="hidden" id="dev_login" action="login.php" method="POST">
-            <input type="hidden" name="username" value="VisitorTwo">
+            <input type="hidden" name="username" value="DemoDev">
             <input type="hidden" name="pwd" value="stjerne">
             <input type="hidden" name="login_submit" value="">
         </form>
 
         <form class="hidden" id="pm_login" action="login.php" method="POST">
-            <input type="hidden" name="username" value="VisitorThree">
+            <input type="hidden" name="username" value="DemoPM">
             <input type="hidden" name="pwd" value="stjerne">
             <input type="hidden" name="login_submit" value="">
         </form>
 
         <form class="hidden" id="submitter_login" action="login.php" method="POST">
-            <input type="hidden" name="username" value="VisitorFour">
+            <input type="hidden" name="username" value="DemoSub">
             <input type="hidden" name="pwd" value="stjerne">
             <input type="hidden" name="login_submit" value="">
         </form>

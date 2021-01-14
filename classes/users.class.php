@@ -38,9 +38,11 @@ class Users extends Dbh
     public function get_most_busy_users()
     {
         $sql = "SELECT COUNT(tickets.ticket_id) as count, users.username
-                FROM tickets RIGHT JOIN users ON tickets.developer_assigned = users.user_id
-                GROUP BY tickets.developer_assigned
-                ORDER BY count(tickets.ticket_id) DESC LIMIT 5";
+        FROM tickets 
+        JOIN users ON tickets.developer_assigned = users.user_id    
+        WHERE tickets.status = 1
+        GROUP BY tickets.developer_assigned
+        ORDER BY count(tickets.ticket_id) ASC LIMIT 5";
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute();
         $results = $stmt->fetchAll();
@@ -48,9 +50,12 @@ class Users extends Dbh
     }
 
 
+
     protected function get_users_by_role_id($role_id)
     {
-        $sql  = "SELECT * FROM users WHERE role_id = {$role_id}?";
+        $sql  = "SELECT *
+                FROM users
+                WHERE role_id = {$role_id}";
         $stmt = $this->connect()->query($sql);
         $results = $stmt->fetchAll();
         return $results;
