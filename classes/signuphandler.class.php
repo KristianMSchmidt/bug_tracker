@@ -102,26 +102,26 @@ class SignupHandler
     }
 
     private function signup_attempt()
-    {
-        $user_model = new Users();
-        $username_taken = $user_model->get_user_by_username($this->data['username']);
+    {   // To do: Move this functionality to controller?
+        $contr = new Controller();
+        $username_taken = $contr->get_user_by_username($this->data['username']);
         if ($username_taken) {
             $this->signup_error = 'There is already a user with this username';
             return;
         }
-        $email_taken = $user_model->get_user_by_email($this->data['email']);
+        $email_taken = $contr->get_user_by_email($this->data['email']);
         if ($email_taken) {
             $this->signup_error = 'There is already a user with this email';
             return;
         }
         $this->data['role_id'] = 3; // New users start out as developers.
-        $user_model->set_user(
+        $contr->set_user(
             $this->data['username'],
             $this->data['pwd'],
             $this->data['email'],
             $this->data['role_id']
         );
-        $new_user = $user_model->get_user_by_username($this->data['username']);
+        $new_user = $contr->get_user_by_username($this->data['username']);
         set_session_vars($new_user);
         $this->signup_succes = True;
     }

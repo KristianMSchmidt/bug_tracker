@@ -1,20 +1,90 @@
 <?php
+/*
+Only class direcly querying and modifying database. 
+*/
+
 class Controller extends Model
 {
-    public function get_tickets_by_user($user_id, $role_name)
+    public function get_users()
     {
-        $tickets = $this->fetch_tickets_by_user($user_id, $role_name);
-        return $tickets;
+        $results = $this->get_users();
+        return $results;
     }
 
-    public function count_tickets_in_progress($user_id, $role_name)
+    public function get_user_by_username($username)
     {
-        $tickets = $this->get_tickets_by_user($user_id, $role_name);
-        $in_progress = 0;
-        foreach ($tickets as $key => $value) {
-            if ($value['ticket_status_name'] == 'In Progress'){
-                $in_progress
-            };
+        $result = $this->db_get_user_by_username($username);
+        return $result;
+    }
+
+    public function get_user_by_email($email)
+    {
+
+        $results = $this->db_get_user_by_email($email);
+        return $results;
+    }
+
+    public function get_most_busy_users()
+    {
+        $results = $this->db_get_most_busy_users();
+        return $results;
+    }
+
+    public function get_users_by_role_id($role_id)
+    {
+        $results = $this->db_get_users_by_role_id($role_id);
+        return $results;
+    }
+
+    public function set_user($username, $pwd, $email, $role_id)
+    {
+        $this->db_set_user($username, $pwd, $email, $role_id);
+    }
+
+    public function get_projects_by_user_id($user_id)
+    {
+        $results = $this->db_get_projects_by_user_id($user_id);
+        return $results;
+    }
+
+    public function get_tickets_by_user($user_id, $role_name)
+    {
+        $results = $this->db_get_tickets_by_user($user_id, $role_name);
+
+        return $results;
+    }
+
+    public function get_ticket_priority_count()
+    {
+        $results = $this->db_get_ticket_priority_count();
+        return $results;
+    }
+
+    public function get_ticket_status_count()
+    {
+        $results = $this->db_get_ticket_status_count();
+        return $results;
+    }
+
+    public function get_tickets_type_count()
+    {
+        $results = $this->db_get_tickets_type_count();
+        return $results;
+    }
+
+    public function get_notifications_by_user_id($user_id)
+    {
+        $notifications = $this->db_get_notifications_by_user_id($user_id);
+
+        $unseen = 0;
+        foreach ($notifications as $notification) {
+            $unseen += $notification['unseen'];
         }
+        return  array('notifications' => $notifications, 'num_unseen' => $unseen);
+    }
+
+    public function make_notifications_seen($user_id)
+    {
+        $this->db_make_notifications_seen($user_id);
     }
 }

@@ -2,13 +2,11 @@
 include('../includes/login_check.inc.php');
 include_once('../includes/auto_loader.inc.php');
 
-$ticket_model = new Tickets();
-$priorities = $ticket_model->get_ticket_priority_count();
-$statuses = $ticket_model->get_ticket_status_count();
-$types = $ticket_model->get_tickets_type_count();
-$ticket_model = null; //would get deleted automatically anyway after end of script.
-$user_model = new Users();
-$users = $user_model->get_most_busy_users();
+$contr = new Controller();
+$priorities = $contr->get_ticket_priority_count();
+$statuses = $contr->get_ticket_status_count();
+$types = $contr->get_tickets_type_count();
+$users = $contr->get_most_busy_users();
 
 ?>
 

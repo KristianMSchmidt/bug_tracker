@@ -64,11 +64,12 @@ class LoginHandler
   }
 
   private function login_attempt()
+  // To do: Move this functionality to controller?
   {
     $this->login_error = 'Wrong username or password';
-    $user_model = new Users();
+    $contr = new Controller();
     $pwd = $this->data['pwd'];
-    $user = $user_model->get_user_by_username($this->data['username']);
+    $user = $contr->get_user_by_username($this->data['username']);
     if ($user) {
       $pwd_db = $user['password'];
       $psw_check = password_verify($pwd, $pwd_db);

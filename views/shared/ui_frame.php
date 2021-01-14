@@ -6,13 +6,13 @@ if (!isset($_SESSION)) {
 if (isset($_SESSION['username'])) {
     include_once('../includes/auto_loader.inc.php');
     include('../includes/human_timing.inc.php');
-    $notif_handler = new Notifications;
+    $contr = new Controller;
 
     if (isset($_GET['seen'])) {
-        $notif_handler->make_notifications_seen($_SESSION['user_id']);
+        $contr->make_notifications_seen($_SESSION['user_id']);
     }
 
-    $data = $notif_handler->get_notifications_by_user_id($_SESSION['user_id']);
+    $data = $contr->get_notifications_by_user_id($_SESSION['user_id']);
 }
 
 ?>
