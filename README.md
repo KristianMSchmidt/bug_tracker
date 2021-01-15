@@ -24,3 +24,15 @@ features, jeg kan overveje:
 
 --- role names med lille skrift? så de ikke ligner navne? og så måske til gengæl vise dem med fed
 i navbaren?
+
+MySqsl
+first_class
+
+- id
+
+second_class
+
+- id
+- created_by_fk_first_class_id
+
+scss imports @ - make it work

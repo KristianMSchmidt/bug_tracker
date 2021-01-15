@@ -6,23 +6,19 @@ include('shared/ui_frame.php');
 <div class="main">
     <div class="profile_settings">
         <div class="card">
-            <h4>Profile Settings</h4>
-            <div style="padding-left:1em;">
+            <div class="container lightgrey">
+                <h4>Profile Settings</h4>
+            </div>
+            <div class="container">
                 <table>
                     <tr>
                         <td>Full name:</td>
-                        <td>Kristian Møller Schmidt</td>
+                        <td><?php echo $_SESSION['firstname'] . ' ' . $_SESSION['lastname'] ?></td>
                     </tr>
-
 
                     <tr>
                         <td>User ID:</td>
                         <td><?php echo $_SESSION['user_id'] ?></td>
-                    </tr>
-
-                    <tr>
-                        <td>User Name:</td>
-                        <td><?php echo $_SESSION['username'] ?></td>
                     </tr>
                     <tr>
                         <td>Current Role:</td>
@@ -35,11 +31,13 @@ include('shared/ui_frame.php');
                     </tr>
                 </table>
             </div>
-
             <br>
-            <h4>Privileges</h4>
-            <div style="padding-left:1em;">
-
+        </div>
+        <div class="card">
+            <div class="container lightgrey">
+                <h4>Privileges</h4>
+            </div>
+            <div class="container">
                 <?php if ($_SESSION['role_name'] == 'Admin') : ?>
                     <p style="max-width:400px;">As administrator you can do almost anything on this site. <br> <br>If you are a guest, feel free to delete, create and edit: I have a back-up of the database and do daily resets.</p>
                 <?php elseif ($_SESSION['role_name'] == "Project Manager") : ?>
@@ -52,5 +50,7 @@ include('shared/ui_frame.php');
             </div>
         </div>
     </div>
+</div>
+</div>
 
-    <?php include('shared/closing_tags.php') ?>
+<?php include('shared/closing_tags.php') ?>

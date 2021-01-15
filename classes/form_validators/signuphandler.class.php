@@ -8,7 +8,7 @@ class SignupHandler
     private $input_errors = [];
     private $signup_error = '';
     private $signup_succes = False;
-    private static $fields = ['username', 'email', 'pwd', 'pwd_repeat'];
+    private static $fields = ['firstname', 'lastname', 'email', 'pwd', 'pwd_repeat'];
 
     public function __construct($post_data)
     {
@@ -24,7 +24,8 @@ class SignupHandler
             }
         }
 
-        $this->validate_username();
+        $this->validate_firstname();
+        $this->validate_lastname();
         $this->validate_email();
         $this->validate_pwd();
         if (!isset($this->input_errors['pwd'])) {
@@ -42,16 +43,30 @@ class SignupHandler
         );
     }
 
-    private function validate_username()
+    private function validate_firstname()
     {
 
-        $val = trim($this->data['username']);
+        $val = trim($this->data['firstname']);
 
         if (empty($val)) {
-            $this->add_input_error('username', 'Please fill in username');
+            $this->add_input_error('firstname', 'please fill in first name');
         } else {
-            if (!preg_match('/^[a-zA-Z0-9]{6,12}$/', $val)) {
-                $this->add_input_error('username', 'username must be 6-12 chars & alphanumeric');
+            if (!preg_match('/^[a-zA-Z]{2,20}$/', $val)) {
+                $this->add_input_error('firstname', 'first name must be 2-20 chars & alphabetic');
+            }
+        }
+    }
+
+    private function validate_lastname()
+    {
+
+        $val = trim($this->data['lastname']);
+
+        if (empty($val)) {
+            $this->add_input_error('lastname', 'please fill in last name');
+        } else {
+            if (!preg_match('/^[a-zA-Z]{2,20}$/', $val)) {
+                $this->add_input_error('lastname', 'last name name must be 2-20 chars & alphabetic');
             }
         }
     }
@@ -104,11 +119,6 @@ class SignupHandler
     private function signup_attempt()
     {   // To do: Move this functionality to controller?
         $contr = new Controller();
-        $username_taken = $contr->get_user_by_username($this->data['username']);
-        if ($username_taken) {
-            $this->signup_error = 'There is already a user with this username';
-            return;
-        }
         $email_taken = $contr->get_user_by_email($this->data['email']);
         if ($email_taken) {
             $this->signup_error = 'There is already a user with this email';
@@ -116,12 +126,13 @@ class SignupHandler
         }
         $this->data['role_id'] = 3; // New users start out as developers.
         $contr->set_user(
-            $this->data['username'],
+            $this->data['firstname'],
+            $this->data['lastname'],
             $this->data['pwd'],
             $this->data['email'],
             $this->data['role_id']
         );
-        $new_user = $contr->get_user_by_username($this->data['username']);
+        $new_user = $contr->get_user_by_email($this->data['email']);
         set_session_vars($new_user);
         $this->signup_succes = True;
     }

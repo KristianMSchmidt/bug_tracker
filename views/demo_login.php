@@ -1,6 +1,8 @@
 <?php
+
 session_start();
-if (isset($_SESSION['username'])) {
+
+if (isset($_SESSION['user_id'])) {
     // User already logged in -> Go to dashboard
     header('location: dashboard.php');
     exit();
@@ -9,86 +11,67 @@ if (isset($_SESSION['username'])) {
 
 <?php include('shared/ui_frame.php'); ?>
 
-<div class="main" style="text-align: center">
-    <h2> Demo Login </h2>
+<div class="main">
+    <div class="demo_login">
+        <div class="card">
 
-    <style>
-        .demo-login_wrapper {
-            display: grid;
-            grid-template-columns: 2fr 1fr 1fr 2fr;
-            grid-template-rows: 1fr 1fr;
-            /* border: 1px solid black;*/
-            padding-top: 1em;
-            padding-bottom: 0;
-            margin: 0;
-        }
+            <div class="container lightgrey" style="text-align:center">
+                <h3>Demo Login</h3>
+            </div>
 
-        .hidden {
-            display: none;
-        }
-    </style>
+            <div class="row">
+                <div class="col one">
+                    <a href="#" class="fa fa-fw fa-user fa-3x" style="color:black" onclick="document.getElementById('admin_login').submit()">
+                    </a>
+                    <p>Admin</p>
+                    <a href="#" class="fa fa-fw fa-user fa-3x" style="color:green" onclick="document.getElementById('pm_login').submit()">
+                    </a>
+                    <p>Project&nbspManager</p>
+                </div>
 
-    <div class="demo-login_wrapper">
-
-
-        <form class="hidden" id="admin_login" action="login.php" method="POST">
-            <input type="hidden" name="username" value="DemoAdmin">
-            <input type="hidden" name="pwd" value="stjerne">
-            <input type="hidden" name="login_submit" value="">
-        </form>
-
-        <form class="hidden" id="dev_login" action="login.php" method="POST">
-            <input type="hidden" name="username" value="DemoDev">
-            <input type="hidden" name="pwd" value="stjerne">
-            <input type="hidden" name="login_submit" value="">
-        </form>
-
-        <form class="hidden" id="pm_login" action="login.php" method="POST">
-            <input type="hidden" name="username" value="DemoPM">
-            <input type="hidden" name="pwd" value="stjerne">
-            <input type="hidden" name="login_submit" value="">
-        </form>
-
-        <form class="hidden" id="submitter_login" action="login.php" method="POST">
-            <input type="hidden" name="username" value="DemoSub">
-            <input type="hidden" name="pwd" value="stjerne">
-            <input type="hidden" name="login_submit" value="">
-        </form>
-
-
-        <div></div>
-
-        <div>
-            <a href="#" class="fa fa-fw fa-user fa-3x" style="color:black" onclick="document.getElementById('admin_login').submit()">
-            </a>
-            <p>Admin</p>
+                <div class="col two">
+                    <a href=" #" class="fa fa-fw fa-user fa-3x" style="color:red" onclick="document.getElementById('dev_login').submit()">
+                    </a>
+                    <p>Developer</p>
+                    <a href="#" class="fa fa-fw fa-user fa-3x" style="color:blue" onclick="document.getElementById('submitter_login').submit()">
+                    </a>
+                    <p>Submitter</p>
+                </div>
+            </div>
         </div>
-
-        <div>
-            <a href=" #" class="fa fa-fw fa-user fa-3x" style="color:red" onclick="document.getElementById('dev_login').submit()">
-            </a>
-            <p>Developer</p>
+        <div class="row">
+            <div class="col">
+                <p>Have an account? <a href="login.php">Sign in</a>
+                <p>Sign up? <a href="signup.php">Sign up</a>
+            </div>
         </div>
-
-
-        <div></div>
-        <div></div>
-
-        <div>
-            <a href="#" class="fa fa-fw fa-user fa-3x" style="color:green" onclick="document.getElementById('pm_login').submit()">
-            </a>
-            <p>Project Manager</p>
-        </div>
-
-
-        <div>
-            <a href="#" class="fa fa-fw fa-user fa-3x" style="color:blue" onclick="document.getElementById('submitter_login').submit()">
-            </a>
-            <p>Submitter</p>
-        </div>
-        <div></div>
     </div>
-
-    <p>Have an account? <a href="login.php">Sign in</a>
 </div>
+
+
+<form class="hidden" id="admin_login" action="login.php" method="POST">
+    <input type="hidden" name="email" value="demoadmin@gmail.com">
+    <input type="hidden" name="pwd" value="stjerne">
+    <input type="hidden" name="login_submit" value="">
+</form>
+
+<form class="hidden" id="dev_login" action="login.php" method="POST">
+    <input type="hidden" name="email" value="demodev@gmail.com">
+    <input type="hidden" name="pwd" value="stjerne">
+    <input type="hidden" name="login_submit" value="">
+</form>
+
+
+<form class="hidden" id="pm_login" action="login.php" method="POST">
+    <input type="hidden" name="email" value="demopm@gmail.com">
+    <input type="hidden" name="pwd" value="stjerne">
+    <input type="hidden" name="login_submit" value="">
+</form>
+
+<form class="hidden" id="submitter_login" action="login.php" method="POST">
+    <input type="hidden" name="email" value="demosub@gmail.com">
+    <input type="hidden" name="pwd" value="stjerne">
+    <input type="hidden" name="login_submit" value="">
+</form>
+
 <?php include('shared/closing_tags.php') ?>

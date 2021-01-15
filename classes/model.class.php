@@ -21,21 +21,24 @@ class Model extends Dbh
         return $results;
     }
 
-    protected function db_get_user_by_username($username)
+    protected function db_get_user_by_id($user_id)
     {
         $sql = "SELECT * 
              FROM users JOIN user_roles
              ON users.role_id = user_roles.role_id 
-             WHERE username = ?";
+             WHERE user_id = ?";
         $stmt = $this->connect()->prepare($sql);
-        $stmt->execute([$username]); //stmt is a "PDO Stamement Object"
+        $stmt->execute([$user_id]); //stmt is a "PDO Stamement Object"
         $result = $stmt->fetch();
         return $result;
     }
 
     protected function db_get_user_by_email($email)
     {
-        $sql = "SELECT * FROM users WHERE email = ?";
+        $sql = "SELECT * 
+                FROM users JOIN user_roles
+                ON users.role_id = user_roles.role_id 
+                WHERE email = ?";
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute([$email]); //stmt is a "PDO Stamement Object"
         $results = $stmt->fetch();
@@ -44,7 +47,7 @@ class Model extends Dbh
 
     protected function db_get_most_busy_users()
     {
-        $sql = "SELECT COUNT(tickets.ticket_id) as count, users.username
+        $sql = "SELECT COUNT(tickets.ticket_id) as count, users.firstname, users.lastname
         FROM tickets 
         JOIN users ON tickets.developer_assigned = users.user_id    
         WHERE tickets.status = 1
@@ -69,14 +72,14 @@ class Model extends Dbh
     }
 
 
-    protected function db_set_user($username, $pwd, $email, $role_id)
+    protected function db_set_user($firstname, $lastname, $pwd, $email, $role_id)
     {
 
-        $sql = "INSERT INTO users(username, password, email, role_id)
-                VALUES(?, ?, ?, ?)";
+        $sql = "INSERT INTO users(firstname, lastname, password, email, role_id)
+                VALUES(?, ?, ?, ?, ?)";
 
         $stmt = $this->connect()->prepare($sql);
-        $stmt->execute([$username, $pwd, $email, $role_id]);
+        $stmt->execute([$firstname, $lastname, $pwd, $email, $role_id]);
     }
 
     protected function db_get_projects_by_user_id($user_id)
@@ -107,8 +110,8 @@ class Model extends Dbh
            ticket_priorities.ticket_priority_name,
            ticket_status_types.ticket_status_name,
            ticket_types.ticket_type_name,
-           s.username AS submitter_name,  /* alias necessary */
-           d.username AS developer_name  /* alias necessary */
+           s.firstname AS submitter_name,  /* alias necessary */
+           d.firstname AS developer_name  /* alias necessary */
            FROM tickets 
            JOIN users s ON tickets.submitter = s.user_id
            JOIN users d ON tickets.developer_assigned = d.user_id
@@ -188,7 +191,8 @@ class Model extends Dbh
                     notification_type, 
                     notifications.created_at, 
                     notifications.user_id, 
-                    username as created_by
+                    users.firstname as created_by_firstname,
+                    users.lastname as created_by_lastname
                 FROM notifications
                 JOIN notification_types
                 ON notifications.notification_type = notification_types.notification_type_id

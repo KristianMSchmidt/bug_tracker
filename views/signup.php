@@ -2,8 +2,10 @@
 
 if (isset($_POST['signup_submit'])) {
     include_once('../includes/auto_loader.inc.php');
+    include('../classes/form_validators/signuphandler.class.php');
     $signup_handler = new SignUpHandler($_POST);
     $feedback = $signup_handler->process_input();
+
     if ($feedback['signup_succes']) {
         header('location:dashboard.php');
         exit();
@@ -14,38 +16,69 @@ include('shared/ui_frame.php');
 
 ?>
 
-<div class="main"">
-    <h2>Sign Up</h2>
-    
-    <?php echo $feedback['signup_error'] ?? '' ?>
 
-    <form action=" <?php echo $_SERVER['PHP_SELF'] ?>" method="POST">
-    <label>Username: </label>
-    <input type="text" name="username" value="<?php echo $_POST['username'] ?? '' ?>">
-    <div class="error">
-        <?php echo $feedback['input_errors']['username'] ?? '' ?>
+<div class="main">
+    <div class="login" style="width:50%">
+        <div class="card">
+
+            <div class="container lightgrey" style="text-align:center">
+                <h3>Sign up</h3>
+            </div>
+            <div class="container">
+                <p class="error"><?php echo $feedback['signup_error'] ?? '' ?>
+                </p>
+            </div>
+
+
+            <form action=" <?php echo $_SERVER['PHP_SELF'] ?>" method="POST" class="container">
+                <p>
+                    <input type="text" name="firstname" class="input" value="<?php echo $_POST['firstname'] ?? '' ?>">
+                    <label>First name</label>
+                </p>
+                <p class="error"><?php echo $feedback['input_errors']['firstname'] ?? '' ?>
+
+                <p>
+                    <input type="text" name="lastname" class="input" value="<?php echo $_POST['lastname'] ?? '' ?>">
+                    <label>Last name</label>
+                </p>
+                <p class="error"><?php echo $feedback['input_errors']['lastname'] ?? '' ?>
+
+                <p>
+                    <input type="text" name="email" class="input" value="<?php echo $_POST['email'] ?? '' ?>">
+                    <label>Email</label>
+                </p>
+                <p class="error">
+                    <?php echo $feedback['input_errors']['email'] ?? '' ?>
+                </p>
+
+                <p>
+                    <input type="text" name="pwd" class="input" value="">
+                    <label>Password</label>
+                </p>
+                <p class="error">
+                    <?php echo $feedback['input_errors']['pwd'] ?? '' ?>
+                </p>
+
+
+                <p>
+                    <input type="text" name="pwd_repeat" class="input" value="">
+                    <label>Repeat Password</label>
+                </p>
+                <p class="error">
+                    <?php echo $feedback['input_errors']['pwd_repeat'] ?? '' ?>
+                </p>
+
+                <div class="container" style="text-align:center">
+                    <input type="submit" value="Sign up" name="signup_submit" class="btn-primary">
+                </div>
+            </form>
+        </div>
+        <div class="row">
+            <div class="col">
+                <p>Have an account? <a href="login.php">Sign in</a></p>
+                <p>Sign in as <a href="demo_login.php">Demo User</a></p>
+            </div>
+        </div>
     </div>
-
-    <label>Email: </label>
-    <input type="text" name="email" value="<?php echo $_POST['email'] ?? '' ?>">
-    <div class="error">
-        <?php echo $feedback['input_errors']['email'] ?? '' ?>
-    </div>
-
-    <label>Password: </label>
-    <input type="text" name="pwd" value="">
-    <div class="error">
-        <?php echo $feedback['input_errors']['pwd'] ?? '' ?>
-    </div>
-
-    <label>Repeat Password: </label>
-    <input type="text" name="pwd_repeat" value="">
-    <div class="error">
-        <?php echo $feedback['input_errors']['pwd_repeat'] ?? '' ?>
-    </div>
-
-    <input type="submit" value="submit" name="signup_submit">
-    </form>
-
 </div>
 <?php include('shared/closing_tags.php') ?>

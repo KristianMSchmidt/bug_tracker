@@ -1,3 +1,5 @@
+//Lots of inspiration here: https://www.w3schools.com/w3css/4/w3.css
+
 $primary-bg-color: lightsteelblue;
 $secondary-bg-color: #a0b2c9;
 
@@ -183,16 +185,18 @@ html {
     justify-content: center; /*centers content-div inside main */
 
     .row {
+      display: flex;
+      flex: 1;
+      flex-direction: row;
+      justify-content: stretch;
+      align-items: stretch;
+
       .col {
-        &-1 {
-          flex: 1;
-        }
-        &-2 {
-          flex: 2;
-        }
-        &-3 {
-          flex: 3;
-        }
+        display: flex;
+        flex: 1;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
       }
     }
 
@@ -200,21 +204,7 @@ html {
       flex: 1; //makes this fill out main-div horizontally
       display: flex;
       flex-direction: column;
-
-      .row {
-        display: flex;
-        flex: 1;
-        flex-direction: row;
-        justify-content: stretch;
-        align-items: stretch;
-      }
-      .col {
-        display: flex;
-        flex: 1;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-      }
+      padding: 1em;
 
       .card {
         box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16),
@@ -224,9 +214,15 @@ html {
         padding-right: 4em;
         margin: 1em;
       }
-      @media only screen and (max-width: 1000px) {
+      @media only screen and (max-width: 1100px) {
         .row {
           flex-direction: column;
+        }
+        .card {
+          margin-left: 3em;
+          margin-right: 3em;
+          padding-left: 7em;
+          padding-right: 7em;
         }
       }
     }
@@ -234,51 +230,85 @@ html {
     .profile_settings {
       .card {
         margin: 2em;
-        padding: 2em;
       }
     }
 
-    .layout {
-      flex: 1; //makes this fill out main-div horizontally
-      display: flex;
-      flex-direction: column;
-      background-color: aquamarine;
-
-      .row {
-        display: flex;
-        flex: 1;
-        flex-direction: row;
-        justify-content: stretch;
-        align-items: stretch;
+    .demo_login {
+      .card {
+        margin-top: 2em;
+        margin-bottom: 1em;
+        padding-bottom: 1em;
       }
       .col {
-        display: flex;
-        flex: 1;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-      }
-
-      .card {
-        box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16),
-          0 2px 10px 0 rgba(0, 0, 0, 0.12);
-        padding-top: 1em;
-        padding-left: 4em;
-        padding-right: 4em;
-        margin: 1em;
-      }
-
-      @media only screen and (max-width: 1000px) {
-        .row {
-          flex-direction: column;
+        padding-top: 2em;
+        &.one {
+          padding-right: 1.5em;
+          padding-left: 2.5em;
         }
+        &.two {
+          padding-left: 1.5em;
+          padding-right: 4em;
+        }
+      }
+    }
+    .login {
+      .card {
+        margin-top: 2em;
+        padding-bottom: 1em;
+        margin-bottom: 1em;
+      }
+      p {
+        margin-top: 0;
       }
     }
   }
 }
 
+.container {
+  padding: 0.01em 16px;
+}
 .card {
   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+}
+div,
+.card {
+  .lightgrey {
+    background-color: #f1f1f1;
+  }
+
+  .blue {
+    background-color: #2196f3;
+  }
+  .red {
+    background-color: #f44336;
+  }
+}
+
+.error {
+  color: #f44336;
+}
+
+.input {
+  padding: 8px;
+  display: block;
+  border: none;
+  border-bottom: 1px solid #ccc;
+  width: 100%;
+}
+
+.btn-primary {
+  color: white;
+  background-color: #4285f4;
+  width: 13em;
+  height: 2em;
+  border: 0;
+  margin-top: 0.8em;
+
+  &:focus {
+    background-color: #2a66c9;
+    outline: none;
+    border: 0;
+  }
 }
 
 @media only screen and (max-width: 1050px) {

@@ -3,7 +3,7 @@ if (!isset($_SESSION)) {
     session_start();
 }
 
-if (isset($_SESSION['username'])) {
+if (isset($_SESSION['user_id'])) {
     include_once('../includes/auto_loader.inc.php');
     include('../includes/human_timing.inc.php');
     $contr = new Controller;
@@ -42,7 +42,7 @@ if (isset($_SESSION['username'])) {
             </ul>
         </div>
         <div class="main_nav">
-            <?php if (isset($_SESSION['username'])) : ?>
+            <?php if (isset($_SESSION['user_id'])) : ?>
                 <p class="left_main_nav" style="color:black;">Logged in as
                     <?php echo $_SESSION['role_name'] ?>
                 </p>
@@ -104,7 +104,7 @@ if (isset($_SESSION['username'])) {
 
     <div class="sidebar_and_main_container">
         <div class="sidebar">
-            <?php if (isset($_SESSION['username'])) : ?>
+            <?php if (isset($_SESSION['user_id'])) : ?>
                 <a href="dashboard.php" id="dashboard_link"><i class="fas fa-home"></i> &nbsp; Dashboard</a>
                 <a href="manage_user_roles.php" id="manage_user_roles_link"><i class="fas fa-users"></i> &nbsp;Manage User Roles</a>
                 <a href="manage_project_users.php" id="manage_project_users_link"><i class="fas fa-user-plus"></i> &nbsp;Manage Project Users</a>

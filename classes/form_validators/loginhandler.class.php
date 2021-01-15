@@ -8,7 +8,7 @@ class LoginHandler
   private $input_errors = [];
   private $login_error = "";
   private $login_succes = False;
-  private static $fields = ['username', 'pwd'];
+  private static $fields = ['email', 'pwd'];
 
   public function __construct($post_data)
   {
@@ -24,7 +24,7 @@ class LoginHandler
       }
     }
 
-    $this->validate_username();
+    $this->validate_email();
     $this->validate_pwd();
 
     if (!$this->input_errors) {
@@ -38,13 +38,13 @@ class LoginHandler
     );
   }
 
-  private function validate_username()
+  private function validate_email()
   {
 
-    $val = trim($this->data['username']);
+    $val = trim($this->data['email']);
 
     if (empty($val)) {
-      $this->add_input_error('username', 'Please fill in username');
+      $this->add_input_error('email', 'Please fill in email');
     }
   }
 
@@ -66,11 +66,13 @@ class LoginHandler
   private function login_attempt()
   // To do: Move this functionality to controller?
   {
-    $this->login_error = 'Wrong username or password';
+    $this->login_error = 'Wrong email or password';
     $contr = new Controller();
     $pwd = $this->data['pwd'];
-    $user = $contr->get_user_by_username($this->data['username']);
+    echo $pwd;
+    $user = $contr->get_user_by_email($this->data['email']);
     if ($user) {
+      print_r($user);
       $pwd_db = $user['password'];
       $psw_check = password_verify($pwd, $pwd_db);
       if ($psw_check) {

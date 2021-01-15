@@ -7,12 +7,10 @@ $priorities = $contr->get_ticket_priority_count();
 $statuses = $contr->get_ticket_status_count();
 $types = $contr->get_tickets_type_count();
 $users = $contr->get_most_busy_users();
-
 ?>
 
+
 <?php include('shared/ui_frame.php'); ?>
-
-
 <div class="main">
     <div class="dashboard">
         <div class="row">
@@ -201,7 +199,8 @@ $users = $contr->get_most_busy_users();
         type: 'doughnut',
         data: {
             labels: [<?php foreach ($users as $user) {
-                            echo "'{$user['username']}',";
+                            $full_name = $user['firstname'] . " " . $user['lastname'];
+                            echo "'{$full_name}',";
                         } ?>],
 
             datasets: [{
@@ -211,11 +210,11 @@ $users = $contr->get_most_busy_users();
                         } ?>],
 
                 backgroundColor: [
-                    '#FEDEBE',
-                    'rgba(255, 148, 120, 1)',
-                    'rgba(242, 38, 19, 1)',
-                    'rgba(217, 30, 24, 1)',
-                    'rgba(150, 40, 27, 1)',
+                    '#e8ffe8',
+                    '#b3ffb3',
+                    '#66ff66',
+                    '#1aff1a',
+                    '#00cc00'
                 ],
                 borderWidth: 1
             }]
