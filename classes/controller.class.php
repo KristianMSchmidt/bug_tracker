@@ -41,9 +41,10 @@ class Controller extends Model
         $this->db_set_user($full_name, $pwd, $email, $role_id);
     }
 
-    public function get_projects_by_user_id($user_id)
+    public function get_projects_by_user_id($user_id, $role_name)
     {
-        $results = $this->db_get_projects_by_user_id($user_id);
+
+        $results = $this->db_get_projects_by_user_id($user_id, $role_name);
         return $results;
     }
 

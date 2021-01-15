@@ -82,18 +82,19 @@ class Model extends Dbh
         $stmt->execute([$full_name, $pwd, $email, $role_id]);
     }
 
-    protected function db_get_projects_by_user_id($user_id)
+    protected function db_get_projects_by_user_id($user_id, $role_name)
     {
         $sql = "SELECT 
                 projects.project_id,
                 projects.project_name,
                 projects.project_description
-                FROM projects
-                WHERE projects.project_id IN 
+                FROM projects";
+        if ($role_name != 'Admin') {
+            $sql .= " WHERE projects.project_id IN 
                     (SELECT project_id 
                     FROM project_enrollments 
                     WHERE user_id = {$user_id})";
-
+        }
         $stmt = $this->connect()->query($sql);
         $results = $stmt->fetchAll();
         return $results;

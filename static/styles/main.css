@@ -338,6 +338,10 @@ html {
   padding-bottom: 1em;
 }
 
+.sidebar_and_main_container .main .demo_login .mt-0 {
+  margin-top: 0;
+}
+
 .sidebar_and_main_container .main .demo_login .col {
   padding-top: 2em;
 }
@@ -352,10 +356,15 @@ html {
   padding-right: 4em;
 }
 
+.sidebar_and_main_container .main .login {
+  width: 50%;
+}
+
 .sidebar_and_main_container .main .login .card {
   margin-top: 2em;
+  margin-bottom: 2em;
   padding-bottom: 1em;
-  margin-bottom: 1em;
+  margin-bottom: 2em;
 }
 
 .sidebar_and_main_container .main .login p {
@@ -372,17 +381,20 @@ html {
 }
 
 div .lightgrey,
-.card .lightgrey {
+.card .lightgrey,
+tr .lightgrey {
   background-color: #f1f1f1;
 }
 
 div .blue,
-.card .blue {
+.card .blue,
+tr .blue {
   background-color: #2196f3;
 }
 
 div .red,
-.card .red {
+.card .red,
+tr .red {
   background-color: #f44336;
 }
 
@@ -407,10 +419,87 @@ div .red,
   margin-top: 0.8em;
 }
 
+.btn-primary:hover {
+  background-color: #2a66c9;
+}
+
 .btn-primary:focus {
   background-color: #2a66c9;
   outline: none;
   border: 0;
+}
+
+.w3-image {
+  max-width: 100%;
+  height: auto;
+}
+
+img {
+  vertical-align: middle;
+}
+
+a {
+  color: inherit;
+}
+
+.table,
+.table-all {
+  border-collapse: collapse;
+  border-spacing: 0;
+  width: 100%;
+  display: table;
+}
+
+.table-all {
+  border: 1px solid #ccc;
+}
+
+.bordered tr,
+.table-all tr {
+  border-bottom: 1px solid #ddd;
+}
+
+.striped tbody tr:nth-child(even) {
+  background-color: #f1f1f1;
+}
+
+.table-all tr:nth-child(odd) {
+  background-color: #fff;
+}
+
+.table-all tr:nth-child(even) {
+  background-color: #f1f1f1;
+}
+
+.hoverable tbody tr:hover,
+.w3-hoverable li:hover {
+  background-color: #ccc;
+}
+
+.centered tr th,
+.centered tr td {
+  text-align: center;
+}
+
+.table td,
+.table th,
+.table-all td,
+.table-all th {
+  padding: 8px 8px;
+  display: table-cell;
+  text-align: left;
+  vertical-align: top;
+}
+
+.table th:first-child,
+.table td:first-child,
+.table-all th:first-child,
+.table-all td:first-child {
+  padding-left: 16px;
+}
+
+.small {
+  font-size: 80%;
 }
 
 @media only screen and (max-width: 1050px) {

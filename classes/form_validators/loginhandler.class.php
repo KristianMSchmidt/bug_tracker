@@ -72,7 +72,6 @@ class LoginHandler
     echo $pwd;
     $user = $contr->get_user_by_email($this->data['email']);
     if ($user) {
-      print_r($user);
       $pwd_db = $user['password'];
       $psw_check = password_verify($pwd, $pwd_db);
       if ($psw_check) {

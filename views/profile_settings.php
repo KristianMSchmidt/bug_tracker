@@ -21,7 +21,7 @@ include('shared/ui_frame.php');
                         <td><?php echo $_SESSION['user_id'] ?></td>
                     </tr>
                     <tr>
-                        <td>Current Role:</td>
+                        <td>Current role:</td>
                         <td><?php echo $_SESSION['role_name'] ?></td>
                     </tr>
 

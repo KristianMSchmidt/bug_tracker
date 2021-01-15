@@ -239,6 +239,11 @@ html {
         margin-bottom: 1em;
         padding-bottom: 1em;
       }
+
+      .mt-0 {
+        margin-top: 0;
+      }
+
       .col {
         padding-top: 2em;
         &.one {
@@ -252,10 +257,12 @@ html {
       }
     }
     .login {
+      width: 50%;
       .card {
         margin-top: 2em;
+        margin-bottom: 2em;
         padding-bottom: 1em;
-        margin-bottom: 1em;
+        margin-bottom: 2em;
       }
       p {
         margin-top: 0;
@@ -271,7 +278,8 @@ html {
   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
 }
 div,
-.card {
+.card,
+tr {
   .lightgrey {
     background-color: #f1f1f1;
   }
@@ -303,12 +311,76 @@ div,
   height: 2em;
   border: 0;
   margin-top: 0.8em;
-
+  &:hover {
+    background-color: #2a66c9;
+  }
   &:focus {
     background-color: #2a66c9;
     outline: none;
     border: 0;
   }
+}
+
+.w3-image {
+  max-width: 100%;
+  height: auto;
+}
+img {
+  vertical-align: middle;
+}
+a {
+  color: inherit;
+}
+
+.table,
+.table-all {
+  border-collapse: collapse;
+  border-spacing: 0;
+  width: 100%;
+  display: table;
+}
+.table-all {
+  border: 1px solid #ccc;
+}
+.bordered tr,
+.table-all tr {
+  border-bottom: 1px solid #ddd;
+}
+.striped tbody tr:nth-child(even) {
+  background-color: #f1f1f1;
+}
+.table-all tr:nth-child(odd) {
+  background-color: #fff;
+}
+.table-all tr:nth-child(even) {
+  background-color: #f1f1f1;
+}
+.hoverable tbody tr:hover,
+.w3-hoverable li:hover {
+  background-color: #ccc;
+}
+.centered tr th,
+.centered tr td {
+  text-align: center;
+}
+.table td,
+.table th,
+.table-all td,
+.table-all th {
+  padding: 8px 8px;
+  display: table-cell;
+  text-align: left;
+  vertical-align: top;
+}
+.table th:first-child,
+.table td:first-child,
+.table-all th:first-child,
+.table-all td:first-child {
+  padding-left: 16px;
+}
+
+.small {
+  font-size: 80%;
 }
 
 @media only screen and (max-width: 1050px) {
