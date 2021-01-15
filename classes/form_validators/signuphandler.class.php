@@ -8,7 +8,7 @@ class SignupHandler
     private $input_errors = [];
     private $signup_error = '';
     private $signup_succes = False;
-    private static $fields = ['firstname', 'lastname', 'email', 'pwd', 'pwd_repeat'];
+    private static $fields = ['full_name', 'email', 'pwd', 'pwd_repeat'];
 
     public function __construct($post_data)
     {
@@ -24,8 +24,7 @@ class SignupHandler
             }
         }
 
-        $this->validate_firstname();
-        $this->validate_lastname();
+        $this->validate_full_name();
         $this->validate_email();
         $this->validate_pwd();
         if (!isset($this->input_errors['pwd'])) {
@@ -43,30 +42,16 @@ class SignupHandler
         );
     }
 
-    private function validate_firstname()
+    private function validate_full_name()
     {
 
-        $val = trim($this->data['firstname']);
+        $val = trim($this->data['full_name']);
 
         if (empty($val)) {
-            $this->add_input_error('firstname', 'please fill in first name');
+            $this->add_input_error('full_name', 'please fill in full name');
         } else {
-            if (!preg_match('/^[a-zA-Z]{2,20}$/', $val)) {
-                $this->add_input_error('firstname', 'first name must be 2-20 chars & alphabetic');
-            }
-        }
-    }
-
-    private function validate_lastname()
-    {
-
-        $val = trim($this->data['lastname']);
-
-        if (empty($val)) {
-            $this->add_input_error('lastname', 'please fill in last name');
-        } else {
-            if (!preg_match('/^[a-zA-Z]{2,20}$/', $val)) {
-                $this->add_input_error('lastname', 'last name name must be 2-20 chars & alphabetic');
+            if (!preg_match("/^[a-zA-ZæøåÆØÅ' ]{5,40}$/", $val)) {
+                $this->add_input_error('full_name', 'full name must be 5-40 chars & alphabetic');
             }
         }
     }
@@ -126,10 +111,9 @@ class SignupHandler
         }
         $this->data['role_id'] = 3; // New users start out as developers.
         $contr->set_user(
-            $this->data['firstname'],
-            $this->data['lastname'],
-            $this->data['pwd'],
-            $this->data['email'],
+            trim($this->data['full_name']),
+            trim($this->data['pwd']),
+            trim($this->data['email']),
             $this->data['role_id']
         );
         $new_user = $contr->get_user_by_email($this->data['email']);

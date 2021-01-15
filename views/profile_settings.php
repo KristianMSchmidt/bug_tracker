@@ -13,7 +13,7 @@ include('shared/ui_frame.php');
                 <table>
                     <tr>
                         <td>Full name:</td>
-                        <td><?php echo $_SESSION['firstname'] . ' ' . $_SESSION['lastname'] ?></td>
+                        <td><?php echo $_SESSION['full_name'] ?></td>
                     </tr>
 
                     <tr>

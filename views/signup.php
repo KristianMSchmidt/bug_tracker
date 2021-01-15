@@ -11,11 +11,10 @@ if (isset($_POST['signup_submit'])) {
         exit();
     }
 }
-
-include('shared/ui_frame.php');
-
 ?>
 
+
+<?php include('shared/ui_frame.php'); ?>
 
 <div class="main">
     <div class="login" style="width:50%">
@@ -32,16 +31,10 @@ include('shared/ui_frame.php');
 
             <form action=" <?php echo $_SERVER['PHP_SELF'] ?>" method="POST" class="container">
                 <p>
-                    <input type="text" name="firstname" class="input" value="<?php echo $_POST['firstname'] ?? '' ?>">
-                    <label>First name</label>
+                    <input type="text" name="full_name" class="input" value="<?php echo $_POST['full_name'] ?? '' ?>">
+                    <label>Full name</label>
                 </p>
-                <p class="error"><?php echo $feedback['input_errors']['firstname'] ?? '' ?>
-
-                <p>
-                    <input type="text" name="lastname" class="input" value="<?php echo $_POST['lastname'] ?? '' ?>">
-                    <label>Last name</label>
-                </p>
-                <p class="error"><?php echo $feedback['input_errors']['lastname'] ?? '' ?>
+                <p class="error"><?php echo $feedback['input_errors']['full_name'] ?? '' ?>
 
                 <p>
                     <input type="text" name="email" class="input" value="<?php echo $_POST['email'] ?? '' ?>">
@@ -59,10 +52,9 @@ include('shared/ui_frame.php');
                     <?php echo $feedback['input_errors']['pwd'] ?? '' ?>
                 </p>
 
-
                 <p>
                     <input type="text" name="pwd_repeat" class="input" value="">
-                    <label>Repeat Password</label>
+                    <label>Repeat password</label>
                 </p>
                 <p class="error">
                     <?php echo $feedback['input_errors']['pwd_repeat'] ?? '' ?>

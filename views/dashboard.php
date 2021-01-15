@@ -199,8 +199,7 @@ $users = $contr->get_most_busy_users();
         type: 'doughnut',
         data: {
             labels: [<?php foreach ($users as $user) {
-                            $full_name = $user['firstname'] . " " . $user['lastname'];
-                            echo "'{$full_name}',";
+                            echo "'{$user['full_name']}',";
                         } ?>],
 
             datasets: [{

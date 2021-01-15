@@ -20,8 +20,6 @@ features, jeg kan overveje:
 
 -- download font awsome link to show quicker
 
--- first and last name in db? shown on frontpage?
-
 --- role names med lille skrift? så de ikke ligner navne? og så måske til gengæl vise dem med fed
 i navbaren?
 

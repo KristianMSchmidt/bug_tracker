@@ -36,9 +36,9 @@ class Controller extends Model
         return $results;
     }
 
-    public function set_user($firstname, $lastname, $pwd, $email, $role_id)
+    public function set_user($full_name, $pwd, $email, $role_id)
     {
-        $this->db_set_user($firstname, $lastname, $pwd, $email, $role_id);
+        $this->db_set_user($full_name, $pwd, $email, $role_id);
     }
 
     public function get_projects_by_user_id($user_id)

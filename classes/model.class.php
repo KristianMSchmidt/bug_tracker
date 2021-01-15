@@ -47,7 +47,7 @@ class Model extends Dbh
 
     protected function db_get_most_busy_users()
     {
-        $sql = "SELECT COUNT(tickets.ticket_id) as count, users.firstname, users.lastname
+        $sql = "SELECT COUNT(tickets.ticket_id) as count, users.full_name
         FROM tickets 
         JOIN users ON tickets.developer_assigned = users.user_id    
         WHERE tickets.status = 1
@@ -72,14 +72,14 @@ class Model extends Dbh
     }
 
 
-    protected function db_set_user($firstname, $lastname, $pwd, $email, $role_id)
+    protected function db_set_user($full_name, $pwd, $email, $role_id)
     {
 
-        $sql = "INSERT INTO users(firstname, lastname, password, email, role_id)
-                VALUES(?, ?, ?, ?, ?)";
+        $sql = "INSERT INTO users(full_name, password, email, role_id)
+                VALUES(?, ?, ?, ?)";
 
         $stmt = $this->connect()->prepare($sql);
-        $stmt->execute([$firstname, $lastname, $pwd, $email, $role_id]);
+        $stmt->execute([$full_name, $pwd, $email, $role_id]);
     }
 
     protected function db_get_projects_by_user_id($user_id)
@@ -110,8 +110,8 @@ class Model extends Dbh
            ticket_priorities.ticket_priority_name,
            ticket_status_types.ticket_status_name,
            ticket_types.ticket_type_name,
-           s.firstname AS submitter_name,  /* alias necessary */
-           d.firstname AS developer_name  /* alias necessary */
+           s.full_name AS submitter_name,  /* alias necessary */
+           d.full_name AS developer_name  /* alias necessary */
            FROM tickets 
            JOIN users s ON tickets.submitter = s.user_id
            JOIN users d ON tickets.developer_assigned = d.user_id
@@ -191,8 +191,7 @@ class Model extends Dbh
                     notification_type, 
                     notifications.created_at, 
                     notifications.user_id, 
-                    users.firstname as created_by_firstname,
-                    users.lastname as created_by_lastname
+                    users.full_name as created_by
                 FROM notifications
                 JOIN notification_types
                 ON notifications.notification_type = notification_types.notification_type_id

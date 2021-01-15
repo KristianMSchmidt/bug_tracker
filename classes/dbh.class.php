@@ -22,10 +22,16 @@ class Dbh
         $dsn = 'mysql:host=' . $this->host . ';dbname=' . $this->dbName . ';charset=' .  $this->charset;
 
         // Create PDO ('PHDP Data Object')
-        $pdo = new PDO($dsn, $this->user, $this->pwd);
+        // The try->catch is important here, as password might otherwise get shown
+        try {
+            $pdo = new PDO($dsn, $this->user, $this->pwd);
+        } catch (\PDOException $e) {
+            throw new \PDOException($e->getMessage(), (int)$e->getCode());
+        }
 
         // Pull out data as associative array (optional)
         $pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+        // Show errors
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 
