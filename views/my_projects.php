@@ -8,14 +8,16 @@ $projects = $contr->get_projects_by_user_id($_SESSION['user_id'], $_SESSION['rol
 
 <div class="main">
 
-    <div class="my_projects" style="width:90%">
-        <br>
+    <div class="my_projects">
+
         <form action="create_project.php">
-            <input type="submit" value="CREATE NEW PROJECT" class="btn-primary">
+            <input type="submit" value="CREATE NEW PROJECT" class="btn-primary large">
         </form>
-        <div class="card" style="margin-top:2em; margin-bottom:2em;padding-bottom:2em;">
+        <div class="card">
             <div class="container">
                 <h2>My projects</h2>
+            </div>
+            <div class="container">
                 <p>
                     <?php if ($_SESSION['role_name'] == 'Admin') : ?>
                         Administrators see all projects in the database
@@ -27,8 +29,8 @@ $projects = $contr->get_projects_by_user_id($_SESSION['user_id'], $_SESSION['rol
                         Submitters see all projects they are assigned to
                     <?php endif ?>
                 </p>
-                <div class="container">
-                    <table class="table striped bordered small">
+                <div class="container w3-responsive">
+                    <table class="table striped bordered">
                         <tr>
                             <th>Project Name</th>
                             <th>Description</th>
@@ -40,7 +42,7 @@ $projects = $contr->get_projects_by_user_id($_SESSION['user_id'], $_SESSION['rol
                                 <td><?php echo $project['project_name'] ?></td>
                                 <td><?php echo $project['project_description'] ?></td>
                                 <td>
-                                    <a href="#" style="color:blue" onclick="document.getElementById('<?php echo $form_id ?>').submit()">
+                                    <a href="#" onclick="document.getElementById('<?php echo $form_id ?>').submit()">
                                         More Details
                                     </a>
                                 </td>
@@ -49,6 +51,8 @@ $projects = $contr->get_projects_by_user_id($_SESSION['user_id'], $_SESSION['rol
                     </table>
                 </div>
                 <p>Showing project 1-<?php echo count($projects); ?> out of <?php echo count($projects); ?>.</p>
+
+
             </div>
         </div>
     </div>

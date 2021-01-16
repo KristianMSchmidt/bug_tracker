@@ -183,6 +183,7 @@ html {
     display: flex;
     align-items: stretch; /*makes content-div inside main fill out main area vertically */
     justify-content: center; /*centers content-div inside main */
+    padding-top: 1em;
 
     .row {
       display: flex;
@@ -231,6 +232,23 @@ html {
       .card {
         margin: 2em;
       }
+      table {
+        padding-top: 1em;
+        padding-bottom: 1em;
+      }
+    }
+
+    .my_projects,
+    .my_tickets {
+      width: 95%;
+      input {
+        font-size: 14px; /* makes button somewhat bigger */
+      }
+      .card {
+        margin-top: 1em;
+        margin-bottom: 2em;
+        padding-bottom: 2em;
+      }
     }
 
     .demo_login {
@@ -259,13 +277,14 @@ html {
     .login {
       width: 50%;
       .card {
-        margin-top: 2em;
-        margin-bottom: 2em;
+        margin-top: 1em;
+        margin-bottom: 1em;
         padding-bottom: 1em;
-        margin-bottom: 2em;
+        margin-bottom: 1em;
       }
       p {
-        margin-top: 0;
+        margin-top: 0.5em;
+        margin-bottom: 0.5em;
       }
     }
   }
@@ -276,6 +295,12 @@ html {
 }
 .card {
   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+  a {
+    color: blue;
+  }
+  div:first-child {
+    background-color: #ffc107;
+  }
 }
 div,
 .card,
@@ -283,12 +308,15 @@ tr {
   .lightgrey {
     background-color: #f1f1f1;
   }
-
   .blue {
     background-color: #2196f3;
   }
   .red {
     background-color: #f44336;
+  }
+  &.amber {
+    background-color: #ffc107;
+    /*    background-image: linear-gradient(to right, #ffc107, #ff9800); */
   }
 }
 
@@ -450,4 +478,9 @@ a {
   .hide_xsmall {
     display: none;
   }
+}
+
+.w3-responsive {
+  display: block;
+  overflow-x: auto;
 }

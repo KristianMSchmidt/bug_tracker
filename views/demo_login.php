@@ -15,7 +15,7 @@ if (isset($_SESSION['user_id'])) {
     <div class="demo_login">
         <div class="card">
 
-            <div class="container lightgrey" style="text-align:center">
+            <div class="container" style="text-align:center">
                 <h3>Demo Login</h3>
             </div>
 

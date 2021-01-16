@@ -43,7 +43,9 @@ if (isset($_SESSION['user_id'])) {
         </div>
         <div class="main_nav">
             <?php if (isset($_SESSION['user_id'])) : ?>
-                <p class="left_main_nav" style="color:black;">Logged in as
+                <p class="left_main_nav" style="color:black;">
+                    <?php echo $_SESSION['full_name'] ?>
+                    |
                     <?php echo $_SESSION['role_name'] ?>
                 </p>
                 <!-- <p style="color:black;">Albert Einstein</p> -->

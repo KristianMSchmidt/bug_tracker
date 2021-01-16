@@ -1,6 +1,9 @@
 <?php
 /*
 Only class direcly querying and modifying database. 
+
+// user_by(property)
+// project_by()
 */
 
 class Controller extends Model
@@ -87,5 +90,10 @@ class Controller extends Model
     public function make_notifications_seen($user_id)
     {
         $this->db_make_notifications_seen($user_id);
+    }
+
+    public function set_session($user_id, $session_id)
+    {
+        $this->db_set_session($user_id, $session_id);
     }
 }

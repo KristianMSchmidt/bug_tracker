@@ -15,9 +15,6 @@ class Model extends Dbh
         $sql  = "SELECT * FROM users";
         $stmt = $this->connect()->query($sql); //stmt is a "PDO Stamement Object"
         $results = $stmt->fetchAll();
-        print_r($results);
-        echo "HEJ";
-        exit();
         return $results;
     }
 
@@ -131,6 +128,7 @@ class Model extends Dbh
 
         elseif ($role_name == 'Submitter') :
             $sql .= " WHERE tickets.submitter = ?";
+
         endif;
 
         // latest project at top
@@ -141,6 +139,7 @@ class Model extends Dbh
         $results = $stmt->fetchAll();
         return $results;
     }
+
     protected function db_get_ticket_priority_count()
     {
         $sql = "SELECT COUNT(tickets.ticket_id) AS count, 
@@ -212,6 +211,13 @@ class Model extends Dbh
         $sql = "UPDATE notifications SET unseen = 0 WHERE user_id = ?";
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute([$user_id]);
+    }
+
+    protected function db_set_session($user_id, $session_id)
+    {
+        $sql = "INSERT INTO sessions(user_id, session_id_php) VALUES(?, ?)";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute([$user_id, $session_id]);
     }
 }
 

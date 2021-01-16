@@ -6,7 +6,7 @@ include('shared/ui_frame.php');
 <div class="main">
     <div class="profile_settings">
         <div class="card">
-            <div class="container lightgrey">
+            <div class="container">
                 <h4>Profile Settings</h4>
             </div>
             <div class="container">
@@ -31,10 +31,10 @@ include('shared/ui_frame.php');
                     </tr>
                 </table>
             </div>
-            <br>
+
         </div>
         <div class="card">
-            <div class="container lightgrey">
+            <div class="container">
                 <h4>Privileges</h4>
             </div>
             <div class="container">

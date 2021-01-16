@@ -69,7 +69,6 @@ class LoginHandler
     $this->login_error = 'Wrong email or password';
     $contr = new Controller();
     $pwd = $this->data['pwd'];
-    echo $pwd;
     $user = $contr->get_user_by_email($this->data['email']);
     if ($user) {
       $pwd_db = $user['password'];
@@ -77,7 +76,7 @@ class LoginHandler
       if ($psw_check) {
         $this->login_succes = True;
         $this->login_error = '';
-        set_session_vars($user);
+        set_session_vars($user, $contr);
       }
     }
   }

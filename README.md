@@ -31,6 +31,5 @@ first_class
 second_class
 
 - id
-- created_by_fk_first_class_id
 
 scss imports @ - make it work
