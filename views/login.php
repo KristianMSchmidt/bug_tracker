@@ -28,7 +28,7 @@ if (isset($_POST['login_submit'])) {
     <div class="login">
         <div class="card">
 
-            <div class="container" style="text-align:center">
+            <div class="container card-head" style="text-align:center">
                 <h3>Sign in</h3>
             </div>
             <div class="container">

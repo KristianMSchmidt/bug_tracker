@@ -182,7 +182,7 @@ html {
     flex: 30; /* how much of the flexbox space should the main area take, relative to sidebar */
     display: flex;
     align-items: stretch; /*makes content-div inside main fill out main area vertically */
-    justify-content: center; /*centers content-div inside main */
+    justify-content: center; /* horizontally centers content-div inside main */
     padding-top: 1em;
 
     .row {
@@ -196,7 +196,7 @@ html {
         display: flex;
         flex: 1;
         flex-direction: column;
-        justify-content: center;
+        //justify-content: center;
         align-items: center;
       }
     }
@@ -227,7 +227,21 @@ html {
         }
       }
     }
+    .manage_user_roles {
+      width: 95%;
+      .row {
+        display: flex;
+        flex: 1;
+        flex-direction: row;
+        justify-content: stretch;
+        align-items: stretch;
 
+        .col {
+          justify-content: flex-start;
+          align-items: flex-start;
+        }
+      }
+    }
     .profile_settings {
       .card {
         margin: 2em;
@@ -298,7 +312,7 @@ html {
   a {
     color: blue;
   }
-  div:first-child {
+  .card-head {
     background-color: #ffc107;
   }
 }

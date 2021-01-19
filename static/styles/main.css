@@ -249,7 +249,7 @@ html {
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
-  /*centers content-div inside main */
+  /* horizontally centers content-div inside main */
   padding-top: 1em;
 }
 
@@ -283,9 +283,6 @@ html {
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
@@ -327,6 +324,38 @@ html {
     padding-left: 7em;
     padding-right: 7em;
   }
+}
+
+.sidebar_and_main_container .main .manage_user_roles {
+  width: 95%;
+}
+
+.sidebar_and_main_container .main .manage_user_roles .row {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: stretch;
+      -ms-flex-pack: stretch;
+          justify-content: stretch;
+  -webkit-box-align: stretch;
+      -ms-flex-align: stretch;
+          align-items: stretch;
+}
+
+.sidebar_and_main_container .main .manage_user_roles .row .col {
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
 }
 
 .sidebar_and_main_container .main .profile_settings .card {
@@ -409,7 +438,7 @@ html {
   color: blue;
 }
 
-.card div:first-child {
+.card .card-head {
   background-color: #ffc107;
 }
 

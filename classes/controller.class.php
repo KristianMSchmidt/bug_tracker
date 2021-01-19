@@ -10,7 +10,7 @@ class Controller extends Model
 {
     public function get_users()
     {
-        $results = $this->get_users();
+        $results = $this->db_get_users();
         return $results;
     }
 

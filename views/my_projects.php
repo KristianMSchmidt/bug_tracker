@@ -13,8 +13,9 @@ $projects = $contr->get_projects_by_user_id($_SESSION['user_id'], $_SESSION['rol
         <form action="create_project.php">
             <input type="submit" value="CREATE NEW PROJECT" class="btn-primary large">
         </form>
+
         <div class="card">
-            <div class="container">
+            <div class="container card-head">
                 <h2>My projects</h2>
             </div>
             <div class="container">

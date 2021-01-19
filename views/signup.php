@@ -20,7 +20,7 @@ if (isset($_POST['signup_submit'])) {
     <div class="login" style="width:50%">
         <div class="card">
 
-            <div class="container" style="text-align:center">
+            <div class="container card-head" style="text-align:center">
                 <h3>Sign up</h3>
             </div>
             <div class="container">

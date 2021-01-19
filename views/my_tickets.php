@@ -20,7 +20,7 @@ $tickets = $contr->get_tickets_by_user($_SESSION['user_id'], $_SESSION['role_nam
     <div class="my_tickets">
 
         <div class="card">
-            <div class="container">
+            <div class="container card-head">
                 <h2>My tickets</h2>
             </div>
             <div class="container">

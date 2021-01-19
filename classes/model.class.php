@@ -12,13 +12,16 @@ class Model extends Dbh
 
     protected function db_get_users()
     {
-        $sql  = "SELECT * FROM users";
+        $sql  = "SELECT * 
+                 FROM users JOIN user_roles
+                 ON users.role_id = user_roles.role_id";
         $stmt = $this->connect()->query($sql); //stmt is a "PDO Stamement Object"
         $results = $stmt->fetchAll();
         return $results;
     }
 
     protected function db_get_user_by_id($user_id)
+    //to do: refactor db_get_user_by_property('user_id')
     {
         $sql = "SELECT * 
              FROM users JOIN user_roles
