@@ -1,6 +1,6 @@
 <?php
 /*
-Only class direcly querying and modifying database. 
+This is the only class direcly querying and modifying database. 
 Only protected methods.
 I call query_statements select
 Never use 'select * '
@@ -126,7 +126,7 @@ class Model extends Dbh
         // add conditions to sql depending on user type
         if ($role_name == 'Project Manager') :
             $sql .= " WHERE tickets.project IN 
-              (SELECT project_id FROM project_enrollments WHERE user_id = ?";
+              (SELECT project_id FROM project_enrollments WHERE user_id = ?)";
 
         elseif ($role_name == 'Developer') :
             $sql .= " WHERE tickets.developer_assigned = ?";
@@ -138,10 +138,10 @@ class Model extends Dbh
 
         // latest project at top
         $sql .= " ORDER BY tickets.created_at DESC";
-
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute([$user_id]);
         $results = $stmt->fetchAll();
+
         return $results;
     }
 
@@ -231,9 +231,64 @@ class Model extends Dbh
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute([$role_id, $user_id]);
     }
+
+    protected function db_get_project_by_id($project_id)
+    {
+        $sql = "SELECT * FROM projects WHERE project_id = ?";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute([$project_id]);
+        $project = $stmt->fetch();
+        return $project;
+    }
+
+    protected function db_get_project_users($project_id)
+    //all users assigned to project
+    {
+        $sql =
+            "SELECT users.full_name, users.email, role_name
+            FROM users 
+            JOIN project_enrollments ON users.user_id = project_enrollments.user_id
+            JOIN user_roles ON user_roles.role_id = users.role_id
+            WHERE project_enrollments.project_id = ?";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute([$project_id]);
+        $users = $stmt->fetchAll();
+        return $users;
+    }
+
+
+    protected function db_get_tickets_by_project($project_id)
+    //all tickets to given project
+    {
+        $sql = "SELECT 
+        tickets.title,
+        tickets.created_at,
+        ticket_priorities.ticket_priority_name,
+        ticket_status_types.ticket_status_name,
+        ticket_types.ticket_type_name,
+        s.full_name AS submitter_name,  /* alias necessary */
+        d.full_name AS developer_name   /* alias necessary */
+        FROM tickets 
+        JOIN users s ON tickets.submitter = s.user_id
+        JOIN users d ON tickets.developer_assigned = d.user_id
+        JOIN projects ON tickets.project = projects.project_id
+        JOIN ticket_status_types ON tickets.type = ticket_status_types.ticket_status_id
+        JOIN ticket_priorities ON tickets.priority = ticket_priorities.ticket_priority_id
+        JOIN ticket_types ON tickets.type =ticket_types.ticket_type_id
+        WHERE tickets.project = ?";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute([$project_id]);
+        $tickets = $stmt->fetchAll();
+        return $tickets;
+    }
+    protected function db_create_notification($notification_type, $user_id, $created_by)
+    {
+        $sql = "INSERT INTO notifications(notification_type, user_id, unseen, created_by) VALUES(?, ?, ?, ?)";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute([$notification_type, $user_id, 1, $created_by]);
+    }
 }
-
-
+ 
 /*
 A 'statement' is any command that database understands
 A 'query' is a select statement

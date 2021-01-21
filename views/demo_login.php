@@ -69,7 +69,7 @@ if (isset($_SESSION['user_id'])) {
 </form>
 
 <form class="hidden" id="submitter_login" action="login.php" method="POST">
-    <input type="hidden" name="email" value="nbohr@gmail.com">
+    <input type="hidden" name="email" value="demosub@gmail.com">
     <input type="hidden" name="pwd" value="stjerne">
     <input type="hidden" name="login_submit" value="">
 </form>

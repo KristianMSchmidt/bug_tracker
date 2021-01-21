@@ -1,0 +1,108 @@
+/* Style for the shared ui-frame - top navbar, sidebar, main-area */
+
+* {
+  box-sizing: border-box; //paddings and borders should not change box sizes
+}
+
+body,
+html {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  height: 100%;
+}
+
+/* Top nav bar */
+.my_navbar {
+  display: flex;
+  flex-direction: row;
+  /*height: 70px; */
+  align-items: center; // vertically centers items in the navbar
+  background-color: #343a40;
+  color: #6c757d;
+
+  .nav_list {
+    list-style: none; /*Don't show 'list-dots' of any type! */
+    li {
+      a {
+        transition: all 0.3s ease 0s;
+      }
+    }
+  }
+  ul {
+    padding-left: 0;
+    &.flatten {
+      li {
+        display: inline;
+      }
+    }
+  }
+  .branding_area {
+    display: flex;
+    flex-direction: row;
+    padding-left: 1rem;
+    flex: 5; // relative with of this ares. Should be same number as sidebar
+    align-items: center; // Alignment along cross-axis
+    .logo {
+      font-size: 1.1rem;
+      font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+    }
+  }
+  .main_nav {
+    display: flex;
+    flex-direction: row;
+    flex: 30;
+    align-items: center; //Alignment along cross-axis
+    padding-right: 1em;
+    padding-left: 1em;
+    .left_main_nav {
+      margin-right: auto; //Makes it flow to the left
+    }
+  }
+}
+
+/* sidebar and main */
+
+.sidebar_and_main_container {
+  flex: 1; //Will make this area fill out the entire container
+  display: flex;
+  flex-direction: row;
+  background-color: white;
+
+  .sidebar {
+    display: flex;
+    flex-direction: column;
+    flex: 5; /* how much of the flexbox space should the sidebar take, relative to main area*/
+    /*align-items: center;*/
+    background-color: lightsteelblue;
+    line-height: 1rem;
+    a {
+      padding: 1em 0.7em 1rem 0.7rem; /*top, right, bottom, left */
+      text-decoration: none;
+      font-size: 0.88em;
+      color: black;
+      display: block;
+      &.active {
+        background-color: #a0b2c9;
+      }
+      &:hover {
+        color: white;
+        background-color: #a0b2c9;
+      }
+    }
+  }
+
+  .main {
+    flex: 30; /* how much of the flexbox space should the main area take, relative to sidebar */
+    display: flex;
+    align-items: stretch; /*makes content-div inside main fill out main area vertically */
+    justify-content: center; /* horizontally centers content-div inside main */
+    padding-top: 1em;
+    background-color: #f9f9f9;
+  }
+  .new_main {
+    flex: 30; /* how much of the flexbox space should the main area take, relative to sidebar */
+    background-color: #f9f9f9;
+    padding: 1em;
+  }
+}

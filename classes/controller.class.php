@@ -100,4 +100,24 @@ class Controller extends Model
     {
         $this->db_set_role($user_id, $role_id);
     }
+
+    public function get_project_by_id($project_id)
+    {
+        $results = $this->db_get_project_by_id($project_id);
+        return $results;
+    }
+    public function get_project_users($project_id)
+    {
+        $results = $this->db_get_project_users($project_id);
+        return $results;
+    }
+    public function get_tickets_by_project($project_id)
+    {
+        $results = $this->db_get_tickets_by_project($project_id);
+        return $results;
+    }
+    public function create_notification($notification_type, $user_id, $created_by)
+    {
+        $this->db_create_notification($notification_type, $user_id, $created_by);
+    }
 }

@@ -57,6 +57,7 @@ if (isset($_SESSION['user_id'])) {
                 <div class="dropdown">
                     <!-- notifications dropdown btn -->
                     <?php if ($data['num_unseen'] > 0) : ?>
+
                         <button class='dropbtn notifications' onclick="window.location.href = window.location.href + '?seen='">
                             <span id='bell' class='notifications dropbtn fa-stack'>
                                 <i class='notifications dropbtn fas fa-bell fa-stack' data-count=<?php echo $data['num_unseen'] ?>></i>

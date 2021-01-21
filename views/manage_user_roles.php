@@ -4,89 +4,85 @@ include('shared/ui_frame.php');
 $contr = new controller;
 
 if (isset($_POST['assign_role_submit'])) {
-    //print_r($_POST);
-    /*
-    $no_selected_role_error = "";
-    $no_selected_users_error = "";
-    if (!isset($POST['new_role'])) {
-        $no_selected_role_error = "No new role selected";
-    }
-    if (!isset($POST['user_ids'])) {
-        $no_selected_users_error = "Select one or more users";
-    }*/
-
     $new_role = $_POST['new_role'];
     $selected_users = explode(" ", trim($_POST['user_ids']));
-    //print_r($selected_users);
-    //exit();
-
+    /*
+    echo
+    "
+    <script>
+        const selected_users_list = JSON.parse({$_POST['user_ids_json']});
+        alert(selected_users_list)
+    </script>";
+    */
     foreach ($selected_users as $user_id) {
         $contr->set_role(trim($user_id), $new_role);
+        $contr->create_notification(1, $user_id, $_SESSION['user_id']);
     }
 }
 $users = $contr->get_users();
-
 ?>
 
-
-
-<div class="main">
-    <div class="manage_user_roles">
-
-        <div class="row">
-
-            <?php if (isset($_POST['assign_role_submit'])) : ?>
-                <?php $num_changed = 0 ?>
-                <div id="id01" class="w3-modal">
-                    <div class="w3-modal-content">
-                        <div class="w3-container">
-                            <span onclick="document.getElementById('id01').style.display='none'" class="w3-button w3-display-topright">&times;</span>
-                            <div class="container">
-                                <p>
-                                    You succesfully updated the following users
-                                </p>
-                                <div class="container w3-responsive">
-                                    <table class="table striped bordered">
-                                        <tr>
-                                            <th>Name</th>
-                                            <th>Email</th>
-                                            <th>New Role</th>
-                                        </tr>
-                                        <?php foreach ($selected_users as $user_id) : ?>
-                                            <?php $user = $contr->get_user_by_id($user_id);
-                                            $num_changed += 1 ?>
-                                            <tr>
-                                                <td><?php echo $user['full_name'] ?></td>
-                                                <td><?php echo $user['email'] ?></td>
-                                                <td><?php echo $user['role_name'] ?></td>
-                                            </tr>
-                                        <?php endforeach; ?>
-                                    </table>
-                                </div>
-                                <p>Showing 1-<?php echo $num_changed; ?> of <?php echo $num_changed; ?> entries</p>
-                            </div>
+<div class="new_main">
+    <!-- Model response message -->
+    <?php if (isset($_POST['assign_role_submit'])) : ?>
+        <?php $num_changed = 0 ?>
+        <div id="id01" class="w3-modal">
+            <div class="w3-modal-content">
+                <div class="w3-container">
+                    <span onclick="document.getElementById('id01').style.display='none'" class="w3-button w3-display-topright">&times;</span>
+                    <div class="container">
+                        <p>
+                            You succesfully updated the following users
+                        </p>
+                        <div class="container w3-responsive">
+                            <table class="table striped bordered">
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>New Role</th>
+                                </tr>
+                                <?php foreach ($selected_users as $user_id) : ?>
+                                    <?php $user = $contr->get_user_by_id($user_id);
+                                    $num_changed += 1 ?>
+                                    <tr>
+                                        <td><?php echo $user['full_name'] ?></td>
+                                        <td><?php echo $user['email'] ?></td>
+                                        <td><?php echo $user['role_name'] ?></td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            </table>
                         </div>
+                        <p>Showing 1-<?php echo $num_changed; ?> of <?php echo $num_changed; ?> entries</p>
                     </div>
                 </div>
-                <script>
-                    document.getElementById('id01').style.display = 'block';
-                </script>
-            <?php endif ?>
-            <div class="col_two">
-                <h1>Manage User Roles</h1>
-                <h4>Select One or more Users</h4>
+            </div>
+        </div>
+        <script>
+            document.getElementById('id01').style.display = 'block';
+        </script>
+    <?php endif ?>
+
+    <h1>Manage User Roles</h1>
+    <div class="container">
+        <div class="manage_user_roles">
+
+            <div class="area_one">
+                <h4>Select One or more Users </h4>
                 <div class="scroll">
                     <?php foreach ($users as $user) : ?>
-                        <p id="<?php echo $user['user_id'] ?>" onclick="toggle_user(<?php echo $user['user_id'] ?>)"><?php echo $user['full_name'] ?></p>
+                        <?php $demo_users = array("Demo Admin", "Demo PM", "Demo Dev", "Demo Sub") ?>
+                        <?php if (!in_array($user['full_name'], $demo_users)) : ?>
+                            <p id="<?php echo $user['user_id'] ?>" onclick="toggle_user(<?php echo $user['user_id'] ?>)"><?php echo $user['full_name'] ?></p>
+                        <?php endif ?>
                     <?php endforeach ?>
                 </div>
-                <br>
-                <p id="no_selected_users" class="error" style="margin:0; padding:0"></p>
+                <p id="no_selected_users" class="error"></p>
                 <h4>Select the Role to Assign</h4>
-                <p id="no_selected_role" class="error" style="margin:0; padding:0"></p>
 
                 <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="post" id="assign_role_form">
                     <input type="hidden" name="user_ids" value="" id="input_user_ids">
+                    <!--
+                        <input type="hidden" name="user_ids_json" value="" id="input_user_ids_json">-->
                     <input type="hidden" name="new_role" value="">
                     <input type="hidden" name="assign_role_submit" value="" id="assign_role_submit">
                 </form>
@@ -98,11 +94,12 @@ $users = $contr->get_users();
                     <option value="3">Developer</option>
                     <option value="4">Submitter</option>
                 </select>
+                <p id="no_selected_role" class="error"></p>
 
                 <input type="button" value="Submit" class="btn-primary" onclick="submit_form()">
             </div>
 
-            <div class="col_one">
+            <div class="area_two">
                 <div class="card">
                     <div class="container card-head">
                         <h3>Your Personnel</h3>
@@ -110,6 +107,11 @@ $users = $contr->get_users();
                     <div class="container">
                         <p>
                             All users in your database
+                            <!--
+                            <form action="" method="post">
+                                Show <input type="number" name="show_count" value="10" class="show_count"> Entries
+                            </form>
+                            -->
                         </p>
                         <div class="container w3-responsive">
                             <table class="table striped bordered">
@@ -131,54 +133,59 @@ $users = $contr->get_users();
                     </div>
                 </div>
             </div>
+
         </div>
-
-
     </div>
+</div>
+<script>
+    var selected_users = [];
 
-    <script>
-        var selected_users = [];
+    function toggle_user(user_id) {
+        //document.getElementById(user_id).classList.toggle("active");
+        if (!document.getElementById(user_id).classList.contains("active")) {
+            document.getElementById(user_id).classList.add("active");
+            selected_users.push(user_id);
+        } else {
+            document.getElementById(user_id).classList.remove("active");
+            selected_users = selected_users.filter(function(value, index, arr) {
+                return value != user_id;
+            })
+        }
 
-        function toggle_user(user_id) {
-            //document.getElementById(user_id).classList.toggle("active");
-            if (!document.getElementById(user_id).classList.contains("active")) {
-                document.getElementById(user_id).classList.add("active");
-                selected_users.push(user_id);
-            } else {
-                document.getElementById(user_id).classList.remove("active");
-                selected_users = selected_users.filter(function(value, index, arr) {
-                    return value != user_id;
-                })
-            }
+    }
+
+    function submit_form() {
+        var errors = false;
+        if (selected_users.length == 0) {
+            document.getElementById("no_selected_users").innerHTML = "Select one or more Users";
+            errors = true;
+        } else {
+            document.getElementById("no_selected_users").innerHTML = "";
+        }
+        if (document.getElementById("selected_role").value == "") {
+            document.getElementById("no_selected_role").innerHTML = "Select new Role";
+            errors = true;
+        } else {
+            document.getElementById("no_selected_role").innerHTML = "";
+        };
+        if (!errors) {
             var selected_users_str = ""
             selected_users.forEach(user_id => {
                 selected_users_str += " " + user_id;
             });
             document.getElementById("input_user_ids").value = selected_users_str;
+            /*
+            document.getElementById("input_user_ids_json").value = JSON.stringify({
+                'selected_users_list': selected_users
+            });
+            */
+            document.getElementById("assign_role_submit").value = "submited";
+            document.getElementById("assign_role_form").submit();
         }
-
-        function submit_form() {
-            var errors = false;
-            if (selected_users.length == 0) {
-                document.getElementById("no_selected_users").innerHTML = "Select one or more Users";
-                errors = true;
-            } else {
-                document.getElementById("no_selected_users").innerHTML = "";
-            }
-            if (document.getElementById("selected_role").value == "") {
-                document.getElementById("no_selected_role").innerHTML = "Select New role";
-                errors = true;
-            } else {
-                document.getElementById("no_selected_role").innerHTML = "";
-            };
-            if (!errors) {
-                document.getElementById("assign_role_submit").value = "submited";
-                document.getElementById("assign_role_form").submit();
-            }
-        }
-    </script>
-
-    <?php include('shared/closing_tags.php') ?>
-    <script>
-        set_active_link("manage_user_roles");
-    </script>
+    }
+</script>
+</div>
+<?php include('shared/closing_tags.php') ?>
+<script>
+    set_active_link("manage_user_roles");
+</script>
