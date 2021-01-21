@@ -14,9 +14,11 @@ class Model extends Dbh
     {
         $sql  = "SELECT * 
                  FROM users JOIN user_roles
-                 ON users.role_id = user_roles.role_id";
+                 ON users.role_id = user_roles.role_id
+                 ORDER by users.full_name";
         $stmt = $this->connect()->query($sql); //stmt is a "PDO Stamement Object"
         $results = $stmt->fetchAll();
+
         return $results;
     }
 
@@ -221,6 +223,13 @@ class Model extends Dbh
         $sql = "INSERT INTO sessions(user_id, session_id_php) VALUES(?, ?)";
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute([$user_id, $session_id]);
+    }
+
+    protected function db_set_role($user_id, $role_id)
+    {
+        $sql = "UPDATE users SET role_id = ? WHERE user_id = ?";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute([$role_id, $user_id]);
     }
 }
 

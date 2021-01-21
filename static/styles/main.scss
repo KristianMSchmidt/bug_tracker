@@ -1,4 +1,4 @@
-//Lots of inspiration here: https://www.w3schools.com/w3css/4/w3.css
+@import "pages";
 
 $primary-bg-color: lightsteelblue;
 $secondary-bg-color: #a0b2c9;
@@ -63,92 +63,93 @@ html {
     .left_main_nav {
       margin-right: auto; //Makes it flow to the left
     }
-    .dropdown {
-      position: relative;
-      display: inline-block;
-      .dropbtn {
-        background-color: inherit;
-        border: none;
-        margin-left: 0;
-        color: black; //#303030;
-        font-size: 1em;
-        padding-left: 1em;
-        padding-right: 1em;
-        cursor: pointer;
-        outline: none;
-
-        &:hover,
-        :focus {
-          /*color: white;*/
-          border: 0;
-          outline: none;
-        }
-        &:visited {
-          border: 0;
-          outline: none;
-        }
-
-        i {
-          margin: 0;
-          padding: 0;
-        }
-        .fa-stack[data-count]:after {
-          position: absolute;
-          right: 0%;
-          top: 1%;
-          content: attr(data-count);
-          font-size: 60%;
-          padding: 0.5em;
-          border-radius: 999px;
-          line-height: 0.75em;
-          color: white;
-          background: rgba(255, 0, 0, 0.85);
-          text-align: center;
-          font-weight: bold;
-        }
-      }
-
-      .dropdown-content {
-        display: none;
-        position: absolute;
-        background-color: white; // #f1f1f1;
-        max-height: 20em;
-        min-width: 14em;
-
-        box-shadow: 0em 0.25em 0.5em 0em rgba(0, 0, 0, 0.2);
-        z-index: 1;
-
-        &.notifications {
-          right: 0;
-          overflow-y: scroll;
-        }
-
-        &.user_actions {
-          right: 0;
-          overflow-y: scroll;
-        }
-
-        a {
-          color: black;
-          padding: 12px 16px;
-          text-decoration: none;
-          display: block;
-          &:hover {
-            background-color: #f1f1f1; // #ddd;
-          }
-        }
-      }
-      .hidden {
-        display: none;
-      }
-
-      .show {
-        display: block;
-      }
-    }
   }
 }
 
+.dropdown {
+  position: relative;
+  display: inline-block;
+  .dropbtn {
+    background-color: inherit;
+    border: none;
+    margin-left: 0;
+    color: black; //#303030;
+    font-size: 1em;
+    padding-left: 1em;
+    padding-right: 1em;
+    cursor: pointer;
+    outline: none;
+
+    &:hover,
+    :focus {
+      /*color: white;*/
+      border: 0;
+      outline: none;
+    }
+    &:visited {
+      border: 0;
+      outline: none;
+    }
+
+    i {
+      margin: 0;
+      padding: 0;
+    }
+    .fa-stack[data-count]:after {
+      position: absolute;
+      right: 0%;
+      top: 1%;
+      content: attr(data-count);
+      font-size: 60%;
+      padding: 0.5em;
+      border-radius: 999px;
+      line-height: 0.75em;
+      color: white;
+      background: rgba(255, 0, 0, 0.85);
+      text-align: center;
+      font-weight: bold;
+    }
+  }
+
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: white; // #f1f1f1;
+    max-height: 20em;
+    min-width: 14em;
+
+    box-shadow: 0em 0.25em 0.5em 0em rgba(0, 0, 0, 0.2);
+    z-index: 1;
+
+    &.notifications {
+      right: 0;
+      overflow-y: scroll;
+    }
+
+    &.user_actions {
+      right: 0;
+      overflow-y: scroll;
+    }
+
+    a,
+    p {
+      color: black;
+      padding: 12px 16px;
+      text-decoration: none;
+      display: block;
+      &:hover {
+        background-color: #f1f1f1; // #ddd;
+      }
+    }
+  }
+  .hidden {
+    display: none;
+  }
+
+  .show {
+    display: block;
+  }
+}
 .sidebar_and_main_container {
   flex: 1; //Will make this area fill out the entire container
   display: flex;
@@ -184,6 +185,7 @@ html {
     align-items: stretch; /*makes content-div inside main fill out main area vertically */
     justify-content: center; /* horizontally centers content-div inside main */
     padding-top: 1em;
+    background-color: #f9f9f9;
 
     .row {
       display: flex;
@@ -228,18 +230,53 @@ html {
       }
     }
     .manage_user_roles {
-      width: 95%;
-      .row {
+      .row_ {
         display: flex;
-        flex: 1;
         flex-direction: row;
-        justify-content: stretch;
-        align-items: stretch;
 
-        .col {
-          justify-content: flex-start;
-          align-items: flex-start;
+        .col_one {
+          display: flex;
+          flex: 1;
+          flex-direction: column;
+          //justify-content: center;
+          //align-items: center;
         }
+        .col_two {
+          display: flex;
+          flex: 2;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+        }
+      }
+
+      .scroll {
+        background-color: white;
+        width: 300px;
+        height: 120px;
+        border: 1px solid black;
+        overflow-y: scroll;
+        line-height: 1.5;
+      }
+
+      .scroll > p {
+        margin: 0.1em;
+        padding-left: 0.25em;
+      }
+
+      .active {
+        background-color: #ccc;
+      }
+      .select {
+        padding: 9px 0;
+        width: 300px;
+        border: none;
+        border-bottom: 1px solid #ccc;
+      }
+      .btn-primary {
+        width: 300px;
+        font-size: 15px;
+        height: 30px;
       }
     }
     .profile_settings {
@@ -309,6 +346,7 @@ html {
 }
 .card {
   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+  background-color: white;
   a {
     color: blue;
   }
@@ -353,12 +391,16 @@ tr {
   height: 2em;
   border: 0;
   margin-top: 0.8em;
-  &:hover {
+  /*&:hover {
     background-color: #2a66c9;
-  }
+  }*/
   &:focus {
-    background-color: #2a66c9;
+    // background-color: #2a66c9;
     outline: none;
+    border: 0;
+  }
+  &:active {
+    background-color: #2a66c9;
     border: 0;
   }
 }
@@ -495,6 +537,11 @@ a {
 }
 
 .w3-responsive {
-  display: block;
+  //display: block;
   overflow-x: auto;
+}
+
+// w3-css overrides
+.w3-modal {
+  padding-left: 100px;
 }

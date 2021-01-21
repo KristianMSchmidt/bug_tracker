@@ -96,4 +96,8 @@ class Controller extends Model
     {
         $this->db_set_session($user_id, $session_id);
     }
+    public function set_role($user_id, $role_id)
+    {
+        $this->db_set_role($user_id, $role_id);
+    }
 }

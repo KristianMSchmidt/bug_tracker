@@ -36,7 +36,6 @@ window.onclick = function (event) {
 // Force display notifications
 url = window.location.href
 if (url.split("?")[1] == "seen=") {
-    console.log("hey!")
     document.getElementById("notifications").classList.toggle("show");
 
 }

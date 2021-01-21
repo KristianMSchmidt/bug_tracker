@@ -30,8 +30,11 @@ $users = $contr->get_users();
 
 
 
-<div class="main">
+<div class="main" style="background-color:#f9f9f9">
     <div class="manage_user_roles">
+
+
+
 
         <div class="row">
 
@@ -72,7 +75,7 @@ $users = $contr->get_users();
                     document.getElementById('id01').style.display = 'block';
                 </script>
             <?php endif ?>
-            <div class="col_two">
+            <div class="col">
                 <h1>Manage User Roles</h1>
                 <h4>Select One or more Users</h4>
                 <div class="scroll">
@@ -102,7 +105,7 @@ $users = $contr->get_users();
                 <input type="button" value="Submit" class="btn-primary" onclick="submit_form()">
             </div>
 
-            <div class="col_one">
+            <div class="col flex-2">
                 <div class="card">
                     <div class="container card-head">
                         <h3>Your Personnel</h3>

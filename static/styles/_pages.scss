@@ -1,0 +1,13 @@
+.new_main {
+  flex: 30;
+  background-color: grey;
+  padding-top: 1em;
+
+  /* how much of the flexbox space should the main area take, relative to sidebar */
+}
+
+.template {
+  display: flex;
+  flex-direction: row;
+  background-color: blue;
+}

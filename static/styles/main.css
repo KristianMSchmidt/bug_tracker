@@ -1,3 +1,23 @@
+.new_main {
+  -webkit-box-flex: 30;
+      -ms-flex: 30;
+          flex: 30;
+  background-color: grey;
+  padding-top: 1em;
+  /* how much of the flexbox space should the main area take, relative to sidebar */
+}
+
+.template {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  background-color: blue;
+}
+
 * {
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
@@ -96,12 +116,12 @@ html {
   margin-right: auto;
 }
 
-.my_navbar .main_nav .dropdown {
+.dropdown {
   position: relative;
   display: inline-block;
 }
 
-.my_navbar .main_nav .dropdown .dropbtn {
+.dropdown .dropbtn {
   background-color: inherit;
   border: none;
   margin-left: 0;
@@ -113,24 +133,24 @@ html {
   outline: none;
 }
 
-.my_navbar .main_nav .dropdown .dropbtn:hover,
-.my_navbar .main_nav .dropdown .dropbtn :focus {
+.dropdown .dropbtn:hover,
+.dropdown .dropbtn :focus {
   /*color: white;*/
   border: 0;
   outline: none;
 }
 
-.my_navbar .main_nav .dropdown .dropbtn:visited {
+.dropdown .dropbtn:visited {
   border: 0;
   outline: none;
 }
 
-.my_navbar .main_nav .dropdown .dropbtn i {
+.dropdown .dropbtn i {
   margin: 0;
   padding: 0;
 }
 
-.my_navbar .main_nav .dropdown .dropbtn .fa-stack[data-count]:after {
+.dropdown .dropbtn .fa-stack[data-count]:after {
   position: absolute;
   right: 0%;
   top: 1%;
@@ -145,7 +165,7 @@ html {
   font-weight: bold;
 }
 
-.my_navbar .main_nav .dropdown .dropdown-content {
+.dropdown .dropdown-content {
   display: none;
   position: absolute;
   background-color: white;
@@ -156,32 +176,34 @@ html {
   z-index: 1;
 }
 
-.my_navbar .main_nav .dropdown .dropdown-content.notifications {
+.dropdown .dropdown-content.notifications {
   right: 0;
   overflow-y: scroll;
 }
 
-.my_navbar .main_nav .dropdown .dropdown-content.user_actions {
+.dropdown .dropdown-content.user_actions {
   right: 0;
   overflow-y: scroll;
 }
 
-.my_navbar .main_nav .dropdown .dropdown-content a {
+.dropdown .dropdown-content a,
+.dropdown .dropdown-content p {
   color: black;
   padding: 12px 16px;
   text-decoration: none;
   display: block;
 }
 
-.my_navbar .main_nav .dropdown .dropdown-content a:hover {
+.dropdown .dropdown-content a:hover,
+.dropdown .dropdown-content p:hover {
   background-color: #f1f1f1;
 }
 
-.my_navbar .main_nav .dropdown .hidden {
+.dropdown .hidden {
   display: none;
 }
 
-.my_navbar .main_nav .dropdown .show {
+.dropdown .show {
   display: block;
 }
 
@@ -251,6 +273,7 @@ html {
           justify-content: center;
   /* horizontally centers content-div inside main */
   padding-top: 1em;
+  background-color: #f9f9f9;
 }
 
 .sidebar_and_main_container .main .row {
@@ -326,36 +349,77 @@ html {
   }
 }
 
-.sidebar_and_main_container .main .manage_user_roles {
-  width: 95%;
+.sidebar_and_main_container .main .manage_user_roles .row_ {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
 }
 
-.sidebar_and_main_container .main .manage_user_roles .row {
+.sidebar_and_main_container .main .manage_user_roles .row_ .col_one {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   -webkit-box-flex: 1;
       -ms-flex: 1;
           flex: 1;
-  -webkit-box-orient: horizontal;
+  -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
-      -ms-flex-direction: row;
-          flex-direction: row;
-  -webkit-box-pack: stretch;
-      -ms-flex-pack: stretch;
-          justify-content: stretch;
-  -webkit-box-align: stretch;
-      -ms-flex-align: stretch;
-          align-items: stretch;
+      -ms-flex-direction: column;
+          flex-direction: column;
 }
 
-.sidebar_and_main_container .main .manage_user_roles .row .col {
-  -webkit-box-pack: start;
-      -ms-flex-pack: start;
-          justify-content: flex-start;
-  -webkit-box-align: start;
-      -ms-flex-align: start;
-          align-items: flex-start;
+.sidebar_and_main_container .main .manage_user_roles .row_ .col_two {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-flex: 2;
+      -ms-flex: 2;
+          flex: 2;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.sidebar_and_main_container .main .manage_user_roles .scroll {
+  background-color: white;
+  width: 300px;
+  height: 120px;
+  border: 1px solid black;
+  overflow-y: scroll;
+  line-height: 1.5;
+}
+
+.sidebar_and_main_container .main .manage_user_roles .scroll > p {
+  margin: 0.1em;
+  padding-left: 0.25em;
+}
+
+.sidebar_and_main_container .main .manage_user_roles .active {
+  background-color: #ccc;
+}
+
+.sidebar_and_main_container .main .manage_user_roles .select {
+  padding: 9px 0;
+  width: 300px;
+  border: none;
+  border-bottom: 1px solid #ccc;
+}
+
+.sidebar_and_main_container .main .manage_user_roles .btn-primary {
+  width: 300px;
+  font-size: 15px;
+  height: 30px;
 }
 
 .sidebar_and_main_container .main .profile_settings .card {
@@ -432,6 +496,7 @@ html {
 .card {
   -webkit-box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
           box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+  background-color: white;
 }
 
 .card a {
@@ -486,15 +551,18 @@ tr.amber {
   height: 2em;
   border: 0;
   margin-top: 0.8em;
-}
-
-.btn-primary:hover {
-  background-color: #2a66c9;
+  /*&:hover {
+    background-color: #2a66c9;
+  }*/
 }
 
 .btn-primary:focus {
-  background-color: #2a66c9;
   outline: none;
+  border: 0;
+}
+
+.btn-primary:active {
+  background-color: #2a66c9;
   border: 0;
 }
 
@@ -661,7 +729,10 @@ a {
 }
 
 .w3-responsive {
-  display: block;
   overflow-x: auto;
+}
+
+.w3-modal {
+  padding-left: 100px;
 }
 /*# sourceMappingURL=main.css.map */
