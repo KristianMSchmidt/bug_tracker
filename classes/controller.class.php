@@ -116,8 +116,58 @@ class Controller extends Model
         $results = $this->db_get_tickets_by_project($project_id);
         return $results;
     }
-    public function create_notification($notification_type, $user_id, $created_by)
+    public function create_notification($notification_type, $user_id, $message, $created_by)
     {
-        $this->db_create_notification($notification_type, $user_id, $created_by);
+        $this->db_create_notification($notification_type, $user_id, $message, $created_by);
+    }
+
+    public function get_ticket_by_id($ticket_id)
+    { // Currently not used
+        $ticket = $this->db_get_ticket_by_id($ticket_id);
+        return $ticket;
+    }
+
+    public function get_projects()
+    {
+        $projects = $this->db_get_projects();
+        return $projects;
+    }
+
+    public function get_priorities()
+    {
+        $priorities = $this->db_get_priorities();
+        return $priorities;
+    }
+
+    public function get_ticket_types()
+    {
+        $ticket_types = $this->db_get_ticket_types();
+        return $ticket_types;
+    }
+
+    public function get_ticket_status_types()
+    {
+        $ticket_status_types = $this->db_get_ticket_status_types();
+        return $ticket_status_types;
+    }
+
+    public function set_ticket($data)
+    {
+        $this->db_set_ticket($data);
+    }
+
+    public function get_role_name_by_role_id($role_id)
+    {
+        return $this->db_get_role_name_by_role_id($role_id);
+    }
+
+    public function add_to_ticket_history($ticket_id, $event_type, $old_value, $new_value)
+    {
+        $this->db_add_to_ticket_history($ticket_id, $event_type, $old_value, $new_value);
+    }
+
+    public function get_ticket_history($ticket_id)
+    {
+        return $this->db_get_ticket_history($ticket_id);
     }
 }

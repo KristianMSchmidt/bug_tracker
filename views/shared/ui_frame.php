@@ -73,22 +73,33 @@ if (isset($_SESSION['user_id'])) {
 
                     <!-- notifications dropdown content -->
                     <div id="notifications" class="dropdown-content notifications">
-                        <?php foreach ($data['notifications'] as $notification) : ?>
-                            <?php
-                            if ($notification['notification_type'] == 1) {
-                                echo '<a href="profile_settings.php">';
-                            } elseif ($notification['notification_type'] == 2) {
-                                echo '<a href="my_tickets.php">';
-                            } elseif ($notification['notification_type'] == 3) {
-                                echo '<a href="my_projects.php">';
-                            }
-                            ?>
-                            <?php echo '<b>' . $notification["created_by"] . '</b>'; ?>
-                            <?php echo $notification["notification"]; ?>
-                            <?php $elapsed_time = human_timing(strtotime($notification["created_at"])); ?>
-                            <?php echo '<br>' . $elapsed_time . ' ago'; ?>
-                            </a>
-                        <?php endforeach; ?>
+                        <?php if (count($data['notifications']) == 0) : ?>
+                            <a href="#">You don't have any notifications yet</a>
+                        <?php else : ?>
+                            <?php foreach ($data['notifications'] as $notification) : ?>
+                                <?php
+                                if ($notification['type'] == 1) {
+                                    /*role update*/
+                                    echo '<a href="profile_settings.php">';
+                                } elseif ($notification['type'] == 2) {
+                                    /* assigned to ticket */
+                                    echo '<a href="my_tickets.php">';
+                                } elseif ($notification['type'] == 3) {
+                                    /* un-assigned from ticket */
+                                    echo '<a href="my_tickets.php">';
+                                } elseif ($notification['type'] == 4) {
+                                    /* enrolled in project */
+                                    echo '<a href="my_projects.php">';
+                                }
+                                ?>
+                                <?php echo '<b>' . $notification["created_by"] . '</b>'; ?>
+                                <?php echo $notification["message"]; ?>
+                                <?php $elapsed_time = human_timing(strtotime($notification["created_at"])); ?>
+                                <?php echo '<br>' . $elapsed_time . ' ago'; ?>
+
+                                </a>
+                            <?php endforeach; ?>
+                        <?php endif ?>
                     </div>
 
                     <!-- user actions dropdown btn -->

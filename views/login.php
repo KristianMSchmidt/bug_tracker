@@ -41,7 +41,7 @@ if (isset($_POST['login_submit'])) {
                     <label>Email</label>
                 </p>
                 <p class="error"><?php echo $feedback['input_errors']['email'] ?? '' ?>
-                <p>
+                </p>
                 <p>
                     <input type="text" name="pwd" class="input" value="<?php echo $_POST['pwd'] ?? '' ?>">
                     <label>Password</label>

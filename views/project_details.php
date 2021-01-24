@@ -1,6 +1,6 @@
 <?php
 include('../includes/login_check.inc.php');
-include('../includes/post_check.inc.php');
+//include('../includes/post_check.inc.php');
 include('shared/ui_frame.php');
 
 $contr = new controller;
@@ -76,7 +76,7 @@ $tickets = $contr->get_tickets_by_project($_POST['project_id']);
                                     <td><?php echo $ticket['developer_name'] ?></td>
                                     <td><?php echo $ticket['ticket_status_name'] ?></td>
                                     <td><?php echo $ticket['created_at'] ?></td>
-                                    <td><a href="#">More Details</a></td>
+                                    <td><a href="ticket_details.php?ticket_id=<?php echo $ticket['ticket_id']; ?>">More Details</a></td>
                                 </tr>
                             <?php endforeach; ?>
                         </table>

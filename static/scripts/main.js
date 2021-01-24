@@ -23,7 +23,6 @@ window.onclick = function (event) {
     document.getElementById("notifications").classList.remove("show");
   } else{
     document.getElementById("notifications").classList.toggle("show");
-    //console.log("notifications 2")
   }
   if (!event.target.classList.contains("user_actions")){
     document.getElementById("user_actions").classList.remove("show");

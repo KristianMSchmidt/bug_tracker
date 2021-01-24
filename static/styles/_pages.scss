@@ -1,5 +1,24 @@
 /* Style of individual pages, i.e. the content of the main area */
 
+.edit_ticket {
+  .card-content {
+    display: flex;
+    flex-direction: row;
+    .left {
+      display: flex;
+      flex-direction: column;
+      flex: 2;
+      padding-right: 4em;
+    }
+    .right {
+      display: flex;
+      flex-direction: column;
+      flex: 3;
+      padding-right: 1em;
+    }
+  }
+}
+
 .project_details {
   display: flex;
   flex-direction: column;

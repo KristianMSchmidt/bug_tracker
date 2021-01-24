@@ -117,7 +117,7 @@ class SignupHandler
             $this->data['role_id']
         );
         $new_user = $contr->get_user_by_email($this->data['email']);
-        set_session_vars($new_user);
+        set_session_vars($new_user, $contr);
         $this->signup_succes = True;
     }
 }

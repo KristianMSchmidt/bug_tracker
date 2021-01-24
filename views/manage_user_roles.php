@@ -3,23 +3,27 @@ include('../includes/login_check.inc.php');
 include('shared/ui_frame.php');
 $contr = new controller;
 
+
 if (isset($_POST['assign_role_submit'])) {
-    $new_role = $_POST['new_role'];
-    $selected_users = explode(" ", trim($_POST['user_ids']));
-    /*
-    echo
-    "
-    <script>
-        const selected_users_list = JSON.parse({$_POST['user_ids_json']});
-        alert(selected_users_list)
-    </script>";
-    */
+    $selected_users = json_decode($_POST['user_ids']);
+    $new_role = $contr->get_role_name_by_role_id($_POST['new_role']);
     foreach ($selected_users as $user_id) {
-        $contr->set_role(trim($user_id), $new_role);
-        $contr->create_notification(1, $user_id, $_SESSION['user_id']);
+        $contr->set_role(trim($user_id),  $_POST['new_role']);
+        $message = "updated your role to '{$new_role['role_name']}'";
+        $contr->create_notification(1, $user_id, $message, $_SESSION['user_id']);
     }
 }
+
+/* Converting PHP array into js-object. I don't use this yet, but will later */
 $users = $contr->get_users();
+$json =  json_encode($users);
+echo "
+<script>
+        var users_js = {$json};
+        console.log(users_js)
+</script>";
+
+
 ?>
 
 <div class="new_main">
@@ -151,7 +155,6 @@ $users = $contr->get_users();
                 return value != user_id;
             })
         }
-
     }
 
     function submit_form() {
@@ -169,16 +172,7 @@ $users = $contr->get_users();
             document.getElementById("no_selected_role").innerHTML = "";
         };
         if (!errors) {
-            var selected_users_str = ""
-            selected_users.forEach(user_id => {
-                selected_users_str += " " + user_id;
-            });
-            document.getElementById("input_user_ids").value = selected_users_str;
-            /*
-            document.getElementById("input_user_ids_json").value = JSON.stringify({
-                'selected_users_list': selected_users
-            });
-            */
+            document.getElementById("input_user_ids").value = JSON.stringify(selected_users);
             document.getElementById("assign_role_submit").value = "submited";
             document.getElementById("assign_role_form").submit();
         }

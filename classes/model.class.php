@@ -61,8 +61,6 @@ class Model extends Dbh
         return $results;
     }
 
-
-
     protected function db_get_users_by_role_id($role_id)
     {
         $sql  = "SELECT *
@@ -106,10 +104,16 @@ class Model extends Dbh
         $sql =
             "SELECT 
            tickets.title,
+           tickets.ticket_id,
+           tickets.type,
+           tickets.priority,
+           tickets.status,
            tickets.created_at,
            tickets.developer_assigned,
            tickets.submitter,
+           tickets.description,
            projects.project_name,
+           projects.project_id,
            ticket_priorities.ticket_priority_name,
            ticket_status_types.ticket_status_name,
            ticket_types.ticket_type_name,
@@ -119,7 +123,7 @@ class Model extends Dbh
            JOIN users s ON tickets.submitter = s.user_id
            JOIN users d ON tickets.developer_assigned = d.user_id
            JOIN projects ON tickets.project = projects.project_id
-           JOIN ticket_status_types ON tickets.type = ticket_status_types.ticket_status_id
+           JOIN ticket_status_types ON tickets.status = ticket_status_types.ticket_status_id
            JOIN ticket_priorities ON tickets.priority = ticket_priorities.ticket_priority_id
            JOIN ticket_types ON tickets.type =ticket_types.ticket_type_id";
 
@@ -191,11 +195,11 @@ class Model extends Dbh
     protected function db_get_notifications_by_user_id($user_id)
     {
         $sql = "SELECT 
-                    unseen, 
-                    notification, 
-                    notification_type, 
+                    notifications.unseen, 
+                    notifications.message,
                     notifications.created_at, 
                     notifications.user_id, 
+                    notification_types.notification_type_id as type, 
                     users.full_name as created_by
                 FROM notifications
                 JOIN notification_types
@@ -260,7 +264,8 @@ class Model extends Dbh
     protected function db_get_tickets_by_project($project_id)
     //all tickets to given project
     {
-        $sql = "SELECT 
+        $sql = "SELECT
+        tickets.ticket_id,
         tickets.title,
         tickets.created_at,
         ticket_priorities.ticket_priority_name,
@@ -281,14 +286,120 @@ class Model extends Dbh
         $tickets = $stmt->fetchAll();
         return $tickets;
     }
-    protected function db_create_notification($notification_type, $user_id, $created_by)
+    protected function db_create_notification($notification_type, $user_id, $message, $created_by)
     {
-        $sql = "INSERT INTO notifications(notification_type, user_id, unseen, created_by) VALUES(?, ?, ?, ?)";
+        $sql = "INSERT INTO notifications(notification_type, user_id, message, unseen, created_by) VALUES(?, ?, ?, ?,?)";
         $stmt = $this->connect()->prepare($sql);
-        $stmt->execute([$notification_type, $user_id, 1, $created_by]);
+        $stmt->execute([$notification_type, $user_id, $message, 1, $created_by]);
+    }
+
+    protected function db_add_to_ticket_history($ticket_id, $event_type, $old_value, $new_value)
+    {
+        $sql = "INSERT INTO ticket_history(ticket_id, event_type, old_value, new_value) VALUES (?,?,?,?)";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute([$ticket_id, $event_type, $old_value, $new_value]);
+    }
+
+
+
+
+    protected function db_get_ticket_by_id($ticket_id)
+    //currently not used
+    {
+        $sql = "SELECT * FROM tickets where tickets.ticket_id = ?";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute([$ticket_id]);
+        $ticket = $stmt->fetch();
+        return $ticket;
+    }
+
+    protected function db_get_projects()
+    //All projects
+    {
+        $sql = "SELECT project_id, project_name FROM projects";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute();
+        $projects = $stmt->fetchAll();
+        return $projects;
+    }
+
+
+    protected function db_get_priorities()
+    //All priority names and their id's
+    {
+        $sql = "SELECT ticket_priority_id, ticket_priority_name FROM ticket_priorities";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute();
+        $priorities = $stmt->fetchAll();
+        return $priorities;
+    }
+
+    protected function db_get_ticket_types()
+    {
+        $sql = "SELECT ticket_type_id, ticket_type_name FROM ticket_types";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute();
+        $types = $stmt->fetchAll();
+        return $types;
+    }
+
+    protected function db_get_ticket_status_types()
+    //All status names and their id's
+    {
+        $sql = "SELECT ticket_status_id, ticket_status_name FROM ticket_status_types";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute();
+        $status_types = $stmt->fetchAll();
+        return $status_types;
+    }
+
+    protected function db_set_ticket($data)
+    {
+
+        $sql = "UPDATE tickets 
+                SET 
+                    title = ?,
+                    project = ?,
+                    developer_assigned = ?,
+                    priority=?,
+                    status = ?,
+                    type=?,
+                    description=?
+                WHERE ticket_id = ?";
+
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute([
+            $data['title'],
+            $data['project'],
+            $data['developer_assigned'],
+            $data['priority'],
+            $data['status'],
+            $data['type'],
+            $data['description'],
+            $data['ticket_id']
+        ]);
+    }
+
+    protected function db_get_role_name_by_role_id($role_id)
+    {
+        $sql = "SELECT role_name 
+                FROM user_roles
+                WHERE role_id = ?";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute([$role_id]);
+        $role_name = $stmt->fetch();
+        return $role_name;
+    }
+
+    protected function db_get_ticket_history($ticket_id)
+    {
+        $sql = "SELECT * FROM ticket_history WHERE ticket_id = ?";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute([$ticket_id]);
+        $ticket_history = $stmt->fetchAll();
+        return $ticket_history;
     }
 }
- 
 /*
 A 'statement' is any command that database understands
 A 'query' is a select statement

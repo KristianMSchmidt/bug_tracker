@@ -21,7 +21,7 @@ class Dbh
     {
         $dsn = 'mysql:host=' . $this->host . ';dbname=' . $this->dbName . ';charset=' .  $this->charset;
 
-        // Create PDO ('PHDP Data Object')
+        // Create PDO ('PHD Data Object')
         // The try->catch is important here, as password might otherwise get shown
         try {
             $pdo = new PDO($dsn, $this->user, $this->pwd);
