@@ -391,9 +391,13 @@ class Model extends Dbh
         return $role_name;
     }
 
-    protected function db_get_ticket_history($ticket_id)
+    protected function db_get_ticket_history($ticket_id, $OFFSET, $LIMIT)
     {
-        $sql = "SELECT * FROM ticket_history WHERE ticket_id = ?";
+        $sql = "SELECT * 
+                FROM ticket_history 
+                WHERE ticket_id = ?
+                LIMIT {$LIMIT}
+                OFFSET {$OFFSET}";
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute([$ticket_id]);
         $ticket_history = $stmt->fetchAll();

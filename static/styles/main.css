@@ -176,7 +176,21 @@ html {
 }
 
 /* Style of individual pages, i.e. the content of the main area */
-.edit_ticket .card-content {
+.edit_ticket .card {
+  margin: 1em;
+  padding-bottom: 2em;
+  margin: 1em;
+}
+
+.edit_ticket .card label {
+  margin-bottom: 1em;
+}
+
+.edit_ticket .card .card-head {
+  margin-bottom: 2em;
+}
+
+.edit_ticket .card .card-content .text-input {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -186,7 +200,18 @@ html {
           flex-direction: row;
 }
 
-.edit_ticket .card-content .left {
+.edit_ticket .card .card-content .other-input {
+  margin-top: 1.5em;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+}
+
+.edit_ticket .card .card-content .left {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -197,10 +222,11 @@ html {
   -webkit-box-flex: 2;
       -ms-flex: 2;
           flex: 2;
-  padding-right: 4em;
+  padding-right: 3em;
+  padding-left: 3em;
 }
 
-.edit_ticket .card-content .right {
+.edit_ticket .card .card-content .right {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -211,7 +237,26 @@ html {
   -webkit-box-flex: 3;
       -ms-flex: 3;
           flex: 3;
-  padding-right: 1em;
+  padding-right: 3em;
+  padding-left: 3em;
+}
+
+@media only screen and (max-width: 1050px) {
+  .edit_ticket .card .card-content .text-input {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+  }
+  .edit_ticket .card .card-content .other-input {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+  }
+  .edit_ticket .card .card-content .left {
+    padding-right: 3em;
+  }
 }
 
 .project_details {

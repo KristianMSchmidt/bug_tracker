@@ -1,20 +1,59 @@
 /* Style of individual pages, i.e. the content of the main area */
 
 .edit_ticket {
-  .card-content {
-    display: flex;
-    flex-direction: row;
-    .left {
-      display: flex;
-      flex-direction: column;
-      flex: 2;
-      padding-right: 4em;
+  .card {
+    margin: 1em;
+    padding-bottom: 2em;
+    margin: 1em;
+    label {
+      margin-bottom: 1em;
     }
-    .right {
-      display: flex;
-      flex-direction: column;
-      flex: 3;
-      padding-right: 1em;
+    .card-head {
+      margin-bottom: 2em;
+    }
+
+    .card-content {
+      .text-input {
+        display: flex;
+        flex-direction: row;
+      }
+      .other-input {
+        margin-top: 1.5em;
+        display: flex;
+        flex-direction: row;
+      }
+      .left {
+        display: flex;
+        flex-direction: column;
+        flex: 2;
+        padding-right: 3em;
+        padding-left: 3em;
+      }
+      .right {
+        display: flex;
+        flex-direction: column;
+        flex: 3;
+        padding-right: 3em;
+        padding-left: 3em;
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 1050px) {
+  .edit_ticket {
+    .card {
+      .card-content {
+        .text-input {
+          flex-direction: column;
+        }
+        .other-input {
+          flex-direction: column;
+        }
+        .left {
+          padding-right: 3em;
+        }
+      }
     }
   }
 }

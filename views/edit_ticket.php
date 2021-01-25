@@ -4,8 +4,7 @@ include('../includes/post_check.inc.php');
 include('shared/ui_frame.php');
 $contr = new Controller();
 
-if (isset($_POST['edit_ticket_submit'])) {
-    // $old_title = $ticket['title']... etc... sådan kunne man også gøre
+if ($_POST['requested_action'] == "edit_ticket_attempt") {
 
     $no_changes = true;
     if ($_POST['title'] != $_POST['old_title']) {
@@ -66,108 +65,121 @@ $developers = $contr->get_users_by_role_id(3);
             <div class="container card-head">
                 <h2>Edit Ticket</h2>
             </div>
+            <p class="error" style="text-align:center"><?php echo $no_changes_error ?? '' ?></p>
 
-            <form action=" <?php echo $_SERVER['PHP_SELF'] ?>" method="POST" class="container" id="edit_ticket_form">
+            <div class="card-content">
+                <form action=" <?php echo $_SERVER['PHP_SELF'] ?>" method="POST" class="container" id="edit_ticket_form">
 
-                <div class="card-content">
-
-                    <div class="left">
-                        <!-- Ticket Title -->
-                        <p>
-                            <input type="text" name="title" class="input" id="title_input" value="<?php echo $ticket['title'] ?? '' ?>">
-                            <label>Ticket Title</label><br>
-                            <span id="title_error" class="error"></span>
-                        </p>
-                        <input type="hidden" name="old_title" value="<?php echo $ticket['title']; ?>">
-
-
-                        <!-- Project -->
-                        <select class="select" name="project">
-                            <option value="<?php echo $ticket['project_id'] ?>" selected><?php echo $ticket['project_name'] ?? '' ?></option>
-                            <?php foreach ($projects as $project) : ?>
-                                <?php if ($project['project_id'] != $ticket['project_id']) : ?>
-                                    <option value=<?php echo $project['project_id'] ?>><?php echo $project['project_name'] ?></option>
-                                <?php endif ?>
-                            <?php endforeach; ?>
-                        </select>
-                        <label>Project</label>
-                        <input type="hidden" name="old_project" value="<?php echo $ticket['project_id']; ?>">
-
-
-                        <!-- Ticket Priority -->
-                        <select class="select" name="priority">
-                            <option value=<?php echo $ticket['priority'] ?> selected><?php echo $ticket['ticket_priority_name']; ?></option>
-                            <?php foreach ($priorities as $priority) : ?>
-                                <?php if ($priority['ticket_priority_id'] != $ticket['priority']) : ?>
-                                    <option value=<?php echo $priority['ticket_priority_id'] ?>><?php echo $priority['ticket_priority_name'] ?></option>
-                                <?php endif ?>
-                            <?php endforeach; ?>
-                        </select>
-                        <label>Ticket Priority</label>
-                        <input type="hidden" name="old_priority" value="<?php echo $ticket['priority']; ?>">
-
-                        <!-- Ticket Type -->
-                        <select class="select" name="type">
-                            <option value=<?php echo $ticket['type'] ?> selected><?php echo $ticket['ticket_type_name'] ?></option>
-                            <?php foreach ($types as $type) : ?>
-                                <?php if ($type['ticket_type_id'] != $ticket['type']) : ?>
-                                    <option value=<?php echo $type['ticket_type_id'] ?>><?php echo $type['ticket_type_name'] ?></option>
-                                <?php endif ?>
-                            <?php endforeach; ?>
-                        </select>
-                        <label>Ticket Type</label>
-                        <input type="hidden" name="old_type" value="<?php echo $ticket['type']; ?>">
-                    </div>
-
-
-                    <div class="right">
-                        <!-- Description -->
-                        <p>
-                            <input type="text" name="description" class="input" id="description_input" value="<?php echo $ticket['description'] ?? '' ?>">
-                            <label>Description</label><br>
-                            <span id="description_error" class="error"></span>
-                        </p>
-                        <p class="error">
-                            <?php echo $feedback['input_errors']['description'] ?? '' ?>
-                        </p>
-                        <input type="hidden" name="old_description" value="<?php echo $ticket['description']; ?>">
-
-
-                        <!-- Developer Assigned -->
-                        <select class="select" name="developer_assigned">
-                            <option value=<?php echo $ticket['developer_assigned'] ?> selected><?php echo $ticket['developer_name'] ?></option>
-                            <?php foreach ($developers as $developer) : ?>
-                                <?php if ($developer['user_id'] != $ticket['developer_assigned']) : ?>
-                                    <option value=<?php echo $developer['user_id'] ?>><?php echo $developer['full_name'] ?></option>
-                                <?php endif ?>
-                            <?php endforeach; ?>
-                        </select>
-                        <label>Assigned Developer</label>
-                        <input type="hidden" name="old_developer_assigned" value="<?php echo $ticket['developer_assigned']; ?>">
-
-
-                        <!-- Ticket Status -->
-                        <select class="select" name="status">
-                            <option value=<?php echo $ticket['status'] ?> selected><?php echo $ticket['ticket_status_name'] ?></option>
-                            <?php foreach ($status_types as $status_type) : ?>
-                                <?php if ($status_type['ticket_status_id'] != $ticket['status']) : ?>
-                                    <option value=<?php echo $status_type['ticket_status_id'] ?>><?php echo $status_type['ticket_status_name'] ?></option>
-                                <?php endif ?>
-                            <?php endforeach; ?>
-                        </select>
-                        <label>Ticket Status</label>
-                        <input type="hidden" name="old_status" value="<?php echo $ticket['status']; ?>">
-
-                        <!-- Other post items we'll need -->
-                        <input type="hidden" name="ticket_id" value="<?php echo $ticket['ticket_id']; ?>">
-                        <input type='hidden' name='ticket_json' id="ticket_json" value="">
-                        <p class=" error"><?php echo $no_changes_error ?? '' ?></p>
-
-                        <!-- Submit button -->
-                        <div class="container" style="text-align:center">
-                            <input input="button" name="edit_ticket_submit" value="Update Ticket" class="btn-primary" onclick="submit_form()">
+                    <div class="text-input">
+                        <div class="left">
+                            <!-- Title -->
+                            <p>
+                                <input type="text" name="title" class="input" id="title_input" value="<?php echo $ticket['title'] ?? '' ?>">
+                                <label>Ticket Title</label><br>
+                                <span id="title_error" class="error"></span>
+                            </p>
+                            <input type="hidden" name="old_title" value="<?php echo $ticket['title']; ?>">
                         </div>
-            </form>
+                        <div class="right">
+                            <!-- Description -->
+                            <p>
+                                <input type="text" name="description" class="input" id="description_input" value="<?php echo $ticket['description'] ?? '' ?>">
+                                <label>Description</label><br>
+                                <span id="description_error" class="error"></span>
+                            </p>
+                            <p class="error">
+                                <?php echo $feedback['input_errors']['description'] ?? '' ?>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="other-input">
+                        <div class="left">
+                            <!-- Ticket Title -->
+
+
+
+                            <!-- Project -->
+                            <select class="select" name="project">
+                                <option value="<?php echo $ticket['project_id'] ?>" selected><?php echo $ticket['project_name'] ?? '' ?></option>
+                                <?php foreach ($projects as $project) : ?>
+                                    <?php if ($project['project_id'] != $ticket['project_id']) : ?>
+                                        <option value=<?php echo $project['project_id'] ?>><?php echo $project['project_name'] ?></option>
+                                    <?php endif ?>
+                                <?php endforeach; ?>
+                            </select>
+                            <label>Project</label>
+                            <input type="hidden" name="old_project" value="<?php echo $ticket['project_id']; ?>">
+
+
+                            <!-- Ticket Priority -->
+                            <select class="select" name="priority">
+                                <option value=<?php echo $ticket['priority'] ?> selected><?php echo $ticket['ticket_priority_name']; ?></option>
+                                <?php foreach ($priorities as $priority) : ?>
+                                    <?php if ($priority['ticket_priority_id'] != $ticket['priority']) : ?>
+                                        <option value=<?php echo $priority['ticket_priority_id'] ?>><?php echo $priority['ticket_priority_name'] ?></option>
+                                    <?php endif ?>
+                                <?php endforeach; ?>
+                            </select>
+                            <label>Ticket Priority</label>
+                            <input type="hidden" name="old_priority" value="<?php echo $ticket['priority']; ?>">
+
+                            <!-- Ticket Type -->
+                            <select class="select" name="type">
+                                <option value=<?php echo $ticket['type'] ?> selected><?php echo $ticket['ticket_type_name'] ?></option>
+                                <?php foreach ($types as $type) : ?>
+                                    <?php if ($type['ticket_type_id'] != $ticket['type']) : ?>
+                                        <option value=<?php echo $type['ticket_type_id'] ?>><?php echo $type['ticket_type_name'] ?></option>
+                                    <?php endif ?>
+                                <?php endforeach; ?>
+                            </select>
+                            <label>Ticket Type</label>
+                            <input type="hidden" name="old_type" value="<?php echo $ticket['type']; ?>">
+                        </div>
+                        <div class="right">
+
+                            <input type="hidden" name="old_description" value="<?php echo $ticket['description']; ?>">
+
+
+                            <!-- Developer Assigned -->
+                            <select class="select" name="developer_assigned">
+                                <option value=<?php echo $ticket['developer_assigned'] ?> selected><?php echo $ticket['developer_name'] ?></option>
+                                <?php foreach ($developers as $developer) : ?>
+                                    <?php if ($developer['user_id'] != $ticket['developer_assigned']) : ?>
+                                        <option value=<?php echo $developer['user_id'] ?>><?php echo $developer['full_name'] ?></option>
+                                    <?php endif ?>
+                                <?php endforeach; ?>
+                            </select>
+                            <label>Assigned Developer</label>
+                            <input type="hidden" name="old_developer_assigned" value="<?php echo $ticket['developer_assigned']; ?>">
+
+
+                            <!-- Ticket Status -->
+                            <select class="select" name="status">
+                                <option value=<?php echo $ticket['status'] ?> selected><?php echo $ticket['ticket_status_name'] ?></option>
+                                <?php foreach ($status_types as $status_type) : ?>
+                                    <?php if ($status_type['ticket_status_id'] != $ticket['status']) : ?>
+                                        <option value=<?php echo $status_type['ticket_status_id'] ?>><?php echo $status_type['ticket_status_name'] ?></option>
+                                    <?php endif ?>
+                                <?php endforeach; ?>
+                            </select>
+                            <label>Ticket Status</label>
+                            <input type="hidden" name="old_status" value="<?php echo $ticket['status']; ?>">
+
+                            <!-- Other post items we'll need -->
+                            <input type="hidden" name="ticket_id" value="<?php echo $ticket['ticket_id']; ?>">
+                            <input type='hidden' name='ticket_json' id="ticket_json" value="">
+
+                            <!-- hidden input -->
+                            <input type="hidden" name="requested_action" value="edit_ticket_attempt">
+
+                            <!-- Submit button -->
+                            <div class="container" style="text-align:center">
+                                <button class="btn-primary" onclick="submit_form()">Make Changes</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 </div>

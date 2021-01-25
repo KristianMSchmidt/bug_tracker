@@ -93,6 +93,7 @@ $tickets_str = json_encode($tickets);
 
 <form action="edit_ticket.php" method="post" id="edit_ticket_form">
     <input type="hidden" name="ticket_json" id="ticket_json" value="">
+    <input type="hidden" name="requested_action" value="show_edit_ticket_form">
 </form>
 
 <script>
