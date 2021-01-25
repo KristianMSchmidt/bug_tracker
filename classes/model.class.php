@@ -105,15 +105,15 @@ class Model extends Dbh
             "SELECT 
            tickets.title,
            tickets.ticket_id,
-           tickets.type,
+           /*tickets.type,
            tickets.priority,
-           tickets.status,
+           tickets.status,*/
            tickets.created_at,
-           tickets.developer_assigned,
-           tickets.submitter,
-           tickets.description,
+           /*tickets.developer_assigned,*/
+           /*tickets.submitter,*/
+           /*tickets.description,*/
            projects.project_name,
-           projects.project_id,
+          /* projects.project_id,*/
            ticket_priorities.ticket_priority_name,
            ticket_status_types.ticket_status_name,
            ticket_types.ticket_type_name,
@@ -263,6 +263,7 @@ class Model extends Dbh
 
     protected function db_get_tickets_by_project($project_id)
     //all tickets to given project
+    // TODO: merge this function with db_get_tickets_by_id
     {
         $sql = "SELECT
         tickets.ticket_id,
@@ -277,7 +278,7 @@ class Model extends Dbh
         JOIN users s ON tickets.submitter = s.user_id
         JOIN users d ON tickets.developer_assigned = d.user_id
         JOIN projects ON tickets.project = projects.project_id
-        JOIN ticket_status_types ON tickets.type = ticket_status_types.ticket_status_id
+        JOIN ticket_status_types ON tickets.status = ticket_status_types.ticket_status_id
         JOIN ticket_priorities ON tickets.priority = ticket_priorities.ticket_priority_id
         JOIN ticket_types ON tickets.type =ticket_types.ticket_type_id
         WHERE tickets.project = ?";
@@ -286,6 +287,41 @@ class Model extends Dbh
         $tickets = $stmt->fetchAll();
         return $tickets;
     }
+
+    protected function db_get_ticket_by_id($ticket_id)
+    {
+        $sql = "SELECT
+        tickets.ticket_id,
+        tickets.type,
+        tickets.status,
+        tickets.priority,
+        tickets.developer_assigned,
+        tickets.submitter,
+        tickets.project,
+        tickets.title,
+        tickets.description,
+        tickets.created_at,
+        ticket_priorities.ticket_priority_name,
+        ticket_status_types.ticket_status_name,
+        ticket_types.ticket_type_name,
+        projects.project_name,
+        s.full_name AS submitter_name,  /* alias necessary */
+        d.full_name AS developer_name   /* alias necessary */
+        FROM tickets 
+        JOIN users s ON tickets.submitter = s.user_id
+        JOIN users d ON tickets.developer_assigned = d.user_id
+        JOIN projects ON tickets.project = projects.project_id
+        JOIN ticket_status_types ON tickets.status = ticket_status_types.ticket_status_id
+        JOIN ticket_priorities ON tickets.priority = ticket_priorities.ticket_priority_id
+        JOIN ticket_types ON tickets.type =ticket_types.ticket_type_id
+        WHERE tickets.ticket_id = ?";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute([$ticket_id]);
+        $tickets = $stmt->fetch();
+        return $tickets;
+    }
+
+
     protected function db_create_notification($notification_type, $user_id, $message, $created_by)
     {
         $sql = "INSERT INTO notifications(notification_type, user_id, message, unseen, created_by) VALUES(?, ?, ?, ?,?)";
@@ -298,19 +334,6 @@ class Model extends Dbh
         $sql = "INSERT INTO ticket_history(ticket_id, event_type, old_value, new_value) VALUES (?,?,?,?)";
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute([$ticket_id, $event_type, $old_value, $new_value]);
-    }
-
-
-
-
-    protected function db_get_ticket_by_id($ticket_id)
-    //currently not used
-    {
-        $sql = "SELECT * FROM tickets where tickets.ticket_id = ?";
-        $stmt = $this->connect()->prepare($sql);
-        $stmt->execute([$ticket_id]);
-        $ticket = $stmt->fetch();
-        return $ticket;
     }
 
     protected function db_get_projects()

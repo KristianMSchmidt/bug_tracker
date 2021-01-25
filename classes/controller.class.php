@@ -122,7 +122,7 @@ class Controller extends Model
     }
 
     public function get_ticket_by_id($ticket_id)
-    { // Currently not used
+    {
         $ticket = $this->db_get_ticket_by_id($ticket_id);
         return $ticket;
     }

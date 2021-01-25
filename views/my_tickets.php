@@ -12,13 +12,8 @@ include('shared/ui_frame.php');
 
 $contr = new Controller;
 $tickets = $contr->get_tickets_by_user($_SESSION['user_id'], $_SESSION['role_name']);
-$tickets_str = json_encode($tickets);
-
 ?>
 
-<script>
-    var tickets_js = <?php echo $tickets_str  ?>
-</script>
 
 <div class="main">
 
@@ -62,11 +57,7 @@ $tickets_str = json_encode($tickets);
                 <p>Showing 0-0 of 0 entries</p>
             </div>
         <?php else : ?>
-            <?php
-                            $j = count($tickets);
-                            for ($i = 0; $i < $j; $i++) :
-                                $ticket = $tickets[$i] ?>
-
+            <?php foreach ($tickets as $ticket) : ?>
                 <tr>
                     <td><?php echo $ticket['title'] ?></td>
                     <td><?php echo $ticket['project_name'] ?></td>
@@ -78,12 +69,12 @@ $tickets_str = json_encode($tickets);
                     <td><?php echo $ticket['created_at'] ?></td>
                     <td style="padding-left: 3em;">
                         <ul style="padding:0; margin:0;">
-                            <li><a href="#" onclick="edit_ticket_form_submitter(<?php echo $i ?>)">Edit</a></li>
+                            <li><a href="#" onclick="edit_ticket_form_submitter(<?php echo $ticket['ticket_id'] ?>)">Edit</a></li>
                             <li><a href="ticket_details.php?ticket_id=<?php echo $ticket['ticket_id'] ?>">Details</a></li>
                         </ul>
                     </td>
                 </tr>
-            <?php endfor ?>
+            <?php endforeach ?>
             </table>
         </div>
         <p>Showing ticket 1-<?php echo count($tickets); ?> out of <?php echo count($tickets); ?>.</p>
@@ -92,13 +83,13 @@ $tickets_str = json_encode($tickets);
 </div>
 
 <form action="edit_ticket.php" method="post" id="edit_ticket_form">
-    <input type="hidden" name="ticket_json" id="ticket_json" value="">
+    <input type="hidden" name="ticket_id" id="ticket_id" value="">
     <input type="hidden" name="requested_action" value="show_edit_ticket_form">
 </form>
 
 <script>
     function edit_ticket_form_submitter(i) {
-        document.getElementById("ticket_json").value = JSON.stringify(tickets_js[i]);
+        document.getElementById("ticket_id").value = i;
         document.getElementById("edit_ticket_form").submit()
     }
 </script>
