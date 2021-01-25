@@ -65,11 +65,9 @@ $developers = $contr->get_users_by_role_id(3);
             <div class="container card-head">
                 <h2>Edit Ticket</h2>
             </div>
-            <p class="error" style="text-align:center"><?php echo $no_changes_error ?? '' ?></p>
 
             <div class="card-content">
                 <form action=" <?php echo $_SERVER['PHP_SELF'] ?>" method="POST" class="container" id="edit_ticket_form">
-
                     <div class="text-input">
                         <div class="left">
                             <!-- Title -->
@@ -171,6 +169,9 @@ $developers = $contr->get_users_by_role_id(3);
 
                             <!-- hidden input -->
                             <input type="hidden" name="requested_action" value="edit_ticket_attempt">
+
+                            <p class="error" style="text-align:center;"><?php echo $no_changes_error ?? '' ?></p>
+
 
                             <!-- Submit button -->
                             <div class="container" style="text-align:center">
