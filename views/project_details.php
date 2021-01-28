@@ -1,6 +1,6 @@
 <?php
 include('../includes/login_check.inc.php');
-//include('../includes/post_check.inc.php');
+include('../includes/post_check.inc.php');
 include('shared/ui_frame.php');
 
 $contr = new controller;
@@ -14,7 +14,7 @@ $tickets = $contr->get_tickets_by_project($_POST['project_id']);
 <div class="new_main">
     <div class="project_details">
         <div class="top">
-            <div class="container card-head">
+            <div class="container">
                 <h1>Details for Project #<?php echo $project['project_id'] ?></h1>
                 <div class="container" style="margin-bottom:1em">
                     <p><span style="color:grey;">Project Name:</span> <?php echo $project['project_name'] ?></p>
@@ -29,7 +29,7 @@ $tickets = $contr->get_tickets_by_project($_POST['project_id']);
                         <h4>Assigned Personel</h4>
                     </div>
                     <div class="container">
-                        <p>Current Users on this Project</p>
+                        <h5>Current Users on this Project</h5>
                     </div>
                     <div class="container w3-responsive">
                         <table class="table striped bordered">
@@ -57,7 +57,7 @@ $tickets = $contr->get_tickets_by_project($_POST['project_id']);
                     </div>
                     <div class="container">
 
-                        <p>Condenced ticket Details</p>
+                        <h5>Condenced ticket Details</h5>
                     </div>
                     <div class="container w3-responsive">
                         <table class="table striped bordered">
@@ -76,7 +76,7 @@ $tickets = $contr->get_tickets_by_project($_POST['project_id']);
                                     <td><?php echo $ticket['developer_name'] ?></td>
                                     <td><?php echo $ticket['ticket_status_name'] ?></td>
                                     <td><?php echo $ticket['created_at'] ?></td>
-                                    <td><a href="ticket_details.php?ticket_id=<?php echo $ticket['ticket_id']; ?>">More Details</a></td>
+                                    <td><a href="#" onclick="ticket_details_submitter(<?php echo $ticket['ticket_id'] ?>)">Ticket Details</a></td>
                                 </tr>
                             <?php endforeach; ?>
                         </table>
@@ -87,6 +87,20 @@ $tickets = $contr->get_tickets_by_project($_POST['project_id']);
 
     </div>
 </div>
+
+
+<form action="ticket_details.php" method="post" id="form">
+    <input type="hidden" name="ticket_id" id="ticket_id" value="">
+    <input type="hidden" name="requested_action" value="">
+</form>
+
+
+<script>
+    function ticket_details_submitter(i) {
+        document.getElementById("ticket_id").value = i;
+        document.getElementById("form").submit()
+    }
+</script>
 
 <?php include('shared/closing_tags.php') ?>
 

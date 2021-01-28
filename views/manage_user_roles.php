@@ -109,14 +109,14 @@ echo "
                         <h3>Your Personnel</h3>
                     </div>
                     <div class="container">
-                        <p>
+                        <h5>
                             All users in your database
                             <!--
                             <form action="" method="post">
                                 Show <input type="number" name="show_count" value="10" class="show_count"> Entries
                             </form>
                             -->
-                        </p>
+                        </h5>
                         <div class="container w3-responsive">
                             <table class="table striped bordered">
                                 <tr>

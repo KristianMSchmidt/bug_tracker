@@ -96,6 +96,8 @@ class EditTicketHandler
         }
         if (!$changes) {
             $this->add_error('no_changes_error', 'No changes made to ticket');
+        } else {
+            $contr->set_ticket($new_ticket);
         }
     }
 

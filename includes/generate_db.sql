@@ -26,8 +26,8 @@ CREATE TABLE users(
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, 
     updated_at TIMESTAMP NULL ON UPDATE CURRENT_TIMESTAMP,
     updated_by INT,
-    FOREIGN KEY (role_id) REFERENCES user_roles(role_id) ON DELETE SET NULL ON UPDATE SET NULL,
-    FOREIGN KEY (updated_by) REFERENCES users(user_id) ON DELETE SET NULL ON UPDATE SET NULL
+    FOREIGN KEY (role_id) REFERENCES user_roles(role_id) ON DELETE SET NULL ON UPDATE CASCADE,
+    FOREIGN KEY (updated_by) REFERENCES users(user_id) ON DELETE SET NULL ON UPDATE CASCADE
 );
 DESCRIBE users;
 
@@ -66,7 +66,7 @@ CREATE TABLE projects(
     project_description TINYTEXT, 
     created_by INT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, 
-    FOREIGN KEY (created_by) REFERENCES users(user_id) ON DELETE SET NULL ON UPDATE SET NULL
+    FOREIGN KEY (created_by) REFERENCES users(user_id) ON DELETE SET NULL ON UPDATE CASCADE
     );
 DESCRIBE projects;
 
@@ -171,8 +171,8 @@ CREATE TABLE ticket_types(
     ticket_type_id INT AUTO_INCREMENT PRIMARY KEY,
     ticket_type_name TINYTEXT NOT NULL
 );
-INSERT INTO ticket_types(ticket_type_name) VALUES('Feaure Reqs.');
-INSERT INTO ticket_types(ticket_type_name) VALUES('Bugs');
+INSERT INTO ticket_types(ticket_type_name) VALUES('Feature Reqst');
+INSERT INTO ticket_types(ticket_type_name) VALUES('Bug');
 INSERT INTO ticket_types(ticket_type_name) VALUES('Other');
     
 DESCRIBE ticket_types;
@@ -215,12 +215,13 @@ CREATE TABLE tickets(
     description TEXT,
     submitter INT, /* the person submitting the ticket*/
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (project) REFERENCES projects(project_id) ON DELETE CASCADE ON UPDATE CASCADE,
-    FOREIGN KEY (developer_assigned) REFERENCES users(user_id) ON DELETE SET NULL ON UPDATE CASCADE,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (project) REFERENCES projects(project_id) ON DELETE CASCADE ON UPDATE CASCADE, /* if project gets deleted, all tickets will as well */
+    FOREIGN KEY (developer_assigned) REFERENCES users(user_id) ON DELETE SET NULL ON UPDATE CASCADE, /*developer can't be deleted, if he is assigned to a ticcket */
     FOREIGN KEY (submitter) REFERENCES users(user_id) ON DELETE SET NULL ON UPDATE CASCADE,
-    FOREIGN KEY (priority) REFERENCES ticket_priorities(ticket_priority_id) ON DELETE SET NULL ON UPDATE CASCADE,
-    FOREIGN KEY (status) REFERENCES ticket_status_types (ticket_status_id) ON DELETE SET NULL ON UPDATE CASCADE,
-    FOREIGN KEY (type) REFERENCES ticket_types(ticket_type_id) ON DELETE SET NULL ON UPDATE CASCADE
+    FOREIGN KEY (priority) REFERENCES ticket_priorities(ticket_priority_id) ON DELETE RESTRICT ON UPDATE CASCADE,
+    FOREIGN KEY (status) REFERENCES ticket_status_types (ticket_status_id) ON DELETE RESTRICT ON UPDATE CASCADE,
+    FOREIGN KEY (type) REFERENCES ticket_types(ticket_type_id) ON DELETE RESTRICT ON UPDATE CASCADE
 );
 DESCRIBE tickets;
 
@@ -442,12 +443,15 @@ SELECT * FROM tickets;
 DROP TABLE IF EXISTS notification_types;
 CREATE TABLE notification_types(
     notification_type_id INT AUTO_INCREMENT PRIMARY KEY,
-    notification tinytext
+    notification_type tinytext
 );
 
-INSERT INTO notification_types(notification) VALUES('updated your role.'); 
-INSERT INTO notification_types(notification) VALUES('assigned you to a new ticket.'); 
-INSERT INTO notification_types(notification) VALUES('enrolled you to a new project'); 
+INSERT INTO notification_types(notification_type) VALUES('role updated'); 
+INSERT INTO notification_types(notification_type) VALUES('assigned to ticket'); 
+INSERT INTO notification_types(notification_type) VALUES('unassigned from ticket'); 
+INSERT INTO notification_types(notification_type) VALUES('enrolled to project'); 
+INSERT INTO notification_types(notification_type) VALUES('account created'); 
+
 
 
 DROP TABLE IF EXISTS notifications;
@@ -455,71 +459,20 @@ CREATE TABLE notifications(
     notification_id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT,
     notification_type INT,
+    message TEXT,
     unseen BOOLEAN, /* 0 is false (notification not seen) 1 is true (seen) */
     created_by INT, /* the person submitting the ticket*/
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (created_by) REFERENCES users(user_id) ON DELETE SET NULL ON UPDATE CASCADE,
-    FOREIGN KEY (user_id) REFERENCES users (user_id) ON DELETE SET NULL ON UPDATE CASCADE,
-    FOREIGN KEY (notification_type) REFERENCES notification_types (notification_type_id) ON DELETE CASCADE ON UPDATE CASCADE
+    FOREIGN KEY (user_id) REFERENCES users (user_id) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (notification_type) REFERENCES notification_types (notification_type_id) ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
-INSERT INTO notifications(user_id, notification_type, unseen, created_by) VALUES(1, 3, true, 1); 
-INSERT INTO notifications(user_id, notification_type, unseen, created_by) VALUES(2, 3, true, 1); 
-INSERT INTO notifications(user_id, notification_type, unseen, created_by) VALUES(3, 3, true, 1); 
-INSERT INTO notifications(user_id, notification_type, unseen, created_by) VALUES(4, 3, true, 1); 
-INSERT INTO notifications(user_id, notification_type, unseen, created_by) VALUES(5, 3, true, 1); 
-INSERT INTO notifications(user_id, notification_type, unseen, created_by) VALUES(6, 3, true, 1); 
-INSERT INTO notifications(user_id, notification_type, unseen, created_by) VALUES(7, 3, true, 1); 
-INSERT INTO notifications(user_id, notification_type, unseen, created_by) VALUES(8, 3, true, 1); 
-INSERT INTO notifications(user_id, notification_type, unseen, created_by) VALUES(9, 3, true, 1); 
-INSERT INTO notifications(user_id, notification_type, unseen, created_by) VALUES(10, 3, true, 1); 
-INSERT INTO notifications(user_id, notification_type, unseen, created_by) VALUES(11, 3, true, 1); 
-INSERT INTO notifications(user_id, notification_type, unseen, created_by) VALUES(12, 3, true, 1); 
-INSERT INTO notifications(user_id, notification_type, unseen, created_by) VALUES(13, 3, true, 1); 
-INSERT INTO notifications(user_id, notification_type, unseen, created_by) VALUES(14, 3, true, 1); 
-INSERT INTO notifications(user_id, notification_type, unseen, created_by) VALUES(15, 3, true, 1); 
-
-
-INSERT INTO notifications(user_id, notification_type, unseen, created_by) VALUES(1, 1, true, 1); 
-INSERT INTO notifications(user_id, notification_type, unseen, created_by) VALUES(2, 1, true, 2); 
-INSERT INTO notifications(user_id, notification_type, unseen, created_by) VALUES(3, 1, true, 3); 
-INSERT INTO notifications(user_id, notification_type, unseen, created_by) VALUES(4, 1, true, 4); 
-INSERT INTO notifications(user_id, notification_type, unseen, created_by) VALUES(5, 1, true, 5); 
-INSERT INTO notifications(user_id, notification_type, unseen, created_by) VALUES(6, 1, true, 1); 
-INSERT INTO notifications(user_id, notification_type, unseen, created_by) VALUES(7, 1, true, 2); 
-INSERT INTO notifications(user_id, notification_type, unseen, created_by) VALUES(8, 1, true, 3); 
-INSERT INTO notifications(user_id, notification_type, unseen, created_by) VALUES(9, 1, true, 4); 
-INSERT INTO notifications(user_id, notification_type, unseen, created_by) VALUES(10, 1, true, 5); 
-INSERT INTO notifications(user_id, notification_type, unseen, created_by) VALUES(11, 1, true, 1); 
-INSERT INTO notifications(user_id, notification_type, unseen, created_by) VALUES(12, 1, true, 1); 
-INSERT INTO notifications(user_id, notification_type, unseen, created_by) VALUES(13, 1, true, 2); 
-INSERT INTO notifications(user_id, notification_type, unseen, created_by) VALUES(14, 1, true, 2); 
-INSERT INTO notifications(user_id, notification_type, unseen, created_by) VALUES(15, 1, true, 6); 
-
-INSERT INTO notifications(user_id, notification_type, unseen, created_by) VALUES(1, 2, true, 7); 
-INSERT INTO notifications(user_id, notification_type, unseen, created_by) VALUES(2, 2, true, 7); 
-INSERT INTO notifications(user_id, notification_type, unseen, created_by) VALUES(3, 2, true, 7); 
-INSERT INTO notifications(user_id, notification_type, unseen, created_by) VALUES(4, 2, true, 7); 
-INSERT INTO notifications(user_id, notification_type, unseen, created_by) VALUES(5, 2, true, 7); 
-INSERT INTO notifications(user_id, notification_type, unseen, created_by) VALUES(6, 2, true, 7); 
-INSERT INTO notifications(user_id, notification_type, unseen, created_by) VALUES(7, 2, true, 7); 
-INSERT INTO notifications(user_id, notification_type, unseen, created_by) VALUES(8, 2, true, 7); 
-INSERT INTO notifications(user_id, notification_type, unseen, created_by) VALUES(9, 2, true, 8); 
-INSERT INTO notifications(user_id, notification_type, unseen, created_by) VALUES(10, 2, true, 8); 
-INSERT INTO notifications(user_id, notification_type, unseen, created_by) VALUES(11, 2, true, 8); 
-INSERT INTO notifications(user_id, notification_type, unseen, created_by) VALUES(12, 2, true, 8); 
-INSERT INTO notifications(user_id, notification_type, unseen, created_by) VALUES(13, 2, true, 8); 
-INSERT INTO notifications(user_id, notification_type, unseen, created_by) VALUES(14, 2, true, 8); 
-INSERT INTO notifications(user_id, notification_type, unseen, created_by) VALUES(15, 2, true, 8); 
-
-
-
-INSERT INTO notifications(user_id, notification_type, unseen, created_by) VALUES(16, 2, true, 8); 
-INSERT INTO notifications(user_id, notification_type, unseen, created_by) VALUES(17, 2, true, 8); 
-INSERT INTO notifications(user_id, notification_type, unseen, created_by) VALUES(18, 2, true, 8); 
-INSERT INTO notifications(user_id, notification_type, unseen, created_by) VALUES(19, 2, true, 8); 
-INSERT INTO notifications(user_id, notification_type, unseen, created_by) VALUES(20, 2, true, 8); 
-
+/* role update */
+INSERT INTO notifications(user_id, notification_type, message, unseen, created_by) VALUES(17, 1, "updated your role to 'Admin'", true, 1); 
+INSERT INTO notifications(user_id, notification_type,message,  unseen, created_by) VALUES(17, 2, "assigned you to the ticket 'Hell is loose'", true, 2); 
+INSERT INTO notifications(user_id, notification_type,message,  unseen, created_by) VALUES(17, 3,  "unassigned you from the ticket 'Gammel billet'",true, 3); 
+INSERT INTO notifications(user_id, notification_type,message,  unseen, created_by) VALUES(17, 4, "enrolled you to the project 'Nyt project'", true, 4); 
 
 select * from notifications;
 
@@ -543,14 +496,13 @@ CREATE TABLE ticket_comments(
     message text,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (commenter_user_id) REFERENCES users (user_id) ON DELETE SET NULL ON UPDATE CASCADE,
-    FOREIGN KEY (ticket_id) REFERENCES tickets (ticket_id) ON DELETE SET NULL ON UPDATE CASCADE
-
+    FOREIGN KEY (ticket_id) REFERENCES tickets (ticket_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-INSERT INTO ticket_comments(commenter_user_id, ticket_id, message) VALUES(5, 1, "Example comment"); 
+INSERT INTO ticket_comments(commenter_user_id, ticket_id, message) VALUES(5, 1, "Get this done! Asap!"); 
+INSERT INTO ticket_comments(commenter_user_id, ticket_id, message) VALUES(1, 1, "Comment #2"); 
 
-select * from ticket_comments
-
+select * from tickets
 
 DROP TABLE IF EXISTS ticket_history;
 CREATE TABLE ticket_history(
@@ -559,8 +511,7 @@ CREATE TABLE ticket_history(
     event_type TEXT,  /* I could make a table of eventy_types and turn this into a foreign key */
     old_value TEXT,   /* this has to represent many things... so I wont use foreign keys. */
     new_value TEXT,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (ticket_id) REFERENCES tickets (ticket_id) ON DELETE SET NULL ON UPDATE CASCADE
+    FOREIGN KEY (ticket_id) REFERENCES tickets (ticket_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 INSERT INTO ticket_history(ticket_id, event_type, old_value, new_value)

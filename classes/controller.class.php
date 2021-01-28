@@ -96,6 +96,7 @@ class Controller extends Model
     {
         $this->db_set_session($user_id, $session_id);
     }
+
     public function set_role($user_id, $role_id)
     {
         $this->db_set_role($user_id, $role_id);
@@ -169,5 +170,10 @@ class Controller extends Model
     public function get_ticket_history($ticket_id, $OFFSET, $LIMIT)
     {
         return $this->db_get_ticket_history($ticket_id, $OFFSET, $LIMIT);
+    }
+
+    public function get_ticket_comments($ticket_id)
+    {
+        return $this->db_get_ticket_comments($ticket_id);
     }
 }

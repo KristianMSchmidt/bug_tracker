@@ -51,7 +51,7 @@ class Model extends Dbh
     {
         $sql = "SELECT COUNT(tickets.ticket_id) as count, users.full_name
         FROM tickets 
-        JOIN users ON tickets.developer_assigned = users.user_id    
+        LEFT JOIN users ON tickets.developer_assigned = users.user_id    
         WHERE tickets.status = 1
         GROUP BY tickets.developer_assigned
         ORDER BY count(tickets.ticket_id) ASC LIMIT 5";
@@ -120,8 +120,8 @@ class Model extends Dbh
            s.full_name AS submitter_name,  /* alias necessary */
            d.full_name AS developer_name  /* alias necessary */
            FROM tickets 
-           JOIN users s ON tickets.submitter = s.user_id
-           JOIN users d ON tickets.developer_assigned = d.user_id
+           LEFT JOIN users s ON tickets.submitter = s.user_id
+           LEFT JOIN users d ON tickets.developer_assigned = d.user_id
            JOIN projects ON tickets.project = projects.project_id
            JOIN ticket_status_types ON tickets.status = ticket_status_types.ticket_status_id
            JOIN ticket_priorities ON tickets.priority = ticket_priorities.ticket_priority_id
@@ -202,10 +202,8 @@ class Model extends Dbh
                     notification_types.notification_type_id as type, 
                     users.full_name as created_by
                 FROM notifications
-                JOIN notification_types
-                ON notifications.notification_type = notification_types.notification_type_id
-                JOIN users
-                ON notifications.created_by = users.user_id
+                JOIN notification_types ON notifications.notification_type = notification_types.notification_type_id
+                LEFT JOIN users ON notifications.created_by = users.user_id
                 WHERE notifications.user_id = ?
                 ORDER BY notification_id DESC";
 
@@ -275,8 +273,8 @@ class Model extends Dbh
         s.full_name AS submitter_name,  /* alias necessary */
         d.full_name AS developer_name   /* alias necessary */
         FROM tickets 
-        JOIN users s ON tickets.submitter = s.user_id
-        JOIN users d ON tickets.developer_assigned = d.user_id
+        LEFT JOIN users s ON tickets.submitter = s.user_id
+        LEFT JOIN users d ON tickets.developer_assigned = d.user_id
         JOIN projects ON tickets.project = projects.project_id
         JOIN ticket_status_types ON tickets.status = ticket_status_types.ticket_status_id
         JOIN ticket_priorities ON tickets.priority = ticket_priorities.ticket_priority_id
@@ -301,6 +299,7 @@ class Model extends Dbh
         tickets.title,
         tickets.description,
         tickets.created_at,
+        tickets.updated_at,
         ticket_priorities.ticket_priority_name,
         ticket_status_types.ticket_status_name,
         ticket_types.ticket_type_name,
@@ -308,8 +307,11 @@ class Model extends Dbh
         s.full_name AS submitter_name,  /* alias necessary */
         d.full_name AS developer_name   /* alias necessary */
         FROM tickets 
-        JOIN users s ON tickets.submitter = s.user_id
-        JOIN users d ON tickets.developer_assigned = d.user_id
+        /* left join er vigtig her, da der stadig skal findes resultater frem fra tickets,
+         selvom f.eks. submitteren i mellemtiden er blevet slettet        
+        */
+        LEFT JOIN users s ON tickets.submitter = s.user_id
+        LEFT JOIN users d ON tickets.developer_assigned = d.user_id
         JOIN projects ON tickets.project = projects.project_id
         JOIN ticket_status_types ON tickets.status = ticket_status_types.ticket_status_id
         JOIN ticket_priorities ON tickets.priority = ticket_priorities.ticket_priority_id
@@ -387,7 +389,8 @@ class Model extends Dbh
                     priority=?,
                     status = ?,
                     type=?,
-                    description=?
+                    description=?,
+                    updated_at = CURRENT_TIMESTAMP
                 WHERE ticket_id = ?";
 
         $stmt = $this->connect()->prepare($sql);
@@ -425,6 +428,21 @@ class Model extends Dbh
         $stmt->execute([$ticket_id]);
         $ticket_history = $stmt->fetchAll();
         return $ticket_history;
+    }
+
+    protected function db_get_ticket_comments($ticket_id)
+    {
+        $sql = "SELECT 
+                    ticket_comments.message, 
+                    ticket_comments.created_at,
+                    users.full_name as commenter
+                FROM ticket_comments
+                LEFT JOIN users on ticket_comments.id = users.user_id
+                WHERE ticket_id = ?";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute([$ticket_id]);
+        $comments = $stmt->fetchAll();
+        return $comments;
     }
 }
 /*
