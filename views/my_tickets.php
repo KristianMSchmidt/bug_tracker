@@ -16,25 +16,23 @@ $tickets = $contr->get_tickets_by_user($_SESSION['user_id'], $_SESSION['role_nam
 
 
 <div class="main">
-
     <div class="my_tickets">
-
         <div class="card">
             <div class="container card-head">
                 <h2>My tickets</h2>
             </div>
             <div class="container">
-
-                <?php if ($_SESSION['role_name'] == 'Admin') : ?>
-                    <p>All tickets in the database</p>
-                <?php elseif ($_SESSION['role_name'] == "Project Manager") : ?>
-                    <p>All tickets to the projects that you manage </p>
-                <?php elseif ($_SESSION['role_name'] == "Developer") : ?>
-                    <p>All tickets that you are assigned to as developer </p>
-                <?php elseif ($_SESSION['role_name'] == "Submitter") : ?>
-                    <p>All tickets that you have submitted </p>
-                <?php endif ?>
-
+                <h4>
+                    <?php if ($_SESSION['role_name'] == 'Admin') : ?>
+                        All tickets in your database
+                    <?php elseif ($_SESSION['role_name'] == "Project Manager") : ?>
+                        All tickets to the projects that you manage
+                    <?php elseif ($_SESSION['role_name'] == "Developer") : ?>
+                        All tickets that you are assigned to as developer
+                    <?php elseif ($_SESSION['role_name'] == "Submitter") : ?>
+                        All tickets that you have submitted
+                    <?php endif ?>
+                </h4>
                 <div class="container w3-responsive">
                     <table class="table w3-small striped bordered">
                         <tr>
@@ -47,50 +45,58 @@ $tickets = $contr->get_tickets_by_user($_SESSION['user_id'], $_SESSION['role_nam
                             <th>Submitter</th>
                             <th>Created</th>
                         </tr>
-                        <?php if (count($tickets) == 0) : ?>
+                        <?php
+                        //$tickets = array();
+                        ?>
+                        <?php foreach ($tickets as $ticket) : ?>
+                            <tr>
+                                <td><?php echo $ticket['title'] ?></td>
+                                <td><?php echo $ticket['project_name'] ?></td>
+                                <td><?php echo $ticket['developer_name'] ?></td>
+                                <td><?php echo $ticket['ticket_priority_name'] ?></td>
+                                <td><?php echo $ticket['ticket_status_name'] ?></td>
+                                <td><?php echo $ticket['ticket_type_name'] ?></td>
+                                <td><?php echo $ticket['submitter_name'] ?></td>
+                                <td><?php echo $ticket['created_at'] ?></td>
+                                <td style="padding-left: 3em;">
+                                    <ul style="padding:0; margin:0;">
+                                        <li><a href="#" onclick="edit_ticket_form_submitter(<?php echo $ticket['ticket_id'] ?>)">Edit</a></li>
+                                        <li><a href="#" onclick="ticket_details_submitter(<?php echo $ticket['ticket_id'] ?>)">Details</a></li>
+                                    </ul>
+                                </td>
+                            </tr>
+                        <?php endforeach ?>
                     </table>
+                    <?php if (count($tickets) == 0) : ?>
+                        <div class="empty-table-row">
+                            <p>You have no tickets in the database</p>
+                        </div>
+                    <?php endif ?>
+                    <p style="font-size:12px">Showing ticket 0-<?php echo count($tickets); ?> of <?php echo count($tickets); ?>.</p>
 
-                    <div class="empty-table-row">
-                        <p>You have no tickets in the database</p>
-                    </div>
                 </div>
-                <p>Showing 0-0 of 0 entries</p>
             </div>
-        <?php else : ?>
-            <?php foreach ($tickets as $ticket) : ?>
-                <tr>
-                    <td><?php echo $ticket['title'] ?></td>
-                    <td><?php echo $ticket['project_name'] ?></td>
-                    <td><?php echo $ticket['developer_name'] ?></td>
-                    <td><?php echo $ticket['ticket_priority_name'] ?></td>
-                    <td><?php echo $ticket['ticket_status_name'] ?></td>
-                    <td><?php echo $ticket['ticket_type_name'] ?></td>
-                    <td><?php echo $ticket['submitter_name'] ?></td>
-                    <td><?php echo $ticket['created_at'] ?></td>
-                    <td style="padding-left: 3em;">
-                        <ul style="padding:0; margin:0;">
-                            <li><a href="#" onclick="edit_ticket_form_submitter(<?php echo $ticket['ticket_id'] ?>)">Edit</a></li>
-                            <li><a href="ticket_details.php?ticket_id=<?php echo $ticket['ticket_id'] ?>">Details</a></li>
-                        </ul>
-                    </td>
-                </tr>
-            <?php endforeach ?>
-            </table>
         </div>
-        <p>Showing ticket 1-<?php echo count($tickets); ?> out of <?php echo count($tickets); ?>.</p>
     </div>
-<?php endif ?>
 </div>
 
-<form action="edit_ticket.php" method="post" id="edit_ticket_form">
+<form action="" method="post" id="form">
     <input type="hidden" name="ticket_id" id="ticket_id" value="">
-    <input type="hidden" name="requested_action" value="show_edit_ticket_form">
+    <input type="hidden" name="requested_action" value="">
 </form>
 
+
 <script>
-    function edit_ticket_form_submitter(i) {
-        document.getElementById("ticket_id").value = i;
-        document.getElementById("edit_ticket_form").submit()
+    function edit_ticket_form_submitter(ticket_id) {
+        document.getElementById("ticket_id").value = ticket_id;
+        document.getElementById("form").action = "edit_ticket.php";
+        document.getElementById("form").submit()
+    }
+
+    function ticket_details_submitter(ticket_id) {
+        document.getElementById("ticket_id").value = ticket_id;
+        document.getElementById("form").action = "ticket_details.php"
+        document.getElementById("form").submit()
     }
 </script>
 

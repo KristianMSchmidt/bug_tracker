@@ -1,5 +1,27 @@
 /* Style of individual pages, i.e. the content of the main area */
 
+.ticket_details {
+  .grid-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1em;
+    grid-auto-flow: dense;
+  }
+  li {
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+}
+
+@media only screen and (max-width: 1050px) {
+  .ticket_details {
+    .grid-container {
+      display: flex;
+      flex-direction: column;
+    }
+  }
+}
+
 .edit_ticket {
   .card {
     margin: 1em;

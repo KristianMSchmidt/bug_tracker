@@ -26,11 +26,12 @@ if (isset($_SESSION['user_id'])) {
     <title>Bug_Tracker</title>
     <!-- font awesome icon library -->
     <link href="../static/styles/font-awesome/css/all.css" rel="stylesheet">
-    <!-- custom css -->
-    <link rel="stylesheet" href="../static/styles/main.css">
 
     <!-- w3-css style sheet -->
     <link rel="stylesheet" href="../static/styles/w3.css">
+
+    <!-- custom css -->
+    <link rel="stylesheet" href="../static/styles/main.css">
 
     <!-- JS chart library -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.bundle.min.js"></script>
@@ -125,7 +126,7 @@ if (isset($_SESSION['user_id'])) {
             <?php if (isset($_SESSION['user_id'])) : ?>
                 <a href="dashboard.php" id="dashboard_link"><i class="fas fa-home"></i> &nbsp; Dashboard</a>
                 <a href="manage_user_roles.php" id="manage_user_roles_link"><i class="fas fa-users"></i> &nbsp;Manage User Roles</a>
-                <a href="manage_project_users.php" id="manage_project_users_link"><i class="fas fa-user-plus"></i> &nbsp;Manage Project Users</a>
+                <!--  <a href="manage_project_users.php" id="manage_project_users_link"><i class="fas fa-user-plus"></i> &nbsp;Manage Project Users</a> -->
                 <a href="my_projects.php" id="my_projects_link"><i class="fas fa-industry"></i> &nbsp; My Projects</a>
                 <a href="my_tickets.php" id="my_tickets_link"><i class="fas fa-ticket-alt"></i> &nbsp; My Tickets</a>
             <?php endif ?>

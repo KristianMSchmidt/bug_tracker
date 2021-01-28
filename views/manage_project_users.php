@@ -5,6 +5,9 @@ include('shared/ui_frame.php');
 
 <div class="main">
     <h2>Manage Project Users</h2>
+    <?php
+    print_r($_POST);
+    ?>
 </div>
 
 <?php include('shared/closing_tags.php') ?>
