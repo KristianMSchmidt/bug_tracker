@@ -1,14 +1,13 @@
 <?php
 /*
 Function that produces human readable time (copied from stack exchange)
-
 Example usage: 
 $time = strtotime('2020-12-31 12:25:43');
 echo humanTiming($time) . 'ago' 
 --> "4 hours ago"
 */
 
-function humanTiming($time)
+function human_timing($time)
 {
 
     $time = time() - $time; // to get the time since that moment

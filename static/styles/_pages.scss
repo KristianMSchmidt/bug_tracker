@@ -1,0 +1,234 @@
+/* Style of individual pages, i.e. the content of the main area */
+
+.edit_ticket {
+  .card {
+    margin: 1em;
+    padding-bottom: 2em;
+    margin: 1em;
+    label {
+      margin-bottom: 1em;
+    }
+    .card-head {
+      margin-bottom: 2em;
+    }
+
+    .card-content {
+      .text-input {
+        display: flex;
+        flex-direction: row;
+      }
+      .other-input {
+        margin-top: 1.5em;
+        display: flex;
+        flex-direction: row;
+      }
+      .left {
+        display: flex;
+        flex-direction: column;
+        flex: 2;
+        padding-right: 3em;
+        padding-left: 3em;
+      }
+      .right {
+        display: flex;
+        flex-direction: column;
+        flex: 3;
+        padding-right: 3em;
+        padding-left: 3em;
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 1050px) {
+  .edit_ticket {
+    .card {
+      .card-content {
+        .text-input {
+          flex-direction: column;
+        }
+        .other-input {
+          flex-direction: column;
+        }
+        .left {
+          padding-right: 3em;
+        }
+      }
+    }
+  }
+}
+
+.project_details {
+  display: flex;
+  flex-direction: column;
+  .top {
+    flex: 1;
+  }
+
+  .bottom {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .bottom-left {
+    margin-right: 0.5em;
+  }
+
+  .bottom-right {
+    margin-left: 0.5en;
+  }
+}
+
+.manage_user_roles {
+  display: flex;
+  flex-direction: row;
+
+  .area_one {
+    display: flex;
+    flex-direction: column;
+    /* padding: 1em;*/
+    flex: 1;
+  }
+  .area_two {
+    padding-left: 1em;
+    flex: 2;
+  }
+  .btn-primary {
+    width: 300px;
+    font-size: 15px;
+    height: 30px;
+  }
+  .select {
+    width: 300px;
+  }
+}
+
+/* OLD STUFF */
+.row {
+  display: flex;
+  flex: 1;
+  flex-direction: row;
+  justify-content: stretch;
+  align-items: stretch;
+
+  .col {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    //justify-content: center;
+    align-items: center;
+  }
+}
+.dashboard {
+  flex: 1; //makes this fill out main-div horizontally
+  display: flex;
+  flex-direction: column;
+  padding: 1em;
+
+  .card {
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16),
+      0 2px 10px 0 rgba(0, 0, 0, 0.12);
+    padding-top: 1em;
+    padding-left: 4em;
+    padding-right: 4em;
+    margin: 1em;
+  }
+  @media only screen and (max-width: 1100px) {
+    .row {
+      flex-direction: column;
+    }
+    .card {
+      margin-left: 3em;
+      margin-right: 3em;
+      padding-left: 7em;
+      padding-right: 7em;
+    }
+  }
+}
+.manage_user_roles {
+  .row_ {
+    display: flex;
+    flex-direction: row;
+
+    .col_one {
+      display: flex;
+      flex: 1;
+      flex-direction: column;
+      //justify-content: center;
+      //align-items: center;
+    }
+    .col_two {
+      display: flex;
+      flex: 2;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+
+  .select {
+    padding: 9px 0;
+    width: 300px;
+    border: none;
+    border-bottom: 1px solid #ccc;
+  }
+}
+.profile_settings {
+  .card {
+    margin: 2em;
+  }
+  table {
+    padding-top: 1em;
+    padding-bottom: 1em;
+  }
+}
+
+.my_projects,
+.my_tickets {
+  width: 95%;
+  input {
+    font-size: 14px; /* makes button somewhat bigger */
+  }
+  .card {
+    margin-top: 1em;
+    margin-bottom: 2em;
+    padding-bottom: 2em;
+  }
+}
+
+.demo_login {
+  .card {
+    margin-top: 2em;
+    margin-bottom: 1em;
+    padding-bottom: 1em;
+  }
+
+  .mt-0 {
+    margin-top: 0;
+  }
+
+  .col {
+    padding-top: 2em;
+    &.one {
+      padding-right: 1.5em;
+      padding-left: 2.5em;
+    }
+    &.two {
+      padding-left: 1.5em;
+      padding-right: 4em;
+    }
+  }
+}
+.login {
+  width: 50%;
+  .card {
+    margin-top: 1em;
+    margin-bottom: 1em;
+    padding-bottom: 1em;
+    margin-bottom: 1em;
+  }
+  p {
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+  }
+}

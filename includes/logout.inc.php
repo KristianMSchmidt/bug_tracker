@@ -1,15 +1,13 @@
 <?php
 
-// Start/resume the session
+// Get acces to session variable
 session_start();
 
 // remove all session variables
-session_unset(); 
+session_unset();
 
 // destroy the session 
-session_destroy(); 
+session_destroy();
 
 // redirect to login page
-header('location: ../login.php?logout=true');
-?>
-
+header('location: ../views/login.php?');
