@@ -143,7 +143,12 @@ class Model extends Dbh
         // latest project at top
         $sql .= " ORDER BY tickets.created_at DESC";
         $stmt = $this->connect()->prepare($sql);
-        $stmt->execute([$user_id]);
+        if ($role_name = 'Admin'):
+            $stmt -> execute();
+        else : 
+            $stmt->execute([$user_id]);
+        endif;
+        
         $results = $stmt->fetchAll();
 
         return $results;

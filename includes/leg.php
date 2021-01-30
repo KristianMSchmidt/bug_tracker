@@ -1,8 +1,8 @@
 <?php
 
-include('../classes/dbh.class.php');
-include('../classes/model.class.php');
-include('../classes/controller.class.php');
+include('../classes/Dbh.class.php');
+include('../classes/Model.class.php');
+include('../classes/Controller.class.php');
 
 $contr = new Controller;
 

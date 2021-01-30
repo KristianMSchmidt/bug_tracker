@@ -6,7 +6,7 @@ $contr = new Controller();
 $ticket = $contr->get_ticket_by_id($_POST['ticket_id']);
 
 if ($_POST['requested_action'] == "edit_ticket_attempt") {
-    include('../classes/form_handlers/edittickethandler.class.php');
+    include('../classes/form_handlers/EditTicketHandler.class.php');
     $edit_ticket_handler = new EditTicketHandler($ticket, $_POST);
     $errors = $edit_ticket_handler->process_input();
     if (!$errors) {

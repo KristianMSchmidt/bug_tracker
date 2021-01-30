@@ -12,6 +12,7 @@ include('shared/ui_frame.php');
 
 $contr = new Controller;
 $tickets = $contr->get_tickets_by_user($_SESSION['user_id'], $_SESSION['role_name']);
+
 ?>
 
 

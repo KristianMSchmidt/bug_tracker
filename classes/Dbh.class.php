@@ -13,7 +13,7 @@ class Dbh
     private $host = "localhost";
     private $user = "kimarokko";
     private $pwd = "stjerne";
-    private $dbName = "test";
+    private $dbName = "bugtracker";
     private $charset = 'utf8mb4';
 
 

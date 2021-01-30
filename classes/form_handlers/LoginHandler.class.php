@@ -2,6 +2,7 @@
 include_once('../includes/set_session_vars.inc.php');
 include_once('../includes/auto_loader.inc.php');
 
+
 class LoginHandler
 {
   private $data;

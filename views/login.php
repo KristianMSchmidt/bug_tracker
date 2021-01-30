@@ -9,7 +9,7 @@ if (isset($_SESSION['user_id'])) {
 }
 
 include_once('../includes/auto_loader.inc.php');
-include('../classes/form_handlers/loginhandler.class.php');
+include('../classes/form_handlers/LoginHandler.class.php');
 
 if (isset($_POST['login_submit'])) {
     $login_handler = new LoginHandler($_POST);

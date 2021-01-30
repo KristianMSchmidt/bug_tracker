@@ -1,5 +1,5 @@
 <?php
-include_once('dbh.class.php');
+include_once('Dbh.class.php');
 
 class CreateSessionsTable extends Dbh
 {
