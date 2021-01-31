@@ -286,7 +286,8 @@ class Model extends Dbh
         JOIN ticket_status_types ON tickets.status = ticket_status_types.ticket_status_id
         JOIN ticket_priorities ON tickets.priority = ticket_priorities.ticket_priority_id
         JOIN ticket_types ON tickets.type =ticket_types.ticket_type_id
-        WHERE tickets.project = ?";
+        WHERE tickets.project = ?
+        ORDER BY created_at DESC";
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute([$project_id]);
         $tickets = $stmt->fetchAll();
@@ -502,12 +503,29 @@ class Model extends Dbh
         $result = $stmt->fetch();
         return $result;
     }
-    public function db_add_ticket_comment($user_id, $ticket_id, $message ){
+    
+    protected function db_add_ticket_comment($user_id, $ticket_id, $message ){
         $sql = "INSERT 
                 INTO ticket_comments (commenter_user_id, ticket_id, message)
                 VALUES (?,?,?)";
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute([$user_id, $ticket_id, $message]);
+    }
+
+        
+    protected function db_create_ticket($data){
+        $sql = "INSERT 
+                INTO tickets (title, project, developer_assigned, priority, status, type, description, submitter)
+                VALUES (?,?,?,?,?,?,?,?)";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute([$data['title'],
+                        $data['project_id'],
+                        $data['developer_assigned'],
+                        $data['priority_id'],
+                        $data['status_id'],
+                        $data['type_id'],
+                        $data['description'],
+                        $data['submitter']]);
     }
 }
 /*

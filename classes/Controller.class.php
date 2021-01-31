@@ -204,4 +204,8 @@ class Controller extends Model
         $this->db_add_ticket_comment($user_id, $ticket_id, $message);
     }
 
+    public function create_ticket($data){
+        $this->db_create_ticket($data);
+    }
+
 }

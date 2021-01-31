@@ -219,13 +219,13 @@ if (isset($_POST['show_next'])) {
     </div>
 
      <!-- Model response message -->
-     <?php if ($_POST['requested_action']=='show_succes_message'): ?>
+     <?php if (isset($_POST['show_ticket_edited_succes_message'])): ?>
         <div id="id01" class="w3-modal">
             <div class="w3-modal-content">
                 <div class="w3-container">
                     <span onclick="document.getElementById('id01').style.display='none'" class="w3-button w3-display-topright">&times;</span>
                     <div class="container">
-                        <p style="margin-top:4em; margin-bottom:4em;">
+                        <p style="margin-top:3em; margin-bottom:3em;">
                             You succesfully updated the the ticket
                         </p>
                     </div>

@@ -9,20 +9,6 @@ if ($_POST['requested_action'] == "edit_ticket_attempt") {
     include('../classes/form_handlers/EditTicketHandler.class.php');
     $edit_ticket_handler = new EditTicketHandler($ticket, $_POST);
     $errors = $edit_ticket_handler->process_input();
-    if (!$errors) {
-        echo "              
-            <form action='ticket_details.php' method='post' id='form'>
-                <input type='hidden' name='ticket_id' value='' id='ticket_id'>
-                <input type='hidden' name='requested_action' value='show_succes_message'>
-            </form>
-        <script>
-            function submit(ticket_id) {
-                document.getElementById('ticket_id').value = ticket_id;
-                document.getElementById('form').submit();
-            }
-            submit({$_POST['ticket_id']})
-       </script>";
-    }
 }
 $projects = $contr->get_projects();
 $priorities = $contr->get_priorities();
@@ -52,7 +38,7 @@ select{
                         <div class="left">
                             <!-- Title -->
                             <p>
-                                <input type="text" name="title" class="input" value="<?php echo $ticket['title'] ?>">
+                                <input type="text" name="title" class="input" value="<?php echo $ticket['title'] ??'' ?>">
                                 <label>Ticket Title</label><br>
                                 <span class="error">
                                     <?php echo $errors['title'] ?? '' ?>
@@ -74,7 +60,7 @@ select{
                         <div class="left">
                             <!-- Project -->
                             <select class="select" name="project">
-                                <option value="<?php echo $ticket['project'] ?>" selected><?php echo $ticket['project_name'] ?? '' ?></option>
+                                <option value="<?php echo $ticket['project'] ?>" selected><?php echo $ticket['project_name']; ?></option>
                                 <?php foreach ($projects as $project) : ?>
                                     <?php if ($project['project_id'] != $ticket['project']) : ?>
                                         <option value=<?php echo $project['project_id'] ?>><?php echo $project['project_name'] ?></option>

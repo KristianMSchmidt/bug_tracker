@@ -1,7 +1,7 @@
 <?php
 class AddCommentHandler
 {
-    public $user_id;
+    private $user_id;
     private $ticket_id;
     private $comment;
     private $errors = [];

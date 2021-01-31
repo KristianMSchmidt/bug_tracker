@@ -20,6 +20,10 @@ class EditTicketHandler
             $this->attempt_edit();
         }
 
+        if(!$this->errors){
+            $this->redirect();
+        }
+
         return $this->errors;
     }
 
@@ -32,7 +36,7 @@ class EditTicketHandler
             $this->add_error('title', 'Ticket needs a title');
         } else {
             if (!(strlen($val) < 45 && strlen($val) > 5)) {
-                $this->add_error('title', 'Title must be 5-45 chars');
+                $this->add_error('title', 'Title must be 6-45 chars');
             }
         }
     }
@@ -46,11 +50,10 @@ class EditTicketHandler
             $this->add_error('description', 'Ticket needs a description');
         } else {
             if (!(strlen($val) < 300 && strlen($val) > 5)) {
-                $this->add_error('description', 'Description must be 5-300 chars');
+                $this->add_error('description', 'Description must be 6-300 chars');
             }
         }
     }
-
 
     private function attempt_edit()
     {
@@ -111,6 +114,18 @@ class EditTicketHandler
         } else {
             $contr->set_ticket($new_ticket);
         }
+    }
+
+    private function redirect()
+    {
+        echo "              
+            <form action='ticket_details.php' method='post' id='form'>
+                <input type='hidden' name='ticket_id' value='{$this->new_ticket['ticket_id']}'>
+                <input type='hidden' name='show_ticket_edited_succes_message'>
+            </form>
+            <script>
+                document.getElementById('form').submit();
+            </script>";
     }
 
     private function add_error($key, $val)

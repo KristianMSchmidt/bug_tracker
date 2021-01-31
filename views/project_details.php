@@ -22,7 +22,9 @@ $tickets = $contr->get_tickets_by_project($_POST['project_id']);
         </div>
         <div class="bottom">
             <div class="bottom-left">           
-                <form action="create_ticket.php">
+                <form action="create_ticket.php" method="post">
+                        <input type="hidden" name="project_id" value="<?php echo $_POST['project_id']; ?>"> 
+                        <input type="hidden" name="requested_action" value="go_to_create_ticket_page">
                         <input type="submit" value="CREATE NEW TICKET" class="btn-primary large">
                 </form>
                 <div class="card">
@@ -66,7 +68,7 @@ $tickets = $contr->get_tickets_by_project($_POST['project_id']);
                 </div>                
             </div>
             <div class="bottom-right">
-                <form action="manage_project_users.php">
+                <form action="manage_project_users.php" method="post">
                         <input type="submit" value="MANAGE PROJECT USERS" class="btn-primary large" style="width: 16em;">
                 </form>
                 <div class="card">
@@ -104,6 +106,24 @@ $tickets = $contr->get_tickets_by_project($_POST['project_id']);
             </div>
         </div>
     </div>
+    <!-- Model response message -->
+    <?php if ($_POST['requested_action']=='show_created_ticket_succes_message'): ?>
+        <div id="id01" class="w3-modal">
+            <div class="w3-modal-content">
+                <div class="w3-container">
+                    <span onclick="document.getElementById('id01').style.display='none'" class="w3-button w3-display-topright">&times;</span>
+                    <div class="container">
+                        <p style="margin-top:3em; margin-bottom:3em;">
+                            You succesfully created at ticket for this project
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script>
+            document.getElementById('id01').style.display = 'block';
+        </script>
+    <?php endif ?>
 </div>
 
 
