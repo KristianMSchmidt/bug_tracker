@@ -60,32 +60,44 @@ class EditTicketHandler
         $new_ticket = $this->new_ticket;
         $ticket_id = $this->old_ticket['ticket_id'];
 
+        
+        $new_ticket['project_name'] = $contr-> get_project_name_by_id($new_ticket['project'])['project_name'];
+        $new_ticket['priority_name'] = $contr-> get_priority_name_by_id($new_ticket['priority'])['ticket_priority_name'];
+        $new_ticket['ticket_type_name'] = $contr-> get_ticket_type_name_by_id($new_ticket['type'])['ticket_type_name'];
+        $new_ticket['ticket_status_name'] = $contr-> get_ticket_status_name_by_id($new_ticket['status'])['ticket_status_name'];
+        $new_ticket['developer_name'] = $contr-> get_user_by_id($new_ticket['developer_assigned'])['full_name'];
+
+        //print_r($new_ticket['ticket_status_name']);
+        //  exit();
+        
         if ($old_ticket['title'] != $new_ticket['title']) {
             $contr->add_to_ticket_history($ticket_id, "TitleChange", $old_ticket['title'], $new_ticket['title']);
-            $changes = True;
-        }
-        if ($old_ticket['project'] != $new_ticket['project']) {
-            $contr->add_to_ticket_history($ticket_id, "ProjectChange", $old_ticket['project'], $new_ticket['project']);
-            $changes = True;
-        }
-        if ($old_ticket['priority'] != $new_ticket['priority']) {
-            $contr->add_to_ticket_history($ticket_id, "PriorityChange", $old_ticket['priority'], $new_ticket['priority']);
-            $changes = True;
-        }
-        if ($old_ticket['type'] != $new_ticket['type']) {
-            $contr->add_to_ticket_history($ticket_id, "TypeChange", $old_ticket['type'], $new_ticket['type']);
             $changes = True;
         }
         if (trim($old_ticket['description']) != trim($new_ticket['description'])) {
             $contr->add_to_ticket_history($ticket_id, "DescriptionChange", $old_ticket['description'], $new_ticket['description']);
             $changes = True;
         }
-        if ($old_ticket['status'] != $new_ticket['status']) {
-            $contr->add_to_ticket_history($ticket_id, "StatusChange", $old_ticket['status'], $new_ticket['status']);
+        if ($old_ticket['project'] != $new_ticket['project']) {
+            $contr->add_to_ticket_history($ticket_id, "ProjectChange", $old_ticket['project_name'], $new_ticket['project_name']);
             $changes = True;
         }
+        if ($old_ticket['priority'] != $new_ticket['priority']) {
+            $contr->add_to_ticket_history($ticket_id, "PriorityChange", $old_ticket['ticket_priority_name'], $new_ticket['priority_name']);
+            $changes = True;
+        }
+        if ($old_ticket['type'] != $new_ticket['type']) {
+            $contr->add_to_ticket_history($ticket_id, "TypeChange", $old_ticket['ticket_type_name'], $new_ticket['ticket_type_name']);
+            $changes = True;
+        }
+ 
+        if ($old_ticket['status'] != $new_ticket['status']) {
+            $contr->add_to_ticket_history($ticket_id, "StatusChange", $old_ticket['ticket_status_name'], $new_ticket['ticket_status_name']);
+            $changes = True;
+        }
+        
         if ($old_ticket['developer_assigned'] != $new_ticket['developer_assigned']) {
-            $contr->add_to_ticket_history($ticket_id, "AssignedTo", $old_ticket['developer_assigned'], $new_ticket['developer_assigned']);
+            $contr->add_to_ticket_history($ticket_id, "AssignedTo", $old_ticket['developer_name'], $new_ticket['developer_name']);
             //Notify newly assigned developer
             $message = "assigned you to the ticket '{$new_ticket['title']}'";
             $contr->create_notification(2, $new_ticket['developer_assigned'], $message, $_SESSION['user_id']);

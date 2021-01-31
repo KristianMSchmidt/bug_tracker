@@ -45,15 +45,7 @@ $projects = $contr->get_projects_by_user_id($_SESSION['user_id'], $_SESSION['rol
                                 <td><?php echo $project['project_name'] ?></td>
                                 <td style="padding-right:2em;"><?php echo $project['project_description'] ?></td>
                                 <td>
-                                    <ul style="padding:0; margin:0;">
-                                        <li> <a href="#" onclick="manage_submitter(<?php echo $project['project_id'] ?>)">
-                                                Edit
-                                            </a>
-                                        </li>
-                                        <li> <a href="#" onclick="details_submitter(<?php echo $project['project_id'] ?>)">
-                                                Details
-                                            </a></li>
-                                    </ul>
+                                    <a href="#" onclick="details_submitter(<?php echo $project['project_id'] ?>)">Details</a>                                    
                                 </td>
                             </tr>
                         <?php endforeach ?>
@@ -63,28 +55,22 @@ $projects = $contr->get_projects_by_user_id($_SESSION['user_id'], $_SESSION['rol
                     <div class="empty-table-row">
                         <p>You have no projects in the database</p>
                     </div>
+                    <p style="font-size:12px">Showing 0-0 of 0 entries</p>
+                <?php else : ?>
+                    <p style="font-size:12px">Showing 1-<?php echo count($projects); ?> of <?php echo count($projects); ?> entries</p>
                 <?php endif ?>
-                <p style="font-size:12px">Showing project 0-<?php echo count($projects); ?> of <?php echo count($projects); ?> entries</p>
-
             </div>
         </div>
     </div>
 </div>
 
-<form action="" method="post" id="form">
+<form action="project_details.php" method="post" id="form">
     <input type="hidden" name="project_id" id="project_id" value="">
 </form>
 
 <script>
-    function manage_submitter(project_id) {
-        document.getElementById("project_id").value = project_id;
-        document.getElementById("form").action = "manage_project_users.php";
-        document.getElementById("form").submit();
-    }
-
     function details_submitter(project_id) {
         document.getElementById("project_id").value = project_id;
-        document.getElementById("form").action = "project_details.php";
         document.getElementById("form").submit();
     }
 </script>

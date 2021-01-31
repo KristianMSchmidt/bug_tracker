@@ -13,6 +13,7 @@ if ($_POST['requested_action'] == "edit_ticket_attempt") {
         echo "              
             <form action='ticket_details.php' method='post' id='form'>
                 <input type='hidden' name='ticket_id' value='' id='ticket_id'>
+                <input type='hidden' name='requested_action' value='show_succes_message'>
             </form>
         <script>
             function submit(ticket_id) {
@@ -30,8 +31,13 @@ $status_types = $contr->get_ticket_status_types();
 $developers = $contr->get_users_by_role_id(3);
 
 include('shared/ui_frame.php');
+    ?>
 
-?>
+<style>
+select{
+    padding-top: 0.3em;
+    padding-bottom:0.3em;}
+</style>
 
 <div class="new_main">
     <div class="edit_ticket">

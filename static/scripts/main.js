@@ -4,7 +4,6 @@ function set_active_link(new_active_item) {
     sidebar_items = sidebar_items = [
       "dashboard", 
       "manage_user_roles", 
-      "manage_project_users", 
       "my_projects", 
       "my_tickets"];                       
 

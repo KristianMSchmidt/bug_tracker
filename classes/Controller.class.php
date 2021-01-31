@@ -176,4 +176,32 @@ class Controller extends Model
     {
         return $this->db_get_ticket_comments($ticket_id);
     }
+
+    public function get_project_name_by_id($project_id){
+
+        return $this->db_get_project_name_by_id($project_id);
+    }
+    
+    public function get_priority_name_by_id($priority_id){
+
+        return $this->db_get_priority_name_by_id($priority_id);
+    }
+
+    public function get_ticket_type_name_by_id($type_id){
+
+        return $this->db_ticket_type_name_by_id($type_id);
+    }
+
+
+    public function get_ticket_status_name_by_id($status_id){
+
+        return $this->db_ticket_status_name_by_id($status_id);
+    }
+
+
+    public function add_ticket_comment($user_id, $ticket_id, $message){
+
+        $this->db_add_ticket_comment($user_id, $ticket_id, $message);
+    }
+
 }

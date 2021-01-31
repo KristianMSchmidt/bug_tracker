@@ -511,6 +511,7 @@ CREATE TABLE ticket_history(
     event_type TEXT,  /* I could make a table of eventy_types and turn this into a foreign key */
     old_value TEXT,   /* this has to represent many things... so I wont use foreign keys. */
     new_value TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (ticket_id) REFERENCES tickets (ticket_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 

@@ -100,7 +100,7 @@ class Model extends Dbh
         return $results;
     }
     protected function db_get_tickets_by_user($user_id, $role_name)
-    {
+    {   
         $sql =
             "SELECT 
            tickets.title,
@@ -142,8 +142,10 @@ class Model extends Dbh
 
         // latest project at top
         $sql .= " ORDER BY tickets.created_at DESC";
+        
         $stmt = $this->connect()->prepare($sql);
-        if ($role_name = 'Admin'):
+        
+        if ($role_name == 'Admin'):
             $stmt -> execute();
         else : 
             $stmt->execute([$user_id]);
@@ -427,6 +429,7 @@ class Model extends Dbh
         $sql = "SELECT * 
                 FROM ticket_history 
                 WHERE ticket_id = ?
+                ORDER BY created_at DESC
                 LIMIT {$LIMIT}
                 OFFSET {$OFFSET}";
         $stmt = $this->connect()->prepare($sql);
@@ -442,12 +445,69 @@ class Model extends Dbh
                     ticket_comments.created_at,
                     users.full_name as commenter
                 FROM ticket_comments
-                LEFT JOIN users on ticket_comments.id = users.user_id
+                LEFT JOIN users on ticket_comments.commenter_user_id = users.user_id
                 WHERE ticket_id = ?";
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute([$ticket_id]);
         $comments = $stmt->fetchAll();
         return $comments;
+    }
+
+
+    protected function db_get_project_name_by_id($project_id)
+    {
+        $sql = "SELECT project_name 
+                FROM projects 
+                WHERE project_id = ?";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute([$project_id]);
+        $project_name = $stmt->fetch();
+        return $project_name;
+    }
+
+    protected function db_get_priority_name_by_id($priority_id)
+    {
+        $sql = "SELECT ticket_priority_name 
+                FROM ticket_priorities
+                WHERE ticket_priority_id = ?";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute([$priority_id]);
+        $result = $stmt->fetch();
+        return $result;
+    }
+
+
+
+    protected function db_ticket_type_name_by_id($type_id)
+
+    {
+        $sql = "SELECT ticket_type_name
+                FROM ticket_types
+                WHERE ticket_type_id = ?";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute([$type_id]);
+        $result = $stmt->fetch();
+        return $result;
+    }
+
+
+    protected function db_ticket_status_name_by_id($status_id)
+
+    {
+        $sql = "SELECT ticket_status_name
+                FROM ticket_status_types
+                WHERE ticket_status_id = ?";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute([$status_id]);
+        $result = $stmt->fetch();
+        return $result;
+    }
+    public function db_add_ticket_comment($user_id, $ticket_id, $message ){
+        $sql = "INSERT 
+                INTO ticket_comments (commenter_user_id, ticket_id, message)
+                VALUES (?,?,?)";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute([$user_id, $ticket_id, $message]);
     }
 }
 /*

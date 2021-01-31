@@ -59,12 +59,7 @@ $tickets = $contr->get_tickets_by_user($_SESSION['user_id'], $_SESSION['role_nam
                                 <td><?php echo $ticket['ticket_type_name'] ?></td>
                                 <td><?php echo $ticket['submitter_name'] ?></td>
                                 <td><?php echo $ticket['created_at'] ?></td>
-                                <td style="padding-left: 3em;">
-                                    <ul style="padding:0; margin:0;">
-                                        <li><a href="#" onclick="edit_ticket_form_submitter(<?php echo $ticket['ticket_id'] ?>)">Edit</a></li>
-                                        <li><a href="#" onclick="ticket_details_submitter(<?php echo $ticket['ticket_id'] ?>)">Details</a></li>
-                                    </ul>
-                                </td>
+                                <td><a href="#" onclick="ticket_details_submitter(<?php echo $ticket['ticket_id'] ?>)">Details</a></td>
                             </tr>
                         <?php endforeach ?>
                     </table>
@@ -72,8 +67,10 @@ $tickets = $contr->get_tickets_by_user($_SESSION['user_id'], $_SESSION['role_nam
                         <div class="empty-table-row">
                             <p>You have no tickets in the database</p>
                         </div>
-                    <?php endif ?>
-                    <p style="font-size:12px">Showing ticket 0-<?php echo count($tickets); ?> of <?php echo count($tickets); ?>.</p>
+                        <p style="font-size:12px">Showing 0-0 of 0 entries</p>
+                    <?php else : ?>
+                         <p style="font-size:12px">Showing 1-<?php echo count($tickets); ?> of <?php echo count($tickets); ?> entries</p>
+                    <?php endif ?>       
 
                 </div>
             </div>
@@ -81,22 +78,15 @@ $tickets = $contr->get_tickets_by_user($_SESSION['user_id'], $_SESSION['role_nam
     </div>
 </div>
 
-<form action="" method="post" id="form">
+<form action="ticket_details.php" method="post" id="form">
     <input type="hidden" name="ticket_id" id="ticket_id" value="">
     <input type="hidden" name="requested_action" value="">
 </form>
 
 
 <script>
-    function edit_ticket_form_submitter(ticket_id) {
-        document.getElementById("ticket_id").value = ticket_id;
-        document.getElementById("form").action = "edit_ticket.php";
-        document.getElementById("form").submit()
-    }
-
     function ticket_details_submitter(ticket_id) {
         document.getElementById("ticket_id").value = ticket_id;
-        document.getElementById("form").action = "ticket_details.php"
         document.getElementById("form").submit()
     }
 </script>

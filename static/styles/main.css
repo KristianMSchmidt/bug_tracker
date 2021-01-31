@@ -319,6 +319,19 @@ html {
   margin-left: 0.5en;
 }
 
+.project_details .card {
+  margin-top: 1em;
+}
+
+@media only screen and (max-width: 1050px) {
+  .project_details .bottom {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+  }
+}
+
 .manage_user_roles {
   display: -webkit-box;
   display: -ms-flexbox;
