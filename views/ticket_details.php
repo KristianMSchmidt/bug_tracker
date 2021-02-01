@@ -190,8 +190,13 @@ if (isset($_POST['show_next'])) {
                     <div class="container">
                         <h5>Add an attachment?</h5>
                         <div class="container" style="padding-bottom:0.6em;">
+                        <form action="" method="post">
+                            <input type="file" id="myFile" name="filename">
                             <input style="width:80%" type="text" placeholder="Describe the attachment">
-                            <input type="submit" class="btn-primary" style="width:5em;" value="ADD" onclick="alert('File upload not implemented yet!')">
+                            <input type="hidden" name="ticket_id" value="<?php echo $ticket_id ?>">
+                            <input type="hidden" name="requested_action">     
+                            <input type="submit" class="btn-primary" style="width:5em;" value="ADD">
+                        </form>
                         </div>
                     </div>
                     <h5 class=" container">All files attached to this project</h5>
