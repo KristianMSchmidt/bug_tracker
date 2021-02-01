@@ -1,5 +1,11 @@
 /* Style of individual pages, i.e. the content of the main area */
 
+.create_project {
+    .card {
+        padding-bottom: 1em;
+    }
+}
+
 .ticket_details {
     .grid-container {
         display: grid;

@@ -208,4 +208,8 @@ class Controller extends Model
         $this->db_create_ticket($data);
     }
 
+    public function create_project($data){
+        $this->db_create_project($data);
+    }
+
 }

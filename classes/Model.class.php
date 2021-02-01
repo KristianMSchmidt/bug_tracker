@@ -88,7 +88,8 @@ class Model extends Dbh
                 projects.project_id,
                 projects.project_name,
                 projects.project_description
-                FROM projects";
+                FROM projects
+                ORDER BY created_at DESC";
         if ($role_name != 'Admin') {
             $sql .= " WHERE projects.project_id IN 
                     (SELECT project_id 
@@ -527,6 +528,17 @@ class Model extends Dbh
                         $data['description'],
                         $data['submitter']]);
     }
+
+    protected function db_create_project($data){
+        $sql = "INSERT 
+                INTO projects (project_name, project_description, created_by)
+                VALUES (?,?,?)";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute([$data['title'],
+                        $data['description'],
+                        $data['created_by']]);
+    }
+
 }
 /*
 A 'statement' is any command that database understands

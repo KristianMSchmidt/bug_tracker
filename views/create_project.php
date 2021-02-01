@@ -1,43 +1,55 @@
 <?php
-require "templates/ui_frame.php";
+include('../includes/login_check.inc.php');
+include('../includes/post_check.inc.php');
+
+if (isset($_POST['create_project_attempt'])) {
+    include('../classes/form_handlers/CreateProjectHandler.class.php');
+    $create_project_handler = new CreateProjectHandler($_POST);
+    $errors = $create_project_handler->process_input();
+}
+include('shared/ui_frame.php');
 ?>
 
-<div class="main">
+<div class="new_main">
+    <div class="create_project">
+        <div class="card">
+            <div class="container card-head">
+                <h2>Create Project</h2>
+            </div>
+            <div class="container">
+                <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="POST">
+                     <!-- Title -->
+                     <p>
+                        <input type="text" name="title" class="input" value="<?php echo $_POST['title'] ?? '' ?>">
+                        <label>Ticket Title</label><br>
+                        <span class="error">
+                            <?php echo $errors['title'] ?? '' ?>
+                        </span>
+                    </p>
+                    <!-- Description -->
+                    <p>
+                        <input type="text" name="description" class="input" value="<?php echo $_POST['description'] ?? '' ?>">
+                        <label>Description</label><br>
+                        <span class="error">
+                            <?php echo $errors['description'] ?? '' ?>
+                        </span>
+                    </p>
 
-    <h2>Create project</h2>
-    <?php
+                    <!-- Submitter -->
+                    <input type="hidden" name="created_by" value="<?php echo $_SESSION['user_id']?>">
 
-    $title = $description = "";
+                     <!-- Submit button -->
+                    <div class="container" style="text-align:center">
+                        <input type="submit" name="create_project_attempt" class="btn-primary" value="Create Project">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 
-    if (isset($_GET['createprojectsucces'])) {
-        echo '<p class="text-succes">Your project was added to the database</p>';
-    }
+<?php include('shared/closing_tags.php') ?>
 
-    if (isset($_GET['error'])) {
-        //user has tried to create a new project but there is an error     
-        //recover title and description
-        $title = htmlspecialchars($_GET['title']);
-        $description = htmlspecialchars($_GET['description']);
-        if ($_GET['error'] == 'notitle') {
-            echo '<p class="text-danger">Your project needs a title</p>';
-        } elseif ($_GET['error'] == 'nodescription') {
-            echo '<p class="text-danger">Your project needs a description</p>';
-        } elseif ($_GET['error'] == 'titleexists') {
-            echo '<p class="text-danger">There is already a project with that title in the database</p>';
-        }
-    }
-    ?>
-
-
-    <form action="includes/create_project.inc.php" method="POST">
-        <input type="text" name="title" placeholder="Project title" value="<?php echo $title ?>"><br><br>
-        <textarea rows="4" cols="50" name="description" placeholder="Describe your project..."><?php echo $description ?></textarea><br>
-        <input type="submit" value="Create project" class="signin_button">
-        <input type="hidden" name="create_project_submit">
-    </form>
-
-</div> <!-- div.main -->
-</div> <!-- div.wrapper-->
-</body>
-
-</html>
+<script>
+    set_active_link("my_projects")
+</script>

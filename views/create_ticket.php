@@ -2,15 +2,14 @@
 include('../includes/login_check.inc.php');
 include('../includes/post_check.inc.php');
 include_once('../includes/auto_loader.inc.php');
-print_r($_POST);
 $contr = new Controller();
 $selected_project_name = $contr-> get_project_name_by_id($_POST['project_id'])['project_name'];
 
 
 if ($_POST['requested_action'] == "create_ticket_attempt") {
     include('../classes/form_handlers/CreateTicketHandler.class.php');
-    $edit_ticket_handler = new CreateTicketHandler($_POST);
-    $errors = $edit_ticket_handler->process_input();
+    $create_ticket_handler = new CreateTicketHandler($_POST);
+    $errors = $create_ticket_handler->process_input();
 }
 $projects = $contr->get_projects();
 $priorities = $contr->get_priorities();
@@ -56,7 +55,6 @@ select{
                                     <?php echo $errors['description'] ?? '' ?>
                                 </span>
                             </p>
-
                         </div>
                     </div>
                     <div class="other-input">
