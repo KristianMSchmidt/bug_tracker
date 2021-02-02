@@ -350,6 +350,7 @@ html {
   -webkit-box-direction: normal;
       -ms-flex-direction: row;
           flex-direction: row;
+  padding-top: 1em;
 }
 
 .manage_project_users .orto-wrapper {
@@ -360,6 +361,24 @@ html {
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
+  padding-bottom: 2em;
+}
+
+.manage_project_users .orto-wrapper.top {
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+}
+
+.manage_project_users .orto-wrapper.left {
+  margin-right: 1em;
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+}
+
+.manage_project_users .orto-wrapper.right {
+  margin-left: 1em;
   -webkit-box-flex: 1;
       -ms-flex: 1;
           flex: 1;
@@ -376,6 +395,24 @@ html {
   padding: 0.5em;
 }
 
+.manage_project_users .scroll {
+  background-color: #f9f9f9;
+}
+
+.manage_project_users p {
+  margin-top: 0.2em;
+  margin-bottom: 0;
+}
+
+.manage_project_users .card {
+  margin-top: 2em;
+}
+
+.manage_project_users .h4 {
+  padding-bottom: 0;
+  margin-bottom: 0;
+}
+
 .manage_user_roles {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -384,6 +421,7 @@ html {
   -webkit-box-direction: normal;
       -ms-flex-direction: row;
           flex-direction: row;
+  padding-top: 1.5em;
 }
 
 .manage_user_roles .area_one {
@@ -394,10 +432,25 @@ html {
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
-  /* padding: 1em;*/
+  /*align-items: center;*/
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
   -webkit-box-flex: 1;
       -ms-flex: 1;
           flex: 1;
+}
+
+.manage_user_roles .area_one .card {
+  padding: 1em;
+}
+
+.manage_user_roles .area_one input {
+  margin-bottom: 2em;
+}
+
+.manage_user_roles .area_one h4 {
+  padding-top: 1em;
 }
 
 .manage_user_roles .area_two {
@@ -416,6 +469,11 @@ html {
 .manage_user_roles .select {
   width: 300px;
   padding: 0.5em;
+  background-color: #f9f9f9;
+}
+
+.manage_user_roles .scroll {
+  background-color: #f9f9f9;
 }
 
 /* OLD STUFF */
@@ -490,55 +548,6 @@ html {
     padding-left: 7em;
     padding-right: 7em;
   }
-}
-
-.manage_user_roles .row_ {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: row;
-          flex-direction: row;
-}
-
-.manage_user_roles .row_ .col_one {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-flex: 1;
-      -ms-flex: 1;
-          flex: 1;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-}
-
-.manage_user_roles .row_ .col_two {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-flex: 2;
-      -ms-flex: 2;
-          flex: 2;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-}
-
-.manage_user_roles .select {
-  padding: 9px 0;
-  width: 300px;
-  border: none;
-  border-bottom: 1px solid #ccc;
 }
 
 .profile_settings .card {
@@ -697,8 +706,8 @@ html {
   display: none;
   position: absolute;
   background-color: white;
-  max-height: 20em;
-  min-width: 14em;
+  max-height: 35em;
+  min-width: 25em;
   -webkit-box-shadow: 0em 0.25em 0.5em 0em rgba(0, 0, 0, 0.2);
           box-shadow: 0em 0.25em 0.5em 0em rgba(0, 0, 0, 0.2);
   z-index: 1;
@@ -826,33 +835,7 @@ form label {
   margin: 0;
 }
 
-@media only screen and (max-width: 1050px) {
-  .my_navbar .branding_area {
-    -webkit-box-flex: 7;
-        -ms-flex: 7;
-            flex: 7;
-  }
-  .sidebar_and_main_container .sidebar {
-    -webkit-box-flex: 7;
-        -ms-flex: 7;
-            flex: 7;
-  }
-}
-
-@media only screen and (max-width: 900px) {
-  .my_navbar .branding_area {
-    -webkit-box-flex: 8;
-        -ms-flex: 8;
-            flex: 8;
-  }
-  .sidebar_and_main_container .sidebar {
-    -webkit-box-flex: 8;
-        -ms-flex: 8;
-            flex: 8;
-  }
-}
-
-@media only screen and (max-width: 800px) {
+@media only screen and (max-width: 1250px) {
   .my_navbar {
     -webkit-box-orient: vertical;
     -webkit-box-direction: normal;
@@ -882,9 +865,15 @@ form label {
     -webkit-box-align: center;
         -ms-flex-align: center;
             align-items: center;
-    -webkit-box-pack: space-evenly;
-        -ms-flex-pack: space-evenly;
-            justify-content: space-evenly;
+    -ms-flex-pack: distribute;
+        justify-content: space-around;
+  }
+  .sidebar_and_main_container .sidebar a {
+    -webkit-box-flex: 1;
+        -ms-flex: 1;
+            flex: 1;
+    padding-left: 2em;
+    padding-right: 2em;
   }
   .branding_area {
     display: none;

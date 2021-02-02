@@ -31,36 +31,43 @@ echo "
     <div class="container">
         <div class="manage_user_roles">
 
-            <div class="area_one">
-                
-                <h4>Select One or more Users </h4>
-                <div class="scroll">
-                    <?php foreach ($users as $user) : ?>
-                        <?php $demo_users = array("Demo Admin", "Demo PM", "Demo Dev", "Demo Sub") ?>
-                        <?php if (!in_array($user['full_name'], $demo_users)) : ?>
-                            <p id="<?php echo $user['user_id'] ?>" onclick="toggle_user(<?php echo $user['user_id'] ?>)"><?php echo $user['full_name'] ?></p>
-                        <?php endif ?>
-                    <?php endforeach ?>
+            <div class="area_one card">
+                <div class="container">
+                    <h4>Select One or more Users </h4>
+                    <div class="container">
+                        <div class="scroll w2-light-grey">
+                            <?php foreach ($users as $user) : ?>
+                                <?php $demo_users = array("Demo Admin", "Demo PM", "Demo Dev", "Demo Sub") ?>
+                                <?php if (!in_array($user['full_name'], $demo_users)) : ?>
+                                    <p id="<?php echo $user['user_id'] ?>" onclick="toggle_user(<?php echo $user['user_id'] ?>)"><?php echo $user['full_name'] ?></p>
+                                <?php endif ?>
+                            <?php endforeach ?>
+                        </div>
+                        <p id="no_selected_users" class="error"></p>
+                    </div>
+                    <h4>Select the Role to Assign</h4>
+                    <div class="container">
+
+                        <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="post" id="assign_role_form">
+                            <input type="hidden" name="user_ids" value="" id="input_user_ids">
+                            <input type="hidden" name="new_role" value="">
+                            <input type="hidden" name="assign_role_submit" value="" id="assign_role_submit">
+                        </form>
+
+                        <select class="select w3-light-grey" name="new_role" form="assign_role_form" id="selected_role">
+                            <option value="" disabled selected> -- Select Role --</option>
+                            <option value="1">Admin</option>
+                            <option value="2">Project Manager</option>
+                            <option value="3">Developer</option>
+                            <option value="4">Submitter</option>
+                        </select>
+                        <p id="no_selected_role" class="error"></p>
+                    </div>
+                    <h4>Submit changes</h4>
+                    <div class="container">
+                        <input type="submit" value="Submit" class="btn-primary" onclick="submit_form()">
+                    </div>
                 </div>
-                <p id="no_selected_users" class="error"></p>
-
-                <h4>Select the Role to Assign</h4>
-                <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="post" id="assign_role_form">
-                    <input type="hidden" name="user_ids" value="" id="input_user_ids">
-                    <input type="hidden" name="new_role" value="">
-                    <input type="hidden" name="assign_role_submit" value="" id="assign_role_submit">
-                </form>
-
-                <select class="select" name="new_role" form="assign_role_form" id="selected_role">
-                    <option value="" disabled selected>-- Select Role --</option>
-                    <option value="1">Admin</option>
-                    <option value="2">Project Manager</option>
-                    <option value="3">Developer</option>
-                    <option value="4">Submitter</option>
-                </select>
-                <p id="no_selected_role" class="error"></p>
-
-                <input type="submit" value="Submit" class="btn-primary" onclick="submit_form()">
             </div>
 
             <div class="area_two">
@@ -95,7 +102,7 @@ echo "
                         </div>
                         <?php if (count($users) == 0) : ?>
                             <div class="empty-table-row">
-                            <p>You have no projects in the database</p>
+                                <p>You have no projects in the database</p>
                             </div>
                             <p style="font-size:12px">Showing 0-0 of 0 entries</p>
                         <?php else : ?>
@@ -108,8 +115,8 @@ echo "
         </div>
     </div>
 
-     <!-- Model response message -->
-     <?php if (isset($_POST['assign_role_submit'])) : ?>
+    <!-- Model response message -->
+    <?php if (isset($_POST['assign_role_submit'])) : ?>
         <?php $num_changed = 0 ?>
         <div id="id01" class="w3-modal">
             <div class="w3-modal-content">
@@ -138,6 +145,7 @@ echo "
                             </table>
                         </div>
                         <p>Showing 1-<?php echo $num_changed; ?> of <?php echo $num_changed; ?> entries</p>
+                        <br>
                     </div>
                 </div>
             </div>

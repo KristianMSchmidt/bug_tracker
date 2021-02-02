@@ -17,14 +17,12 @@ $users = $contr->get_most_busy_users();
             <div class="card" style="flex:1">
                 <canvas id="priority_chart"></canvas>
             </div>
-
             <div class="card" style="flex:1">
                 <canvas id="status_chart"></canvas>
             </div>
         </div>
 
         <div class="row">
-
             <div class="card" style="flex:1">
                 <canvas id="type_chart"></canvas>
             </div>
@@ -32,9 +30,8 @@ $users = $contr->get_most_busy_users();
             <div class="card" style="flex:1">
                 <canvas id="top_busy_users_chart"></canvas>
             </div>
-
         </div>
-
+        <br><br>
     </div>
 </div>
 

@@ -39,7 +39,10 @@ include('shared/ui_frame.php');
             </div>
             <div class="container">
                 <?php if ($_SESSION['role_name'] == 'Admin') : ?>
-                    <p style="max-width:400px;">As administrator you can do almost anything on this site. <br> <br>If you are a guest, feel free to delete, create and edit: I have a back-up of the database and do daily resets.</p>
+                    <p style="max-width:400px;">As administrator you can do almost anything on this site.
+                        <br>
+                        If you are a guest, feel free to delete, create and edit.
+                    </p>
                 <?php elseif ($_SESSION['role_name'] == "Project Manager") : ?>
                     <p>As project manager you can assign users to projects and create tickets</p>
                 <?php elseif ($_SESSION['role_name'] == "Developer") : ?>

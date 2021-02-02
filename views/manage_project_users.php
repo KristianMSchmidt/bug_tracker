@@ -39,21 +39,25 @@ if (isset($_POST['project_id'])) {
 
             <h1>Manage Project Users</h1>
 
-            <div class="wrapper">
-                <div class="orto-wrapper container">
-                    <?php if (isset($_POST['project_id'])) : ?>
-                        <h5><span style="color:grey;">Selected Project Id:</span> <?php echo $_POST['project_id'] ?></h5>
-                        <h5><span style="color:grey;">Selected Project Name:</span> <?php echo $project_name ?></h5>
+            <div class="orto-wrapper top container card">
+                <?php if (isset($_POST['project_id'])) : ?>
+
+                    <h5><span style="color:grey;">Selected Project:</span> <?php echo $project_name ?></h5>
+                    <div class="container">
                         <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="post">
                             <input type="submit" value="Other Project" class="btn-primary">
                         </form>
-                    <?php else : ?>
-                        <h5>Select Project</h5>
+                    </div>
+
+                <?php else : ?>
+                    <h4>Select Project</h4>
+                    <div class="container">
+                        <p>What project to assign users to?</p>
                         <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="post" id="project_form">
-                            <select class="select" name="project_id">
+                            <select class="select w3-light-grey" name="project_id">
                                 <?php foreach ($projects as $project) : ?>
                                     <?php if ($project['project_id'] == $project_id) : ?>
-                                        <option value="<?php echo $project['project_id'] ?>" selected>
+                                        <option value=" <?php echo $project['project_id'] ?>" selected>
                                         <?php else : ?>
                                         <option value="<?php echo $project['project_id'] ?>">
                                         <?php endif ?>
@@ -62,27 +66,30 @@ if (isset($_POST['project_id'])) {
                             </select>
                         </form>
                         <input type="submit" value="Proceed" class="btn-primary" form="project_form">
-                    <?php endif ?>
-                </div>
+                    </div>
+                <?php endif ?>
             </div>
+
 
             <?php if (isset($_POST['project_id'])) : ?>
 
                 <div class="wrapper">
                     <!-- Select Enroll -->
-                    <div class="orto-wrapper">
+                    <div class="orto-wrapper left container card">
                         <h4> Select Users to Enroll</h4>
-                        <p>Available users</p>
-                        <div class="scroll">
-                            <?php foreach ($non_project_users as $npu) : ?>
-                                <p id="available_user_<?php echo $npu['user_id'] ?>" onclick="toggle_users_to_enroll(<?php echo $npu['user_id'] ?>)"><?php echo $npu['full_name'] ?></p>
-                            <?php endforeach ?>
-                            <?php if (count($non_project_users) == 0) : ?>
-                                <p><i>There are no available users</i></p>
-                            <?php endif ?>
+                        <div class="container">
+                            <p>Users not enrolled in project</p>
+                            <div class="scroll">
+                                <?php foreach ($non_project_users as $npu) : ?>
+                                    <p id="available_user_<?php echo $npu['user_id'] ?>" onclick="toggle_users_to_enroll(<?php echo $npu['user_id'] ?>)"><?php echo $npu['full_name'] ?></p>
+                                <?php endforeach ?>
+                                <?php if (count($non_project_users) == 0) : ?>
+                                    <p><i>There are no available users</i></p>
+                                <?php endif ?>
+                            </div>
+                            <p id="no_selected_users_to_enroll" class="error"></p>
+                            <input type="button" value="Enroll" class="btn-primary" onclick="submit_enroll_form()">
                         </div>
-                        <p id="no_selected_users_to_enroll" class="error"></p>
-                        <input type="button" value="Enroll" class="btn-primary" onclick="submit_enroll_form()">
                     </div>
 
                     <!-- Enroll form -->
@@ -93,16 +100,18 @@ if (isset($_POST['project_id'])) {
                     </form>
 
                     <!-- Select Disenroll -->
-                    <div class="orto-wrapper">
+                    <div class="orto-wrapper right container card">
                         <h4> Select Users to Disenroll</h4>
-                        <p>Users currently enrolled in project</p>
-                        <div class="scroll">
-                            <?php foreach ($project_users as $pu) : ?>
-                                <p id="enrolled_user_<?php echo $pu['user_id'] ?>" onclick="toggle_users_to_disenroll(<?php echo $pu['user_id'] ?>)"><?php echo $pu['full_name'] ?></p>
-                            <?php endforeach ?>
+                        <div class="container">
+                            <p>Users currently enrolled in project</p>
+                            <div class="scroll">
+                                <?php foreach ($project_users as $pu) : ?>
+                                    <p id="enrolled_user_<?php echo $pu['user_id'] ?>" onclick="toggle_users_to_disenroll(<?php echo $pu['user_id'] ?>)"><?php echo $pu['full_name'] ?></p>
+                                <?php endforeach ?>
+                            </div>
+                            <p id="no_selected_users_to_disenroll" class="error"></p>
+                            <input type="button" value="Disenroll" class="btn-primary" onclick="submit_disenroll_form()">
                         </div>
-                        <p id="no_selected_users_to_disenroll" class="error"></p>
-                        <input type="button" value="Disenroll" class="btn-primary" onclick="submit_disenroll_form()">
                     </div>
 
                     <!-- Disenroll form -->
@@ -145,6 +154,7 @@ if (isset($_POST['project_id'])) {
                                     </table>
                                 </div>
                                 <p>Showing 1-<?php echo $num_changed; ?> of <?php echo $num_changed; ?> entries</p>
+                                <br>
                             </div>
                         </div>
                     </div>
@@ -162,9 +172,9 @@ if (isset($_POST['project_id'])) {
                         <div class="w3-container">
                             <span onclick="document.getElementById('disenrolled_modal').style.display='none'" class="w3-button w3-display-topright">&times;</span>
                             <div class="container">
-                                <p>
+                                <h5>
                                     You succesfully dis-enrolled the following users from the selected project:
-                                </p>
+                                </h5>
                                 <div class="container w3-responsive">
                                     <table class="table striped bordered">
                                         <tr>
@@ -184,6 +194,7 @@ if (isset($_POST['project_id'])) {
                                     </table>
                                 </div>
                                 <p>Showing 1-<?php echo $num_changed; ?> of <?php echo $num_changed; ?> entries</p>
+                                <br>
                             </div>
                         </div>
                     </div>

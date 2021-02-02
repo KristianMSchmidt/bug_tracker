@@ -120,11 +120,23 @@
     .wrapper {
         display: flex;
         flex-direction: row;
+        padding-top: 1em;
     }
     .orto-wrapper {
         display: flex;
         flex-direction: column;
-        flex: 1;
+        padding-bottom: 2em;
+        &.top {
+            width: fit-content;
+        }
+        &.left {
+            margin-right: 1em;
+            flex: 1;
+        }
+        &.right {
+            margin-left: 1em;
+            flex: 1;
+        }
     }
     .btn-primary {
         width: 300px;
@@ -135,16 +147,41 @@
         width: 300px;
         padding: 0.5em;
     }
+    .scroll {
+        background-color: #f9f9f9;
+    }
+    p {
+        margin-top: 0.2em;
+        margin-bottom: 0;
+    }
+    .card {
+        margin-top: 2em;
+    }
+    .h4 {
+        padding-bottom: 0;
+        margin-bottom: 0;
+    }
 }
 
 .manage_user_roles {
     display: flex;
     flex-direction: row;
+    padding-top: 1.5em;
     .area_one {
         display: flex;
         flex-direction: column;
-        /* padding: 1em;*/
+        /*align-items: center;*/
+        height: fit-content;
         flex: 1;
+        .card {
+            padding: 1em;
+        }
+        input {
+            margin-bottom: 2em;
+        }
+        h4 {
+            padding-top: 1em;
+        }
     }
     .area_two {
         padding-left: 1em;
@@ -158,6 +195,10 @@
     .select {
         width: 300px;
         padding: 0.5em;
+        background-color: #f9f9f9;
+    }
+    .scroll {
+        background-color: #f9f9f9;
     }
 }
 
@@ -201,33 +242,6 @@
             padding-left: 7em;
             padding-right: 7em;
         }
-    }
-}
-
-.manage_user_roles {
-    .row_ {
-        display: flex;
-        flex-direction: row;
-        .col_one {
-            display: flex;
-            flex: 1;
-            flex-direction: column;
-            //justify-content: center;
-            //align-items: center;
-        }
-        .col_two {
-            display: flex;
-            flex: 2;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-        }
-    }
-    .select {
-        padding: 9px 0;
-        width: 300px;
-        border: none;
-        border-bottom: 1px solid #ccc;
     }
 }
 
