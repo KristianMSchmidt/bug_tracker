@@ -101,7 +101,7 @@ class Model extends Dbh
         return $results;
     }
     protected function db_get_tickets_by_user($user_id, $role_name)
-    {   
+    {
         $sql =
             "SELECT 
            tickets.title,
@@ -143,15 +143,15 @@ class Model extends Dbh
 
         // latest project at top
         $sql .= " ORDER BY tickets.created_at DESC";
-        
+
         $stmt = $this->connect()->prepare($sql);
-        
-        if ($role_name == 'Admin'):
-            $stmt -> execute();
-        else : 
+
+        if ($role_name == 'Admin') :
+            $stmt->execute();
+        else :
             $stmt->execute([$user_id]);
         endif;
-        
+
         $results = $stmt->fetchAll();
 
         return $results;
@@ -255,17 +255,31 @@ class Model extends Dbh
     //all users assigned to project
     {
         $sql =
-            "SELECT users.full_name, users.email, role_name
+            "SELECT users.full_name, users.email, role_name, users.user_id
             FROM users 
             JOIN project_enrollments ON users.user_id = project_enrollments.user_id
             JOIN user_roles ON user_roles.role_id = users.role_id
-            WHERE project_enrollments.project_id = ?";
+            WHERE project_enrollments.project_id = ?
+            ORDER BY users.full_name";
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute([$project_id]);
         $users = $stmt->fetchAll();
         return $users;
     }
 
+    protected function db_get_users_not_enrolled_in_project($project_id)
+    {
+        $sql =
+            "SELECT users.full_name, user_id
+            FROM users 
+            WHERE users.user_id NOT IN 
+                (SELECT user_id FROM `project_enrollments` WHERE project_id=?)
+            ORDER BY users.full_name";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute([$project_id]);
+        $users = $stmt->fetchAll();
+        return $users;
+    }
 
     protected function db_get_tickets_by_project($project_id)
     //all tickets to given project
@@ -504,8 +518,9 @@ class Model extends Dbh
         $result = $stmt->fetch();
         return $result;
     }
-    
-    protected function db_add_ticket_comment($user_id, $ticket_id, $message ){
+
+    protected function db_add_ticket_comment($user_id, $ticket_id, $message)
+    {
         $sql = "INSERT 
                 INTO ticket_comments (commenter_user_id, ticket_id, message)
                 VALUES (?,?,?)";
@@ -513,32 +528,55 @@ class Model extends Dbh
         $stmt->execute([$user_id, $ticket_id, $message]);
     }
 
-        
-    protected function db_create_ticket($data){
+
+    protected function db_create_ticket($data)
+    {
         $sql = "INSERT 
                 INTO tickets (title, project, developer_assigned, priority, status, type, description, submitter)
                 VALUES (?,?,?,?,?,?,?,?)";
         $stmt = $this->connect()->prepare($sql);
-        $stmt->execute([$data['title'],
-                        $data['project_id'],
-                        $data['developer_assigned'],
-                        $data['priority_id'],
-                        $data['status_id'],
-                        $data['type_id'],
-                        $data['description'],
-                        $data['submitter']]);
+        $stmt->execute([
+            $data['title'],
+            $data['project_id'],
+            $data['developer_assigned'],
+            $data['priority_id'],
+            $data['status_id'],
+            $data['type_id'],
+            $data['description'],
+            $data['submitter']
+        ]);
     }
 
-    protected function db_create_project($data){
+    protected function db_create_project($data)
+    {
         $sql = "INSERT 
                 INTO projects (project_name, project_description, created_by)
                 VALUES (?,?,?)";
         $stmt = $this->connect()->prepare($sql);
-        $stmt->execute([$data['title'],
-                        $data['description'],
-                        $data['created_by']]);
+        $stmt->execute([
+            $data['title'],
+            $data['description'],
+            $data['created_by']
+        ]);
     }
 
+    public function db_assign_to_project($user_id, $project_id)
+    {
+        $sql = "INSERT 
+                INTO project_enrollments (user_id, project_id)
+                VALUES (?,?)";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute([$user_id, $project_id]);
+    }
+
+    public function db_unassign_from_project($user_id, $project_id)
+    {
+        $sql = "DELETE  
+                FROM project_enrollments 
+                WHERE user_id = ? AND project_id = ?";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute([$user_id, $project_id]);
+    }
 }
 /*
 A 'statement' is any command that database understands

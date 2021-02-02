@@ -450,6 +450,7 @@ INSERT INTO notification_types(notification_type) VALUES('role updated');
 INSERT INTO notification_types(notification_type) VALUES('assigned to ticket'); 
 INSERT INTO notification_types(notification_type) VALUES('unassigned from ticket'); 
 INSERT INTO notification_types(notification_type) VALUES('enrolled to project'); 
+INSERT INTO notification_types(notification_type) VALUES('disenrolled from project'); 
 INSERT INTO notification_types(notification_type) VALUES('account created'); 
 
 

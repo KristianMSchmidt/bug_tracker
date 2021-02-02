@@ -3,7 +3,6 @@ include('../includes/login_check.inc.php');
 include('shared/ui_frame.php');
 $contr = new controller;
 
-
 if (isset($_POST['assign_role_submit'])) {
     $selected_users = json_decode($_POST['user_ids']);
     $new_role = $contr->get_role_name_by_role_id($_POST['new_role']);
@@ -27,8 +26,90 @@ echo "
 ?>
 
 <div class="new_main">
-    <!-- Model response message -->
-    <?php if (isset($_POST['assign_role_submit'])) : ?>
+
+    <h1>Manage User Roles</h1>
+    <div class="container">
+        <div class="manage_user_roles">
+
+            <div class="area_one">
+                
+                <h4>Select One or more Users </h4>
+                <div class="scroll">
+                    <?php foreach ($users as $user) : ?>
+                        <?php $demo_users = array("Demo Admin", "Demo PM", "Demo Dev", "Demo Sub") ?>
+                        <?php if (!in_array($user['full_name'], $demo_users)) : ?>
+                            <p id="<?php echo $user['user_id'] ?>" onclick="toggle_user(<?php echo $user['user_id'] ?>)"><?php echo $user['full_name'] ?></p>
+                        <?php endif ?>
+                    <?php endforeach ?>
+                </div>
+                <p id="no_selected_users" class="error"></p>
+
+                <h4>Select the Role to Assign</h4>
+                <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="post" id="assign_role_form">
+                    <input type="hidden" name="user_ids" value="" id="input_user_ids">
+                    <input type="hidden" name="new_role" value="">
+                    <input type="hidden" name="assign_role_submit" value="" id="assign_role_submit">
+                </form>
+
+                <select class="select" name="new_role" form="assign_role_form" id="selected_role">
+                    <option value="" disabled selected>-- Select Role --</option>
+                    <option value="1">Admin</option>
+                    <option value="2">Project Manager</option>
+                    <option value="3">Developer</option>
+                    <option value="4">Submitter</option>
+                </select>
+                <p id="no_selected_role" class="error"></p>
+
+                <input type="submit" value="Submit" class="btn-primary" onclick="submit_form()">
+            </div>
+
+            <div class="area_two">
+                <div class="card">
+                    <div class="container card-head">
+                        <h3>Your Personnel</h3>
+                    </div>
+                    <div class="container">
+                        <h5>
+                            All users in your database
+                            <!--
+                            <form action="" method="post">
+                                Show <input type="number" name="show_count" value="10" class="show_count"> Entries
+                            </form>
+                            -->
+                        </h5>
+                        <div class="container w3-responsive">
+                            <table class="table striped bordered">
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Role</th>
+                                </tr>
+                                <?php foreach ($users as $user) : ?>
+                                    <tr>
+                                        <td><?php echo $user['full_name'] ?></td>
+                                        <td><?php echo $user['email'] ?></td>
+                                        <td><?php echo $user['role_name'] ?></td>
+                                    </tr>
+                                <?php endforeach ?>
+                            </table>
+                        </div>
+                        <?php if (count($users) == 0) : ?>
+                            <div class="empty-table-row">
+                            <p>You have no projects in the database</p>
+                            </div>
+                            <p style="font-size:12px">Showing 0-0 of 0 entries</p>
+                        <?php else : ?>
+                            <p style="font-size:12px">Showing 1-<?php echo count($users); ?> of <?php echo count($users); ?> entries</p>
+                        <?php endif ?>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+     <!-- Model response message -->
+     <?php if (isset($_POST['assign_role_submit'])) : ?>
         <?php $num_changed = 0 ?>
         <div id="id01" class="w3-modal">
             <div class="w3-modal-content">
@@ -65,81 +146,6 @@ echo "
             document.getElementById('id01').style.display = 'block';
         </script>
     <?php endif ?>
-
-    <h1>Manage User Roles</h1>
-    <div class="container">
-        <div class="manage_user_roles">
-
-            <div class="area_one">
-                <h4>Select One or more Users </h4>
-                <div class="scroll">
-                    <?php foreach ($users as $user) : ?>
-                        <?php $demo_users = array("Demo Admin", "Demo PM", "Demo Dev", "Demo Sub") ?>
-                        <?php if (!in_array($user['full_name'], $demo_users)) : ?>
-                            <p id="<?php echo $user['user_id'] ?>" onclick="toggle_user(<?php echo $user['user_id'] ?>)"><?php echo $user['full_name'] ?></p>
-                        <?php endif ?>
-                    <?php endforeach ?>
-                </div>
-                <p id="no_selected_users" class="error"></p>
-                <h4>Select the Role to Assign</h4>
-
-                <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="post" id="assign_role_form">
-                    <input type="hidden" name="user_ids" value="" id="input_user_ids">
-                    <!--
-                        <input type="hidden" name="user_ids_json" value="" id="input_user_ids_json">-->
-                    <input type="hidden" name="new_role" value="">
-                    <input type="hidden" name="assign_role_submit" value="" id="assign_role_submit">
-                </form>
-
-                <select class="select" name="new_role" form="assign_role_form" id="selected_role">
-                    <option value="" disabled selected>-- Select Role --</option>
-                    <option value="1">Admin</option>
-                    <option value="2">Project Manager</option>
-                    <option value="3">Developer</option>
-                    <option value="4">Submitter</option>
-                </select>
-                <p id="no_selected_role" class="error"></p>
-
-                <input type="button" value="Submit" class="btn-primary" onclick="submit_form()">
-            </div>
-
-            <div class="area_two">
-                <div class="card">
-                    <div class="container card-head">
-                        <h3>Your Personnel</h3>
-                    </div>
-                    <div class="container">
-                        <h5>
-                            All users in your database
-                            <!--
-                            <form action="" method="post">
-                                Show <input type="number" name="show_count" value="10" class="show_count"> Entries
-                            </form>
-                            -->
-                        </h5>
-                        <div class="container w3-responsive">
-                            <table class="table striped bordered">
-                                <tr>
-                                    <th>Name</th>
-                                    <th>Email</th>
-                                    <th>Role</th>
-                                </tr>
-                                <?php foreach ($users as $user) : ?>
-                                    <tr>
-                                        <td><?php echo $user['full_name'] ?></td>
-                                        <td><?php echo $user['email'] ?></td>
-                                        <td><?php echo $user['role_name'] ?></td>
-                                    </tr>
-                                <?php endforeach ?>
-                            </table>
-                        </div>
-                        <p>Showing 1-<?php echo count($users); ?> of <?php echo count($users); ?> entries</p>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-    </div>
 </div>
 <script>
     var selected_users = [];

@@ -181,45 +181,6 @@ if (isset($_POST['show_next'])) {
                       
                 </div>
             </div>
-
-            <div class="bottom-right">
-                <div class="card">
-                    <div class="container card-head">
-                        <h3>Ticket Attachments</h3>
-                    </div>
-                    <div class="container">
-                        <h5>Add an attachment?</h5>
-                        <div class="container" style="padding-bottom:0.6em;">
-                        <form action="" method="post">
-                            <input type="file" id="myFile" name="filename">
-                            <input style="width:80%" type="text" placeholder="Describe the attachment">
-                            <input type="hidden" name="ticket_id" value="<?php echo $ticket_id ?>">
-                            <input type="hidden" name="requested_action">     
-                            <input type="submit" class="btn-primary" style="width:5em;" value="ADD">
-                        </form>
-                        </div>
-                    </div>
-                    <h5 class=" container">All files attached to this project</h5>
-                    <div class="container w3-responsive">
-                        <table class="table w3-small striped bordered">
-                            <tr>
-                                <th>File</th>
-                                <th>Uploader</th>
-                                <th>Notes</th>
-                                <th>Created</th>
-                            </tr>
-                        </table>
-                        <?php if (count($files) == 0) : ?>
-                            <div class="empty-table-row">
-                                <p>There are no files for this ticket</p>
-                            </div>
-                            <p class="entry-info">Showing 0-0 of 0 entries</p>
-                        <?php else : ?>
-                            <p class="entry-info">Showing 1-<?php echo count($files); ?> of <?php echo count($files); ?> entries</p>
-                        <?php endif ?>   
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
 

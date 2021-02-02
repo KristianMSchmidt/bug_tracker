@@ -15,17 +15,17 @@ $tickets = $contr->get_tickets_by_project($_POST['project_id']);
             <div class="container">
                 <h1>Details for Project #<?php echo $project['project_id'] ?></h1>
                 <div class="container" style="margin-bottom:1em">
-                    <p><span style="color:grey;">Project Name:</span> <?php echo $project['project_name'] ?></p>
-                    <p><span style="color:grey;">Description:</span> <?php echo $project['project_description'] ?></p>
+                    <h5><span style="color:grey;">Project Name:</span> <?php echo $project['project_name'] ?></h5>
+                    <h5><span style="color:grey;">Description:</span> <?php echo $project['project_description'] ?></h5>
                 </div>
             </div>
         </div>
         <div class="bottom">
-            <div class="bottom-left">           
+            <div class="bottom-left">
                 <form action="create_ticket.php" method="post">
-                        <input type="hidden" name="project_id" value="<?php echo $_POST['project_id']; ?>"> 
-                        <input type="hidden" name="requested_action" value="go_to_create_ticket_page">
-                        <input type="submit" value="CREATE NEW TICKET" class="btn-primary large">
+                    <input type="hidden" name="project_id" value="<?php echo $_POST['project_id']; ?>">
+                    <input type="hidden" name="requested_action" value="go_to_create_ticket_page">
+                    <input type="submit" value="CREATE NEW TICKET" class="btn-primary large">
                 </form>
                 <div class="card">
                     <div class="container card-head">
@@ -60,16 +60,17 @@ $tickets = $contr->get_tickets_by_project($_POST['project_id']);
                             <div class="empty-table-row">
                                 <p>There are no tickets for this project in the database</p>
                             </div>
-                        <p style="font-size:12px">Showing 0-0 of 0 entries</p>
+                            <p style="font-size:12px">Showing 0-0 of 0 entries</p>
                         <?php else : ?>
                             <p style="font-size:12px">Showing 1-<?php echo count($tickets); ?> of <?php echo count($tickets); ?> entries</p>
-                        <?php endif ?>    
+                        <?php endif ?>
                     </div>
-                </div>                
+                </div>
             </div>
             <div class="bottom-right">
                 <form action="manage_project_users.php" method="post">
-                        <input type="submit" value="MANAGE PROJECT USERS" class="btn-primary large" style="width: 16em;">
+                    <input type="hidden" name="project_id" value="<?php echo $_POST['project_id']; ?>">
+                    <input type="submit" value="MANAGE PROJECT USERS" class="btn-primary large" style="width: 16em;">
                 </form>
                 <div class="card">
                     <div class="container card-head">
@@ -97,17 +98,17 @@ $tickets = $contr->get_tickets_by_project($_POST['project_id']);
                             <div class="empty-table-row">
                                 <p>There are no users assigned to this project</p>
                             </div>
-                        <p style="font-size:12px">Showing 0-0 of 0 entries</p>
+                            <p style="font-size:12px">Showing 0-0 of 0 entries</p>
                         <?php else : ?>
                             <p style="font-size:12px">Showing 1-<?php echo count($users); ?> of <?php echo count($users); ?> entries</p>
-                        <?php endif ?>    
+                        <?php endif ?>
                     </div>
                 </div>
             </div>
         </div>
     </div>
     <!-- Model response message -->
-    <?php if ($_POST['requested_action']=='show_created_ticket_succes_message'): ?>
+    <?php if ($_POST['requested_action'] == 'show_created_ticket_succes_message') : ?>
         <div id="id01" class="w3-modal">
             <div class="w3-modal-content">
                 <div class="w3-container">

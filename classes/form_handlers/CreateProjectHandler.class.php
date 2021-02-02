@@ -65,7 +65,7 @@ class CreateProjectHandler
         echo "              
             <form action='my_projects.php' method='post' id='form'>
                 <input type='hidden' name='project_title' value='{$this->post_data['title']}'>
-                <input type='hidden' name='requested_action' value='show_created_project_succes_message'>
+                <input type='hidden' name='show_created_project_succes_message'>
             </form>
             <script>
                 document.getElementById('form').submit();

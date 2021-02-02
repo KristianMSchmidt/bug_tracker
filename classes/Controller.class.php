@@ -112,6 +112,11 @@ class Controller extends Model
         $results = $this->db_get_project_users($project_id);
         return $results;
     }
+    public function get_users_not_enrolled_in_project($project_id)
+    {
+        $results = $this->db_get_users_not_enrolled_in_project($project_id);
+        return $results;
+    }
     public function get_tickets_by_project($project_id)
     {
         $results = $this->db_get_tickets_by_project($project_id);
@@ -177,39 +182,55 @@ class Controller extends Model
         return $this->db_get_ticket_comments($ticket_id);
     }
 
-    public function get_project_name_by_id($project_id){
+    public function get_project_name_by_id($project_id)
+    {
 
         return $this->db_get_project_name_by_id($project_id);
     }
-    
-    public function get_priority_name_by_id($priority_id){
+
+    public function get_priority_name_by_id($priority_id)
+    {
 
         return $this->db_get_priority_name_by_id($priority_id);
     }
 
-    public function get_ticket_type_name_by_id($type_id){
+    public function get_ticket_type_name_by_id($type_id)
+    {
 
         return $this->db_ticket_type_name_by_id($type_id);
     }
 
 
-    public function get_ticket_status_name_by_id($status_id){
+    public function get_ticket_status_name_by_id($status_id)
+    {
 
         return $this->db_ticket_status_name_by_id($status_id);
     }
 
 
-    public function add_ticket_comment($user_id, $ticket_id, $message){
+    public function add_ticket_comment($user_id, $ticket_id, $message)
+    {
 
         $this->db_add_ticket_comment($user_id, $ticket_id, $message);
     }
 
-    public function create_ticket($data){
+    public function create_ticket($data)
+    {
         $this->db_create_ticket($data);
     }
 
-    public function create_project($data){
+    public function create_project($data)
+    {
         $this->db_create_project($data);
     }
 
+    public function assign_to_project($user_id, $project_id)
+    {
+        $this->db_assign_to_project($user_id, $project_id);
+    }
+
+    public function unassign_from_project($user_id, $project_id)
+    {
+        $this->db_unassign_from_project($user_id, $project_id);
+    }
 }

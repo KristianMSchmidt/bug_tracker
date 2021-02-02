@@ -62,10 +62,31 @@ $projects = $contr->get_projects_by_user_id($_SESSION['user_id'], $_SESSION['rol
             </div>
         </div>
     </div>
+    <?php if(isset($_POST['show_created_project_succes_message'])) : ?>
+        <div id="id01" class="w3-modal">
+            <div class="w3-modal-content">
+                <div class="w3-container">
+                    <span onclick="document.getElementById('id01').style.display='none'" class="w3-button w3-display-topright">&times;</span>
+                    <div class="container">
+                        <p style="margin-top:3em; margin-bottom:3em;">
+                            You succesfully created the project '<?php echo $_POST['project_title'] ?>'
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script>
+            document.getElementById('id01').style.display = 'block';
+        </script>   
+    <?php endif ?>
+
+
 </div>
 
 <form action="project_details.php" method="post" id="form">
     <input type="hidden" name="project_id" id="project_id" value="">
+    <input type="hidden" name="requested_action">
+
 </form>
 
 <script>

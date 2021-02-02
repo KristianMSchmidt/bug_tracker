@@ -317,10 +317,16 @@ html {
 
 .project_details .bottom-left {
   margin-right: 0.5em;
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
 }
 
 .project_details .bottom-right {
   margin-left: 0.5en;
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
 }
 
 .project_details .card {
@@ -334,6 +340,40 @@ html {
         -ms-flex-direction: column;
             flex-direction: column;
   }
+}
+
+.manage_project_users .wrapper {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+}
+
+.manage_project_users .orto-wrapper {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+}
+
+.manage_project_users .btn-primary {
+  width: 300px;
+  font-size: 15px;
+  height: 30px;
+}
+
+.manage_project_users .select {
+  width: 300px;
+  padding: 0.5em;
 }
 
 .manage_user_roles {
@@ -375,6 +415,7 @@ html {
 
 .manage_user_roles .select {
   width: 300px;
+  padding: 0.5em;
 }
 
 /* OLD STUFF */
