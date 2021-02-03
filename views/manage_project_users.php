@@ -42,11 +42,19 @@ if (isset($_POST['project_id'])) {
             <div class="orto-wrapper top w3-container card">
                 <?php if (isset($_POST['project_id'])) : ?>
 
-                    <h5><span style="color:grey;">Selected Project:</span> <?php echo $project_name ?></h5>
-                    <div class="w3-container">
-                        <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="post">
-                            <input type="submit" value="Other Project" class="btn-primary">
+                    <div style="padding-right:1em; padding-top:1em;">
+                        <h4 style="display:inline"><span style="color:grey;">Selected Project:</span> <?php echo $project_name ?></h4>
+                        <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="post" id="select_other_form"></form>
+
+                        <form action='project_details.php' method='post' id="project_details_form">
+                            <input type="hidden" name="project_id" value="<?php echo $_POST['project_id'] ?>">
+                            <input type="hidden" name="requested_action">
                         </form>
+                        <br>
+                        <div>
+                            <a href="#" onclick="document.getElementById('select_other_form').submit()">Change Project</a>
+                            <a href="#" style="float:right" onclick="document.getElementById('project_details_form').submit()">Project Details</a>
+                        </div>
                     </div>
 
                 <?php else : ?>

@@ -11,12 +11,20 @@ $tickets = $contr->get_tickets_by_project($_POST['project_id']);
 
 <div class="main">
     <div class="project_details">
-        <div class="w3-container" style="width:fit-content; margin-bottom:1em;">
+        <div class="w3-container" style="width:fit-content; margin-bottom:2em;">
             <h1 style="margin-right:1em; display:inline">Details for Project #<?php echo $project['project_id'] ?></h1>
             <a href="#" onclick="document.getElementById('go_to_edit_form').submit()"> Edit Project</a>
-            <div class="w3-container card">
-                <h5><span>Project Name:</span> <?php echo $project['project_name'] ?></h5>
-                <h5><span>Description:</span> <?php echo $project['project_description'] ?></h5>
+            <div class="w3-container card" style="padding-bottom:1em;">
+                <table class="table bordered">
+                    <tr>
+                        <th>Project Name</th>
+                        <th>Description</th>
+                    </tr>
+                    <tr>
+                        <td><?php echo $project['project_name'] ?></td>
+                        <td><?php echo $project['project_description'] ?></td>
+                    </tr>
+                </table>
             </div>
         </div>
 
