@@ -17,8 +17,7 @@ class CreateTicketHandler
         if (!$this->errors) {
             $this->create();
             $this->redirect();
-        }
-        else{
+        } else {
             return $this->errors;
         }
     }
@@ -66,6 +65,8 @@ class CreateTicketHandler
             <form action='project_details.php' method='post' id='form'>
                 <input type='hidden' name='project_id' value='{$this->post_data['project_id']}'>
                 <input type='hidden' name='requested_action' value='show_created_ticket_succes_message'>
+                <input type='hidden' name='ticket_title' value='{$this->post_data['title']}'>
+                <input type='hidden' name='ticket_description' value='{$this->post_data['description']}'>
             </form>
             <script>
                 document.getElementById('form').submit();

@@ -429,6 +429,22 @@ class Model extends Dbh
         ]);
     }
 
+
+    protected function db_set_project($project_title, $project_description, $project_id)
+    {
+
+        $sql = "UPDATE projects 
+                SET 
+                    project_name = ?,
+                    project_description = ?,
+                    updated_at = CURRENT_TIMESTAMP
+                WHERE project_id = ?";
+
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute([$project_title, $project_description, $project_id]);
+    }
+
+
     protected function db_get_role_name_by_role_id($role_id)
     {
         $sql = "SELECT role_name 

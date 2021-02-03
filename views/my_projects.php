@@ -9,11 +9,9 @@ $projects = $contr->get_projects_by_user_id($_SESSION['user_id'], $_SESSION['rol
 <div class="main">
 
     <div class="my_projects">
-
         <form action="create_project.php" method="POST">
             <input type="submit" name="submit" value="CREATE NEW PROJECT" class="btn-primary large">
         </form>
-
         <div class="card">
             <div class="container card-head">
                 <h2>My projects</h2>
@@ -45,7 +43,7 @@ $projects = $contr->get_projects_by_user_id($_SESSION['user_id'], $_SESSION['rol
                                 <td><?php echo $project['project_name'] ?></td>
                                 <td style="padding-right:2em;"><?php echo $project['project_description'] ?></td>
                                 <td>
-                                    <a href="#" onclick="details_submitter(<?php echo $project['project_id'] ?>)">Details</a>                                    
+                                    <a href="#" onclick="details_submitter(<?php echo $project['project_id'] ?>)">Details</a>
                                 </td>
                             </tr>
                         <?php endforeach ?>
@@ -62,25 +60,35 @@ $projects = $contr->get_projects_by_user_id($_SESSION['user_id'], $_SESSION['rol
             </div>
         </div>
     </div>
-    <?php if(isset($_POST['show_created_project_succes_message'])) : ?>
+    <?php if (isset($_POST['show_created_project_succes_message'])) : ?>
         <div id="id01" class="w3-modal">
             <div class="w3-modal-content">
                 <div class="w3-container">
                     <span onclick="document.getElementById('id01').style.display='none'" class="w3-button w3-display-topright">&times;</span>
-                    <div class="container">
-                        <p style="margin-top:3em; margin-bottom:3em;">
-                            You succesfully created the project '<?php echo $_POST['project_title'] ?>'
-                        </p>
+                    <div class="w3-container">
+                        <h5>
+                            You succesfully created the following project:
+                        </h5>
+                        <div class="container w3-responsive">
+                            <table class="table striped bordered">
+                                <tr>
+                                    <th>Project</th>
+                                    <th>Description</th>
+                                </tr>
+                                <tr>
+                                    <td><?php echo $_POST['project_title'] ?></td>
+                                    <td><?php echo $_POST['project_description'] ?></td>
+                                </tr>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
         <script>
             document.getElementById('id01').style.display = 'block';
-        </script>   
+        </script>
     <?php endif ?>
-
-
 </div>
 
 <form action="project_details.php" method="post" id="form">

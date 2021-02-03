@@ -66,6 +66,7 @@ CREATE TABLE projects(
     project_description TINYTEXT, 
     created_by INT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, 
+    updated_at TIMESTAMP NULL ON UPDATE CURRENT_TIMESTAMP,
     FOREIGN KEY (created_by) REFERENCES users(user_id) ON DELETE SET NULL ON UPDATE CASCADE
     );
 DESCRIBE projects;

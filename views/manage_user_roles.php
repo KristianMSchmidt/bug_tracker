@@ -123,9 +123,7 @@ echo "
                 <div class="w3-container">
                     <span onclick="document.getElementById('id01').style.display='none'" class="w3-button w3-display-topright">&times;</span>
                     <div class="container">
-                        <p>
-                            You succesfully updated the following users
-                        </p>
+                        <h5>You succesfully updated the following users</h5>
                         <div class="container w3-responsive">
                             <table class="table striped bordered">
                                 <tr>
@@ -134,8 +132,10 @@ echo "
                                     <th>New Role</th>
                                 </tr>
                                 <?php foreach ($selected_users as $user_id) : ?>
-                                    <?php $user = $contr->get_user_by_id($user_id);
-                                    $num_changed += 1 ?>
+                                    <?php
+                                    $user = $contr->get_user_by_id($user_id);
+                                    $num_changed += 1
+                                    ?>
                                     <tr>
                                         <td><?php echo $user['full_name'] ?></td>
                                         <td><?php echo $user['email'] ?></td>
@@ -145,7 +145,6 @@ echo "
                             </table>
                         </div>
                         <p>Showing 1-<?php echo $num_changed; ?> of <?php echo $num_changed; ?> entries</p>
-                        <br>
                     </div>
                 </div>
             </div>

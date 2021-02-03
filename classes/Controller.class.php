@@ -162,6 +162,12 @@ class Controller extends Model
         $this->db_set_ticket($data);
     }
 
+
+    public function set_project($project_name, $project_description, $project_id)
+    {
+        $this->db_set_project($project_name, $project_description, $project_id);
+    }
+
     public function get_role_name_by_role_id($role_id)
     {
         return $this->db_get_role_name_by_role_id($role_id);

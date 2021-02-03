@@ -18,8 +18,7 @@ class CreateProjectHandler
         if (!$this->errors) {
             $this->create();
             $this->redirect();
-        }
-        else{
+        } else {
             return $this->errors;
         }
     }
@@ -53,11 +52,12 @@ class CreateProjectHandler
     }
 
     private function create()
-    {   include_once('../includes/auto_loader.inc.php');
+    {
+        include_once('../includes/auto_loader.inc.php');
         $contr = new Controller();
         $contr->create_project($this->post_data);
         //notify assigned developer
-        
+
     }
 
     private function redirect()
@@ -65,6 +65,7 @@ class CreateProjectHandler
         echo "              
             <form action='my_projects.php' method='post' id='form'>
                 <input type='hidden' name='project_title' value='{$this->post_data['title']}'>
+                <input type='hidden' name='project_description' value='{$this->post_data['description']}'>
                 <input type='hidden' name='show_created_project_succes_message'>
             </form>
             <script>

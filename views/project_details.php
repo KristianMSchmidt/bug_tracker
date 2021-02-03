@@ -11,16 +11,16 @@ $tickets = $contr->get_tickets_by_project($_POST['project_id']);
 
 <div class="new_main">
     <div class="project_details">
-        <div class="top">
-            <div class="container">
-                <h1>Details for Project #<?php echo $project['project_id'] ?></h1>
-                <div class="container" style="margin-bottom:1em">
-                    <h5><span style="color:grey;">Project Name:</span> <?php echo $project['project_name'] ?></h5>
-                    <h5><span style="color:grey;">Description:</span> <?php echo $project['project_description'] ?></h5>
-                </div>
+        <div class="container" style="width:fit-content; margin-bottom:1em;">
+            <h1 style="margin-right:1em; display:inline">Details for Project #<?php echo $project['project_id'] ?></h1>
+            <a href="#" onclick="document.getElementById('go_to_edit_form').submit()"> Edit Project</a>
+            <div class="container card">
+                <h5><span>Project Name:</span> <?php echo $project['project_name'] ?></h5>
+                <h5><span>Description:</span> <?php echo $project['project_description'] ?></h5>
             </div>
         </div>
-        <div class="bottom">
+
+        <div class="bottom container">
             <div class="bottom-left">
                 <form action="create_ticket.php" method="post">
                     <input type="hidden" name="project_id" value="<?php echo $_POST['project_id']; ?>">
@@ -107,26 +107,58 @@ $tickets = $contr->get_tickets_by_project($_POST['project_id']);
             </div>
         </div>
     </div>
-    <!-- Model response message -->
-    <?php if ($_POST['requested_action'] == 'show_created_ticket_succes_message') : ?>
-        <div id="id01" class="w3-modal">
-            <div class="w3-modal-content">
+</div>
+
+<!-- Model response message for created ticket -->
+<?php if ($_POST['requested_action'] == 'show_created_ticket_succes_message') : ?>
+    <div id="id01" class="w3-modal">
+        <div class="w3-modal-content">
+            <div class="w3-container">
+                <span onclick="document.getElementById('id01').style.display='none'" class="w3-button w3-display-topright">&times;</span>
                 <div class="w3-container">
-                    <span onclick="document.getElementById('id01').style.display='none'" class="w3-button w3-display-topright">&times;</span>
-                    <div class="container">
-                        <p style="margin-top:3em; margin-bottom:3em;">
-                            You succesfully created at ticket for this project
-                        </p>
+                    <h5>
+                        You succesfully created a new ticket for this project:
+                    </h5>
+                    <div class="container w3-responsive">
+                        <table class="table striped bordered">
+                            <tr>
+                                <th>Ticket Title</th>
+                                <th>Ticket Description</th>
+                            </tr>
+                            <tr>
+                                <td><?php echo $_POST['ticket_title'] ?></td>
+                                <td><?php echo $_POST['ticket_description'] ?></td>
+                            </tr>
+                        </table>
                     </div>
                 </div>
             </div>
         </div>
-        <script>
-            document.getElementById('id01').style.display = 'block';
-        </script>
-    <?php endif ?>
-</div>
+    </div>
+    <script>
+        document.getElementById('id01').style.display = 'block';
+    </script>
+<?php endif ?>
 
+
+<!-- Model response message for created ticket -->
+<?php if ($_POST['requested_action'] == 'show_project_edited_succes_message') : ?>
+    <div id="id02" class="w3-modal">
+        <div class="w3-modal-content">
+            <div class="w3-container">
+                <span onclick="document.getElementById('id02').style.display='none'" class="w3-button w3-display-topright">&times;</span>
+                <div class="w3-container">
+                    <h5>
+                        You succesfully edited this project.
+                    </h5>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        document.getElementById('id02').style.display = 'block';
+    </script>
+<?php endif ?>
 
 <form action="ticket_details.php" method="post" id="form">
     <input type="hidden" name="ticket_id" id="ticket_id" value="">
@@ -140,6 +172,14 @@ $tickets = $contr->get_tickets_by_project($_POST['project_id']);
         document.getElementById("form").submit()
     }
 </script>
+
+
+<form action="edit_project.php" method="post" id="go_to_edit_form">
+    <input type="hidden" name="project_id" value=<?php echo $project['project_id'] ?>>
+    <input type="hidden" name="old_project_name" value=<?php echo $project['project_name'] ?>>
+    <input type="hidden" name="old_project_description" value=<?php echo $project['project_description'] ?>>
+    <input type="hidden" name="go_to_edit_project" value="">
+</form>
 
 <?php include('shared/closing_tags.php') ?>
 

@@ -9,7 +9,7 @@ $LIMIT = 5;
 $contr = new Controller();
 $ticket_id = $_POST['ticket_id'];
 
-if(isset($_POST['new_comment'])){
+if (isset($_POST['new_comment'])) {
     include('../classes/form_handlers/AddCommentHandler.class.php');
     $comment_handler = new AddCommentHandler($_SESSION['user_id'], $ticket_id, $_POST);
     $errors = $comment_handler->process_input();
@@ -37,13 +37,11 @@ if (isset($_POST['show_next'])) {
     }
 </style>
 <div class="new_main">
-    <?php
-    ?>
     <div class="ticket_details">
         <div class="container">
             <h1>Details for Ticket #<?php echo $ticket_id ?></h1>
-            <a href="#" onclick="form_submitter('project_details.php')" style="color:blue; margin-right:1em;">Go to Project </a>
-            <a href="#" onclick="form_submitter('edit_ticket.php')" style="color:blue;"> Edit Ticket</a>
+            <a href="#" onclick="form_submitter('project_details.php')" style="margin-right:1em;">Go to Project </a>
+            <a href="#" onclick="form_submitter('edit_ticket.php')"> Edit Ticket</a>
         </div>
         <br>
         <div class="grid-container">
@@ -113,8 +111,8 @@ if (isset($_POST['show_next'])) {
                             <form action="" method="post">
                                 <input style="width:80%" type="text" name="new_comment" placeholder="Write a comment on the ticket">
                                 <input type="hidden" name="ticket_id" value="<?php echo $ticket_id ?>">
-                                <input type="hidden" name="requested_action">                            
-                                <input type="submit" class="btn-primary" style="width:5em;" value="ADD">                            
+                                <input type="hidden" name="requested_action">
+                                <input type="submit" class="btn-primary" style="width:5em;" value="ADD">
                             </form>
                         </div>
                     </div>
@@ -141,7 +139,7 @@ if (isset($_POST['show_next'])) {
                             <p class="entry-info">Showing 0-0 of 0 entries</p>
                         <?php else : ?>
                             <p class="entry-info">Showing 1-<?php echo count($comments); ?> of <?php echo count($comments); ?> entries</p>
-                        <?php endif ?>   
+                        <?php endif ?>
                     </div>
                 </div>
             </div>
@@ -176,24 +174,24 @@ if (isset($_POST['show_next'])) {
                             <p class="entry-info">Showing 0-0 of 0 entries</p>
                         <?php else : ?>
                             <p class="entry-info">Showing 1-<?php echo count($history_entries); ?> of <?php echo count($history_entries); ?> entries</p>
-                        <?php endif ?>   
-                </div>
-                      
+                        <?php endif ?>
+                    </div>
+
                 </div>
             </div>
         </div>
     </div>
 
-     <!-- Model response message -->
-     <?php if (isset($_POST['show_ticket_edited_succes_message'])): ?>
+    <!-- Model response message -->
+    <?php if (isset($_POST['show_ticket_edited_succes_message'])) : ?>
         <div id="id01" class="w3-modal">
             <div class="w3-modal-content">
                 <div class="w3-container">
                     <span onclick="document.getElementById('id01').style.display='none'" class="w3-button w3-display-topright">&times;</span>
                     <div class="container">
-                        <p style="margin-top:3em; margin-bottom:3em;">
+                        <h5>
                             You succesfully updated the the ticket
-                        </p>
+                        </h5>
                     </div>
                 </div>
             </div>
@@ -220,14 +218,14 @@ if (isset($_POST['show_next'])) {
     }
 </script>
 
-<form action="" method ="post" id="form">
-            <input type="hidden" name="ticket_id" value="<?php echo $ticket_id ?>">
-            <input type="hidden" name="project_id" value="<?php echo $ticket['project'] ?>">
-            <input type="hidden" name="requested_action">
+<form action="" method="post" id="form">
+    <input type="hidden" name="ticket_id" value="<?php echo $ticket_id ?>">
+    <input type="hidden" name="project_id" value="<?php echo $ticket['project'] ?>">
+    <input type="hidden" name="requested_action">
 </form>
 <script>
-    function form_submitter(action){
-        document.getElementById('form').action=action;
+    function form_submitter(action) {
+        document.getElementById('form').action = action;
         document.getElementById('form').submit();
     }
 </script>

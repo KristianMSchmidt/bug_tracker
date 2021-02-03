@@ -2,52 +2,67 @@
 @import "pages";
 @import "components";
 @import "media";
-
 input {
-  &.show_count {
-    width: 45px;
-  }
+    &.show_count {
+        width: 45px;
+    }
 }
 
 // Hide arrows from number input
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
+    -webkit-appearance: none;
+    margin: 0;
 }
+
+
 /* Firefox */
+
 input[type="number"] {
-  -moz-appearance: textfield;
+    -moz-appearance: textfield;
 }
 
 .container {
-  padding: 0.01em 16px;
+    padding: 0.01em 16px;
 }
 
 .error {
-  color: #f44336;
-  margin: 0;
-  padding: 0;
+    color: #f44336;
+    margin: 0;
+    padding: 0;
 }
 
 .input {
-  padding: 8px;
-  display: block;
-  border: none;
-  border-bottom: 1px solid #ccc;
-  width: 100%;
+    padding: 8px;
+    display: block;
+    border: none;
+    border-bottom: 1px solid #ccc;
+    width: 100%;
 }
 
 .small {
-  font-size: 80%;
+    font-size: 80%;
 }
 
 .w3-responsive {
-  //display: block;
-  overflow-x: auto;
+    //display: block;
+    overflow-x: auto;
 }
 
 // w3-css overrides
 .w3-modal {
-  padding-left: 100px;
+    padding-left: 100px;
+}
+
+.w3-modal-content {
+    padding-top: 1em;
+    padding-bottom: 1em;
+    p {
+        margin-top: 0.5em;
+        padding: 0;
+    }
+}
+
+a {
+    color: blue;
 }

@@ -88,9 +88,6 @@
 .project_details {
     display: flex;
     flex-direction: column;
-    .top {
-        flex: 1;
-    }
     .bottom {
         display: flex;
         flex-direction: row;
@@ -105,6 +102,9 @@
     }
     .card {
         margin-top: 1em;
+    }
+    span {
+        font-weight: bold;
     }
 }
 

@@ -17,12 +17,13 @@ $status_types = $contr->get_ticket_status_types();
 $developers = $contr->get_users_by_role_id(3);
 
 include('shared/ui_frame.php');
-    ?>
+?>
 
 <style>
-select{
-    padding-top: 0.3em;
-    padding-bottom:0.3em;}
+    select {
+        padding-top: 0.3em;
+        padding-bottom: 0.3em;
+    }
 </style>
 
 <div class="new_main">
@@ -38,7 +39,7 @@ select{
                         <div class="left">
                             <!-- Title -->
                             <p>
-                                <input type="text" name="title" class="input" value="<?php echo $ticket['title'] ??'' ?>">
+                                <input type="text" name="title" class="input" value="<?php echo $ticket['title'] ?? '' ?>">
                                 <label>Ticket Title</label><br>
                                 <span class="error">
                                     <?php echo $errors['title'] ?? '' ?>

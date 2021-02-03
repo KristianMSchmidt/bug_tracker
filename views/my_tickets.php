@@ -69,8 +69,8 @@ $tickets = $contr->get_tickets_by_user($_SESSION['user_id'], $_SESSION['role_nam
                         </div>
                         <p style="font-size:12px">Showing 0-0 of 0 entries</p>
                     <?php else : ?>
-                         <p style="font-size:12px">Showing 1-<?php echo count($tickets); ?> of <?php echo count($tickets); ?> entries</p>
-                    <?php endif ?>       
+                        <p style="font-size:12px">Showing 1-<?php echo count($tickets); ?> of <?php echo count($tickets); ?> entries</p>
+                    <?php endif ?>
 
                 </div>
             </div>

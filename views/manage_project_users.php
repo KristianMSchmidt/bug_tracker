@@ -131,10 +131,10 @@ if (isset($_POST['project_id'])) {
                     <div class="w3-modal-content">
                         <div class="w3-container">
                             <span onclick="document.getElementById('enrolled_modal').style.display='none'" class="w3-button w3-display-topright">&times;</span>
-                            <div class="container">
-                                <p>
+                            <div class="w3-container">
+                                <h5>
                                     You succesfully enrolled the following users to the selected project:
-                                </p>
+                                </h5>
                                 <div class="container w3-responsive">
                                     <table class="table striped bordered">
                                         <tr>
@@ -154,7 +154,6 @@ if (isset($_POST['project_id'])) {
                                     </table>
                                 </div>
                                 <p>Showing 1-<?php echo $num_changed; ?> of <?php echo $num_changed; ?> entries</p>
-                                <br>
                             </div>
                         </div>
                     </div>
@@ -194,7 +193,6 @@ if (isset($_POST['project_id'])) {
                                     </table>
                                 </div>
                                 <p>Showing 1-<?php echo $num_changed; ?> of <?php echo $num_changed; ?> entries</p>
-                                <br>
                             </div>
                         </div>
                     </div>
