@@ -10,7 +10,7 @@ if (isset($_POST['create_project_attempt'])) {
 include('shared/ui_frame.php');
 ?>
 
-<div class="new_main">
+<div class="main">
     <div class="create_project">
         <div class="card">
             <div class="w3-container card-head">
@@ -20,7 +20,7 @@ include('shared/ui_frame.php');
                 <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="POST">
                     <!-- Title -->
                     <p>
-                        <input type="text" name="title" class="input" value="<?php echo $_POST['title'] ?? '' ?>">
+                        <input type="text" name="title" class="w3-input" value="<?php echo $_POST['title'] ?? '' ?>">
                         <label>Ticket Title</label><br>
                         <span class="error">
                             <?php echo $errors['title'] ?? '' ?>
@@ -28,7 +28,7 @@ include('shared/ui_frame.php');
                     </p>
                     <!-- Description -->
                     <p>
-                        <input type="text" name="description" class="input" value="<?php echo $_POST['description'] ?? '' ?>">
+                        <input type="text" name="description" class="w3-input" value="<?php echo $_POST['description'] ?? '' ?>">
                         <label>Description</label><br>
                         <span class="error">
                             <?php echo $errors['description'] ?? '' ?>

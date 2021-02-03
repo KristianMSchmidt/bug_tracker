@@ -98,17 +98,6 @@ html {
     .main {
         flex: 30;
         /* how much of the flexbox space should the main area take, relative to sidebar */
-        display: flex;
-        align-items: stretch;
-        /*makes content-div inside main fill out main area vertically */
-        justify-content: center;
-        /* horizontally centers content-div inside main */
-        padding-top: 1em;
-        background-color: #f9f9f9;
-    }
-    .new_main {
-        flex: 30;
-        /* how much of the flexbox space should the main area take, relative to sidebar */
         background-color: #f9f9f9;
         padding: 1em;
     }

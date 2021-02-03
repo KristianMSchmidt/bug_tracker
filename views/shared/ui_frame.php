@@ -53,7 +53,6 @@ if (isset($_SESSION['user_id'])) {
                     |
                     <?php echo $_SESSION['role_name'] ?>
                 </p>
-                <!-- <p style="color:black;">Albert Einstein</p> -->
 
                 <div class="dropdown">
                     <!-- notifications dropdown btn -->

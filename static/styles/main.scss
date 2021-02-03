@@ -2,14 +2,13 @@
 @import "pages";
 @import "components";
 @import "media";
-input {
-    &.show_count {
-        width: 45px;
-    }
-}
-
+@import "w3-overrides";
 a {
     color: blue;
+}
+
+.entry-info {
+    font-size: 12px;
 }
 
 // Hide arrows from number input
@@ -30,35 +29,4 @@ input[type="number"] {
     color: #f44336;
     margin: 0;
     padding: 0;
-}
-
-.input {
-    padding: 8px;
-    display: block;
-    border: none;
-    border-bottom: 1px solid #ccc;
-    width: 100%;
-}
-
-.small {
-    font-size: 80%;
-}
-
-.w3-responsive {
-    //display: block;
-    overflow-x: auto;
-}
-
-// w3-css overrides
-.w3-modal {
-    padding-left: 100px;
-}
-
-.w3-modal-content {
-    padding-top: 1em;
-    padding-bottom: 1em;
-    p {
-        margin-top: 0.5em;
-        padding: 0;
-    }
 }

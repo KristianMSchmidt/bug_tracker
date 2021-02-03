@@ -1,15 +1,10 @@
 <?php
 /*
-This is the only class direcly querying and modifying database. 
-Only protected methods.
-I call query_statements select
-Never use 'select * '
-
+This is the only class direcly querying and modifying database. Only protected methods.
 */
 
 class Model extends Dbh
 {
-
     protected function db_get_users()
     {
         $sql  = "SELECT * 
@@ -88,14 +83,17 @@ class Model extends Dbh
                 projects.project_id,
                 projects.project_name,
                 projects.project_description
-                FROM projects
-                ORDER BY created_at DESC";
+                FROM projects";
+
         if ($role_name != 'Admin') {
             $sql .= " WHERE projects.project_id IN 
                     (SELECT project_id 
                     FROM project_enrollments 
                     WHERE user_id = {$user_id})";
         }
+
+        $sql .=  " ORDER BY created_at DESC";
+
         $stmt = $this->connect()->query($sql);
         $results = $stmt->fetchAll();
         return $results;
@@ -106,15 +104,8 @@ class Model extends Dbh
             "SELECT 
            tickets.title,
            tickets.ticket_id,
-           /*tickets.type,
-           tickets.priority,
-           tickets.status,*/
            tickets.created_at,
-           /*tickets.developer_assigned,*/
-           /*tickets.submitter,*/
-           /*tickets.description,*/
            projects.project_name,
-          /* projects.project_id,*/
            ticket_priorities.ticket_priority_name,
            ticket_status_types.ticket_status_name,
            ticket_types.ticket_type_name,
@@ -456,14 +447,12 @@ class Model extends Dbh
         return $role_name;
     }
 
-    protected function db_get_ticket_history($ticket_id, $OFFSET, $LIMIT)
+    protected function db_get_ticket_history($ticket_id)
     {
         $sql = "SELECT * 
                 FROM ticket_history 
                 WHERE ticket_id = ?
-                ORDER BY created_at DESC
-                LIMIT {$LIMIT}
-                OFFSET {$OFFSET}";
+                ORDER BY created_at DESC";
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute([$ticket_id]);
         $ticket_history = $stmt->fetchAll();

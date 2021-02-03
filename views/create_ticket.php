@@ -20,14 +20,8 @@ $developers = $contr->get_users_by_role_id(3);
 include('shared/ui_frame.php');
 ?>
 
-<style>
-    select {
-        padding-top: 0.3em;
-        padding-bottom: 0.3em;
-    }
-</style>
 
-<div class="new_main">
+<div class="main">
     <div class="edit_ticket">
         <div class="card">
             <div class="w3-container card-head">
@@ -40,7 +34,7 @@ include('shared/ui_frame.php');
                         <div class="left">
                             <!-- Title -->
                             <p>
-                                <input type="text" name="title" class="input" value="<?php echo $_POST['title'] ?? '' ?>">
+                                <input type="text" name="title" class="w3-input" value="<?php echo $_POST['title'] ?? '' ?>">
                                 <label>Ticket Title</label><br>
                                 <span class="error">
                                     <?php echo $errors['title'] ?? '' ?>
@@ -50,7 +44,7 @@ include('shared/ui_frame.php');
                         <div class="right">
                             <!-- Description -->
                             <p>
-                                <input type="text" name="description" class="input" value="<?php echo $_POST['description'] ?? '' ?>">
+                                <input type="text" name="description" class="w3-input" value="<?php echo $_POST['description'] ?? '' ?>">
                                 <label>Description</label><br>
                                 <span class="error">
                                     <?php echo $errors['description'] ?? '' ?>

@@ -178,9 +178,9 @@ class Controller extends Model
         $this->db_add_to_ticket_history($ticket_id, $event_type, $old_value, $new_value);
     }
 
-    public function get_ticket_history($ticket_id, $OFFSET, $LIMIT)
+    public function get_ticket_history($ticket_id)
     {
-        return $this->db_get_ticket_history($ticket_id, $OFFSET, $LIMIT);
+        return $this->db_get_ticket_history($ticket_id);
     }
 
     public function get_ticket_comments($ticket_id)

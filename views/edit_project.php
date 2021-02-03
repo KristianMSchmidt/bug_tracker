@@ -17,14 +17,7 @@ if (isset($_POST['go_to_edit_project'])) {
 include('shared/ui_frame.php');
 ?>
 
-<style>
-    select {
-        padding-top: 0.3em;
-        padding-bottom: 0.3em;
-    }
-</style>
-
-<div class="new_main">
+<div class="main">
     <div class="edit_ticket">
         <div class="card">
             <div class="w3-container card-head">
@@ -37,7 +30,7 @@ include('shared/ui_frame.php');
                     <!-- Title -->
                     <div class="left">
                         <p>
-                            <input type="text" name="new_project_name" class="input" value="<?php echo $new_project_name ?>">
+                            <input type="text" name="new_project_name" class="w3-input" value="<?php echo $new_project_name ?>">
                             <label>Project Title</label><br>
                             <span class="error">
                                 <?php echo $errors['title'] ?? '' ?>
@@ -47,7 +40,7 @@ include('shared/ui_frame.php');
                     <!-- Description -->
                     <div class="right">
                         <p>
-                            <input type="text" name="new_project_description" class="input" value="<?php echo $new_project_description ?>">
+                            <input type="text" name="new_project_description" class="w3-input" value="<?php echo $new_project_description ?>">
                             <label>Project Description</label><br>
                             <span class="error">
                                 <?php echo $errors['description'] ?? '' ?>

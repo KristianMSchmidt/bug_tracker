@@ -17,10 +17,7 @@
         padding-top: 0;
         padding-bottom: 0;
     }
-}
-
-@media only screen and (max-width: 1050px) {
-    .ticket_details {
+    @media only screen and (max-width: 1050px) {
         .grid-container {
             display: flex;
             flex-direction: column;
@@ -29,6 +26,10 @@
 }
 
 .edit_ticket {
+    .select {
+        padding-top: 0.3em;
+        padding-bottom: 0.3em;
+    }
     .card {
         margin: 1em;
         padding-bottom: 2em;
@@ -65,10 +66,7 @@
             }
         }
     }
-}
-
-@media only screen and (max-width: 1050px) {
-    .edit_ticket {
+    @media only screen and (max-width: 1050px) {
         .card {
             .card-content {
                 .text-input {
@@ -106,10 +104,7 @@
     span {
         font-weight: bold;
     }
-}
-
-@media only screen and (max-width: 1050px) {
-    .project_details {
+    @media only screen and (max-width: 1050px) {
         .bottom {
             flex-direction: column;
         }
@@ -202,8 +197,67 @@
     }
 }
 
+.profile_settings {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    .card {
+        width: 35%;
+        margin: 2em;
+    }
+    table {
+        padding-top: 1em;
+        padding-bottom: 1em;
+    }
+    .pad-right {
+        padding-right: 3em;
+    }
+}
 
-/* OLD STUFF */
+.login {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    .card {
+        width: 50%;
+        margin-top: 1em;
+        margin-bottom: 1em;
+        padding-bottom: 1em;
+        margin-bottom: 1em;
+    }
+    p {
+        margin-top: 0.5em;
+        margin-bottom: 0.5em;
+    }
+    @media only screen and (max-width: 900px) {
+        .card {
+            width: 60%;
+        }
+    }
+}
+
+.my_projects,
+.my_tickets {
+    display: flex;
+    align-items: stretch;
+    justify-content: center;
+    .wrapper {
+        width: 95%;
+        input {
+            font-size: 14px;
+            /* makes button somewhat bigger */
+        }
+        .card {
+            margin-top: 1em;
+            margin-bottom: 2em;
+            padding-bottom: 2em;
+        }
+    }
+}
+
+
+/* Older pages -- Build with the below row and col classes */
 
 .row {
     display: flex;
@@ -245,31 +299,11 @@
     }
 }
 
-.profile_settings {
-    .card {
-        margin: 2em;
-    }
-    table {
-        padding-top: 1em;
-        padding-bottom: 1em;
-    }
-}
-
-.my_projects,
-.my_tickets {
-    width: 95%;
-    input {
-        font-size: 14px;
-        /* makes button somewhat bigger */
-    }
-    .card {
-        margin-top: 1em;
-        margin-bottom: 2em;
-        padding-bottom: 2em;
-    }
-}
-
 .demo_login {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     .card {
         margin-top: 2em;
         margin-bottom: 1em;
@@ -288,19 +322,5 @@
             padding-left: 1.5em;
             padding-right: 4em;
         }
-    }
-}
-
-.login {
-    width: 50%;
-    .card {
-        margin-top: 1em;
-        margin-bottom: 1em;
-        padding-bottom: 1em;
-        margin-bottom: 1em;
-    }
-    p {
-        margin-top: 0.5em;
-        margin-bottom: 0.5em;
     }
 }

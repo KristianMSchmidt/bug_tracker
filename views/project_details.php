@@ -9,7 +9,7 @@ $users = $contr->get_project_users($_POST['project_id']);
 $tickets = $contr->get_tickets_by_project($_POST['project_id']);
 ?>
 
-<div class="new_main">
+<div class="main">
     <div class="project_details">
         <div class="w3-container" style="width:fit-content; margin-bottom:1em;">
             <h1 style="margin-right:1em; display:inline">Details for Project #<?php echo $project['project_id'] ?></h1>
@@ -60,9 +60,9 @@ $tickets = $contr->get_tickets_by_project($_POST['project_id']);
                             <div class="empty-table-row">
                                 <p>There are no tickets for this project in the database</p>
                             </div>
-                            <p style="font-size:12px">Showing 0-0 of 0 entries</p>
+                            <p class="entry-info">Showing 0-0 of 0 entries</p>
                         <?php else : ?>
-                            <p style="font-size:12px">Showing 1-<?php echo count($tickets); ?> of <?php echo count($tickets); ?> entries</p>
+                            <p class="entry-info">Showing 1-<?php echo count($tickets); ?> of <?php echo count($tickets); ?> entries</p>
                         <?php endif ?>
                     </div>
                 </div>
@@ -98,9 +98,9 @@ $tickets = $contr->get_tickets_by_project($_POST['project_id']);
                             <div class="empty-table-row">
                                 <p>There are no users assigned to this project</p>
                             </div>
-                            <p style="font-size:12px">Showing 0-0 of 0 entries</p>
+                            <p class="entry-info">Showing 0-0 of 0 entries</p>
                         <?php else : ?>
-                            <p style="font-size:12px">Showing 1-<?php echo count($users); ?> of <?php echo count($users); ?> entries</p>
+                            <p class="entry-info">Showing 1-<?php echo count($users); ?> of <?php echo count($users); ?> entries</p>
                         <?php endif ?>
                     </div>
                 </div>

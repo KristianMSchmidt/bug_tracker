@@ -25,7 +25,7 @@ echo "
 
 ?>
 
-<div class="new_main">
+<div class="main">
 
     <h1>Manage User Roles</h1>
     <div class="w3-container">
@@ -78,11 +78,6 @@ echo "
                     <div class="w3-container">
                         <h5>
                             All users in your database
-                            <!--
-                            <form action="" method="post">
-                                Show <input type="number" name="show_count" value="10" class="show_count"> Entries
-                            </form>
-                            -->
                         </h5>
                         <div class="w3-container w3-responsive">
                             <table class="table striped bordered">
@@ -104,9 +99,9 @@ echo "
                             <div class="empty-table-row">
                                 <p>You have no projects in the database</p>
                             </div>
-                            <p style="font-size:12px">Showing 0-0 of 0 entries</p>
+                            <p class="entry-info">Showing 0-0 of 0 entries</p>
                         <?php else : ?>
-                            <p style="font-size:12px">Showing 1-<?php echo count($users); ?> of <?php echo count($users); ?> entries</p>
+                            <p class="entry-info">Showing 1-<?php echo count($users); ?> of <?php echo count($users); ?> entries</p>
                         <?php endif ?>
                     </div>
                 </div>

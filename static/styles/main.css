@@ -151,26 +151,6 @@ html {
       -ms-flex: 30;
           flex: 30;
   /* how much of the flexbox space should the main area take, relative to sidebar */
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: stretch;
-      -ms-flex-align: stretch;
-          align-items: stretch;
-  /*makes content-div inside main fill out main area vertically */
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  /* horizontally centers content-div inside main */
-  padding-top: 1em;
-  background-color: #f9f9f9;
-}
-
-.sidebar_and_main_container .new_main {
-  -webkit-box-flex: 30;
-      -ms-flex: 30;
-          flex: 30;
-  /* how much of the flexbox space should the main area take, relative to sidebar */
   background-color: #f9f9f9;
   padding: 1em;
 }
@@ -204,6 +184,11 @@ html {
         -ms-flex-direction: column;
             flex-direction: column;
   }
+}
+
+.edit_ticket .select {
+  padding-top: 0.3em;
+  padding-bottom: 0.3em;
 }
 
 .edit_ticket .card {
@@ -474,7 +459,100 @@ html {
   background-color: #f9f9f9;
 }
 
-/* OLD STUFF */
+.profile_settings {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.profile_settings .card {
+  width: 35%;
+  margin: 2em;
+}
+
+.profile_settings table {
+  padding-top: 1em;
+  padding-bottom: 1em;
+}
+
+.profile_settings .pad-right {
+  padding-right: 3em;
+}
+
+.login {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.login .card {
+  width: 50%;
+  margin-top: 1em;
+  margin-bottom: 1em;
+  padding-bottom: 1em;
+  margin-bottom: 1em;
+}
+
+.login p {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
+
+@media only screen and (max-width: 900px) {
+  .login .card {
+    width: 60%;
+  }
+}
+
+.my_projects,
+.my_tickets {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: stretch;
+      -ms-flex-align: stretch;
+          align-items: stretch;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.my_projects .wrapper,
+.my_tickets .wrapper {
+  width: 95%;
+}
+
+.my_projects .wrapper input,
+.my_tickets .wrapper input {
+  font-size: 14px;
+  /* makes button somewhat bigger */
+}
+
+.my_projects .wrapper .card,
+.my_tickets .wrapper .card {
+  margin-top: 1em;
+  margin-bottom: 2em;
+  padding-bottom: 2em;
+}
+
+/* Older pages -- Build with the below row and col classes */
 .row {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -548,31 +626,20 @@ html {
   }
 }
 
-.profile_settings .card {
-  margin: 2em;
-}
-
-.profile_settings table {
-  padding-top: 1em;
-  padding-bottom: 1em;
-}
-
-.my_projects,
-.my_tickets {
-  width: 95%;
-}
-
-.my_projects input,
-.my_tickets input {
-  font-size: 14px;
-  /* makes button somewhat bigger */
-}
-
-.my_projects .card,
-.my_tickets .card {
-  margin-top: 1em;
-  margin-bottom: 2em;
-  padding-bottom: 2em;
+.demo_login {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
 }
 
 .demo_login .card {
@@ -597,22 +664,6 @@ html {
 .demo_login .col.two {
   padding-left: 1.5em;
   padding-right: 4em;
-}
-
-.login {
-  width: 50%;
-}
-
-.login .card {
-  margin-top: 1em;
-  margin-bottom: 1em;
-  padding-bottom: 1em;
-  margin-bottom: 1em;
-}
-
-.login p {
-  margin-top: 0.5em;
-  margin-bottom: 0.5em;
 }
 
 .btn-primary {
@@ -898,12 +949,27 @@ form label {
   }
 }
 
-input.show_count {
-  width: 45px;
+/* w3-css overrides */
+.w3-modal {
+  padding-left: 100px;
+}
+
+.w3-modal-content {
+  padding-top: 1em;
+  padding-bottom: 1em;
+}
+
+.w3-modal-content p {
+  margin-top: 0.5em;
+  padding: 0;
 }
 
 a {
   color: blue;
+}
+
+.entry-info {
+  font-size: 12px;
 }
 
 input::-webkit-outer-spin-button,
@@ -920,36 +986,6 @@ input[type="number"] {
 .error {
   color: #f44336;
   margin: 0;
-  padding: 0;
-}
-
-.input {
-  padding: 8px;
-  display: block;
-  border: none;
-  border-bottom: 1px solid #ccc;
-  width: 100%;
-}
-
-.small {
-  font-size: 80%;
-}
-
-.w3-responsive {
-  overflow-x: auto;
-}
-
-.w3-modal {
-  padding-left: 100px;
-}
-
-.w3-modal-content {
-  padding-top: 1em;
-  padding-bottom: 1em;
-}
-
-.w3-modal-content p {
-  margin-top: 0.5em;
   padding: 0;
 }
 /*# sourceMappingURL=main.css.map */

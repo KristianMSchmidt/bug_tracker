@@ -32,7 +32,7 @@ if (isset($_POST['project_id'])) {
 }
 ?>
 
-<div class="new_main">
+<div class="main">
 
     <div class="w3-container">
         <div class="manage_project_users">
@@ -135,7 +135,7 @@ if (isset($_POST['project_id'])) {
                                 <h5>
                                     You succesfully enrolled the following users to the selected project:
                                 </h5>
-                                <div class="w-3container w3-responsive">
+                                <div class="w3-container w3-responsive">
                                     <table class="table striped bordered">
                                         <tr>
                                             <th>Name</th>
@@ -203,6 +203,9 @@ if (isset($_POST['project_id'])) {
             <?php endif ?>
 
         </div>
+
+        <div style="height:500px;"></div>
+
     </div>
 
     <script>
@@ -265,5 +268,5 @@ if (isset($_POST['project_id'])) {
 
     <?php include('shared/closing_tags.php'); ?>
     <script>
-        set_active_link("manage_user_roles");
+        set_active_link("manage_project_users");
     </script>

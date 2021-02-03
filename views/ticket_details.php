@@ -3,9 +3,6 @@ include('../includes/login_check.inc.php');
 include('../includes/post_check.inc.php');
 include('shared/ui_frame.php');
 
-$OFFSET = 0;
-$LIMIT = 5;
-
 $contr = new Controller();
 $ticket_id = $_POST['ticket_id'];
 
@@ -16,27 +13,12 @@ if (isset($_POST['new_comment'])) {
 }
 
 $ticket = $contr->get_ticket_by_id($ticket_id);
-$history_entries = $contr->get_ticket_history($ticket_id, $OFFSET, $LIMIT);
+$history_entries = $contr->get_ticket_history($ticket_id);
 $files = array();
 $comments = $contr->get_ticket_comments($ticket_id);
 
-
-if (isset($_POST['show_next'])) {
-    $LIMIT = $_POST['LIMIT'];
-    $OFFSET = $_POST['OFFSET'] + $LIMIT;
-} else {
-    //initial values
-    $LIMIT = 2;
-    $OFFSET = 0;
-}
-
 ?>
-<style>
-    .entry-info {
-        font-size: 12px;
-    }
-</style>
-<div class="new_main">
+<div class="main">
     <div class="ticket_details">
         <div class="w3-container">
             <h1>Details for Ticket #<?php echo $ticket_id ?></h1>
@@ -201,22 +183,6 @@ if (isset($_POST['show_next'])) {
         </script>
     <?php endif ?>
 </div>
-<!--
-<form action="ticket_details.php" method="post">
-    OFFSET: <input type="number" name="OFFSET" id="offset" value=<?php echo $OFFSET ?>>
-    LIMIT: <input type="number" name="LIMIT" id="limit" value=<?php echo $LIMIT ?>>
-    <input type="hidden" name="ticket_id" value=<?php echo $_POST['ticket_id'] ?>>
-    <input type="submit" name="show_next" value="Show next">
-
-</form>
--->
-<script>
-    function f() {
-        offset = document.getElementById("offset").value;
-        limit = document.getElementById("limit").value;
-
-    }
-</script>
 
 <form action="" method="post" id="form">
     <input type="hidden" name="ticket_id" value="<?php echo $ticket_id ?>">

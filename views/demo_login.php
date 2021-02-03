@@ -9,16 +9,14 @@ if (isset($_SESSION['user_id'])) {
 }
 ?>
 
-<?php include('shared/ui_frame.php'); ?>
 
+<?php include('shared/ui_frame.php'); ?>
 <div class="main">
     <div class="demo_login">
         <div class="card">
-
             <div class="w3-container card-head" style="text-align:center">
                 <h3>Demo Login</h3>
             </div>
-
             <div class="row">
                 <div class="col one">
                     <a href="#" class="fa fa-fw fa-user fa-3x" style="color:black" onclick="document.getElementById('admin_login').submit()">

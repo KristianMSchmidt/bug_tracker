@@ -9,7 +9,6 @@ $types = $contr->get_tickets_type_count();
 $users = $contr->get_most_busy_users();
 ?>
 
-
 <?php include('shared/ui_frame.php'); ?>
 <div class="main">
     <div class="dashboard">
