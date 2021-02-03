@@ -902,6 +902,10 @@ input.show_count {
   width: 45px;
 }
 
+a {
+  color: blue;
+}
+
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
   -webkit-appearance: none;
@@ -911,10 +915,6 @@ input::-webkit-inner-spin-button {
 /* Firefox */
 input[type="number"] {
   -moz-appearance: textfield;
-}
-
-.container {
-  padding: 0.01em 16px;
 }
 
 .error {
@@ -951,9 +951,5 @@ input[type="number"] {
 .w3-modal-content p {
   margin-top: 0.5em;
   padding: 0;
-}
-
-a {
-  color: blue;
 }
 /*# sourceMappingURL=main.css.map */

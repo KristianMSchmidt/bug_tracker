@@ -38,7 +38,7 @@ if (isset($_POST['show_next'])) {
 </style>
 <div class="new_main">
     <div class="ticket_details">
-        <div class="container">
+        <div class="w3-container">
             <h1>Details for Ticket #<?php echo $ticket_id ?></h1>
             <a href="#" onclick="form_submitter('project_details.php')" style="margin-right:1em;">Go to Project </a>
             <a href="#" onclick="form_submitter('edit_ticket.php')"> Edit Ticket</a>
@@ -47,10 +47,10 @@ if (isset($_POST['show_next'])) {
         <div class="grid-container">
             <div class="top-left">
                 <div class="card">
-                    <div class="container card-head">
+                    <div class="w3-container card-head">
                         <h3>Ticket Details</h3>
                     </div>
-                    <div class="container w3-responsive">
+                    <div class="w3-container w3-responsive">
                         <table class="table w3-small bordered">
                             <br>
                             <tr>
@@ -101,12 +101,12 @@ if (isset($_POST['show_next'])) {
             <div class="top-right">
 
                 <div class="card">
-                    <div class="container card-head">
+                    <div class="w3-container card-head">
                         <h3>Ticket Comments</h3>
                     </div>
-                    <div class="container">
+                    <div class="w3-container">
                         <h5>Add a comment?</h5>
-                        <div class="container" style="padding-bottom:0.6em;">
+                        <div class="w3-container" style="padding-bottom:0.6em;">
                             <p class="error"><?php echo $errors['comment'] ?? '' ?></p>
                             <form action="" method="post">
                                 <input style="width:80%" type="text" name="new_comment" placeholder="Write a comment on the ticket">
@@ -116,8 +116,8 @@ if (isset($_POST['show_next'])) {
                             </form>
                         </div>
                     </div>
-                    <h5 class="container">All comments for this project</h5>
-                    <div class="container w3-responsive">
+                    <h5 class="w3-container">All comments for this project</h5>
+                    <div class="w3-container w3-responsive">
                         <table class="table w3-small striped bordered">
                             <tr>
                                 <th>Commenter</th>
@@ -145,12 +145,12 @@ if (isset($_POST['show_next'])) {
             </div>
             <div class="bottom-left">
                 <div class="card">
-                    <div class="container card-head">
+                    <div class="w3-container card-head">
                         <h3>Ticket History</h3>
                     </div>
-                    <h5 class="container">All history information for this ticket</h5>
+                    <h5 class="w3-container">All history information for this ticket</h5>
 
-                    <div class="container w3-responsive">
+                    <div class="w3-container w3-responsive">
                         <table class="table w3-small striped bordered">
                             <tr>
                                 <th>Property</th>
@@ -188,7 +188,7 @@ if (isset($_POST['show_next'])) {
             <div class="w3-modal-content">
                 <div class="w3-container">
                     <span onclick="document.getElementById('id01').style.display='none'" class="w3-button w3-display-topright">&times;</span>
-                    <div class="container">
+                    <div class="w3-container">
                         <h5>
                             You succesfully updated the the ticket
                         </h5>

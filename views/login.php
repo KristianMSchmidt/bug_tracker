@@ -28,14 +28,14 @@ if (isset($_POST['login_submit'])) {
     <div class="login">
         <div class="card">
 
-            <div class="container card-head" style="text-align:center">
+            <div class="w3-container card-head" style="text-align:center">
                 <h3>Sign in</h3>
             </div>
-            <div class="container">
+            <div class="w3-container">
                 <p class="error"><?php echo $feedback['login_error'] ?? '' ?>
                 </p>
             </div>
-            <form action=" <?php echo $_SERVER['PHP_SELF'] ?>" method="POST" class="container">
+            <form action=" <?php echo $_SERVER['PHP_SELF'] ?>" method="POST" class="w3-container">
                 <p>
                     <input type="text" name="email" class="input" value="<?php echo $_POST['email'] ?? '' ?>">
                     <label>Email</label>
@@ -49,7 +49,7 @@ if (isset($_POST['login_submit'])) {
                 <p class="error">
                     <?php echo $feedback['input_errors']['pwd'] ?? '' ?>
                 </p>
-                <div class="container" style="text-align:center">
+                <div class="w3-container" style="text-align:center">
                     <input type="submit" value="Sign in" name="login_submit" class="btn-primary">
                 </div>
             </form>

@@ -28,13 +28,13 @@ echo "
 <div class="new_main">
 
     <h1>Manage User Roles</h1>
-    <div class="container">
+    <div class="w3-container">
         <div class="manage_user_roles">
 
             <div class="area_one card">
-                <div class="container">
+                <div class="w3-container">
                     <h4>Select One or more Users </h4>
-                    <div class="container">
+                    <div class="w3-container">
                         <div class="scroll w2-light-grey">
                             <?php foreach ($users as $user) : ?>
                                 <?php $demo_users = array("Demo Admin", "Demo PM", "Demo Dev", "Demo Sub") ?>
@@ -46,7 +46,7 @@ echo "
                         <p id="no_selected_users" class="error"></p>
                     </div>
                     <h4>Select the Role to Assign</h4>
-                    <div class="container">
+                    <div class="w3-container">
 
                         <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="post" id="assign_role_form">
                             <input type="hidden" name="user_ids" value="" id="input_user_ids">
@@ -64,7 +64,7 @@ echo "
                         <p id="no_selected_role" class="error"></p>
                     </div>
                     <h4>Submit changes</h4>
-                    <div class="container">
+                    <div class="w3-container">
                         <input type="submit" value="Submit" class="btn-primary" onclick="submit_form()">
                     </div>
                 </div>
@@ -72,10 +72,10 @@ echo "
 
             <div class="area_two">
                 <div class="card">
-                    <div class="container card-head">
+                    <div class="w3-container card-head">
                         <h3>Your Personnel</h3>
                     </div>
-                    <div class="container">
+                    <div class="w3-container">
                         <h5>
                             All users in your database
                             <!--
@@ -84,7 +84,7 @@ echo "
                             </form>
                             -->
                         </h5>
-                        <div class="container w3-responsive">
+                        <div class="w3-container w3-responsive">
                             <table class="table striped bordered">
                                 <tr>
                                     <th>Name</th>
@@ -122,9 +122,9 @@ echo "
             <div class="w3-modal-content">
                 <div class="w3-container">
                     <span onclick="document.getElementById('id01').style.display='none'" class="w3-button w3-display-topright">&times;</span>
-                    <div class="container">
+                    <div class="w3-container">
                         <h5>You succesfully updated the following users</h5>
-                        <div class="container w3-responsive">
+                        <div class="w3-container w3-responsive">
                             <table class="table striped bordered">
                                 <tr>
                                     <th>Name</th>

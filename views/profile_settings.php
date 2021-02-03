@@ -6,10 +6,10 @@ include('shared/ui_frame.php');
 <div class="main">
     <div class="profile_settings">
         <div class="card">
-            <div class="container card-head">
+            <div class="w3-container card-head">
                 <h4>Profile Settings</h4>
             </div>
-            <div class="container">
+            <div class="w3-container">
                 <table>
                     <tr>
                         <td>Full name:</td>
@@ -34,10 +34,10 @@ include('shared/ui_frame.php');
 
         </div>
         <div class="card">
-            <div class="container card-head">
+            <div class="w3-container card-head">
                 <h4>Privileges</h4>
             </div>
-            <div class="container">
+            <div class="w3-container">
                 <?php if ($_SESSION['role_name'] == 'Admin') : ?>
                     <p style="max-width:400px;">As administrator you can do almost anything on this site.
                         <br>

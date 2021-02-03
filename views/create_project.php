@@ -13,13 +13,13 @@ include('shared/ui_frame.php');
 <div class="new_main">
     <div class="create_project">
         <div class="card">
-            <div class="container card-head">
+            <div class="w3-container card-head">
                 <h2>Create Project</h2>
             </div>
-            <div class="container">
+            <div class="w3-container">
                 <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="POST">
-                     <!-- Title -->
-                     <p>
+                    <!-- Title -->
+                    <p>
                         <input type="text" name="title" class="input" value="<?php echo $_POST['title'] ?? '' ?>">
                         <label>Ticket Title</label><br>
                         <span class="error">
@@ -36,10 +36,10 @@ include('shared/ui_frame.php');
                     </p>
 
                     <!-- Submitter -->
-                    <input type="hidden" name="created_by" value="<?php echo $_SESSION['user_id']?>">
+                    <input type="hidden" name="created_by" value="<?php echo $_SESSION['user_id'] ?>">
 
-                     <!-- Submit button -->
-                    <div class="container" style="text-align:center">
+                    <!-- Submit button -->
+                    <div class="w3-container" style="text-align:center">
                         <input type="submit" name="create_project_attempt" class="btn-primary" value="Create Project">
                     </div>
                 </form>

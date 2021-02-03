@@ -19,10 +19,10 @@ $tickets = $contr->get_tickets_by_user($_SESSION['user_id'], $_SESSION['role_nam
 <div class="main">
     <div class="my_tickets">
         <div class="card">
-            <div class="container card-head">
+            <div class="w3-container card-head">
                 <h2>My tickets</h2>
             </div>
-            <div class="container">
+            <div class="w3-container">
                 <h4>
                     <?php if ($_SESSION['role_name'] == 'Admin') : ?>
                         All tickets in your database
@@ -34,7 +34,7 @@ $tickets = $contr->get_tickets_by_user($_SESSION['user_id'], $_SESSION['role_nam
                         All tickets that you have submitted
                     <?php endif ?>
                 </h4>
-                <div class="container w3-responsive">
+                <div class="w3-container w3-responsive">
                     <table class="table w3-small striped bordered">
                         <tr>
                             <th>Title</th>

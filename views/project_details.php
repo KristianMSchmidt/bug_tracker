@@ -11,16 +11,16 @@ $tickets = $contr->get_tickets_by_project($_POST['project_id']);
 
 <div class="new_main">
     <div class="project_details">
-        <div class="container" style="width:fit-content; margin-bottom:1em;">
+        <div class="w3-container" style="width:fit-content; margin-bottom:1em;">
             <h1 style="margin-right:1em; display:inline">Details for Project #<?php echo $project['project_id'] ?></h1>
             <a href="#" onclick="document.getElementById('go_to_edit_form').submit()"> Edit Project</a>
-            <div class="container card">
+            <div class="w3-container card">
                 <h5><span>Project Name:</span> <?php echo $project['project_name'] ?></h5>
                 <h5><span>Description:</span> <?php echo $project['project_description'] ?></h5>
             </div>
         </div>
 
-        <div class="bottom container">
+        <div class="bottom w3-container">
             <div class="bottom-left">
                 <form action="create_ticket.php" method="post">
                     <input type="hidden" name="project_id" value="<?php echo $_POST['project_id']; ?>">
@@ -28,14 +28,14 @@ $tickets = $contr->get_tickets_by_project($_POST['project_id']);
                     <input type="submit" value="CREATE NEW TICKET" class="btn-primary large">
                 </form>
                 <div class="card">
-                    <div class="container card-head">
+                    <div class="w3-container card-head">
                         <h4>Tickets for this Project</h4>
                     </div>
-                    <div class="container">
+                    <div class="w3-container">
 
                         <h5>Condenced ticket Details</h5>
                     </div>
-                    <div class="container w3-responsive">
+                    <div class="w3-container w3-responsive">
                         <table class="table striped bordered">
                             <tr>
                                 <th>Title</th>
@@ -73,13 +73,13 @@ $tickets = $contr->get_tickets_by_project($_POST['project_id']);
                     <input type="submit" value="MANAGE PROJECT USERS" class="btn-primary large" style="width: 16em;">
                 </form>
                 <div class="card">
-                    <div class="container card-head">
+                    <div class="w3-container card-head">
                         <h4>Assigned Personel</h4>
                     </div>
-                    <div class="container">
+                    <div class="w3-container">
                         <h5>Current Users on this Project</h5>
                     </div>
-                    <div class="container w3-responsive">
+                    <div class="w3-container w3-responsive">
                         <table class="table striped bordered">
                             <tr>
                                 <th>Name</th>
@@ -119,7 +119,7 @@ $tickets = $contr->get_tickets_by_project($_POST['project_id']);
                     <h5>
                         You succesfully created a new ticket for this project:
                     </h5>
-                    <div class="container w3-responsive">
+                    <div class="w3-container w3-responsive">
                         <table class="table striped bordered">
                             <tr>
                                 <th>Ticket Title</th>

@@ -34,16 +34,16 @@ if (isset($_POST['project_id'])) {
 
 <div class="new_main">
 
-    <div class="container">
+    <div class="w3-container">
         <div class="manage_project_users">
 
             <h1>Manage Project Users</h1>
 
-            <div class="orto-wrapper top container card">
+            <div class="orto-wrapper top w3-container card">
                 <?php if (isset($_POST['project_id'])) : ?>
 
                     <h5><span style="color:grey;">Selected Project:</span> <?php echo $project_name ?></h5>
-                    <div class="container">
+                    <div class="w3-container">
                         <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="post">
                             <input type="submit" value="Other Project" class="btn-primary">
                         </form>
@@ -51,7 +51,7 @@ if (isset($_POST['project_id'])) {
 
                 <?php else : ?>
                     <h4>Select Project</h4>
-                    <div class="container">
+                    <div class="w3-container">
                         <p>What project to assign users to?</p>
                         <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="post" id="project_form">
                             <select class="select w3-light-grey" name="project_id">
@@ -75,9 +75,9 @@ if (isset($_POST['project_id'])) {
 
                 <div class="wrapper">
                     <!-- Select Enroll -->
-                    <div class="orto-wrapper left container card">
+                    <div class="orto-wrapper left w3-container card">
                         <h4> Select Users to Enroll</h4>
-                        <div class="container">
+                        <div class="w3-container">
                             <p>Users not enrolled in project</p>
                             <div class="scroll">
                                 <?php foreach ($non_project_users as $npu) : ?>
@@ -100,9 +100,9 @@ if (isset($_POST['project_id'])) {
                     </form>
 
                     <!-- Select Disenroll -->
-                    <div class="orto-wrapper right container card">
+                    <div class="orto-wrapper right w3-container card">
                         <h4> Select Users to Disenroll</h4>
-                        <div class="container">
+                        <div class="w3-container">
                             <p>Users currently enrolled in project</p>
                             <div class="scroll">
                                 <?php foreach ($project_users as $pu) : ?>
@@ -135,7 +135,7 @@ if (isset($_POST['project_id'])) {
                                 <h5>
                                     You succesfully enrolled the following users to the selected project:
                                 </h5>
-                                <div class="container w3-responsive">
+                                <div class="w-3container w3-responsive">
                                     <table class="table striped bordered">
                                         <tr>
                                             <th>Name</th>
@@ -170,11 +170,11 @@ if (isset($_POST['project_id'])) {
                     <div class="w3-modal-content">
                         <div class="w3-container">
                             <span onclick="document.getElementById('disenrolled_modal').style.display='none'" class="w3-button w3-display-topright">&times;</span>
-                            <div class="container">
+                            <div class="w3-container">
                                 <h5>
                                     You succesfully dis-enrolled the following users from the selected project:
                                 </h5>
-                                <div class="container w3-responsive">
+                                <div class="w3-container w3-responsive">
                                     <table class="table striped bordered">
                                         <tr>
                                             <th>Name</th>

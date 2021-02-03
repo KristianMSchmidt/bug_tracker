@@ -27,12 +27,12 @@ include('shared/ui_frame.php');
 <div class="new_main">
     <div class="edit_ticket">
         <div class="card">
-            <div class="container card-head">
+            <div class="w3-container card-head">
                 <h2>Edit Project #<?php echo $_POST['project_id'] ?></h2>
             </div>
 
             <div class="card-content">
-                <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="POST" class="container">
+                <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="POST" class="w3-container">
 
                     <!-- Title -->
                     <div class="left">
@@ -65,7 +65,7 @@ include('shared/ui_frame.php');
                     </p>
 
                     <!-- Submit button -->
-                    <div class="container" style="text-align:center">
+                    <div class="w3-container" style="text-align:center">
                         <input type="submit" name="edit_submit" class="btn-primary" value="Make Changes">
                     </div>
                 </form>

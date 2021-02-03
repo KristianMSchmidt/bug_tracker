@@ -13,10 +13,10 @@ $projects = $contr->get_projects_by_user_id($_SESSION['user_id'], $_SESSION['rol
             <input type="submit" name="submit" value="CREATE NEW PROJECT" class="btn-primary large">
         </form>
         <div class="card">
-            <div class="container card-head">
+            <div class="w3-container card-head">
                 <h2>My projects</h2>
             </div>
-            <div class="container">
+            <div class="w3-container">
                 <h4>
                     <?php if ($_SESSION['role_name'] == 'Admin') : ?>
                         All projects in your database
@@ -28,7 +28,7 @@ $projects = $contr->get_projects_by_user_id($_SESSION['user_id'], $_SESSION['rol
                         All projects your are assigned to
                     <?php endif ?>
                 </h4>
-                <div class="container w3-responsive">
+                <div class="w3-container w3-responsive">
                     <table class="table w3-small striped bordered">
                         <tr>
                             <th>Project Name</th>
@@ -69,7 +69,7 @@ $projects = $contr->get_projects_by_user_id($_SESSION['user_id'], $_SESSION['rol
                         <h5>
                             You succesfully created the following project:
                         </h5>
-                        <div class="container w3-responsive">
+                        <div class="w3-container w3-responsive">
                             <table class="table striped bordered">
                                 <tr>
                                     <th>Project</th>

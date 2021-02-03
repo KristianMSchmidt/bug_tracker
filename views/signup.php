@@ -20,16 +20,16 @@ if (isset($_POST['signup_submit'])) {
     <div class="login" style="width:50%">
         <div class="card">
 
-            <div class="container card-head" style="text-align:center">
+            <div class="w3-container card-head" style="text-align:center">
                 <h3>Sign up</h3>
             </div>
-            <div class="container">
+            <div class="w3-container">
                 <p class="error"><?php echo $feedback['signup_error'] ?? '' ?>
                 </p>
             </div>
 
 
-            <form action=" <?php echo $_SERVER['PHP_SELF'] ?>" method="POST" class="container">
+            <form action=" <?php echo $_SERVER['PHP_SELF'] ?>" method="POST" class="w3-container">
                 <p>
                     <input type="text" name="full_name" class="input" value="<?php echo $_POST['full_name'] ?? '' ?>">
                     <label>Full name</label>
@@ -60,7 +60,7 @@ if (isset($_POST['signup_submit'])) {
                     <?php echo $feedback['input_errors']['pwd_repeat'] ?? '' ?>
                 </p>
 
-                <div class="container" style="text-align:center">
+                <div class="w3-container" style="text-align:center">
                     <input type="submit" value="Sign up" name="signup_submit" class="btn-primary">
                 </div>
             </form>
