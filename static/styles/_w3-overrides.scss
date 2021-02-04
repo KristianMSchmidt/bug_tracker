@@ -12,3 +12,44 @@
         padding: 0;
     }
 }
+
+.w3-tag {
+    padding: 0.5em;
+    text-align: left;
+    width: 250px;
+    color: white;
+    border-radius: 400px;
+    text-align: center;
+    &.dev {
+        background-color: red;
+    }
+    &.admin {
+        background-color: black;
+        width: 350px;
+    }
+    &.pm {
+        background-color: green;
+        width: 350px;
+    }
+    &.sub {
+        background-color: blue;
+    }
+}
+
+.demo_login {
+    span {
+        font-size: 20px;
+        bottom: -21px;
+        padding: 1em;
+        &.admin,
+        &.pm {
+            position: absolute;
+            left: -380px;
+        }
+        &.dev,
+        &.sub {
+            position: absolute;
+            left: 100px;
+        }
+    }
+}

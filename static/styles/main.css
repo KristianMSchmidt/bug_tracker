@@ -1015,6 +1015,49 @@ form label {
   padding: 0;
 }
 
+.w3-tag {
+  padding: 0.5em;
+  text-align: left;
+  width: 250px;
+  color: white;
+  border-radius: 400px;
+  text-align: center;
+}
+
+.w3-tag.dev {
+  background-color: red;
+}
+
+.w3-tag.admin {
+  background-color: black;
+  width: 350px;
+}
+
+.w3-tag.pm {
+  background-color: green;
+  width: 350px;
+}
+
+.w3-tag.sub {
+  background-color: blue;
+}
+
+.demo_login span {
+  font-size: 20px;
+  bottom: -21px;
+  padding: 1em;
+}
+
+.demo_login span.admin, .demo_login span.pm {
+  position: absolute;
+  left: -380px;
+}
+
+.demo_login span.dev, .demo_login span.sub {
+  position: absolute;
+  left: 100px;
+}
+
 a {
   color: blue;
 }

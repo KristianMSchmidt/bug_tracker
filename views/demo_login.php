@@ -9,7 +9,6 @@ if (isset($_SESSION['user_id'])) {
 }
 ?>
 
-
 <?php include('shared/ui_frame.php'); ?>
 <div class="main">
     <div class="demo_login">
@@ -19,19 +18,33 @@ if (isset($_SESSION['user_id'])) {
             </div>
             <div class="row">
                 <div class="col one">
-                    <a href="#" class="fa fa-fw fa-user fa-3x" style="color:black" onclick="document.getElementById('admin_login').submit()">
+                    <!-- Admin -->
+                    <a href="#" class="fa fa-fw fa-user fa-3x w3-tooltip" style="color:black" onclick="document.getElementById('admin_login').submit()">
+                        <span class="w3-text w3-tag admin">
+                            As 'Admin' you have acces to all data and functionality of the site</span>
                     </a>
                     <p>Admin</p>
-                    <a href="#" class="fa fa-fw fa-user fa-3x" style="color:green" onclick="document.getElementById('pm_login').submit()">
+
+                    <!-- Project Manager -->
+                    <a href="#" class="fa fa-fw fa-user fa-3x w3-tooltip" style="color:green" onclick="document.getElementById('pm_login').submit()">
+                        <span class="w3-text w3-tag pm">
+                            As 'Project Manager' you can create tickets and edit projects</span>
                     </a>
                     <p>Project&nbspManager</p>
                 </div>
 
                 <div class="col two">
-                    <a href=" #" class="fa fa-fw fa-user fa-3x" style="color:red" onclick="document.getElementById('dev_login').submit()">
+                    <!-- Developer -->
+                    <a href=" #" class="fa fa-fw fa-user fa-3x w3-tooltip" style="color:red" onclick="document.getElementById('dev_login').submit()">
+                        <span class="w3-text w3-tag dev">
+                            As 'Developer' you can update your tickets</span>
                     </a>
                     <p>Developer</p>
-                    <a href="#" class="fa fa-fw fa-user fa-3x" style="color:blue" onclick="document.getElementById('submitter_login').submit()">
+
+                    <!-- Submitter -->
+                    <a href="#" class="fa fa-fw fa-user fa-3x w3-tooltip" style="color:blue" onclick="document.getElementById('submitter_login').submit()">
+                        <span class="w3-text w3-tag sub">
+                            As 'Submitter' you can create new tickets</span>
                     </a>
                     <p>Submitter</p>
                 </div>
@@ -44,6 +57,7 @@ if (isset($_SESSION['user_id'])) {
             </div>
         </div>
     </div>
+
 </div>
 
 
