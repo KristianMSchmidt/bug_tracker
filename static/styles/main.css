@@ -160,10 +160,25 @@ html {
   padding-bottom: 1em;
 }
 
-.ticket_details .basics {
+.ticket_details .wrapper {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+}
+
+.ticket_details .wrapper .card {
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  margin-top: 2em;
+}
+
+.ticket_details .wrapper .card.left {
+  margin-right: 1em;
+}
+
+.ticket_details .wrapper .card.right {
+  margin-left: 1em;
 }
 
 .ticket_details .grid-container {
@@ -181,25 +196,21 @@ html {
 }
 
 .ticket_details .top {
-  width: -webkit-fit-content;
-  width: -moz-fit-content;
-  width: fit-content;
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
   margin-bottom: 1em;
 }
 
-.ticket_details .top h1 {
-  margin-bottom: 0.2em;
+.ticket_details .top h2 {
+  display: inline;
 }
 
-.ticket_details .right {
-  float: right;
+.ticket_details .top a {
+  margin-left: 2em;
 }
 
 @media only screen and (max-width: 1050px) {
-  .ticket_details .grid-container {
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
+  .ticket_details .wrapper {
     -webkit-box-orient: vertical;
     -webkit-box-direction: normal;
         -ms-flex-direction: column;

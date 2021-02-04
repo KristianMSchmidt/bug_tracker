@@ -7,8 +7,18 @@
 }
 
 .ticket_details {
-    .basics {
+    .wrapper {
         display: flex;
+        .card {
+            flex: 1;
+            margin-top: 2em;
+            &.left {
+                margin-right: 1em;
+            }
+            &.right {
+                margin-left: 1em;
+            }
+        }
     }
     .grid-container {
         display: grid;
@@ -21,18 +31,18 @@
         padding-bottom: 0;
     }
     .top {
-        width: fit-content;
-        h1 {
-            margin-bottom: 0.2em;
+        padding-top: 0.5em;
+        padding-bottom: 0.5em;
+        h2 {
+            display: inline;
+        }
+        a {
+            margin-left: 2em;
         }
         margin-bottom:1em;
     }
-    .right {
-        float: right;
-    }
     @media only screen and (max-width: 1050px) {
-        .grid-container {
-            display: flex;
+        .wrapper {
             flex-direction: column;
         }
     }

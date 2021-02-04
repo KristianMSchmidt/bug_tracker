@@ -20,167 +20,164 @@ $comments = $contr->get_ticket_comments($ticket_id);
 ?>
 <div class="main">
     <div class="ticket_details">
-        <div class="w3-container top">
-            <h1>Details for Ticket #<?php echo $ticket_id ?></h1>
-            <a href="#" onclick="form_submitter('project_details.php')">Go to Project </a>
-            <a href="#" onclick="form_submitter('edit_ticket.php')" class="right"> Edit Ticket</a>
+        <div class="card">
+            <div class="w3-container card-head top">
+                <h2>Ticket Details</h2>
+                <a href="#" onclick="form_submitter('edit_ticket.php')"> Edit Ticket</a>
+                <a href="#" onclick="form_submitter('project_details.php')">Go to Project </a>
+            </div>
+            <div class="w3-container w3-responsive wrapper">
+                <table class="table w3-small bordered">
+                    <tr>
+                        <td style="width:30%">Ticket ID</td>
+                        <td><?php echo $ticket_id ?></td>
+                    </tr>
+
+                    <tr>
+                        <td>Ticket name</td>
+                        <td><?php echo $ticket['title'] ?></td>
+                    </tr>
+
+                    <tr>
+                        <td>Description</td>
+                        <td><?php echo $ticket['description'] ?></td>
+                    </tr>
+                    <tr>
+                        <td>Project</td>
+                        <td><?php echo $ticket['project_name'] ?></td>
+                    </tr>
+                    <tr>
+                        <td>Assigned Developer</td>
+                        <td><?php echo $ticket['developer_name'] ?></td>
+                    </tr>
+                    <tr>
+                        <td>Submitter</td>
+                        <td><?php echo $ticket['submitter_name'] ?></td>
+                    </tr>
+                </table>
+                <table class="table w3-small bordered">
+                    <tr>
+                        <td style="width:30%">Priority</td>
+                        <td><?php echo $ticket['ticket_priority_name'] ?></td>
+                    </tr>
+                    <tr>
+                        <td>Type</td>
+                        <td><?php echo $ticket['ticket_type_name'] ?></td>
+                    </tr>
+                    <tr>
+                        <td>Status</td>
+                        <td><?php echo $ticket['ticket_status_name'] ?></td>
+                    </tr>
+                    <tr>
+                        <td>Created</td>
+                        <td><?php echo $ticket['created_at'] ?></td>
+                    </tr>
+                    <tr>
+                        <td>Last update</td>
+                        <td><?php echo $ticket['updated_at'] ?></td>
+                    </tr>
+                </table>
+            </div>
         </div>
-        <br>
-        <div class="grid-container">
-            <div class="top-left">
-                <div class="card">
-                    <div class="w3-container card-head">
-                        <h3>Ticket Details</h3>
-                    </div>
-                    <div class="w3-container w3-responsive">
-                        <table class="table w3-small bordered">
-                            <tr>
-                                <td>Ticket name</td>
-                                <td><?php echo $ticket['title'] ?></td>
-                            </tr>
-
-                            <tr>
-                                <td>Description</td>
-                                <td><?php echo $ticket['description'] ?></td>
-                            </tr>
-                            <tr>
-                                <td>Project</td>
-                                <td><?php echo $ticket['project_name'] ?></td>
-                            </tr>
-                            <tr>
-                                <td>Assigned Developer</td>
-                                <td><?php echo $ticket['developer_name'] ?></td>
-                            </tr>
-                            <tr>
-                                <td>Submitter</td>
-                                <td><?php echo $ticket['submitter_name'] ?></td>
-                            </tr>
-                            <tr>
-                                <td>Priority</td>
-                                <td><?php echo $ticket['ticket_priority_name'] ?></td>
-                            </tr>
-                            <tr>
-                                <td>Type</td>
-                                <td><?php echo $ticket['ticket_type_name'] ?></td>
-                            </tr>
-                            <tr>
-                                <td>Status</td>
-                                <td><?php echo $ticket['ticket_status_name'] ?></td>
-                            </tr>
-                            <tr>
-                                <td>Created</td>
-                                <td><?php echo $ticket['created_at'] ?></td>
-                            </tr>
-                            <tr>
-                                <td style="color:grey">Last update</td>
-                                <td><?php echo $ticket['updated_at'] ?></td>
-                            </tr>
-                        </table>
+        <div class="wrapper">
+            <div class="card left">
+                <div class="w3-container card-head">
+                    <h4>Ticket Comments</h4>
+                </div>
+                <div class="w3-container">
+                    <h5>Add a comment?</h5>
+                    <div class="w3-container" style="padding-bottom:0.6em;">
+                        <p class="error"><?php echo $errors['comment'] ?? '' ?></p>
+                        <form action="" method="post">
+                            <input style="width:80%" type="text" name="new_comment" placeholder="Write a comment on the ticket">
+                            <input type="hidden" name="ticket_id" value="<?php echo $ticket_id ?>">
+                            <input type="hidden" name="requested_action">
+                            <input type="submit" class="btn-primary" style="width:5em;" value="ADD">
+                        </form>
                     </div>
                 </div>
-            </div>
-            <div class="top-right">
-
-                <div class="card">
-                    <div class="w3-container card-head">
-                        <h3>Ticket Comments</h3>
-                    </div>
-                    <div class="w3-container">
-                        <h5>Add a comment?</h5>
-                        <div class="w3-container" style="padding-bottom:0.6em;">
-                            <p class="error"><?php echo $errors['comment'] ?? '' ?></p>
-                            <form action="" method="post">
-                                <input style="width:80%" type="text" name="new_comment" placeholder="Write a comment on the ticket">
-                                <input type="hidden" name="ticket_id" value="<?php echo $ticket_id ?>">
-                                <input type="hidden" name="requested_action">
-                                <input type="submit" class="btn-primary" style="width:5em;" value="ADD">
-                            </form>
+                <h5 class="w3-container">All comments for this project</h5>
+                <div class="w3-container w3-responsive">
+                    <table class="table w3-small striped bordered">
+                        <tr>
+                            <th>Commenter</th>
+                            <th>Message</th>
+                            <th>Created</th>
+                        </tr>
+                        <?php foreach ($comments as $comment) : ?>
+                            <tr>
+                                <td><?php echo $comment['commenter'] ?></td>
+                                <td><?php echo $comment['message'] ?></td>
+                                <td><?php echo $comment['created_at'] ?></td>
+                            </tr>
+                        <?php endforeach ?>
+                    </table>
+                    <?php if (count($comments) == 0) : ?>
+                        <div class="empty-table-row">
+                            <p>There are no comments for this ticket</p>
                         </div>
-                    </div>
-                    <h5 class="w3-container">All comments for this project</h5>
-                    <div class="w3-container w3-responsive">
-                        <table class="table w3-small striped bordered">
-                            <tr>
-                                <th>Commenter</th>
-                                <th>Message</th>
-                                <th>Created</th>
-                            </tr>
-                            <?php foreach ($comments as $comment) : ?>
-                                <tr>
-                                    <td><?php echo $comment['commenter'] ?></td>
-                                    <td><?php echo $comment['message'] ?></td>
-                                    <td><?php echo $comment['created_at'] ?></td>
-                                </tr>
-                            <?php endforeach ?>
-                        </table>
-                        <?php if (count($comments) == 0) : ?>
-                            <div class="empty-table-row">
-                                <p>There are no comments for this ticket</p>
-                            </div>
-                            <p class="entry-info">Showing 0-0 of 0 entries</p>
-                        <?php else : ?>
-                            <p class="entry-info">Showing 1-<?php echo count($comments); ?> of <?php echo count($comments); ?> entries</p>
-                        <?php endif ?>
-                    </div>
+                        <p class="entry-info">Showing 0-0 of 0 entries</p>
+                    <?php else : ?>
+                        <p class="entry-info">Showing 1-<?php echo count($comments); ?> of <?php echo count($comments); ?> entries</p>
+                    <?php endif ?>
                 </div>
             </div>
-            <div class="bottom-left">
-                <div class="card">
-                    <div class="w3-container card-head">
-                        <h3>Ticket History</h3>
-                    </div>
-                    <h5 class="w3-container">All history information for this ticket</h5>
+            <div class="card right">
+                <div class="w3-container card-head">
+                    <h4>Ticket History</h4>
+                </div>
+                <h5 class="w3-container">All history information for this ticket</h5>
 
-                    <div class="w3-container w3-responsive">
-                        <table class="table w3-small striped bordered">
+                <div class="w3-container w3-responsive">
+                    <table class="table w3-small striped bordered">
+                        <tr>
+                            <th>Property</th>
+                            <th>Old Value</th>
+                            <th>New Value</th>
+                            <th>Date Changed</th>
+                        </tr>
+                        <?php foreach ($history_entries as $history_entry) : ?>
                             <tr>
-                                <th>Property</th>
-                                <th>Old Value</th>
-                                <th>New Value</th>
-                                <th>Date Changed</th>
+                                <td><?php echo $history_entry['event_type'] ?></td>
+                                <td><?php echo $history_entry['old_value'] ?></td>
+                                <td><?php echo $history_entry['new_value'] ?></td>
+                                <td><?php echo $history_entry['created_at'] ?></td>
                             </tr>
-                            <?php foreach ($history_entries as $history_entry) : ?>
-                                <tr>
-                                    <td><?php echo $history_entry['event_type'] ?></td>
-                                    <td><?php echo $history_entry['old_value'] ?></td>
-                                    <td><?php echo $history_entry['new_value'] ?></td>
-                                    <td><?php echo $history_entry['created_at'] ?></td>
-                                </tr>
-                            <?php endforeach ?>
-                        </table>
-                        <?php if (count($history_entries) == 0) : ?>
-                            <div class="empty-table-row">
-                                <p>No changes have been made to this ticket</p>
-                            </div>
-                            <p class="entry-info">Showing 0-0 of 0 entries</p>
-                        <?php else : ?>
-                            <p class="entry-info">Showing 1-<?php echo count($history_entries); ?> of <?php echo count($history_entries); ?> entries</p>
-                        <?php endif ?>
-                    </div>
+                        <?php endforeach ?>
+                    </table>
+                    <?php if (count($history_entries) == 0) : ?>
+                        <div class="empty-table-row">
+                            <p>No changes have been made to this ticket</p>
+                        </div>
+                        <p class="entry-info">Showing 0-0 of 0 entries</p>
+                    <?php else : ?>
+                        <p class="entry-info">Showing 1-<?php echo count($history_entries); ?> of <?php echo count($history_entries); ?> entries</p>
+                    <?php endif ?>
+                </div>
 
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Model response message -->
+<?php if (isset($_POST['show_ticket_edited_succes_message'])) : ?>
+    <div id="id01" class="w3-modal">
+        <div class="w3-modal-content">
+            <div class="w3-container">
+                <span onclick="document.getElementById('id01').style.display='none'" class="w3-button w3-display-topright">&times;</span>
+                <div class="w3-container">
+                    <h5>
+                        You succesfully updated the the ticket
+                    </h5>
                 </div>
             </div>
         </div>
     </div>
-
-    <!-- Model response message -->
-    <?php if (isset($_POST['show_ticket_edited_succes_message'])) : ?>
-        <div id="id01" class="w3-modal">
-            <div class="w3-modal-content">
-                <div class="w3-container">
-                    <span onclick="document.getElementById('id01').style.display='none'" class="w3-button w3-display-topright">&times;</span>
-                    <div class="w3-container">
-                        <h5>
-                            You succesfully updated the the ticket
-                        </h5>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <script>
-            document.getElementById('id01').style.display = 'block';
-        </script>
-    <?php endif ?>
+    <script>
+        document.getElementById('id01').style.display = 'block';
+    </script>
+<?php endif ?>
 </div>
 
 <form action="" method="post" id="form">
