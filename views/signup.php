@@ -20,7 +20,7 @@ if (isset($_POST['signup_submit'])) {
     <div class="login">
         <div class="card">
 
-            <div class="w3-container card-head" style="text-align:center">
+            <div class="w3-container card-head w3-center">
                 <h3>Sign up</h3>
             </div>
             <div class="w3-container">
@@ -60,7 +60,7 @@ if (isset($_POST['signup_submit'])) {
                     <?php echo $feedback['input_errors']['pwd_repeat'] ?? '' ?>
                 </p>
 
-                <div class="w3-container" style="text-align:center">
+                <div class="w3-container w3-center">
                     <input type="submit" value="Sign up" name="signup_submit" class="btn-primary">
                 </div>
             </form>

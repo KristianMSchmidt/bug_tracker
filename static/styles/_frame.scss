@@ -59,6 +59,9 @@ html {
         padding-left: 1em;
         .left_main_nav {
             margin-right: auto; //Makes it flow to the left
+            p {
+                //color: black;
+            }
         }
     }
 }

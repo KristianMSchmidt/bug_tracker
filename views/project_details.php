@@ -11,71 +11,31 @@ $tickets = $contr->get_tickets_by_project($_POST['project_id']);
 
 <div class="main">
     <div class="project_details">
-        <div class="w3-container" style="width:fit-content; margin-bottom:2em;">
-            <h1 style="margin-right:1em; display:inline">Details for Project #<?php echo $project['project_id'] ?></h1>
-            <a href="#" onclick="document.getElementById('go_to_edit_form').submit()"> Edit Project</a>
-            <div class="w3-container card" style="padding-bottom:1em;">
-                <table class="table bordered">
-                    <tr>
-                        <th>Project Name</th>
-                        <th>Description</th>
-                    </tr>
-                    <tr>
-                        <td><?php echo $project['project_name'] ?></td>
-                        <td><?php echo $project['project_description'] ?></td>
-                    </tr>
-                </table>
+        <div class="w3-container">
+            <div class="card">
+                <div class="w3-container card-head top">
+                    <h2>Project Details</h2>
+                    <a href="#" onclick="document.getElementById('go_to_edit_form').submit()"> Edit Project</a>
+                </div>
+                <div class="w3-container">
+                    <table class="table bordered">
+                        <tr>
+                            <th>Project ID</th>
+                            <th>Project Name</th>
+                            <th>Description</th>
+                        </tr>
+                        <tr>
+                            <td style="width:15%"><?php echo $_POST['project_id'] ?></td>
+                            <td style="width:35%"><?php echo $project['project_name'] ?></td>
+                            <td style="width:50%"><?php echo $project['project_description'] ?></td>
+                        </tr>
+                    </table>
+                </div>
             </div>
         </div>
 
         <div class="bottom w3-container">
             <div class="bottom-left">
-                <form action="create_ticket.php" method="post">
-                    <input type="hidden" name="project_id" value="<?php echo $_POST['project_id']; ?>">
-                    <input type="hidden" name="requested_action" value="go_to_create_ticket_page">
-                    <input type="submit" value="CREATE NEW TICKET" class="btn-primary large">
-                </form>
-                <div class="card">
-                    <div class="w3-container card-head">
-                        <h4>Tickets for this Project</h4>
-                    </div>
-                    <div class="w3-container">
-
-                        <h5>Condenced ticket Details</h5>
-                    </div>
-                    <div class="w3-container w3-responsive">
-                        <table class="table striped bordered">
-                            <tr>
-                                <th>Title</th>
-                                <th>Submitter</th>
-                                <th>Developer</th>
-                                <th>Status</th>
-                                <th>Created</th>
-                            </tr>
-
-                            <?php foreach ($tickets as $ticket) : ?>
-                                <tr>
-                                    <td><?php echo $ticket['title'] ?></td>
-                                    <td><?php echo $ticket['submitter_name'] ?></td>
-                                    <td><?php echo $ticket['developer_name'] ?></td>
-                                    <td><?php echo $ticket['ticket_status_name'] ?></td>
-                                    <td><?php echo $ticket['created_at'] ?></td>
-                                    <td><a href="#" onclick="ticket_details_submitter(<?php echo $ticket['ticket_id'] ?>)">Ticket Details</a></td>
-                                </tr>
-                            <?php endforeach; ?>
-                        </table>
-                        <?php if (count($tickets) == 0) : ?>
-                            <div class="empty-table-row">
-                                <p>There are no tickets for this project in the database</p>
-                            </div>
-                            <p class="entry-info">Showing 0-0 of 0 entries</p>
-                        <?php else : ?>
-                            <p class="entry-info">Showing 1-<?php echo count($tickets); ?> of <?php echo count($tickets); ?> entries</p>
-                        <?php endif ?>
-                    </div>
-                </div>
-            </div>
-            <div class="bottom-right">
                 <form action="manage_project_users.php" method="post">
                     <input type="hidden" name="project_id" value="<?php echo $_POST['project_id']; ?>">
                     <input type="submit" value="MANAGE PROJECT USERS" class="btn-primary large" style="width: 16em;">
@@ -113,6 +73,53 @@ $tickets = $contr->get_tickets_by_project($_POST['project_id']);
                     </div>
                 </div>
             </div>
+            <div class="bottom-right">
+                <form action="create_ticket.php" method="post">
+                    <input type="hidden" name="project_id" value="<?php echo $_POST['project_id']; ?>">
+                    <input type="hidden" name="requested_action" value="go_to_create_ticket_page">
+                    <input type="submit" value="CREATE NEW TICKET" class="btn-primary large">
+                </form>
+                <div class="card">
+                    <div class="w3-container card-head">
+                        <h4>Tickets for this Project</h4>
+                    </div>
+                    <div class="w3-container">
+
+                        <h5>Condensed Ticket Details</h5>
+                    </div>
+                    <div class="w3-container w3-responsive">
+                        <table class="table striped bordered">
+                            <tr>
+                                <th>Title</th>
+                                <th>Submitter</th>
+                                <th>Developer</th>
+                                <th>Status</th>
+                                <th>Created</th>
+                            </tr>
+
+                            <?php foreach ($tickets as $ticket) : ?>
+                                <tr>
+                                    <td><?php echo $ticket['title'] ?></td>
+                                    <td><?php echo $ticket['submitter_name'] ?></td>
+                                    <td><?php echo $ticket['developer_name'] ?></td>
+                                    <td><?php echo $ticket['ticket_status_name'] ?></td>
+                                    <td><?php echo explode(" ", $ticket['created_at'])[0] ?></td>
+                                    <td><a href="#" onclick="ticket_details_submitter(<?php echo $ticket['ticket_id'] ?>)">Details</a></td>
+                                </tr>
+                            <?php endforeach; ?>
+                        </table>
+                        <?php if (count($tickets) == 0) : ?>
+                            <div class="empty-table-row">
+                                <p>There are no tickets for this project in the database</p>
+                            </div>
+                            <p class="entry-info">Showing 0-0 of 0 entries</p>
+                        <?php else : ?>
+                            <p class="entry-info">Showing 1-<?php echo count($tickets); ?> of <?php echo count($tickets); ?> entries</p>
+                        <?php endif ?>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
 </div>

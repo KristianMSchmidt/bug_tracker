@@ -111,11 +111,8 @@ include('shared/ui_frame.php');
                             <!-- Submitter -->
                             <input type="hidden" name="submitter" value="<?php echo $_SESSION['user_id'] ?>">
 
-                            <p class="error" style="text-align:center;">
-                                <?php echo $errors['no_changes_error'] ?? '' ?>
-                            </p>
                             <!-- Submit button -->
-                            <div class="w3-container" style="text-align:center">
+                            <div class="w3-container w3-center">
                                 <input type="submit" class="btn-primary" value="Create Ticket">
                             </div>
                         </div>

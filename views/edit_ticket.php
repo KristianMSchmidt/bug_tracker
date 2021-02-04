@@ -116,11 +116,11 @@ include('shared/ui_frame.php');
                             <!-- Requested action -->
                             <input type="hidden" name="requested_action" value="edit_ticket_attempt">
 
-                            <p class="error" style="text-align:center;">
+                            <p class="error w3-center">
                                 <?php echo $errors['no_changes_error'] ?? '' ?>
                             </p>
                             <!-- Submit button -->
-                            <div class="w3-container" style="text-align:center">
+                            <div class="w3-container w3-center">
                                 <input type="submit" class="btn-primary" value="Make Changes">
                             </div>
                         </div>

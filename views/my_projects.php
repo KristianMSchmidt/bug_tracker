@@ -33,7 +33,6 @@ $projects = $contr->get_projects_by_user_id($_SESSION['user_id'], $_SESSION['rol
                             <tr>
                                 <th>Project Name</th>
                                 <th>Description</th>
-                                <th style="width:130px;"></th>
                             </tr>
                             <?php
                             //$projects = array();

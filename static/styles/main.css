@@ -160,6 +160,12 @@ html {
   padding-bottom: 1em;
 }
 
+.ticket_details .basics {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
 .ticket_details .grid-container {
   display: -ms-grid;
   display: grid;
@@ -172,6 +178,21 @@ html {
 .ticket_details li {
   padding-top: 0;
   padding-bottom: 0;
+}
+
+.ticket_details .top {
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  margin-bottom: 1em;
+}
+
+.ticket_details .top h1 {
+  margin-bottom: 0.2em;
+}
+
+.ticket_details .right {
+  float: right;
 }
 
 @media only screen and (max-width: 1050px) {
@@ -284,7 +305,22 @@ html {
           flex-direction: column;
 }
 
+.project_details .card {
+  margin-top: 1em;
+}
+
+.project_details .top {
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+}
+
+.project_details .top h2 {
+  display: inline;
+  padding-right: 1em;
+}
+
 .project_details .bottom {
+  padding-top: 2em;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -295,25 +331,16 @@ html {
 }
 
 .project_details .bottom-left {
-  margin-right: 0.5em;
-  -webkit-box-flex: 1;
-      -ms-flex: 1;
-          flex: 1;
+  margin-right: 2em;
+  -webkit-box-flex: 2;
+      -ms-flex: 2;
+          flex: 2;
 }
 
 .project_details .bottom-right {
-  margin-left: 0.5en;
-  -webkit-box-flex: 1;
-      -ms-flex: 1;
-          flex: 1;
-}
-
-.project_details .card {
-  margin-top: 1em;
-}
-
-.project_details span {
-  font-weight: bold;
+  -webkit-box-flex: 3;
+      -ms-flex: 3;
+          flex: 3;
 }
 
 @media only screen and (max-width: 1050px) {
@@ -325,6 +352,16 @@ html {
   }
 }
 
+.manage_project_users .top {
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+}
+
+.manage_project_users .top a.right {
+  float: right;
+}
+
 .manage_project_users .wrapper {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -333,7 +370,7 @@ html {
   -webkit-box-direction: normal;
       -ms-flex-direction: row;
           flex-direction: row;
-  padding-top: 1em;
+  padding-bottom: 1em;
 }
 
 .manage_project_users .orto-wrapper {
@@ -348,9 +385,9 @@ html {
 }
 
 .manage_project_users .orto-wrapper.top {
-  width: -webkit-fit-content;
-  width: -moz-fit-content;
-  width: fit-content;
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
 }
 
 .manage_project_users .orto-wrapper.left {
@@ -609,6 +646,9 @@ html {
   padding-left: 4em;
   padding-right: 4em;
   margin: 1em;
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
 }
 
 @media only screen and (max-width: 1100px) {
@@ -707,7 +747,7 @@ html {
   background-color: inherit;
   border: none;
   margin-left: 0;
-  color: black;
+  color: #6c757d;
   font-size: 1em;
   padding-left: 1em;
   padding-right: 1em;

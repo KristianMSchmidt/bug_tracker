@@ -14,7 +14,7 @@ if (isset($_SESSION['user_id'])) {
 <div class="main">
     <div class="demo_login">
         <div class="card">
-            <div class="w3-container card-head" style="text-align:center">
+            <div class="w3-container card-head w3-center">
                 <h3>Demo Login</h3>
             </div>
             <div class="row">

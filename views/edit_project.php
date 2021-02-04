@@ -53,12 +53,12 @@ include('shared/ui_frame.php');
                     <input type="hidden" name="old_project_name" value=<?php echo $_POST['old_project_name'] ?>>
                     <input type="hidden" name="old_project_description" value=<?php echo $_POST['old_project_description'] ?>>
 
-                    <p class="error" style="text-align:center;">
+                    <p class="error w3-center">
                         <?php echo $errors['no_changes_error'] ?? '' ?>
                     </p>
 
                     <!-- Submit button -->
-                    <div class="w3-container" style="text-align:center">
+                    <div class="w3-container w3-center">
                         <input type="submit" name="edit_submit" class="btn-primary" value="Make Changes">
                     </div>
                 </form>

@@ -30,12 +30,17 @@ if (isset($_SESSION['user_id'])) {
     <!-- w3-css style sheet -->
     <link rel="stylesheet" href="../static/styles/w3.css">
 
-    <!-- custom css -->
+    <!-- My custom css -->
     <link rel="stylesheet" href="../static/styles/main.css">
 
     <!-- JS chart library -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.bundle.min.js"></script>
 </head>
+
+<style>
+
+
+</style>
 
 <body>
     <!--brand icon-->
@@ -48,11 +53,9 @@ if (isset($_SESSION['user_id'])) {
         </div>
         <div class="main_nav">
             <?php if (isset($_SESSION['user_id'])) : ?>
-                <p class="left_main_nav" style="color:black;">
-                    <?php echo $_SESSION['full_name'] ?>
-                    |
-                    <?php echo $_SESSION['role_name'] ?>
-                </p>
+                <div class="left_main_nav">
+                    <p><?php echo $_SESSION['full_name'] ?> | <?php echo $_SESSION['role_name'] ?></p>
+                </div>
 
                 <div class="dropdown">
                     <!-- notifications dropdown btn -->
@@ -109,7 +112,7 @@ if (isset($_SESSION['user_id'])) {
                     <button class='user_actions dropbtn'>
                         <i class="user_actions dropbtn fas fa-user"></i>
                         <i class="user_actions dropbtn fas fa-caret-down hide_xsmall"></i>
-                        <span class='user_actions dropbtn fa-stack hide_xsmall' style=" padding:0; width:0;">
+                        <span class='user_actions dropbtn fa-stack hide_xsmall' style="padding:0; width:0;">
                         </span>
                     </button>
 

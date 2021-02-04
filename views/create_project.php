@@ -39,7 +39,7 @@ include('shared/ui_frame.php');
                     <input type="hidden" name="created_by" value="<?php echo $_SESSION['user_id'] ?>">
 
                     <!-- Submit button -->
-                    <div class="w3-container" style="text-align:center">
+                    <div class="w3-container w3-center">
                         <input type="submit" name="create_project_attempt" class="btn-primary" value="Create Project">
                     </div>
                 </form>

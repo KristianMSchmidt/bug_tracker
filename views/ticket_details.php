@@ -20,10 +20,10 @@ $comments = $contr->get_ticket_comments($ticket_id);
 ?>
 <div class="main">
     <div class="ticket_details">
-        <div class="w3-container">
+        <div class="w3-container top">
             <h1>Details for Ticket #<?php echo $ticket_id ?></h1>
-            <a href="#" onclick="form_submitter('project_details.php')" style="margin-right:1em;">Go to Project </a>
-            <a href="#" onclick="form_submitter('edit_ticket.php')"> Edit Ticket</a>
+            <a href="#" onclick="form_submitter('project_details.php')">Go to Project </a>
+            <a href="#" onclick="form_submitter('edit_ticket.php')" class="right"> Edit Ticket</a>
         </div>
         <br>
         <div class="grid-container">
@@ -34,42 +34,41 @@ $comments = $contr->get_ticket_comments($ticket_id);
                     </div>
                     <div class="w3-container w3-responsive">
                         <table class="table w3-small bordered">
-                            <br>
                             <tr>
-                                <td style="color:grey">Ticket name</td>
+                                <td>Ticket name</td>
                                 <td><?php echo $ticket['title'] ?></td>
                             </tr>
 
                             <tr>
-                                <td style="color:grey">Description</td>
+                                <td>Description</td>
                                 <td><?php echo $ticket['description'] ?></td>
                             </tr>
                             <tr>
-                                <td style="color:grey">Project</td>
+                                <td>Project</td>
                                 <td><?php echo $ticket['project_name'] ?></td>
                             </tr>
                             <tr>
-                                <td style="color:grey">Assigned Developer</td>
+                                <td>Assigned Developer</td>
                                 <td><?php echo $ticket['developer_name'] ?></td>
                             </tr>
                             <tr>
-                                <td style="color:grey">Submitter</td>
+                                <td>Submitter</td>
                                 <td><?php echo $ticket['submitter_name'] ?></td>
                             </tr>
                             <tr>
-                                <td style="color:grey">Priority</td>
+                                <td>Priority</td>
                                 <td><?php echo $ticket['ticket_priority_name'] ?></td>
                             </tr>
                             <tr>
-                                <td style="color:grey">Type</td>
+                                <td>Type</td>
                                 <td><?php echo $ticket['ticket_type_name'] ?></td>
                             </tr>
                             <tr>
-                                <td style="color:grey">Status</td>
+                                <td>Status</td>
                                 <td><?php echo $ticket['ticket_status_name'] ?></td>
                             </tr>
                             <tr>
-                                <td style="color:grey">Created</td>
+                                <td>Created</td>
                                 <td><?php echo $ticket['created_at'] ?></td>
                             </tr>
                             <tr>

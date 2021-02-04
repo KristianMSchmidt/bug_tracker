@@ -27,7 +27,7 @@ if (isset($_POST['login_submit'])) {
 <div class="main">
     <div class="login">
         <div class="card">
-            <div class="w3-container card-head" style="text-align:center">
+            <div class="w3-container card-head w3-center">
                 <h3>Sign in</h3>
             </div>
             <div class="w3-container">
@@ -48,7 +48,7 @@ if (isset($_POST['login_submit'])) {
                 <p class="error">
                     <?php echo $feedback['input_errors']['pwd'] ?? '' ?>
                 </p>
-                <div class="w3-container" style="text-align:center">
+                <div class="w3-container w3-center">
                     <input type="submit" value="Sign in" name="login_submit" class="btn-primary">
                 </div>
             </form>
