@@ -10,7 +10,9 @@ function set_active_link(new_active_item) {
     ];
 
     sidebar_items.forEach(item => {
-        document.getElementById(item + "_link").classList.remove("active");
+        if (document.body.contains(document.getElementById(item))) {
+            document.getElementById(item + "_link").classList.remove("active");
+        }
     });
 
     document.getElementById(new_active_item + "_link").classList.add("active");

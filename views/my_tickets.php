@@ -24,23 +24,22 @@ $tickets = $contr->get_tickets_by_user($_SESSION['user_id'], $_SESSION['role_nam
                     <h2>My tickets</h2>
                 </div>
                 <div class="w3-container">
-                    <h4>
+                    <p>
                         <?php if ($_SESSION['role_name'] == 'Admin') : ?>
-                            All tickets in your database
+                            All tickets in the database
                         <?php elseif ($_SESSION['role_name'] == "Project Manager") : ?>
-                            All tickets to the projects that you manage
+                            All tickets to the projects you manage
                         <?php elseif ($_SESSION['role_name'] == "Developer") : ?>
-                            All tickets that you are assigned to as developer
+                            All tickets you are assigned to as developer
                         <?php elseif ($_SESSION['role_name'] == "Submitter") : ?>
-                            All tickets that you have submitted
+                            All tickets you have submitted
                         <?php endif ?>
-                    </h4>
+                    </p>
                     <div class="w3-container w3-responsive">
                         <table class="table w3-small striped bordered">
                             <tr>
                                 <th>Title</th>
                                 <th>Project Name</th>
-                                <th>Developer Assigned</th>
                                 <th>Ticket Priority</th>
                                 <th>Ticket Status</th>
                                 <th>Ticket Type</th>
@@ -54,7 +53,6 @@ $tickets = $contr->get_tickets_by_user($_SESSION['user_id'], $_SESSION['role_nam
                                 <tr>
                                     <td><?php echo $ticket['title'] ?></td>
                                     <td><?php echo $ticket['project_name'] ?></td>
-                                    <td><?php echo $ticket['developer_name'] ?></td>
                                     <td><?php echo $ticket['ticket_priority_name'] ?></td>
                                     <td><?php echo $ticket['ticket_status_name'] ?></td>
                                     <td><?php echo $ticket['ticket_type_name'] ?></td>

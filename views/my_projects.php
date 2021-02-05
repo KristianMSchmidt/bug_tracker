@@ -17,7 +17,7 @@ $projects = $contr->get_projects_by_user_id($_SESSION['user_id'], $_SESSION['rol
                     <h2>My projects</h2>
                 </div>
                 <div class="w3-container">
-                    <h4>
+                    <p>
                         <?php if ($_SESSION['role_name'] == 'Admin') : ?>
                             All projects in your database
                         <?php elseif ($_SESSION['role_name'] == "Project Manager") : ?>
@@ -27,7 +27,7 @@ $projects = $contr->get_projects_by_user_id($_SESSION['user_id'], $_SESSION['rol
                         <?php elseif ($_SESSION['role_name'] == "Submitter") : ?>
                             All projects your are assigned to
                         <?php endif ?>
-                    </h4>
+                    </p>
                     <div class="w3-container w3-responsive">
                         <table class="table w3-small striped bordered">
                             <tr>

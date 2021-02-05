@@ -1,5 +1,9 @@
 <?php
 include('../includes/login_check.inc.php');
+if (!($_SESSION['role_name'] == 'Admin' || $_SESSION['role_name'] == 'Project Manager')) {
+    header('location: dashboard.php');
+}
+include('../includes/check_admin_or_pm.inc.php');
 include('shared/ui_frame.php');
 
 $contr = new controller;

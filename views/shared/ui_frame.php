@@ -130,8 +130,13 @@ if (isset($_SESSION['user_id'])) {
         <div class="sidebar">
             <?php if (isset($_SESSION['user_id'])) : ?>
                 <a href="dashboard.php" id="dashboard_link"><i class="fas fa-home"></i> &nbsp; Dashboard</a>
-                <a href="manage_project_users.php" id="manage_project_users_link"><i class="fas fa-user-plus"></i> &nbsp;Manage Project Users</a>
-                <a href="manage_user_roles.php" id="manage_user_roles_link"><i class="fas fa-users"></i> &nbsp;Manage User Roles</a>
+                <!-- Show sidebar links depending on role ?> -->
+                <?php if ($_SESSION['role_name'] == 'Admin' || $_SESSION['role_name'] == 'Project Manager') : ?>
+                    <a href="manage_project_users.php" id="manage_project_users_link"><i class="fas fa-user-plus"></i> &nbsp;Manage Project Users</a>
+                    <?php if ($_SESSION['role_name'] == 'Admin') : ?>
+                        <a href="manage_user_roles.php" id="manage_user_roles_link"><i class="fas fa-users"></i> &nbsp;Manage User Roles</a>
+                    <?php endif ?>
+                <?php endif ?>
                 <a href="my_projects.php" id="my_projects_link"><i class="fas fa-industry"></i> &nbsp; My Projects</a>
                 <a href="my_tickets.php" id="my_tickets_link"><i class="fas fa-ticket-alt"></i> &nbsp; My Tickets</a>
             <?php endif ?>

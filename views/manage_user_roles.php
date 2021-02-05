@@ -1,5 +1,8 @@
 <?php
 include('../includes/login_check.inc.php');
+if ($_SESSION['role_name'] !== 'Admin') {
+    header('location: dashboard.php');
+}
 include('shared/ui_frame.php');
 $contr = new controller;
 
