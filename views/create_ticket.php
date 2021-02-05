@@ -55,54 +55,64 @@ include('shared/ui_frame.php');
                     <div class="other-input">
                         <div class="left">
                             <!-- Project -->
-                            <select class="select" name="project_id">
+                            <select class="w3-select" name="project_id">
+                                <option value="" disabled selected>Choose Project</option>
                                 <?php foreach ($projects as $project) : ?>
                                     <option value="<?php echo $project['project_id'] ?>" <?php if ($_POST['project_id'] == $project['project_id']) : ?> selected <?php endif ?>>
                                         <?php echo $project['project_name']; ?>
                                     </option>
                                 <?php endforeach ?>
                             </select>
+                            <p class="error"><?php echo $errors['project'] ?? '' ?></p>
                             <label>Project</label>
 
                             <!-- Ticket Priority -->
-                            <select class="select" name="priority_id">
+                            <select class="w3-select" name="priority_id">
+                                <option value="" disabled selected>Choose Priority</option>
                                 <?php foreach ($priorities as $priority) : ?>
                                     <option value="<?php echo $priority['ticket_priority_id'] ?>" <?php if (isset($_POST['priority_id'])) : ?> <?php if ($_POST['priority_id'] == $priority['ticket_priority_id']) : ?> selected <?php endif ?> <?php endif ?>>
                                         <?php echo $priority['ticket_priority_name']; ?>
                                     </option>
                                 <?php endforeach ?>
                             </select>
+                            <p class="error"><?php echo $errors['priority'] ?? '' ?></p>
                             <label>Ticket Priority</label>
 
                             <!-- Ticket Type -->
-                            <select class="select" name="type_id">
+                            <select class="w3-select" name="type_id">
+                                <option value="" disabled selected>Choose Ticket Type</option>
                                 <?php foreach ($types as $type) : ?>
                                     <option value="<?php echo $type['ticket_type_id'] ?>" <?php if (isset($_POST['type_id'])) : ?> <?php if ($_POST['type_id'] == $type['ticket_type_id']) : ?> selected <?php endif ?> <?php endif ?>>
                                         <?php echo $type['ticket_type_name']; ?>
                                     </option>
                                 <?php endforeach ?>
                             </select>
+                            <p class="error"><?php echo $errors['type'] ?? '' ?></p>
                             <label>Ticket Type</label>
                         </div>
                         <div class="right">
                             <!-- Developer Assigned -->
-                            <select class="select" name="developer_assigned">
+                            <select class="w3-select" name="developer_assigned">
+                                <option value="" disabled selected>Choose Developer</option>
                                 <?php foreach ($developers as $developer) : ?>
                                     <option value="<?php echo $developer['user_id'] ?>" <?php if (isset($_POST['developer_assigned'])) : ?> <?php if ($_POST['developer_assigned'] == $developer['user_id']) : ?> selected <?php endif ?> <?php endif ?>>
                                         <?php echo $developer['full_name']; ?>
                                     </option>
                                 <?php endforeach ?>
                             </select>
+                            <p class="error"><?php echo $errors['developer'] ?? '' ?></p>
                             <label>Developer Assigned</label>
 
                             <!-- Ticket Status -->
-                            <select class="select" name="status_id">
+                            <select class="w3-select" name="status_id">
+                                <option value="" disabled selected>Choose Ticket Status</option>
                                 <?php foreach ($status_types as $status_type) : ?>
                                     <option value="<?php echo $status_type['ticket_status_id'] ?>" <?php if (isset($_POST['status_id'])) : ?> <?php if ($_POST['status_id'] == $status_type['ticket_status_id']) : ?> selected <?php endif ?> <?php endif ?>>
                                         <?php echo $status_type['ticket_status_name']; ?>
                                     </option>
                                 <?php endforeach ?>
                             </select>
+                            <p class="error"><?php echo $errors['status'] ?? '' ?></p>
                             <label>Ticket Status</label>
 
                             <!-- Requested action -->

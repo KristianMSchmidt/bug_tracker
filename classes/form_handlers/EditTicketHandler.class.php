@@ -20,7 +20,7 @@ class EditTicketHandler
             $this->attempt_edit();
         }
 
-        if(!$this->errors){
+        if (!$this->errors) {
             $this->redirect();
         }
 
@@ -49,7 +49,7 @@ class EditTicketHandler
         if (empty($val)) {
             $this->add_error('description', 'Ticket needs a description');
         } else {
-            if (!(strlen($val) < 300 && strlen($val) > 5)) {
+            if (!(strlen($val) < 250 && strlen($val) > 5)) {
                 $this->add_error('description', 'Description must be 6-300 chars');
             }
         }
@@ -63,16 +63,16 @@ class EditTicketHandler
         $new_ticket = $this->new_ticket;
         $ticket_id = $this->old_ticket['ticket_id'];
 
-        
-        $new_ticket['project_name'] = $contr-> get_project_name_by_id($new_ticket['project'])['project_name'];
-        $new_ticket['priority_name'] = $contr-> get_priority_name_by_id($new_ticket['priority'])['ticket_priority_name'];
-        $new_ticket['ticket_type_name'] = $contr-> get_ticket_type_name_by_id($new_ticket['type'])['ticket_type_name'];
-        $new_ticket['ticket_status_name'] = $contr-> get_ticket_status_name_by_id($new_ticket['status'])['ticket_status_name'];
-        $new_ticket['developer_name'] = $contr-> get_user_by_id($new_ticket['developer_assigned'])['full_name'];
+
+        $new_ticket['project_name'] = $contr->get_project_name_by_id($new_ticket['project'])['project_name'];
+        $new_ticket['priority_name'] = $contr->get_priority_name_by_id($new_ticket['priority'])['ticket_priority_name'];
+        $new_ticket['ticket_type_name'] = $contr->get_ticket_type_name_by_id($new_ticket['type'])['ticket_type_name'];
+        $new_ticket['ticket_status_name'] = $contr->get_ticket_status_name_by_id($new_ticket['status'])['ticket_status_name'];
+        $new_ticket['developer_name'] = $contr->get_user_by_id($new_ticket['developer_assigned'])['full_name'];
 
         //print_r($new_ticket['ticket_status_name']);
         //  exit();
-        
+
         if ($old_ticket['title'] != $new_ticket['title']) {
             $contr->add_to_ticket_history($ticket_id, "TitleChange", $old_ticket['title'], $new_ticket['title']);
             $changes = True;
@@ -93,12 +93,12 @@ class EditTicketHandler
             $contr->add_to_ticket_history($ticket_id, "TypeChange", $old_ticket['ticket_type_name'], $new_ticket['ticket_type_name']);
             $changes = True;
         }
- 
+
         if ($old_ticket['status'] != $new_ticket['status']) {
             $contr->add_to_ticket_history($ticket_id, "StatusChange", $old_ticket['ticket_status_name'], $new_ticket['ticket_status_name']);
             $changes = True;
         }
-        
+
         if ($old_ticket['developer_assigned'] != $new_ticket['developer_assigned']) {
             $contr->add_to_ticket_history($ticket_id, "AssignedTo", $old_ticket['developer_name'], $new_ticket['developer_name']);
             //Notify newly assigned developer

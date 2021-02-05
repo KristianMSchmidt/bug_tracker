@@ -157,7 +157,18 @@ html {
 }
 
 /* Style of individual pages, i.e. the content of the main area */
+.create_project {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
 .create_project .card {
+  max-width: 800px;
+  min-width: 500px;
   padding-bottom: 1em;
 }
 
@@ -217,11 +228,6 @@ html {
         -ms-flex-direction: column;
             flex-direction: column;
   }
-}
-
-.edit_ticket .select {
-  padding-top: 0.3em;
-  padding-bottom: 0.3em;
 }
 
 .edit_ticket .card {
@@ -422,11 +428,6 @@ html {
   height: 30px;
 }
 
-.manage_project_users .select {
-  width: 300px;
-  padding: 0.5em;
-}
-
 .manage_project_users .scroll {
   background-color: #f9f9f9;
 }
@@ -496,12 +497,6 @@ html {
   width: 300px;
   font-size: 15px;
   height: 30px;
-}
-
-.manage_user_roles .select {
-  width: 300px;
-  padding: 0.5em;
-  background-color: #f9f9f9;
 }
 
 .manage_user_roles .scroll {
@@ -716,6 +711,27 @@ html {
 .demo_login .col.two {
   padding-left: 1.5em;
   padding-right: 4em;
+}
+
+.demo_login .demo_login span {
+  font-size: 20px;
+  bottom: -21px;
+  padding: 1em;
+  position: absolute;
+}
+
+.demo_login .demo_login span.admin, .demo_login .demo_login span.pm {
+  left: -270px;
+}
+
+.demo_login .demo_login span.dev, .demo_login .demo_login span.sub {
+  left: 80px;
+}
+
+@media only screen and (max-width: 735px) {
+  .demo_login .demo_login span.admin, .demo_login .demo_login span.pm {
+    left: -170px;
+  }
 }
 
 .btn-primary {
@@ -1043,27 +1059,6 @@ form label {
 @media only screen and (max-width: 735px) {
   .w3-tag {
     width: 150px;
-  }
-}
-
-.demo_login span {
-  font-size: 20px;
-  bottom: -21px;
-  padding: 1em;
-  position: absolute;
-}
-
-.demo_login span.admin, .demo_login span.pm {
-  left: -270px;
-}
-
-.demo_login span.dev, .demo_login span.sub {
-  left: 80px;
-}
-
-@media only screen and (max-width: 735px) {
-  .demo_login span.admin, .demo_login span.pm {
-    left: -170px;
   }
 }
 

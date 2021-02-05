@@ -1,7 +1,11 @@
 /* Style of individual pages, i.e. the content of the main area */
 
 .create_project {
+    display: flex;
+    justify-content: center;
     .card {
+        max-width: 800px;
+        min-width: 500px;
         padding-bottom: 1em;
     }
 }
@@ -49,10 +53,6 @@
 }
 
 .edit_ticket {
-    .select {
-        padding-top: 0.3em;
-        padding-bottom: 0.3em;
-    }
     .card {
         margin: 1em;
         padding-bottom: 2em;
@@ -172,10 +172,6 @@
         font-size: 15px;
         height: 30px;
     }
-    .select {
-        width: 300px;
-        padding: 0.5em;
-    }
     .scroll {
         background-color: #f9f9f9;
     }
@@ -220,11 +216,6 @@
         width: 300px;
         font-size: 15px;
         height: 30px;
-    }
-    .select {
-        width: 300px;
-        padding: 0.5em;
-        background-color: #f9f9f9;
     }
     .scroll {
         background-color: #f9f9f9;
@@ -356,6 +347,28 @@
         &.two {
             padding-left: 1.5em;
             padding-right: 4em;
+        }
+    }
+    .demo_login {
+        span {
+            font-size: 20px;
+            bottom: -21px;
+            padding: 1em;
+            position: absolute;
+            &.admin,
+            &.pm {
+                left: -270px;
+            }
+            &.dev,
+            &.sub {
+                left: 80px;
+            }
+            @media only screen and (max-width: 735px) {
+                &.admin,
+                &.pm {
+                    left: -170px;
+                }
+            }
         }
     }
 }

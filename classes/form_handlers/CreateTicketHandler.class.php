@@ -13,6 +13,7 @@ class CreateTicketHandler
     {
         $this->validate_title();
         $this->validate_description();
+        $this->validate_other();
 
         if (!$this->errors) {
             $this->create();
@@ -38,15 +39,33 @@ class CreateTicketHandler
 
     private function validate_description()
     {
-
         $val = trim($this->post_data['description']);
 
         if (empty($val)) {
             $this->add_error('description', 'Ticket needs a description');
         } else {
-            if (!(strlen($val) < 300 && strlen($val) > 5)) {
+            if (!(strlen($val) < 250 && strlen($val) > 5)) {
                 $this->add_error('description', 'Description must be 6-300 chars');
             }
+        }
+    }
+
+    private function validate_other()
+    {
+        if (!isset($this->post_data['project_id'])) {
+            $this->add_error('project', 'Choose project');
+        }
+        if (!isset($this->post_data['priority_id'])) {
+            $this->add_error('priority', 'Choose priority');
+        }
+        if (!isset($this->post_data['type_id'])) {
+            $this->add_error('type', 'Choose type');
+        }
+        if (!isset($this->post_data['status_id'])) {
+            $this->add_error('status', 'Choose status');
+        }
+        if (!isset($this->post_data['developer_assigned'])) {
+            $this->add_error('developer', 'Choose developer');
         }
     }
 

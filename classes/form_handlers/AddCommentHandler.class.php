@@ -8,7 +8,7 @@ class AddCommentHandler
 
     public function __construct($user_id, $ticket_id, $post_data)
     {
-        $this->user_id = $user_id; 
+        $this->user_id = $user_id;
         $this->ticket_id = $ticket_id;
         $this->comment = trim($post_data['new_comment']);
     }
@@ -32,15 +32,15 @@ class AddCommentHandler
         if (empty($val)) {
             $this->add_error('comment', 'Your comment has no content');
         } else {
-            if (!(strlen($val) > 5 && strlen($val) <200 )) {
+            if (!(strlen($val) > 5 && strlen($val) < 200)) {
                 $this->add_error('comment', 'Your comment must be 5-200 chars');
             }
         }
     }
 
     private function save_comment()
-    {   
-        $contr = New controller();
+    {
+        $contr = new controller();
         $contr->add_ticket_comment($this->user_id, $this->ticket_id, $this->comment);
     }
 

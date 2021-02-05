@@ -35,26 +35,3 @@
         width: 150px;
     }
 }
-
-.demo_login {
-    span {
-        font-size: 20px;
-        bottom: -21px;
-        padding: 1em;
-        position: absolute;
-        &.admin,
-        &.pm {
-            left: -270px;
-        }
-        &.dev,
-        &.sub {
-            left: 80px;
-        }
-        @media only screen and (max-width: 735px) {
-            &.admin,
-            &.pm {
-                left: -170px;
-            }
-        }
-    }
-}

@@ -57,8 +57,8 @@ echo "
                             <input type="hidden" name="assign_role_submit" value="" id="assign_role_submit">
                         </form>
 
-                        <select class="select w3-light-grey" name="new_role" form="assign_role_form" id="selected_role">
-                            <option value="" disabled selected> -- Select Role --</option>
+                        <select class="w3-select" name="new_role" form="assign_role_form" id="selected_role">
+                            <option value="" disabled selected>Select Role</option>
                             <option value="1">Admin</option>
                             <option value="2">Project Manager</option>
                             <option value="3">Developer</option>

@@ -3,7 +3,6 @@ include('../includes/login_check.inc.php');
 if (!($_SESSION['role_name'] == 'Admin' || $_SESSION['role_name'] == 'Project Manager')) {
     header('location: dashboard.php');
 }
-include('../includes/check_admin_or_pm.inc.php');
 include('shared/ui_frame.php');
 
 $contr = new controller;
@@ -34,6 +33,8 @@ if (isset($_POST['project_id'])) {
     $non_project_users = $contr->get_users_not_enrolled_in_project($_POST['project_id']);
     $project_name = $contr->get_project_name_by_id($_POST['project_id'])['project_name'];
     $project_description = "Beskrivelsen";
+} else if (isset($_POST['proceed'])) {
+    $proceed_error = 'Select a project';
 }
 ?>
 
@@ -82,7 +83,8 @@ if (isset($_POST['project_id'])) {
                                 <div class="w3-container">
                                     <p>What project to assign users to?</p>
                                     <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="post" id="project_form">
-                                        <select class="select w3-light-grey" name="project_id">
+                                        <select class="w3-select" name="project_id">
+                                            <option value="" disabled selected>Choose project</option>
                                             <?php foreach ($projects as $project) : ?>
                                                 <?php if ($project['project_id'] == $project_id) : ?>
                                                     <option value=" <?php echo $project['project_id'] ?>" selected>
@@ -93,10 +95,10 @@ if (isset($_POST['project_id'])) {
                                                 <?php endforeach ?>
                                         </select>
                                     </form>
-                                    <input type="submit" value="Proceed" class="btn-primary" form="project_form">
+                                    <p class="error"><?php echo $proceed_error ?? '' ?></p>
+                                    <input type="submit" name="proceed" value="Proceed" class="btn-primary" form="project_form">
                                 </div>
                             </div>
-
                         <?php endif ?>
                         </div>
                     </div>

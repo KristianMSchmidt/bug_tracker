@@ -21,7 +21,7 @@ include('shared/ui_frame.php');
     <div class="edit_ticket">
         <div class="card">
             <div class="w3-container card-head">
-                <h2>Edit Project #<?php echo $_POST['project_id'] ?></h2>
+                <h2>Edit Project</h2>
             </div>
 
             <div class="card-content">
