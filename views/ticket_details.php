@@ -89,7 +89,7 @@ $comments = $contr->get_ticket_comments($ticket_id);
                     <div class="w3-container" style="padding-bottom:0.6em;">
                         <p class="error"><?php echo $errors['comment'] ?? '' ?></p>
                         <form action="" method="post">
-                            <input style="width:80%" type="text" name="new_comment" placeholder="Write a comment on the ticket">
+                            <input style="width:80%" type="text" name="new_comment" maxlength="200" placeholder="Write a comment on the ticket">
                             <input type="hidden" name="ticket_id" value="<?php echo $ticket_id ?>">
                             <input type="hidden" name="requested_action">
                             <input type="submit" class="btn-primary" style="width:5em;" value="ADD">

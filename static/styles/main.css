@@ -167,8 +167,9 @@ html {
 }
 
 .create_project .card {
-  max-width: 800px;
-  min-width: 500px;
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
   padding-bottom: 1em;
 }
 

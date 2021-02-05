@@ -20,7 +20,7 @@ include('shared/ui_frame.php');
                 <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="POST">
                     <!-- Title -->
                     <p>
-                        <input type="text" name="title" class="w3-input" value="<?php echo $_POST['title'] ?? '' ?>">
+                        <input type="text" name="title" maxlength="45" class="w3-input" value="<?php echo $_POST['title'] ?? '' ?>">
                         <label>Ticket Title</label><br>
                         <span class="error">
                             <?php echo $errors['title'] ?? '' ?>
@@ -28,9 +28,9 @@ include('shared/ui_frame.php');
                     </p>
                     <!-- Description -->
                     <p>
-                        <input type="text" name="description" class="w3-input" value="<?php echo $_POST['description'] ?? '' ?>">
+                        <input type="text" name="description" maxlength="200" class="w3-input" value="<?php echo $_POST['description'] ?? '' ?>">
                         <label>Description</label><br>
-                        <span class="error">
+                        <span class=" error">
                             <?php echo $errors['description'] ?? '' ?>
                         </span>
                     </p>

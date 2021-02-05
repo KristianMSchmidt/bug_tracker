@@ -32,7 +32,7 @@ include('shared/ui_frame.php');
                         <div class="left">
                             <!-- Title -->
                             <p>
-                                <input type="text" name="title" class="w3-input" value="<?php echo $ticket['title'] ?? '' ?>">
+                                <input type="text" name="title" class="w3-input" maxlength="45" value="<?php echo $ticket['title'] ?? '' ?>">
                                 <label>Ticket Title</label><br>
                                 <span class="error">
                                     <?php echo $errors['title'] ?? '' ?>
@@ -42,7 +42,7 @@ include('shared/ui_frame.php');
                         <div class="right">
                             <!-- Description -->
                             <p>
-                                <input type="text" name="description" class="w3-input" value="<?php echo $ticket['description'] ?? '' ?>">
+                                <input type="text" name="description" class="w3-input" maxlength="200" value="<?php echo $ticket['description'] ?? '' ?>">
                                 <label>Description</label><br>
                                 <span class="error">
                                     <?php echo $errors['description'] ?? '' ?>

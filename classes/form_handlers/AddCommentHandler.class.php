@@ -32,7 +32,7 @@ class AddCommentHandler
         if (empty($val)) {
             $this->add_error('comment', 'Your comment has no content');
         } else {
-            if (!(strlen($val) > 5 && strlen($val) < 200)) {
+            if (!(strlen($val) > 5 && strlen($val) < 201)) {
                 $this->add_error('comment', 'Your comment must be 5-200 chars');
             }
         }

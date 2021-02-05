@@ -31,7 +31,7 @@ class CreateProjectHandler
         if (empty($val)) {
             $this->add_error('title', 'Ticket needs a title');
         } else {
-            if (!(strlen($val) < 45 && strlen($val) > 5)) {
+            if (!(strlen($val) < 46 && strlen($val) > 5)) {
                 $this->add_error('title', 'Title must be 6-45 chars');
             }
         }
@@ -45,8 +45,8 @@ class CreateProjectHandler
         if (empty($val)) {
             $this->add_error('description', 'Ticket needs a description');
         } else {
-            if (!(strlen($val) < 250 && strlen($val) > 5)) {
-                $this->add_error('description', 'Description must be 6-300 chars');
+            if (!(strlen($val) < 201 && strlen($val) > 5)) {
+                $this->add_error('description', 'Description must be 6-200 chars');
             }
         }
     }
