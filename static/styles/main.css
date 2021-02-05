@@ -1017,45 +1017,53 @@ form label {
 
 .w3-tag {
   padding: 0.5em;
-  text-align: left;
   width: 250px;
   color: white;
   border-radius: 400px;
   text-align: center;
 }
 
-.w3-tag.dev {
-  background-color: red;
-}
-
 .w3-tag.admin {
   background-color: black;
-  width: 350px;
 }
 
 .w3-tag.pm {
   background-color: green;
-  width: 350px;
+}
+
+.w3-tag.dev {
+  background-color: red;
 }
 
 .w3-tag.sub {
   background-color: blue;
 }
 
+@media only screen and (max-width: 735px) {
+  .w3-tag {
+    width: 150px;
+  }
+}
+
 .demo_login span {
   font-size: 20px;
   bottom: -21px;
   padding: 1em;
+  position: absolute;
 }
 
 .demo_login span.admin, .demo_login span.pm {
-  position: absolute;
-  left: -380px;
+  left: -270px;
 }
 
 .demo_login span.dev, .demo_login span.sub {
-  position: absolute;
-  left: 100px;
+  left: 80px;
+}
+
+@media only screen and (max-width: 735px) {
+  .demo_login span.admin, .demo_login span.pm {
+    left: -170px;
+  }
 }
 
 a {

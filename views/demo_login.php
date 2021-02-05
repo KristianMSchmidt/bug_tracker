@@ -21,14 +21,14 @@ if (isset($_SESSION['user_id'])) {
                     <!-- Admin -->
                     <a href="#" class="fa fa-fw fa-user fa-3x w3-tooltip" style="color:black" onclick="document.getElementById('admin_login').submit()">
                         <span class="w3-text w3-tag admin">
-                            As 'Admin' you have acces to all data and functionality of the site</span>
+                            Admins have acces to all data and functionality of the site</span>
                     </a>
                     <p>Admin</p>
 
                     <!-- Project Manager -->
                     <a href="#" class="fa fa-fw fa-user fa-3x w3-tooltip" style="color:green" onclick="document.getElementById('pm_login').submit()">
                         <span class="w3-text w3-tag pm">
-                            As 'Project Manager' you can create tickets and edit projects</span>
+                            Project Manager can update projects and assign users to projects</span>
                     </a>
                     <p>Project&nbspManager</p>
                 </div>
@@ -37,14 +37,14 @@ if (isset($_SESSION['user_id'])) {
                     <!-- Developer -->
                     <a href=" #" class="fa fa-fw fa-user fa-3x w3-tooltip" style="color:red" onclick="document.getElementById('dev_login').submit()">
                         <span class="w3-text w3-tag dev">
-                            As 'Developer' you can update your tickets</span>
+                            Developers can update and comment on tickets</span>
                     </a>
                     <p>Developer</p>
 
                     <!-- Submitter -->
                     <a href="#" class="fa fa-fw fa-user fa-3x w3-tooltip" style="color:blue" onclick="document.getElementById('submitter_login').submit()">
                         <span class="w3-text w3-tag sub">
-                            As 'Submitter' you can create new tickets</span>
+                            Submitter can create new tickets</span>
                     </a>
                     <p>Submitter</p>
                 </div>

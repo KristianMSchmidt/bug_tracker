@@ -15,24 +15,24 @@
 
 .w3-tag {
     padding: 0.5em;
-    text-align: left;
     width: 250px;
     color: white;
     border-radius: 400px;
     text-align: center;
-    &.dev {
-        background-color: red;
-    }
     &.admin {
         background-color: black;
-        width: 350px;
     }
     &.pm {
         background-color: green;
-        width: 350px;
+    }
+    &.dev {
+        background-color: red;
     }
     &.sub {
         background-color: blue;
+    }
+    @media only screen and (max-width: 735px) {
+        width: 150px;
     }
 }
 
@@ -41,15 +41,20 @@
         font-size: 20px;
         bottom: -21px;
         padding: 1em;
+        position: absolute;
         &.admin,
         &.pm {
-            position: absolute;
-            left: -380px;
+            left: -270px;
         }
         &.dev,
         &.sub {
-            position: absolute;
-            left: 100px;
+            left: 80px;
+        }
+        @media only screen and (max-width: 735px) {
+            &.admin,
+            &.pm {
+                left: -170px;
+            }
         }
     }
 }
