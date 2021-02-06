@@ -19,7 +19,7 @@ $tickets = $contr->get_tickets_by_user($_SESSION['user_id'], $_SESSION['role_nam
 <div class="main">
     <div class="my_tickets">
         <div class="wrapper">
-            <div class="card">
+            <div class="card w3-responsive">
                 <div class="w3-container card-head">
                     <h2>My tickets</h2>
                 </div>
@@ -43,6 +43,7 @@ $tickets = $contr->get_tickets_by_user($_SESSION['user_id'], $_SESSION['role_nam
                                 <th>Ticket Priority</th>
                                 <th>Ticket Status</th>
                                 <th>Ticket Type</th>
+                                <th>Developer Assigned</th>
                                 <th>Submitter</th>
                                 <th>Created</th>
                             </tr>
@@ -56,6 +57,7 @@ $tickets = $contr->get_tickets_by_user($_SESSION['user_id'], $_SESSION['role_nam
                                     <td><?php echo $ticket['ticket_priority_name'] ?></td>
                                     <td><?php echo $ticket['ticket_status_name'] ?></td>
                                     <td><?php echo $ticket['ticket_type_name'] ?></td>
+                                    <td><?php echo $ticket['developer_name'] ?></td>
                                     <td><?php echo $ticket['submitter_name'] ?></td>
                                     <td><?php echo $ticket['created_at'] ?></td>
                                     <td><a href="#" onclick="ticket_details_submitter(<?php echo $ticket['ticket_id'] ?>)">Details</a></td>

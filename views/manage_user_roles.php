@@ -39,7 +39,7 @@ echo "
                             <?php foreach ($users as $user) : ?>
                                 <?php $demo_users = array("Demo Admin", "Demo PM", "Demo Dev", "Demo Sub") ?>
                                 <?php if (!in_array($user['full_name'], $demo_users)) : ?>
-                                    <p id="<?php echo $user['user_id'] ?>" onclick="toggle_user(<?php echo $user['user_id'] ?>)"><?php echo $user['full_name'] ?></p>
+                                    <p id="<?php echo $user['user_id'] ?>" onclick="toggle_user(<?php echo $user['user_id'] ?>)"><?php echo $user['full_name'] . ' | ' . $user['role_name'] ?></p>
                                 <?php endif ?>
                             <?php endforeach ?>
                         </div>

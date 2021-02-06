@@ -261,8 +261,9 @@ class Model extends Dbh
     protected function db_get_users_not_enrolled_in_project($project_id)
     {
         $sql =
-            "SELECT users.full_name, user_id
+            "SELECT users.full_name, users.user_id, user_roles.role_name
             FROM users 
+            JOIN user_roles ON user_roles.role_id = users.role_id
             WHERE users.user_id NOT IN 
                 (SELECT user_id FROM `project_enrollments` WHERE project_id=?)
             ORDER BY users.full_name";

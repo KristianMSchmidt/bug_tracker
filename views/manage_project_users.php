@@ -115,7 +115,7 @@ if (isset($_POST['project_id'])) {
                     <div class="scroll">
                         <?php if (isset($_POST['project_id'])) : ?>
                             <?php foreach ($non_project_users as $npu) : ?>
-                                <p id="available_user_<?php echo $npu['user_id'] ?>" onclick="toggle_users_to_enroll(<?php echo $npu['user_id'] ?>)"><?php echo $npu['full_name'] ?></p>
+                                <p id="available_user_<?php echo $npu['user_id'] ?>" onclick="toggle_users_to_enroll(<?php echo $npu['user_id'] ?>)"><?php echo $npu['full_name'] . ' | ' . $npu['role_name'] ?></p>
                             <?php endforeach ?>
 
                             <?php if (count($non_project_users) == 0) : ?>
@@ -144,7 +144,7 @@ if (isset($_POST['project_id'])) {
                     <div class="scroll">
                         <?php if (isset($_POST['project_id'])) : ?>
                             <?php foreach ($project_users as $pu) : ?>
-                                <p id="enrolled_user_<?php echo $pu['user_id'] ?>" onclick="toggle_users_to_disenroll(<?php echo $pu['user_id'] ?>)"><?php echo $pu['full_name'] ?></p>
+                                <p id="enrolled_user_<?php echo $pu['user_id'] ?>" onclick="toggle_users_to_disenroll(<?php echo $pu['user_id'] ?>)"><?php echo $pu['full_name'] . ' | ' . $npu['role_name'] ?></p>
                             <?php endforeach ?>
                             <?php if (count($project_users) == 0) : ?>
                                 <p>There are currently no users enrolled in this project</p>
