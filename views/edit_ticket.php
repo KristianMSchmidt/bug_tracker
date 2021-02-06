@@ -32,7 +32,7 @@ include('shared/ui_frame.php');
                         <div class="left">
                             <!-- Title -->
                             <p>
-                                <input type="text" name="title" class="w3-input" maxlength="45" value="<?php echo $ticket['title'] ?? '' ?>">
+                                <input type="text" name="title" class="w3-input" maxlength="30" value="<?php echo $ticket['title'] ?? '' ?>">
                                 <label>Ticket Title</label><br>
                                 <span class="error">
                                     <?php echo $errors['title'] ?? '' ?>
