@@ -27,50 +27,49 @@ echo "
 ?>
 
 <div class="main">
-    <h1>Manage User Roles</h1>
     <div class="manage_user_roles">
-
-        <div class="area_one card">
-            <div class="w3-container">
-                <h4>Select One or more Users </h4>
+        <h1>Manage User Roles</h1>
+        <div class="wrapper">
+            <div class="orto-wrapper left card">
                 <div class="w3-container">
-                    <div class="scroll w2-light-grey">
-                        <?php foreach ($users as $user) : ?>
-                            <?php $demo_users = array("Demo Admin", "Demo PM", "Demo Dev", "Demo Sub") ?>
-                            <?php if (!in_array($user['full_name'], $demo_users)) : ?>
-                                <p id="<?php echo $user['user_id'] ?>" onclick="toggle_user(<?php echo $user['user_id'] ?>)"><?php echo $user['full_name'] ?></p>
-                            <?php endif ?>
-                        <?php endforeach ?>
+                    <h3>Select One or more Users </h3>
+                    <div class="w3-container">
+                        <div class="scroll w2-light-grey">
+                            <?php foreach ($users as $user) : ?>
+                                <?php $demo_users = array("Demo Admin", "Demo PM", "Demo Dev", "Demo Sub") ?>
+                                <?php if (!in_array($user['full_name'], $demo_users)) : ?>
+                                    <p id="<?php echo $user['user_id'] ?>" onclick="toggle_user(<?php echo $user['user_id'] ?>)"><?php echo $user['full_name'] ?></p>
+                                <?php endif ?>
+                            <?php endforeach ?>
+                        </div>
+                        <p id="no_selected_users" class="error"></p>
                     </div>
-                    <p id="no_selected_users" class="error"></p>
-                </div>
-                <h4>Select the Role to Assign</h4>
-                <div class="w3-container">
+                    <h3>Select the Role to Assign</h3>
+                    <div class="w3-container">
 
-                    <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="post" id="assign_role_form">
-                        <input type="hidden" name="user_ids" value="" id="input_user_ids">
-                        <input type="hidden" name="new_role" value="">
-                        <input type="hidden" name="assign_role_submit" value="" id="assign_role_submit">
-                    </form>
+                        <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="post" id="assign_role_form">
+                            <input type="hidden" name="user_ids" value="" id="input_user_ids">
+                            <input type="hidden" name="new_role" value="">
+                            <input type="hidden" name="assign_role_submit" value="" id="assign_role_submit">
+                        </form>
 
-                    <select class="w3-select" name="new_role" form="assign_role_form" id="selected_role">
-                        <option value="" disabled selected>Select Role</option>
-                        <option value="1">Admin</option>
-                        <option value="2">Project Manager</option>
-                        <option value="3">Developer</option>
-                        <option value="4">Submitter</option>
-                    </select>
-                    <p id="no_selected_role" class="error"></p>
-                </div>
-                <h4>Submit changes</h4>
-                <div class="w3-container">
-                    <input type="submit" value="Submit" class="btn-primary" onclick="submit_form()">
+                        <select class="w3-select" name="new_role" form="assign_role_form" id="selected_role">
+                            <option value="" disabled selected>Select Role</option>
+                            <option value="1">Admin</option>
+                            <option value="2">Project Manager</option>
+                            <option value="3">Developer</option>
+                            <option value="4">Submitter</option>
+                        </select>
+                        <p id="no_selected_role" class="error"></p>
+                    </div>
+                    <h3>Submit changes</h3>
+                    <div class="w3-container">
+                        <input type="submit" value="Submit" class="btn-primary" onclick="submit_form()">
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <div class="area_two">
-            <div class="card">
+            <div class="orto-wrapper right card">
                 <div class="w3-container card-head">
                     <h3>Your Personnel</h3>
                 </div>
@@ -105,7 +104,6 @@ echo "
                 </div>
             </div>
         </div>
-
     </div>
 </div>
 

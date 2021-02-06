@@ -395,13 +395,13 @@ html {
 }
 
 .manage_project_users .orto-wrapper.left {
-  margin-right: 1em;
+  margin-right: 0.5em;
   -webkit-box-flex: 1;
       -ms-flex: 1;
           flex: 1;
 }
 
-.manage_project_users .orto-wrapper.left.top select {
+.manage_project_users .orto-wrapper.left.top .w3-select {
   min-width: 300px;
   max-width: -webkit-fit-content;
   max-width: -moz-fit-content;
@@ -413,7 +413,7 @@ html {
 }
 
 .manage_project_users .orto-wrapper.right {
-  margin-left: 0em;
+  margin-left: 0.5em;
   -webkit-box-flex: 1;
       -ms-flex: 1;
           flex: 1;
@@ -461,16 +461,15 @@ html {
 .manage_user_roles {
   padding-left: 0.7em;
   padding-right: 0.7em;
+}
+
+.manage_user_roles .wrapper {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: row;
-          flex-direction: row;
 }
 
-.manage_user_roles .area_one {
+.manage_user_roles .orto-wrapper {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -478,42 +477,70 @@ html {
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
-  /*align-items: center;*/
+}
+
+.manage_user_roles .orto-wrapper.left {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
   height: -webkit-fit-content;
   height: -moz-fit-content;
   height: fit-content;
   -webkit-box-flex: 1;
       -ms-flex: 1;
           flex: 1;
+  margin-right: 0.5em;
 }
 
-.manage_user_roles .area_one .card {
+.manage_user_roles .orto-wrapper.left .card {
   padding: 1em;
 }
 
-.manage_user_roles .area_one input {
-  margin-bottom: 2em;
+.manage_user_roles .orto-wrapper.left .w3-select {
+  min-width: 300px;
+  max-width: -webkit-fit-content;
+  max-width: -moz-fit-content;
+  max-width: fit-content;
 }
 
-.manage_user_roles .area_one h4 {
-  padding-top: 1em;
-}
-
-.manage_user_roles .area_two {
-  padding-left: 1em;
-  -webkit-box-flex: 2;
-      -ms-flex: 2;
-          flex: 2;
+.manage_user_roles .orto-wrapper.right {
+  margin-left: 0.5em;
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
 }
 
 .manage_user_roles .btn-primary {
   width: 300px;
   font-size: 15px;
   height: 30px;
+  margin-top: 0;
+  margin-bottom: 1.5em;
 }
 
 .manage_user_roles .scroll {
   background-color: #f9f9f9;
+}
+
+@media only screen and (max-width: 870px) {
+  .manage_user_roles .wrapper {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    padding-bottom: 0em;
+  }
+  .manage_user_roles .orto-wrapper {
+    margin-bottom: 1.5em;
+  }
+  .manage_user_roles .orto-wrapper.right, .manage_user_roles .orto-wrapper.left {
+    margin-left: 0;
+    margin-right: 0;
+  }
 }
 
 .profile_settings {
