@@ -553,13 +553,13 @@ html {
 }
 
 .profile_settings .card {
-  width: 35%;
-  margin: 2em;
+  margin-top: 4em;
 }
 
 .profile_settings table {
   padding-top: 1em;
   padding-bottom: 1em;
+  padding-right: 2em;
 }
 
 .profile_settings .pad-right {
@@ -630,6 +630,28 @@ html {
   margin-top: 1em;
   margin-bottom: 2em;
   padding-bottom: 2em;
+}
+
+@media only screen and (max-width: 750px) {
+  .my_tickets .wrapper {
+    width: 100%;
+  }
+  .my_tickets .wrapper td,
+  .my_tickets .wrapper th {
+    font-size: 12px;
+  }
+  .my_tickets .w3-container.card-content {
+    padding: 0;
+  }
+  .my_tickets .hide_if_needed {
+    display: none;
+  }
+}
+
+@media only screen and (max-width: 485px) {
+  .my_tickets .hide_last {
+    display: none;
+  }
 }
 
 /* Older pages -- Build with the below row and col classes */
@@ -751,14 +773,14 @@ html {
 }
 
 .demo_login span {
-  font-size: 20px;
-  bottom: -21px;
+  font-size: 16px;
+  bottom: -5px;
   padding: 1em;
   position: absolute;
 }
 
 .demo_login span.admin, .demo_login span.pm {
-  left: -270px;
+  left: -280px;
 }
 
 .demo_login span.dev, .demo_login span.sub {
@@ -768,6 +790,25 @@ html {
 @media only screen and (max-width: 735px) {
   .demo_login span.admin, .demo_login span.pm {
     left: -170px;
+  }
+}
+
+@media only screen and (max-width: 555px) {
+  .demo_login span {
+    bottom: 0;
+    font-size: 12px;
+  }
+  .demo_login span.admin, .demo_login span.pm {
+    left: -120px;
+  }
+  .demo_login span.dev, .demo_login span.sub {
+    left: 60px;
+  }
+}
+
+@media only screen and (max-width: 445px) {
+  .demo_login span {
+    font-size: 0;
   }
 }
 
@@ -1102,6 +1143,18 @@ form label {
 @media only screen and (max-width: 735px) {
   .w3-tag {
     width: 150px;
+  }
+}
+
+@media only screen and (max-width: 555px) {
+  .w3-tag {
+    width: 120px;
+  }
+}
+
+@media only screen and (max-width: 445px) {
+  .w3-tag {
+    width: 0;
   }
 }
 

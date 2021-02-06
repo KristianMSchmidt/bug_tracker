@@ -28,7 +28,7 @@ if (isset($_SESSION['user_id'])) {
                     <!-- Project Manager -->
                     <a href="#" class="fa fa-fw fa-user fa-3x w3-tooltip" style="color:green" onclick="document.getElementById('pm_login').submit()">
                         <span class="w3-text w3-tag pm">
-                            Project Manager can update projects and assign users to projects</span>
+                            Project Manager can assign users to projects</span>
                     </a>
                     <p>Project&nbspManager</p>
                 </div>
@@ -37,7 +37,7 @@ if (isset($_SESSION['user_id'])) {
                     <!-- Developer -->
                     <a href=" #" class="fa fa-fw fa-user fa-3x w3-tooltip" style="color:red" onclick="document.getElementById('dev_login').submit()">
                         <span class="w3-text w3-tag dev">
-                            Developers can update and comment on tickets</span>
+                            Developers can update their tickets</span>
                     </a>
                     <p>Developer</p>
 

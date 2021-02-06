@@ -1,47 +1,53 @@
-/* w3-css overrides */
-
-.w3-modal {
-    padding-left: 100px;
-}
-
-.w3-modal-content {
-    padding-top: 1em;
-    padding-bottom: 1em;
-    p {
-        margin-top: 0.5em;
-        padding: 0;
+    /* w3-css overrides */
+    
+    .w3-modal {
+        padding-left: 100px;
     }
-}
-
-.w3-tag {
-    padding: 0.5em;
-    width: 250px;
-    color: white;
-    border-radius: 400px;
-    text-align: center;
-    &.admin {
-        background-color: black;
+    
+    .w3-modal-content {
+        padding-top: 1em;
+        padding-bottom: 1em;
+        p {
+            margin-top: 0.5em;
+            padding: 0;
+        }
     }
-    &.pm {
-        background-color: green;
+    
+    .w3-tag {
+        padding: 0.5em;
+        width: 250px;
+        color: white;
+        border-radius: 400px;
+        text-align: center;
+        &.admin {
+            background-color: black;
+        }
+        &.pm {
+            background-color: green;
+        }
+        &.dev {
+            background-color: red;
+        }
+        &.sub {
+            background-color: blue;
+        }
+        @media only screen and (max-width: 735px) {
+            width: 150px;
+        }
+        @media only screen and (max-width: 555px) {
+            width: 120px;
+        }
+        @media only screen and (max-width: 445px) {
+            width: 0;
+        }
     }
-    &.dev {
-        background-color: red;
+    
+    .w3-select {
+        padding-left: 0.2em;
     }
-    &.sub {
-        background-color: blue;
+    
+    .w3-input {
+        &.title {
+            width: 270px;
+        }
     }
-    @media only screen and (max-width: 735px) {
-        width: 150px;
-    }
-}
-
-.w3-select {
-    padding-left: 0.2em;
-}
-
-.w3-input {
-    &.title {
-        width: 270px;
-    }
-}

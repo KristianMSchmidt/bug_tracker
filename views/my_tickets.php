@@ -35,17 +35,19 @@ $tickets = $contr->get_tickets_by_user($_SESSION['user_id'], $_SESSION['role_nam
                             All tickets you have submitted
                         <?php endif ?>
                     </p>
-                    <div class="w3-container w3-responsive">
+                </div>
+                <div class="w3-container card-content">
+                    <div class="w3-container w3-responsive card-content">
                         <table class="table w3-small striped bordered">
                             <tr>
                                 <th>Title</th>
-                                <th>Project Name</th>
-                                <th>Ticket Priority</th>
+                                <th> Project Name</th>
+                                <th class="hide_last">Ticket Priority</th>
                                 <th>Ticket Status</th>
-                                <th>Ticket Type</th>
-                                <th>Developer Assigned</th>
-                                <th>Submitter</th>
-                                <th>Created</th>
+                                <th class="hide_if_needed">Ticket Type</th>
+                                <th class="hide_if_needed">Developer Assigned</th>
+                                <th class="hide_if_needed"> Submitter</th>
+                                <th class="hide_last">Created</th>
                             </tr>
                             <?php
                             //$tickets = array();
@@ -54,12 +56,12 @@ $tickets = $contr->get_tickets_by_user($_SESSION['user_id'], $_SESSION['role_nam
                                 <tr>
                                     <td><?php echo $ticket['title'] ?></td>
                                     <td><?php echo $ticket['project_name'] ?></td>
-                                    <td><?php echo $ticket['ticket_priority_name'] ?></td>
+                                    <td class="hide_last"><?php echo $ticket['ticket_priority_name'] ?></td>
                                     <td><?php echo $ticket['ticket_status_name'] ?></td>
-                                    <td><?php echo $ticket['ticket_type_name'] ?></td>
-                                    <td><?php echo $ticket['developer_name'] ?></td>
-                                    <td><?php echo $ticket['submitter_name'] ?></td>
-                                    <td><?php echo $ticket['created_at'] ?></td>
+                                    <td class="hide_if_needed"><?php echo $ticket['ticket_type_name'] ?></td>
+                                    <td class="hide_if_needed"><?php echo $ticket['developer_name'] ?></td>
+                                    <td class="hide_if_needed"><?php echo $ticket['submitter_name'] ?></td>
+                                    <td class="hide_last"><?php echo $ticket['created_at'] ?></td>
                                     <td><a href="#" onclick="ticket_details_submitter(<?php echo $ticket['ticket_id'] ?>)">Details</a></td>
                                 </tr>
                             <?php endforeach ?>
@@ -78,6 +80,7 @@ $tickets = $contr->get_tickets_by_user($_SESSION['user_id'], $_SESSION['role_nam
             </div>
         </div>
     </div>
+</div>
 </div>
 
 <form action="ticket_details.php" method="post" id="form">
