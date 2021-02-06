@@ -139,24 +139,14 @@
 }
 
 .manage_project_users {
-    .top {
-        width: fit-content;
-        a.right {
-            float: right;
-        }
-    }
     .wrapper {
         display: flex;
-        flex-direction: row;
         padding-bottom: 1em;
     }
     .orto-wrapper {
         display: flex;
         flex-direction: column;
         padding-bottom: 2em;
-        &.top {
-            flex: 1;
-        }
         &.left {
             margin-right: 1em;
             flex: 1;

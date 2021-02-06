@@ -371,24 +371,10 @@ html {
   }
 }
 
-.manage_project_users .top {
-  width: -webkit-fit-content;
-  width: -moz-fit-content;
-  width: fit-content;
-}
-
-.manage_project_users .top a.right {
-  float: right;
-}
-
 .manage_project_users .wrapper {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: row;
-          flex-direction: row;
   padding-bottom: 1em;
 }
 
@@ -401,12 +387,6 @@ html {
       -ms-flex-direction: column;
           flex-direction: column;
   padding-bottom: 2em;
-}
-
-.manage_project_users .orto-wrapper.top {
-  -webkit-box-flex: 1;
-      -ms-flex: 1;
-          flex: 1;
 }
 
 .manage_project_users .orto-wrapper.left {
