@@ -100,6 +100,15 @@ class EditTicketHandler
         }
 
         if ($old_ticket['developer_assigned'] != $new_ticket['developer_assigned']) {
+            //Check if chosen developer is enrolled in (new) project
+            $check = $contr->check_project_enrollment($new_ticket['project'], $new_ticket['developer_assigned']);
+            if (!$check) {
+                //Enroll developer in project
+                $contr->assign_to_project($new_ticket['developer_assigned'], $new_ticket['project']);
+                //Notify assigned developer
+                $message = "enrolled you in the project '{$new_ticket['project_name']}'";
+                $contr->create_notification(4, $new_ticket['developer_assigned'], $message, $_SESSION['user_id']);
+            }
             $contr->add_to_ticket_history($ticket_id, "AssignedTo", $old_ticket['developer_name'], $new_ticket['developer_name']);
             //Notify newly assigned developer
             $message = "assigned you to the ticket '{$new_ticket['title']}'";

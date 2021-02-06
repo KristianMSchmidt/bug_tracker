@@ -239,4 +239,9 @@ class Controller extends Model
     {
         $this->db_unassign_from_project($user_id, $project_id);
     }
+
+    public function check_project_enrollment($project_id, $user_id)
+    {
+        return $this->db_check_project_enrollment($project_id, $user_id);
+    }
 }

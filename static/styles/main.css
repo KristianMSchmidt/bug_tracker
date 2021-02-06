@@ -157,22 +157,6 @@ html {
 }
 
 /* Style of individual pages, i.e. the content of the main area */
-.create_project {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-}
-
-.create_project .card {
-  -webkit-box-flex: 1;
-      -ms-flex: 1;
-          flex: 1;
-  padding-bottom: 1em;
-}
-
 .ticket_details .wrapper {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -234,7 +218,6 @@ html {
 .edit_ticket .card {
   margin: 1em;
   padding-bottom: 2em;
-  margin: 1em;
 }
 
 .edit_ticket .card label {
@@ -339,7 +322,6 @@ html {
 }
 
 .project_details .bottom {
-  padding-top: 2em;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -350,6 +332,7 @@ html {
 }
 
 .project_details .bottom-left {
+  padding-top: 2em;
   margin-right: 2em;
   -webkit-box-flex: 2;
       -ms-flex: 2;
@@ -357,6 +340,7 @@ html {
 }
 
 .project_details .bottom-right {
+  padding-top: 2em;
   -webkit-box-flex: 3;
       -ms-flex: 3;
           flex: 3;
@@ -368,6 +352,9 @@ html {
     -webkit-box-direction: normal;
         -ms-flex-direction: column;
             flex-direction: column;
+  }
+  .project_details .bottom-left {
+    margin-right: 0;
   }
 }
 
@@ -417,6 +404,10 @@ html {
   -webkit-box-flex: 1;
       -ms-flex: 1;
           flex: 1;
+}
+
+.manage_project_users h3 {
+  margin-bottom: 0.2em;
 }
 
 .manage_project_users .btn-primary {
@@ -514,12 +505,17 @@ html {
           flex: 1;
 }
 
+.manage_user_roles h3 {
+  margin-top: 1em;
+  margin-bottom: 0.2em;
+}
+
 .manage_user_roles .btn-primary {
   width: 300px;
   font-size: 15px;
   height: 30px;
   margin-top: 0;
-  margin-bottom: 1.5em;
+  margin-bottom: 2.5em;
 }
 
 .manage_user_roles .scroll {
@@ -692,7 +688,8 @@ html {
   padding-top: 1em;
   padding-left: 4em;
   padding-right: 4em;
-  margin: 1em;
+  padding-bottom: 1em;
+  margin: 0.5em;
   -webkit-box-flex: 1;
       -ms-flex: 1;
           flex: 1;
@@ -753,23 +750,23 @@ html {
   padding-right: 4em;
 }
 
-.demo_login .demo_login span {
+.demo_login span {
   font-size: 20px;
   bottom: -21px;
   padding: 1em;
   position: absolute;
 }
 
-.demo_login .demo_login span.admin, .demo_login .demo_login span.pm {
+.demo_login span.admin, .demo_login span.pm {
   left: -270px;
 }
 
-.demo_login .demo_login span.dev, .demo_login .demo_login span.sub {
+.demo_login span.dev, .demo_login span.sub {
   left: 80px;
 }
 
 @media only screen and (max-width: 735px) {
-  .demo_login .demo_login span.admin, .demo_login .demo_login span.pm {
+  .demo_login span.admin, .demo_login span.pm {
     left: -170px;
   }
 }
@@ -988,6 +985,10 @@ form label {
   margin: 0;
 }
 
+.non-table-card {
+  background-color: #fcfcfc;
+}
+
 @media only screen and (max-width: 1250px) {
   .my_navbar {
     -webkit-box-orient: vertical;
@@ -1015,18 +1016,20 @@ form label {
     -webkit-box-direction: normal;
         -ms-flex-direction: row;
             flex-direction: row;
-    -webkit-box-align: center;
-        -ms-flex-align: center;
-            align-items: center;
-    -ms-flex-pack: distribute;
-        justify-content: space-around;
+    -webkit-box-align: stretch;
+        -ms-flex-align: stretch;
+            align-items: stretch;
+    -webkit-box-pack: space-evenly;
+        -ms-flex-pack: space-evenly;
+            justify-content: space-evenly;
+    padding-top: 0;
   }
   .sidebar_and_main_container .sidebar a {
     -webkit-box-flex: 1;
         -ms-flex: 1;
             flex: 1;
-    padding-left: 2em;
-    padding-right: 2em;
+    padding-left: 1em;
+    padding-right: 0em;
   }
   .branding_area {
     display: none;
@@ -1100,6 +1103,14 @@ form label {
   .w3-tag {
     width: 150px;
   }
+}
+
+.w3-select {
+  padding-left: 0.2em;
+}
+
+.w3-input.title {
+  width: 270px;
 }
 
 a {

@@ -246,7 +246,7 @@ class Model extends Dbh
     //all users assigned to project
     {
         $sql =
-            "SELECT users.full_name, users.email, role_name, users.user_id
+            "SELECT users.full_name, users.email, user_roles.role_name, users.user_id
             FROM users 
             JOIN project_enrollments ON users.user_id = project_enrollments.user_id
             JOIN user_roles ON user_roles.role_id = users.role_id
@@ -497,10 +497,7 @@ class Model extends Dbh
         return $result;
     }
 
-
-
     protected function db_ticket_type_name_by_id($type_id)
-
     {
         $sql = "SELECT ticket_type_name
                 FROM ticket_types
@@ -533,7 +530,6 @@ class Model extends Dbh
         $stmt->execute([$user_id, $ticket_id, $message]);
     }
 
-
     protected function db_create_ticket($data)
     {
         $sql = "INSERT 
@@ -565,7 +561,7 @@ class Model extends Dbh
         ]);
     }
 
-    public function db_assign_to_project($user_id, $project_id)
+    protected function db_assign_to_project($user_id, $project_id)
     {
         $sql = "INSERT 
                 INTO project_enrollments (user_id, project_id)
@@ -574,7 +570,7 @@ class Model extends Dbh
         $stmt->execute([$user_id, $project_id]);
     }
 
-    public function db_unassign_from_project($user_id, $project_id)
+    protected function db_unassign_from_project($user_id, $project_id)
     {
         $sql = "DELETE  
                 FROM project_enrollments 
@@ -582,7 +578,20 @@ class Model extends Dbh
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute([$user_id, $project_id]);
     }
+
+    protected function db_check_project_enrollment($project_id, $user_id)
+    {
+        $sql = "SELECT * 
+                FROM project_enrollments 
+                WHERE project_id = ? AND user_id = ?";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute([$project_id, $user_id]);
+        $result = $stmt->fetchAll();
+        return $result;
+    }
 }
+
+
 /*
 A 'statement' is any command that database understands
 A 'query' is a select statement

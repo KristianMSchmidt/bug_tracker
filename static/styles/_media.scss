@@ -13,12 +13,13 @@
         .sidebar {
             flex: 1;
             flex-direction: row;
-            align-items: center;
-            justify-content: space-around;
+            align-items: stretch;
+            justify-content: space-evenly;
+            padding-top: 0;
             a {
                 flex: 1;
-                padding-left: 2em;
-                padding-right: 2em;
+                padding-left: 1em;
+                padding-right: 0em;
             }
         }
     }

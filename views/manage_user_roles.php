@@ -30,8 +30,9 @@ echo "
     <div class="manage_user_roles">
         <h1>Manage User Roles</h1>
         <div class="wrapper">
-            <div class="orto-wrapper left card">
+            <div class="orto-wrapper left card non-table-card">
                 <div class="w3-container">
+
                     <h3>Select One or more Users </h3>
                     <div class="w3-container">
                         <div class="scroll w2-light-grey">
@@ -44,6 +45,7 @@ echo "
                         </div>
                         <p id="no_selected_users" class="error"></p>
                     </div>
+
                     <h3>Select the Role to Assign</h3>
                     <div class="w3-container">
 
@@ -62,10 +64,12 @@ echo "
                         </select>
                         <p id="no_selected_role" class="error"></p>
                     </div>
+
                     <h3>Submit changes</h3>
                     <div class="w3-container">
                         <input type="submit" value="Submit" class="btn-primary" onclick="submit_form()">
                     </div>
+
                 </div>
             </div>
 
@@ -77,7 +81,7 @@ echo "
                     <h5>
                         All users in your database
                     </h5>
-                    <div class="w3-container w3-responsive">
+                    <div class="w3-container">
                         <table class="table striped bordered">
                             <tr>
                                 <th>Name</th>
@@ -145,7 +149,6 @@ echo "
         document.getElementById('id01').style.display = 'block';
     </script>
 <?php endif ?>
-</div>
 <script>
     var selected_users = [];
 

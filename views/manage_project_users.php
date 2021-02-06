@@ -11,7 +11,7 @@ $projects = $contr->get_projects();
 if (isset($_POST['enroll_users_submit'])) {
     $selected_users = json_decode($_POST['user_ids']);
     $project_name = $contr->get_project_name_by_id($_POST['project_id'])['project_name'];
-    $notification_message = "enrolled you to the project '{$project_name}'";
+    $notification_message = "enrolled you in the project '{$project_name}'";
     foreach ($selected_users as $user_id) {
         $contr->assign_to_project($user_id, $_POST['project_id']);
         $contr->create_notification(4, $user_id, $notification_message, $_SESSION['user_id']);
@@ -38,14 +38,15 @@ if (isset($_POST['project_id'])) {
 }
 ?>
 
+
 <div class="main">
     <div class="manage_project_users">
         <h1>Manage Project Users</h1>
         <div class="wrapper">
-            <div class="orto-wrapper left top card">
+            <div class="orto-wrapper left top card non-table-card">
 
                 <div class="w3-container">
-                    <h2>Select Project</h2>
+                    <h3 class="project">Select Project</h3>
 
                     <div class="w3-container">
                         <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="post" id="project_form">
@@ -72,7 +73,7 @@ if (isset($_POST['project_id'])) {
                     </div>
                 </div>
             </div>
-            <div class="orto-wrapper right card">
+            <div class="orto-wrapper right card ">
                 <div class="w3-container card-head">
                     <h4>Selected Project</h4>
                 </div>
@@ -107,7 +108,7 @@ if (isset($_POST['project_id'])) {
 
         <div class="wrapper">
             <!-- Select Enroll -->
-            <div class="orto-wrapper left w3-container card">
+            <div class="orto-wrapper left w3-container card non-table-card">
                 <h3> Select Users to Enroll</h3>
                 <div class="w3-container">
                     <p>Users not enrolled in project</p>
@@ -136,7 +137,7 @@ if (isset($_POST['project_id'])) {
             <?php endif ?>
 
             <!-- Select Disenroll -->
-            <div class="orto-wrapper right w3-container card">
+            <div class="orto-wrapper right w3-container card non-table-card">
                 <h3> Select Users to Disenroll</h3>
                 <div class="w3-container">
                     <p>Users enrolled in project</p>

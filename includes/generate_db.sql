@@ -62,7 +62,7 @@ SELECT * FROM users;
 DROP TABLE IF EXISTS projects;
 CREATE TABLE projects(
     project_id INT AUTO_INCREMENT PRIMARY KEY, 
-    project_name TINYTEXT NOT NULL UNIQUE,
+    project_name TINYTEXT NOT NULL,
     project_description TINYTEXT, 
     created_by INT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, 

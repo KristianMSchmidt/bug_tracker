@@ -11,7 +11,7 @@ include('shared/ui_frame.php');
 ?>
 
 <div class="main">
-    <div class="create_project">
+    <div class="edit_ticket">
         <div class="card">
             <div class="w3-container card-head">
                 <h2>Create Project</h2>
@@ -20,8 +20,9 @@ include('shared/ui_frame.php');
                 <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="POST">
                     <!-- Title -->
                     <p>
-                        <input type="text" name="title" maxlength="30" class="w3-input" value="<?php echo $_POST['title'] ?? '' ?>">
+                        <input type="text" name="title" maxlength="30" class="w3-input title" value="<?php echo $_POST['title'] ?? '' ?>">
                         <label>Ticket Title</label><br>
+
                         <span class="error">
                             <?php echo $errors['title'] ?? '' ?>
                         </span>

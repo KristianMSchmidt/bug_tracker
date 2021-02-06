@@ -73,6 +73,16 @@ class CreateTicketHandler
     {
         $contr = new Controller();
         $contr->create_ticket($this->post_data);
+        //Check if developer is enrolled in project
+        $check = $contr->check_project_enrollment($this->post_data['project_id'], $this->post_data['developer_assigned']);
+        if (!$check) {
+            //Enroll developer in project
+            $contr->assign_to_project($this->post_data['developer_assigned'], $this->post_data['project_id']);
+            //Notify assigned developer
+            $project_name = $contr->get_project_name_by_id($this->post_data['project_id'])['project_name'];
+            $message = "enrolled you in the project '{$project_name}'";
+            $contr->create_notification(4, $this->post_data['developer_assigned'], $message, $this->post_data['submitter']);
+        }
         //notify assigned developer
         $message = "assigned you to the ticket '{$this->post_data['title']}'";
         $contr->create_notification(2, $this->post_data['developer_assigned'], $message, $this->post_data['submitter']);

@@ -30,7 +30,7 @@ include('shared/ui_frame.php');
                     <!-- Title -->
                     <div class="left">
                         <p>
-                            <input type="text" name="new_project_name" maxlength="30" class="w3-input" value="<?php echo $new_project_name ?>">
+                            <input type="text" name="new_project_name" maxlength="30" class="w3-input title" value="<?php echo $new_project_name ?>">
                             <label>Project Title</label><br>
                             <span class="error">
                                 <?php echo $errors['title'] ?? '' ?>
