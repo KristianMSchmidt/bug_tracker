@@ -10,7 +10,7 @@ $projects = $contr->get_projects_by_user_id($_SESSION['user_id'], $_SESSION['rol
     <div class="my_projects">
         <div class="wrapper">
             <form action="create_project.php" method="POST">
-                <input type="submit" name="submit" value="CREATE NEW PROJECT" class="btn-primary large">
+                <input type="submit" name="submit" value="CREATE NEW PROJECT" class="btn-primary">
             </form>
             <div class="card w3-responsive">
                 <div class="w3-container card-head">

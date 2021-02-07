@@ -10,21 +10,21 @@ include('shared/ui_frame.php');
                 <h4>Profile Settings</h4>
             </div>
             <div class="w3-container">
-                <table>
+                <table class="table striped bordered">
                     <tr>
-                        <td class="pad-right" cladd>Full name:</td>
+                        <td>Full name:</td>
                         <td><?php echo $_SESSION['full_name'] ?></td>
                     </tr>
                     <tr>
-                        <td class="pad-right">User ID:</td>
+                        <td>User ID:</td>
                         <td><?php echo $_SESSION['user_id'] ?></td>
                     </tr>
                     <tr>
-                        <td class="pad-right">Current role:</td>
+                        <td>Current role:</td>
                         <td><?php echo $_SESSION['role_name'] ?></td>
                     </tr>
                     <tr>
-                        <td class="pad-right">Email:</td>
+                        <td>Email:</td>
                         <td><?php echo $_SESSION['user_email'] ?></td>
                     </tr>
                 </table>

@@ -338,7 +338,7 @@ html {
 }
 
 .project_details .btn-primary {
-  width: 15em;
+  margin-top: 2em;
   margin-bottom: 1em;
 }
 
@@ -387,9 +387,6 @@ html {
 }
 
 .manage_project_users .orto-wrapper {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
@@ -409,10 +406,6 @@ html {
   max-width: -webkit-fit-content;
   max-width: -moz-fit-content;
   max-width: fit-content;
-}
-
-.manage_project_users .orto-wrapper.left.top .btn-primary {
-  width: 300px;
 }
 
 .manage_project_users .orto-wrapper.right {
@@ -514,7 +507,7 @@ html {
 }
 
 .manage_user_roles .orto-wrapper.left .w3-container {
-  margin-bottom: 1.5em;
+  margin-bottom: 1em;
 }
 
 .manage_user_roles .orto-wrapper.right {
@@ -561,20 +554,20 @@ html {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
 }
 
 .profile_settings .card {
-  margin-top: 4em;
+  min-width: 500px;
+  text-align: center;
+  padding-bottom: 1em;
 }
 
 .profile_settings table {
   padding-top: 1em;
   padding-bottom: 1em;
-  padding-right: 2em;
-}
-
-.profile_settings .pad-right {
-  padding-right: 3em;
 }
 
 .login {
@@ -623,7 +616,7 @@ html {
 .my_tickets .wrapper .card {
   margin-top: 1em;
   margin-bottom: 2em;
-  padding-bottom: 2em;
+  padding-bottom: 1em;
 }
 
 .my_projects .wrapper .btn-primary,
@@ -810,19 +803,18 @@ html {
 .btn-primary {
   color: white;
   background-color: #4285f4;
-  width: 13em;
-  height: 2em;
+  display: inline-block;
+  padding: 6px 16px;
   border: 0;
-  margin-top: 0.8em;
 }
 
 .btn-primary:focus {
   background-color: #2a66c9;
-  outline: none;
+  outline: invert;
   border: 0;
 }
 
-.btn-primary:active {
+.btn-primary:active, .btn-primary:hover {
   background-color: #2a66c9;
   border: 0;
 }
@@ -834,7 +826,7 @@ html {
 }
 
 .card .card-head {
-  background-color: #ffeb3b;
+  background-color: #ffc107;
 }
 
 .dropdown {

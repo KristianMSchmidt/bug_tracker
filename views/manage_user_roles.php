@@ -32,7 +32,7 @@ echo "
             <div class="orto-wrapper left card non-table-card">
                 <div class="w3-container">
 
-                    <h3>Select One or more Users </h3>
+                    <h4>Select one or more users </h4>
                     <div class="w3-container">
                         <div class="scroll w2-light-grey">
                             <?php foreach ($users as $user) : ?>
@@ -45,7 +45,7 @@ echo "
                         <p id="no_selected_users" class="error"></p>
                     </div>
 
-                    <h3>Select the Role to Assign</h3>
+                    <h4>Select role to assign</h4>
                     <div class="w3-container">
 
                         <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="post" id="assign_role_form">
@@ -64,7 +64,7 @@ echo "
                         <p id="no_selected_role" class="error"></p>
                     </div>
 
-                    <h3>Submit changes</h3>
+                    <h4>Submit changes</h4>
                     <div class="w3-container">
                         <input type="submit" value="Submit" class="btn-primary" onclick="submit_form()">
                     </div>

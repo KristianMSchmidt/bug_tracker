@@ -1,0 +1,24 @@
+
+
+
+
+Lav betinget indhold
+My Ticket -eksperiment: Vælg set ordering... dette burde faktisk være nemt
+My Ticket -eksperiment: Vis første 10. LIMIT OFFSET =10... dette burde heller ikke være særlig svært
+Tjek og frem og tilbage virker godt. Skal nogle af formene skiftes ud med gets (søg på dette i aften: hvonår er gets at foretrække?)
+Overvej, om Mange User Roles -siden kan gøres mere brugbar? Søgefelt under "Select ONe or More Usr? Med JS burde det faktisk ikke være så svært...
+det ville tage mig 1-2 timer at lave, tror jeg. Ville gøre en stor forskel
+
+
+
+
+
+
+
+
+
+Til allersidst: Lav nogle virkelige ticket med de ting, jeg faktisk mangler (men som jeg IKKE laver)
+ - brugere skal kunne redigere
+ - delete ticket og delete project
+ - dashboard-indhold skal gøres afhængigt af individuel bruger 
+ - gør navne i databasen lidt bedre og kortere  project.id  projects.title, projects.submitter_id, ....

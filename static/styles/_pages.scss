@@ -107,7 +107,7 @@
         }
     }
     .btn-primary {
-        width: 15em;
+        margin-top: 2em;
         margin-bottom: 1em;
     }
     .bottom {
@@ -139,7 +139,7 @@
         padding-bottom: 1em;
     }
     .orto-wrapper {
-        display: flex;
+        //display: flex;
         flex-direction: column;
         padding-bottom: 2em;
         &.left {
@@ -149,9 +149,6 @@
                 .w3-select {
                     min-width: 300px;
                     max-width: fit-content;
-                }
-                .btn-primary {
-                    width: 300px;
                 }
             }
         }
@@ -220,7 +217,7 @@
                 margin-bottom: 0.2em;
             }
             .w3-container {
-                margin-bottom: 1.5em;
+                margin-bottom: 1em;
             }
         }
         &.right {
@@ -255,16 +252,15 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
     .card {
-        margin-top: 4em;
+        min-width: 500px;
+        text-align: center;
+        padding-bottom: 1em;
     }
     table {
         padding-top: 1em;
         padding-bottom: 1em;
-        padding-right: 2em;
-    }
-    .pad-right {
-        padding-right: 3em;
     }
 }
 
@@ -298,7 +294,7 @@
         .card {
             margin-top: 1em;
             margin-bottom: 2em;
-            padding-bottom: 2em;
+            padding-bottom: 1em;
         }
         .btn-primary {
             margin-top: 0;
