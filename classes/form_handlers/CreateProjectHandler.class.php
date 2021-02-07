@@ -1,58 +1,21 @@
 <?php
+include_once('../classes/form_handlers/ProjectValidator.class.php');
 
-class CreateProjectHandler
+class CreateProjectHandler extends ProjectValidator
 {
-    private $post_data;
-    private $errors = [];
-    private $contr;
-
-    public function __construct($post_data)
-    {
-        $this->post_data = $post_data;
-    }
-
     public function process_input()
     {
-        $this->validate_title();
-        $this->validate_description();
+        $this->validate_title_length($this->post_data['title'], 'Project');
+        if (!$this->errors) {
+            $this->validate_title_unique();
+        }
+        $this->validate_description($this->post_data['description'], 'Project');
 
         if (!$this->errors) {
             $this->create();
             $this->redirect();
         } else {
             return $this->errors;
-        }
-    }
-
-    private function validate_title()
-    {
-        $val = trim($this->post_data['title']);
-
-        if (empty($val)) {
-            $this->add_error('title', 'Ticket needs a title');
-        } else if (!(strlen($val) < 31 && strlen($val)) > 5) {
-            $this->add_error('title', 'Title must be 6-30 chars');
-        } else {
-            include_once('../includes/auto_loader.inc.php');
-
-            $contr = new Controller();
-            $this->contr = $contr;
-            if ($contr->get_project_by_title($val)) {
-                $this->add_error('title', 'There is already a project by that name');
-            }
-        }
-    }
-
-
-    private function validate_description()
-    {
-
-        $val = trim($this->post_data['description']);
-
-        if (empty($val)) {
-            $this->add_error('description', 'Ticket needs a description');
-        } else if (!(strlen($val) < 201 && strlen($val) > 5)) {
-            $this->add_error('description', 'Description must be 6-200 chars');
         }
     }
 
@@ -74,14 +37,4 @@ class CreateProjectHandler
             </script>
             ";
     }
-
-    private function add_error($key, $val)
-    {
-        $this->errors[$key] = $val;
-    }
 }
-/*
-$x=new CreateProjectHandler(array('title'=>1, 'description'=>4));
-$errors = $x->process_input();
-print_r($errors);
-*/

@@ -2,8 +2,7 @@
 /*
 Only class direcly querying and modifying database. 
 
-// user_by(property)
-// project_by()
+TODO: Refactor a little too shorten code. E.g.: get_user_by_id -> get_user_by(id)
 */
 
 class Controller extends Model

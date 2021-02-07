@@ -1,4 +1,6 @@
 <?php
+include_once('../classes/form_handlers/ProjectValidator.class.php');
+
 class EditProjectHandler
 {
     private $old_project_name;
