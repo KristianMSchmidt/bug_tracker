@@ -172,8 +172,8 @@ CREATE TABLE ticket_types(
     ticket_type_id INT AUTO_INCREMENT PRIMARY KEY,
     ticket_type_name TINYTEXT NOT NULL
 );
-INSERT INTO ticket_types(ticket_type_name) VALUES('Feature Reqst');
-INSERT INTO ticket_types(ticket_type_name) VALUES('Bug');
+INSERT INTO ticket_types(ticket_type_name) VALUES('Feature Request');
+INSERT INTO ticket_types(ticket_type_name) VALUES('Bug/Error');
 INSERT INTO ticket_types(ticket_type_name) VALUES('Other');
     
 DESCRIBE ticket_types;

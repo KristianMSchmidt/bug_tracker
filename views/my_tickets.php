@@ -24,7 +24,7 @@ $tickets = $contr->get_tickets_by_user($_SESSION['user_id'], $_SESSION['role_nam
             </form>
             <div class="card w3-responsive">
                 <div class="w3-container card-head">
-                    <h2>My tickets</h2>
+                    <h3>My tickets</h3>
                 </div>
                 <div class="w3-container">
                     <p>

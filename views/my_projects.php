@@ -14,7 +14,7 @@ $projects = $contr->get_projects_by_user_id($_SESSION['user_id'], $_SESSION['rol
             </form>
             <div class="card w3-responsive">
                 <div class="w3-container card-head">
-                    <h2>My projects</h2>
+                    <h3>My projects</h3>
                 </div>
                 <div class="w3-container">
                     <p>

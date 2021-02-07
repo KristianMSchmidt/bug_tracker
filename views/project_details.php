@@ -11,30 +11,28 @@ $tickets = $contr->get_tickets_by_project($_POST['project_id']);
 
 <div class="main">
     <div class="project_details">
-        <div class="w3-container">
-            <div class="card">
-                <div class="w3-container card-head top" style="display:flex;">
-                    <h2>Project Details</h2>
-                    <a href="#" onclick="document.getElementById('go_to_edit_form').submit()"> Edit Project</a>
-                </div>
-                <div class="w3-container">
-                    <table class="table bordered">
-                        <tr>
-                            <th>Project ID</th>
-                            <th>Project Name</th>
-                            <th>Description</th>
-                        </tr>
-                        <tr>
-                            <td style="width:15%"><?php echo $_POST['project_id'] ?></td>
-                            <td style="width:35%"><?php echo $project['project_name'] ?></td>
-                            <td style="width:50%"><?php echo $project['project_description'] ?></td>
-                        </tr>
-                    </table>
-                </div>
+        <div class="card">
+            <div class="w3-container card-head top" style="display:flex;">
+                <h3>Project Details</h3>
+                <a href="#" onclick="document.getElementById('go_to_edit_form').submit()"> Edit Project</a>
+            </div>
+            <div class="w3-container">
+                <table class="table bordered">
+                    <tr>
+                        <th>Project ID</th>
+                        <th>Project Name</th>
+                        <th>Description</th>
+                    </tr>
+                    <tr>
+                        <td style="width:15%"><?php echo $_POST['project_id'] ?></td>
+                        <td style="width:35%"><?php echo $project['project_name'] ?></td>
+                        <td style="width:50%"><?php echo $project['project_description'] ?></td>
+                    </tr>
+                </table>
             </div>
         </div>
 
-        <div class="bottom w3-container">
+        <div class="bottom">
             <div class="bottom-left">
                 <form action="manage_project_users.php" method="post">
                     <input type="hidden" name="project_id" value="<?php echo $_POST['project_id']; ?>">
@@ -162,7 +160,7 @@ $tickets = $contr->get_tickets_by_project($_POST['project_id']);
                 <span onclick="document.getElementById('id02').style.display='none'" class="w3-button w3-display-topright">&times;</span>
                 <div class="w3-container">
                     <h5>
-                        You succesfully edited this project.
+                        You succesfully edited this project
                     </h5>
                 </div>
             </div>

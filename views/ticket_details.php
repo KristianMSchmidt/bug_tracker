@@ -22,7 +22,7 @@ $comments = $contr->get_ticket_comments($ticket_id);
     <div class="ticket_details">
         <div class="card">
             <div class="w3-container card-head top">
-                <h2>Ticket Details</h2>
+                <h3>Ticket Details</h3>
                 <a href="#" onclick="form_submitter('edit_ticket.php')"> Edit Ticket</a>
             </div>
             <div class="w3-container w3-responsive wrapper">

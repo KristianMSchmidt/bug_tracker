@@ -14,7 +14,7 @@ html {
       -ms-flex-direction: column;
           flex-direction: column;
   margin: 0;
-  height: 100%;
+  height: 105%;
 }
 
 /* Top nav bar */
@@ -153,7 +153,9 @@ html {
           flex: 30;
   /* how much of the flexbox space should the main area take, relative to sidebar */
   background-color: #f9f9f9;
-  padding: 1em;
+  padding-left: 1.5em;
+  padding-right: 1.5em;
+  padding-top: 1.2em;
 }
 
 /* Style of individual pages, i.e. the content of the main area */
@@ -170,7 +172,7 @@ html {
   margin-bottom: 1em;
 }
 
-.ticket_details .card-head.top h2 {
+.ticket_details .card-head.top h3 {
   margin-right: auto;
 }
 
@@ -239,7 +241,7 @@ html {
   margin-bottom: 1em;
 }
 
-.edit_ticket .card .card-head h2 {
+.edit_ticket .card .card-head h3 {
   margin-right: auto;
 }
 
@@ -331,16 +333,13 @@ html {
           justify-content: flex-end;
 }
 
-.project_details .card-head.top h2 {
+.project_details .card-head.top h3 {
   margin-right: auto;
 }
 
 .project_details .btn-primary {
   width: 15em;
-}
-
-.project_details .card {
-  margin-top: 1em;
+  margin-bottom: 1em;
 }
 
 .project_details .bottom {
@@ -354,15 +353,15 @@ html {
 }
 
 .project_details .bottom-left {
-  padding-top: 2em;
-  margin-right: 2em;
+  padding-top: 1em;
+  margin-right: 1em;
   -webkit-box-flex: 2;
       -ms-flex: 2;
           flex: 2;
 }
 
 .project_details .bottom-right {
-  padding-top: 2em;
+  padding-top: 1em;
   -webkit-box-flex: 3;
       -ms-flex: 3;
           flex: 3;
@@ -378,11 +377,6 @@ html {
   .project_details .bottom-left {
     margin-right: 0;
   }
-}
-
-.manage_project_users {
-  padding-left: 0.7em;
-  padding-right: 0.7em;
 }
 
 .manage_project_users .wrapper {
@@ -471,11 +465,6 @@ html {
   }
 }
 
-.manage_user_roles {
-  padding-left: 0.7em;
-  padding-right: 0.7em;
-}
-
 .manage_user_roles .wrapper {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -520,6 +509,14 @@ html {
   max-width: fit-content;
 }
 
+.manage_user_roles .orto-wrapper.left h3 {
+  margin-bottom: 0.2em;
+}
+
+.manage_user_roles .orto-wrapper.left .w3-container {
+  margin-bottom: 1.5em;
+}
+
 .manage_user_roles .orto-wrapper.right {
   margin-left: 0.5em;
   -webkit-box-flex: 1;
@@ -527,17 +524,9 @@ html {
           flex: 1;
 }
 
-.manage_user_roles h3 {
-  margin-top: 1em;
-  margin-bottom: 0.2em;
-}
-
 .manage_user_roles .btn-primary {
   width: 300px;
-  font-size: 15px;
-  height: 30px;
   margin-top: 0;
-  margin-bottom: 2.5em;
 }
 
 .manage_user_roles .scroll {
@@ -623,28 +612,11 @@ html {
   }
 }
 
-.my_projects,
-.my_tickets {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: stretch;
-      -ms-flex-align: stretch;
-          align-items: stretch;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-}
-
 .my_projects .wrapper,
 .my_tickets .wrapper {
-  width: 98%;
-}
-
-.my_projects .wrapper input,
-.my_tickets .wrapper input {
-  font-size: 14px;
-  /* makes button somewhat bigger */
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
 }
 
 .my_projects .wrapper .card,
@@ -652,6 +624,11 @@ html {
   margin-top: 1em;
   margin-bottom: 2em;
   padding-bottom: 2em;
+}
+
+.my_projects .wrapper .btn-primary,
+.my_tickets .wrapper .btn-primary {
+  margin-top: 0;
 }
 
 @media only screen and (max-width: 750px) {
@@ -720,7 +697,6 @@ html {
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
-  padding: 1em;
 }
 
 .dashboard .card {
@@ -841,6 +817,7 @@ html {
 }
 
 .btn-primary:focus {
+  background-color: #2a66c9;
   outline: none;
   border: 0;
 }
@@ -857,7 +834,7 @@ html {
 }
 
 .card .card-head {
-  background-color: #ffc107;
+  background-color: #ffeb3b;
 }
 
 .dropdown {

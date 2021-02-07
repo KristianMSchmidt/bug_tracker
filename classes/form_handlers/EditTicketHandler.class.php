@@ -28,7 +28,6 @@ class EditTicketHandler extends TicketValidator
         $old_ticket = $this->old_ticket;
         $new_ticket = $this->new_ticket;
         $ticket_id = $this->new_ticket['ticket_id'];
-        print_r($new_ticket);
 
         $changes = False;
 

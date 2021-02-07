@@ -52,7 +52,7 @@ include('shared/ui_frame.php');
     <div class="edit_ticket">
         <div class="card">
             <div class="w3-container card-head">
-                <h2>Edit Ticket</h2>
+                <h3>Edit Ticket</h3>
                 <a href="#" onclick="document.getElementById('details_form').submit()">Ticket Details</a>
             </div>
             <div class="card-content">

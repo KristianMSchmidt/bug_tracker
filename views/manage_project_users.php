@@ -41,7 +41,6 @@ if (isset($_POST['project_id'])) {
 
 <div class="main">
     <div class="manage_project_users">
-        <h1>Manage Project Users</h1>
         <div class="wrapper">
             <div class="orto-wrapper left top card non-table-card">
 

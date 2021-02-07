@@ -29,7 +29,7 @@ include('shared/ui_frame.php');
     <div class="edit_ticket">
         <div class="card">
             <div class="w3-container card-head">
-                <h2>Create Ticket</h2>
+                <h3>Create Ticket</h3>
             </div>
 
             <div class="card-content">

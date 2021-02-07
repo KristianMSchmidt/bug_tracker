@@ -14,7 +14,7 @@ include('shared/ui_frame.php');
     <div class="edit_ticket">
         <div class="card">
             <div class="w3-container card-head">
-                <h2>Create Project</h2>
+                <h3>Create Project</h3>
             </div>
             <div class="w3-container">
                 <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="POST">

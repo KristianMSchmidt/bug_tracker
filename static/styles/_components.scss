@@ -6,7 +6,7 @@
     border: 0;
     margin-top: 0.8em;
     &:focus {
-        // background-color: #2a66c9;
+        background-color: #2a66c9;
         outline: none;
         border: 0;
     }
@@ -20,7 +20,7 @@
     box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
     background-color: white;
     .card-head {
-        background-color: #ffc107;
+        background-color: #ffeb3b; // #ffc107;
     }
 }
 

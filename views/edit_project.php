@@ -28,7 +28,7 @@ include('shared/ui_frame.php');
     <div class="edit_ticket">
         <div class="card">
             <div class="w3-container card-head">
-                <h2>Edit Project</h2>
+                <h3>Edit Project</h3>
                 <a href="#" onclick="document.getElementById('details_form').submit()"> Project Details</a>
             </div>
 

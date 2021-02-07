@@ -28,7 +28,6 @@ echo "
 
 <div class="main">
     <div class="manage_user_roles">
-        <h1>Manage User Roles</h1>
         <div class="wrapper">
             <div class="orto-wrapper left card non-table-card">
                 <div class="w3-container">
