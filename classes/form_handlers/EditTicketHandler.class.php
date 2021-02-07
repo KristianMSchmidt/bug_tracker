@@ -1,5 +1,7 @@
 <?php
-class EditTicketHandler
+include_once('../classes/form_handlers/TicketAndProjectValidator.class.php');
+
+class EditTicketHandler extends TicketAndProjectValidator
 {
     private $old_ticket;
     private $new_ticket;

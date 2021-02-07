@@ -6,9 +6,9 @@ $contr = new Controller();
 $selected_project_name = $contr->get_project_name_by_id($_POST['project_id'])['project_name'];
 
 
-if ($_POST['requested_action'] == "create_ticket_attempt") {
+if (isset($_POST['create_ticket_attempt'])) {
     include('../classes/form_handlers/CreateTicketHandler.class.php');
-    $create_ticket_handler = new CreateTicketHandler($_POST);
+    $create_ticket_handler = new CreateTicketHandler(array('new_ticket' => $_POST));
     $errors = $create_ticket_handler->process_input();
 }
 $projects = $contr->get_projects();
@@ -115,15 +115,12 @@ include('shared/ui_frame.php');
                             <p class="error"><?php echo $errors['status'] ?? '' ?></p>
                             <label>Ticket Status</label>
 
-                            <!-- Requested action -->
-                            <input type="hidden" name="requested_action" value="create_ticket_attempt">
-
                             <!-- Submitter -->
                             <input type="hidden" name="submitter" value="<?php echo $_SESSION['user_id'] ?>">
 
                             <!-- Submit button -->
                             <div class="w3-container w3-center">
-                                <input type="submit" class="btn-primary" value="Create Ticket">
+                                <input type="submit" name="create_ticket_attempt" class="btn-primary" value="Create Ticket">
                             </div>
                         </div>
                     </div>
