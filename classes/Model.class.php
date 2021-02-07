@@ -253,7 +253,7 @@ class Model extends Dbh
 
     public function db_get_ticket_by_title($ticket_name, $project_id)
     {
-        $sql = "SELECT ticket_id 
+        $sql = "SELECT title 
                 FROM tickets 
                 WHERE title = ? AND project =?";
         $stmt = $this->connect()->prepare($sql);

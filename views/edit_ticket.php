@@ -3,14 +3,17 @@ include('../includes/login_check.inc.php');
 include('../includes/post_check.inc.php');
 include_once('../includes/auto_loader.inc.php');
 $contr = new Controller();
-$ticket = $contr->get_ticket_by_id($_POST['ticket_id']);
-
-if ($_POST['requested_action'] == "edit_ticket_attempt") {
+if (isset($_POST['edit_submit'])) {
+    $new_ticket = $_POST;
     include('../classes/form_handlers/EditTicketHandler.class.php');
-    $edit_ticket_handler = new EditTicketHandler($ticket, $_POST);
-    $errors = $edit_ticket_handler->process_input();
+    $old_ticket = $ticket;
+    /*$edit_ticket_handler = new EditTicketHandler(
+        array('new_ticket' => $new_ticket, 'old_ticket' => $old_ticket)
+    );
+    $errors = $edit_ticket_handler->process_input();*/
+} else {
+    $new_ticket = $contr->get_ticket_by_id($_POST['ticket_id']);
 }
-
 $projects = $contr->get_projects();
 $priorities = $contr->get_priorities();
 $types = $contr->get_ticket_types();
@@ -53,7 +56,7 @@ include('shared/ui_frame.php');
                     <div class="other-input">
                         <div class="left">
                             <!-- Project -->
-                            <select class="w3-select" name="project">
+                            <select class="w3-select" name="project_id">
                                 <option value="<?php echo $ticket['project'] ?>" selected><?php echo $ticket['project_name']; ?></option>
                                 <?php foreach ($projects as $project) : ?>
                                     <?php if ($project['project_id'] != $ticket['project']) : ?>
@@ -64,7 +67,7 @@ include('shared/ui_frame.php');
                             <label>Project</label>
 
                             <!-- Ticket Priority -->
-                            <select class="w3-select" name="priority">
+                            <select class="w3-select" name="priority_id">
                                 <option value="<?php echo $ticket['priority'] ?>" selected><?php echo $ticket['ticket_priority_name']; ?></option>
                                 <?php foreach ($priorities as $priority) : ?>
                                     <?php if ($priority['ticket_priority_id'] != $ticket['priority']) : ?>
@@ -75,7 +78,7 @@ include('shared/ui_frame.php');
                             <label>Ticket Priority</label>
 
                             <!-- Ticket Type -->
-                            <select class="w3-select" name="type">
+                            <select class="w3-select" name="type_id">
                                 <option value="<?php echo $ticket['type'] ?>" selected><?php echo $ticket['ticket_type_name'] ?></option>
                                 <?php foreach ($types as $type) : ?>
                                     <?php if ($type['ticket_type_id'] != $ticket['type']) : ?>
@@ -99,7 +102,7 @@ include('shared/ui_frame.php');
                             <label>Assigned Developer</label>
 
                             <!-- Ticket Status -->
-                            <select class="w3-select" name="status">
+                            <select class="w3-select" name="status_id">
                                 <option value="<?php echo $ticket['status'] ?>" selected><?php echo $ticket['ticket_status_name'] ?></option>
                                 <?php foreach ($status_types as $status_type) : ?>
                                     <?php if ($status_type['ticket_status_id'] != $ticket['status']) : ?>
@@ -109,18 +112,15 @@ include('shared/ui_frame.php');
                             </select>
                             <label>Ticket Status</label>
 
-                            <!-- Ticet Id -->
+                            <!-- Ticket Id -->
                             <input type="hidden" name="ticket_id" value="<?php echo $ticket['ticket_id']; ?>">
-
-                            <!-- Requested action -->
-                            <input type="hidden" name="requested_action" value="edit_ticket_attempt">
 
                             <p class="error w3-center">
                                 <?php echo $errors['no_changes_error'] ?? '' ?>
                             </p>
                             <!-- Submit button -->
                             <div class="w3-container w3-center">
-                                <input type="submit" class="btn-primary" value="Make Changes">
+                                <input type="submit" name="edit_submit" class="btn-primary" value="Make Changes">
                             </div>
                         </div>
                     </div>

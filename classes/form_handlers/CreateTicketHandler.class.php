@@ -41,8 +41,8 @@ class CreateTicketHandler extends TicketValidator
     private function create()
     {
         $this->contr->create_ticket($this->new_ticket);
-        $developer_enrolled_in_project = $this->contr->check_project_enrollment($this->new_ticket['project_id'], $this->new_ticket['developer_assigned']);
-        if (!$developer_enrolled_in_project) {
+        $developer_is_enrolled_in_project = $this->contr->check_project_enrollment($this->new_ticket['project_id'], $this->new_ticket['developer_assigned']);
+        if (!$developer_is_enrolled_in_project) {
             $this->contr->assign_to_project($this->new_ticket['developer_assigned'], $this->new_ticket['project_id']);
             $project_name = $this->contr->get_project_name_by_id($this->new_ticket['project_id'])['project_name'];
             $message = "enrolled you in the project '{$project_name}'";
