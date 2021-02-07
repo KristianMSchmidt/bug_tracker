@@ -13,7 +13,7 @@ $tickets = $contr->get_tickets_by_project($_POST['project_id']);
     <div class="project_details">
         <div class="w3-container">
             <div class="card">
-                <div class="w3-container card-head top">
+                <div class="w3-container card-head top" style="display:flex;">
                     <h2>Project Details</h2>
                     <a href="#" onclick="document.getElementById('go_to_edit_form').submit()"> Edit Project</a>
                 </div>
@@ -38,7 +38,7 @@ $tickets = $contr->get_tickets_by_project($_POST['project_id']);
             <div class="bottom-left">
                 <form action="manage_project_users.php" method="post">
                     <input type="hidden" name="project_id" value="<?php echo $_POST['project_id']; ?>">
-                    <input type="submit" value="MANAGE PROJECT USERS" class="btn-primary large" style="width: 16em;">
+                    <input type="submit" value="MANAGE PROJECT USERS" class="btn-primary">
                 </form>
                 <div class="card">
                     <div class="w3-container card-head">
@@ -76,14 +76,13 @@ $tickets = $contr->get_tickets_by_project($_POST['project_id']);
             <div class="bottom-right">
                 <form action="create_ticket.php" method="post">
                     <input type="hidden" name="project_id" value="<?php echo $_POST['project_id']; ?>">
-                    <input type="submit" name="go_to_edit_project" value=" CREATE NEW TICKET" class="btn-primary large">
+                    <input type="submit" name="go_to_edit_project" value="ADD TICKET TO PROJECT" class="btn-primary">
                 </form>
                 <div class="card">
                     <div class="w3-container card-head">
                         <h4>Tickets for this Project</h4>
                     </div>
                     <div class="w3-container">
-
                         <h5>Condensed Ticket Details</h5>
                     </div>
                     <div class="w3-container w3-responsive">

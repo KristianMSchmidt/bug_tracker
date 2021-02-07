@@ -3,8 +3,12 @@ include('../includes/login_check.inc.php');
 include('../includes/post_check.inc.php');
 include_once('../includes/auto_loader.inc.php');
 $contr = new Controller();
-$selected_project_name = $contr->get_project_name_by_id($_POST['project_id'])['project_name'];
 
+if (isset($_POST['project_id'])) {
+    $selected_project_name = $contr->get_project_name_by_id($_POST['project_id'])['project_name'];
+} else {
+    $_POST['project_id'] = -1;
+}
 
 if (isset($_POST['create_ticket_attempt'])) {
     include('../classes/form_handlers/CreateTicketHandler.class.php');

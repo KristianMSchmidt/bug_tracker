@@ -19,6 +19,9 @@ $tickets = $contr->get_tickets_by_user($_SESSION['user_id'], $_SESSION['role_nam
 <div class="main">
     <div class="my_tickets">
         <div class="wrapper">
+            <form action="create_ticket.php" method="POST">
+                <input type="submit" name="submit" value="CREATE NEW TICKET" class="btn-primary large">
+            </form>
             <div class="card w3-responsive">
                 <div class="w3-container card-head">
                     <h2>My tickets</h2>

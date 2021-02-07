@@ -85,7 +85,7 @@ class Model extends Dbh
                 projects.project_description
                 FROM projects";
 
-        if ($role_name != 'Admin') {
+        if ($role_name !== 'Admin') {
             $sql .= " WHERE projects.project_id IN 
                     (SELECT project_id 
                     FROM project_enrollments 
@@ -242,7 +242,7 @@ class Model extends Dbh
         return $project;
     }
 
-    public function db_get_project_by_title($project_name)
+    protected function db_get_project_by_title($project_name)
     {
         $sql = "SELECT project_name FROM projects WHERE project_name = ?";
         $stmt = $this->connect()->prepare($sql);
@@ -251,7 +251,7 @@ class Model extends Dbh
         return $result;
     }
 
-    public function db_get_ticket_by_title($ticket_name, $project_id)
+    protected function db_get_ticket_by_title($ticket_name, $project_id)
     {
         $sql = "SELECT title 
                 FROM tickets 
@@ -261,8 +261,6 @@ class Model extends Dbh
         $project = $stmt->fetch();
         return $project;
     }
-
-
 
     protected function db_get_project_users($project_id)
     //all users assigned to project

@@ -4,6 +4,7 @@ include('../includes/post_check.inc.php');
 
 /* 'old' refers to values currently stored in the database */
 /* 'new' is what is to be shown in form ' */
+
 if (isset($_POST['go_to_edit_project'])) {
     $new_project_name = $_POST['old_project_name'];
     $new_project_description = $_POST['old_project_description'];
@@ -28,6 +29,7 @@ include('shared/ui_frame.php');
         <div class="card">
             <div class="w3-container card-head">
                 <h2>Edit Project</h2>
+                <a href="#" onclick="document.getElementById('details_form').submit()"> Project Details</a>
             </div>
 
             <div class="card-content">
@@ -74,7 +76,9 @@ include('shared/ui_frame.php');
     </div>
 </div>
 
-
+<form action="project_details.php" method="post" id="details_form">
+    <input type="hidden" name="project_id" value="<?php echo $_POST['project_id'] ?>">
+</form>
 
 <?php include('shared/closing_tags.php') ?>
 

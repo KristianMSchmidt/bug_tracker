@@ -31,7 +31,12 @@ $new_ticket['ticket_status_name'] = $contr->get_ticket_status_name_by_id($new_ti
 $new_ticket['developer_name'] = $contr->get_user_by_id($new_ticket['developer_assigned'])['full_name'];
 
 if (isset($_POST['edit_submit'])) {
-    $edit_ticket_handler = new EditTicketHandler(array('new_ticket' => $new_ticket, 'old_ticket' => $old_ticket));
+    $edit_ticket_handler = new EditTicketHandler(
+        array(
+            'new_ticket' => $new_ticket,
+            'old_ticket' => $old_ticket
+        )
+    );
     $errors = $edit_ticket_handler->process_input();
 }
 
@@ -48,6 +53,7 @@ include('shared/ui_frame.php');
         <div class="card">
             <div class="w3-container card-head">
                 <h2>Edit Ticket</h2>
+                <a href="#" onclick="document.getElementById('details_form').submit()">Ticket Details</a>
             </div>
             <div class="card-content">
                 <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="POST" class="w3-container">
@@ -149,6 +155,9 @@ include('shared/ui_frame.php');
             </div>
         </div>
     </div>
+    <form action="ticket_details.php" method="post" id="details_form">
+        <input type="hidden" name="ticket_id" value="<?php echo $_POST['ticket_id'] ?>">
+    </form>
 </div>
 
 

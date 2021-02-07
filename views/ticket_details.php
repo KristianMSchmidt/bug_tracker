@@ -24,7 +24,6 @@ $comments = $contr->get_ticket_comments($ticket_id);
             <div class="w3-container card-head top">
                 <h2>Ticket Details</h2>
                 <a href="#" onclick="form_submitter('edit_ticket.php')"> Edit Ticket</a>
-                <a href="#" onclick="form_submitter('project_details.php')">Go to Project </a>
             </div>
             <div class="w3-container w3-responsive wrapper">
                 <table class="table w3-small bordered">
@@ -44,7 +43,7 @@ $comments = $contr->get_ticket_comments($ticket_id);
                     </tr>
                     <tr>
                         <td>Project</td>
-                        <td><?php echo $ticket['project_name'] ?></td>
+                        <td><a href='#' onclick="form_submitter('project_details.php')"><?php echo $ticket['project_name'] ?> </a></td>
                     </tr>
                     <tr>
                         <td>Assigned Developer</td>
@@ -55,7 +54,7 @@ $comments = $contr->get_ticket_comments($ticket_id);
                         <td><?php echo $ticket['submitter_name'] ?></td>
                     </tr>
                 </table>
-                <table class="table w3-small bordered">
+                <table class=" table w3-small bordered">
                     <tr>
                         <td style="width:30%">Priority</td>
                         <td><?php echo $ticket['ticket_priority_name'] ?></td>

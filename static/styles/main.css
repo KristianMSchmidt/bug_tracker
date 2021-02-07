@@ -157,6 +157,23 @@ html {
 }
 
 /* Style of individual pages, i.e. the content of the main area */
+.ticket_details .card-head.top {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+  margin-bottom: 1em;
+}
+
+.ticket_details .card-head.top h2 {
+  margin-right: auto;
+}
+
 .ticket_details .wrapper {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -167,15 +184,15 @@ html {
   -webkit-box-flex: 1;
       -ms-flex: 1;
           flex: 1;
-  margin-top: 2em;
+  margin-top: 1em;
 }
 
 .ticket_details .wrapper .card.left {
-  margin-right: 1em;
+  margin-right: 0.5em;
 }
 
 .ticket_details .wrapper .card.right {
-  margin-left: 1em;
+  margin-left: 0.5em;
 }
 
 .ticket_details .grid-container {
@@ -192,20 +209,6 @@ html {
   padding-bottom: 0;
 }
 
-.ticket_details .top {
-  padding-top: 0.5em;
-  padding-bottom: 0.5em;
-  margin-bottom: 1em;
-}
-
-.ticket_details .top h2 {
-  display: inline;
-}
-
-.ticket_details .top a {
-  margin-left: 2em;
-}
-
 @media only screen and (max-width: 1050px) {
   .ticket_details .wrapper {
     -webkit-box-orient: vertical;
@@ -216,8 +219,7 @@ html {
 }
 
 .edit_ticket .card {
-  margin: 1em;
-  padding-bottom: 2em;
+  padding-bottom: 1em;
 }
 
 .edit_ticket .card label {
@@ -225,7 +227,20 @@ html {
 }
 
 .edit_ticket .card .card-head {
-  margin-bottom: 2em;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+  margin-bottom: 1em;
+}
+
+.edit_ticket .card .card-head h2 {
+  margin-right: auto;
 }
 
 .edit_ticket .card .card-content .text-input {
@@ -260,8 +275,8 @@ html {
   -webkit-box-flex: 2;
       -ms-flex: 2;
           flex: 2;
-  padding-right: 3em;
-  padding-left: 3em;
+  padding-right: 1em;
+  padding-left: 1em;
 }
 
 .edit_ticket .card .card-content .right {
@@ -275,8 +290,8 @@ html {
   -webkit-box-flex: 3;
       -ms-flex: 3;
           flex: 3;
-  padding-right: 3em;
-  padding-left: 3em;
+  padding-right: 1em;
+  padding-left: 1em;
 }
 
 @media only screen and (max-width: 1050px) {
@@ -292,9 +307,6 @@ html {
         -ms-flex-direction: column;
             flex-direction: column;
   }
-  .edit_ticket .card .card-content .left {
-    padding-right: 3em;
-  }
 }
 
 .project_details {
@@ -307,18 +319,28 @@ html {
           flex-direction: column;
 }
 
+.project_details .card-head.top {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+}
+
+.project_details .card-head.top h2 {
+  margin-right: auto;
+}
+
+.project_details .btn-primary {
+  width: 15em;
+}
+
 .project_details .card {
   margin-top: 1em;
-}
-
-.project_details .top {
-  padding-top: 0.5em;
-  padding-bottom: 0.5em;
-}
-
-.project_details .top h2 {
-  display: inline;
-  padding-right: 1em;
 }
 
 .project_details .bottom {
@@ -640,9 +662,6 @@ html {
   .my_tickets .wrapper th {
     font-size: 12px;
   }
-  .my_tickets .w3-container.card-content {
-    padding: 0;
-  }
   .my_tickets .hide_if_needed {
     display: none;
   }
@@ -819,9 +838,6 @@ html {
   height: 2em;
   border: 0;
   margin-top: 0.8em;
-  /*&:hover {
-      background-color: #2a66c9;
-    }*/
 }
 
 .btn-primary:focus {
