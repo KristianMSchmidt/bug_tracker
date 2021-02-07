@@ -93,8 +93,6 @@ $projects = $contr->get_projects_by_user_id($_SESSION['user_id'], $_SESSION['rol
 
 <form action="project_details.php" method="post" id="form">
     <input type="hidden" name="project_id" id="project_id" value="">
-    <input type="hidden" name="requested_action">
-
 </form>
 
 <script>

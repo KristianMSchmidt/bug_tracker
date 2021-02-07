@@ -85,7 +85,6 @@ $tickets = $contr->get_tickets_by_user($_SESSION['user_id'], $_SESSION['role_nam
 
 <form action="ticket_details.php" method="post" id="form">
     <input type="hidden" name="ticket_id" id="ticket_id" value="">
-    <input type="hidden" name="requested_action" value="">
 </form>
 
 

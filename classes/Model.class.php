@@ -327,12 +327,12 @@ class Model extends Dbh
     {
         $sql = "SELECT
         tickets.ticket_id,
-        tickets.type,
-        tickets.status,
-        tickets.priority,
+        tickets.type as type_id,
+        tickets.status as status_id,
+        tickets.priority as priority_id,
         tickets.developer_assigned,
         tickets.submitter,
-        tickets.project,
+        tickets.project as project_id,
         tickets.title,
         tickets.description,
         tickets.created_at,
@@ -415,7 +415,7 @@ class Model extends Dbh
         return $status_types;
     }
 
-    protected function db_set_ticket($data)
+    protected function db_update_ticket($data)
     {
 
         $sql = "UPDATE tickets 
@@ -433,11 +433,11 @@ class Model extends Dbh
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute([
             $data['title'],
-            $data['project'],
+            $data['project_id'],
             $data['developer_assigned'],
-            $data['priority'],
-            $data['status'],
-            $data['type'],
+            $data['priority_id'],
+            $data['status_id'],
+            $data['type_id'],
             $data['description'],
             $data['ticket_id']
         ]);

@@ -42,7 +42,7 @@ class EditProjectHandler extends ProjectValidator
         echo "              
             <form action='project_details.php' method='post' id='form'>
                 <input type='hidden' name='project_id' value='{$this->project_id}'>
-                <input type='hidden' name='requested_action' value='show_project_edited_succes_message'>
+                <input type='hidden' name='show_project_edited_succes_message'>
             </form>
             <script>
                 document.getElementById('form').submit();

@@ -1,19 +1,40 @@
 <?php
 include('../includes/login_check.inc.php');
 include('../includes/post_check.inc.php');
+
+/* 'old' refers to values currently stored in the database */
+/* 'new' is what is to be shown in form ' */
+
 include_once('../includes/auto_loader.inc.php');
 $contr = new Controller();
-if (isset($_POST['edit_submit'])) {
-    $new_ticket = $_POST;
+$old_ticket = $contr->get_ticket_by_id($_POST['ticket_id']);
+
+if (isset($_POST['go_to_edit_ticket'])) {
+    $new_ticket = $old_ticket;
+} else if (isset($_POST['edit_submit'])) {
     include('../classes/form_handlers/EditTicketHandler.class.php');
-    $old_ticket = $ticket;
-    /*$edit_ticket_handler = new EditTicketHandler(
-        array('new_ticket' => $new_ticket, 'old_ticket' => $old_ticket)
+    $new_ticket = array(
+        'ticket_id' => $_POST['ticket_id'],
+        'title' => $_POST['title'],
+        'description' => $_POST['description'],
+        'type_id' => $_POST['type_id'],
+        'status_id' => $_POST['status_id'],
+        'priority_id' => $_POST['priority_id'],
+        'project_id' => $_POST['project_id'],
+        'developer_assigned' => $_POST['developer_assigned']
     );
-    $errors = $edit_ticket_handler->process_input();*/
-} else {
-    $new_ticket = $contr->get_ticket_by_id($_POST['ticket_id']);
 }
+$new_ticket['project_name'] = $contr->get_project_name_by_id($new_ticket['project_id'])['project_name'];
+$new_ticket['ticket_priority_name'] = $contr->get_priority_name_by_id($new_ticket['priority_id'])['ticket_priority_name'];
+$new_ticket['ticket_type_name'] = $contr->get_ticket_type_name_by_id($new_ticket['type_id'])['ticket_type_name'];
+$new_ticket['ticket_status_name'] = $contr->get_ticket_status_name_by_id($new_ticket['status_id'])['ticket_status_name'];
+$new_ticket['developer_name'] = $contr->get_user_by_id($new_ticket['developer_assigned'])['full_name'];
+
+if (isset($_POST['edit_submit'])) {
+    $edit_ticket_handler = new EditTicketHandler(array('new_ticket' => $new_ticket, 'old_ticket' => $old_ticket));
+    $errors = $edit_ticket_handler->process_input();
+}
+
 $projects = $contr->get_projects();
 $priorities = $contr->get_priorities();
 $types = $contr->get_ticket_types();
@@ -22,7 +43,6 @@ $developers = $contr->get_users_by_role_id(3);
 
 include('shared/ui_frame.php');
 ?>
-
 <div class="main">
     <div class="edit_ticket">
         <div class="card">
@@ -35,7 +55,7 @@ include('shared/ui_frame.php');
                         <div class="left">
                             <!-- Title -->
                             <p>
-                                <input type="text" name="title" class="w3-input title" maxlength="30" value="<?php echo $ticket['title'] ?? '' ?>">
+                                <input type="text" name="title" class="w3-input title" maxlength="30" value="<?php echo $new_ticket['title'] ?? '' ?>">
                                 <label>Ticket Title</label><br>
                                 <span class="error">
                                     <?php echo $errors['title'] ?? '' ?>
@@ -45,7 +65,7 @@ include('shared/ui_frame.php');
                         <div class="right">
                             <!-- Description -->
                             <p>
-                                <input type="text" name="description" class="w3-input" maxlength="200" value="<?php echo $ticket['description'] ?? '' ?>">
+                                <input type="text" name="description" class="w3-input" maxlength="200" value="<?php echo $new_ticket['description'] ?? '' ?>">
                                 <label>Description</label><br>
                                 <span class="error">
                                     <?php echo $errors['description'] ?? '' ?>
@@ -57,9 +77,9 @@ include('shared/ui_frame.php');
                         <div class="left">
                             <!-- Project -->
                             <select class="w3-select" name="project_id">
-                                <option value="<?php echo $ticket['project'] ?>" selected><?php echo $ticket['project_name']; ?></option>
+                                <option value="<?php echo $new_ticket['project_id'] ?>" selected><?php echo $new_ticket['project_name']; ?></option>
                                 <?php foreach ($projects as $project) : ?>
-                                    <?php if ($project['project_id'] != $ticket['project']) : ?>
+                                    <?php if ($project['project_id'] != $new_ticket['project_id']) : ?>
                                         <option value="<?php echo $project['project_id'] ?>"><?php echo $project['project_name'] ?></option>
                                     <?php endif ?>
                                 <?php endforeach; ?>
@@ -68,9 +88,9 @@ include('shared/ui_frame.php');
 
                             <!-- Ticket Priority -->
                             <select class="w3-select" name="priority_id">
-                                <option value="<?php echo $ticket['priority'] ?>" selected><?php echo $ticket['ticket_priority_name']; ?></option>
+                                <option value="<?php echo $new_ticket['priority_id'] ?>" selected><?php echo $new_ticket['ticket_priority_name']; ?></option>
                                 <?php foreach ($priorities as $priority) : ?>
-                                    <?php if ($priority['ticket_priority_id'] != $ticket['priority']) : ?>
+                                    <?php if ($priority['ticket_priority_id'] !== $new_ticket['priority_id']) : ?>
                                         <option value="<?php echo $priority['ticket_priority_id'] ?>"><?php echo $priority['ticket_priority_name'] ?></option>
                                     <?php endif ?>
                                 <?php endforeach; ?>
@@ -79,9 +99,9 @@ include('shared/ui_frame.php');
 
                             <!-- Ticket Type -->
                             <select class="w3-select" name="type_id">
-                                <option value="<?php echo $ticket['type'] ?>" selected><?php echo $ticket['ticket_type_name'] ?></option>
+                                <option value="<?php echo $new_ticket['type_id'] ?>" selected><?php echo $new_ticket['ticket_type_name'] ?></option>
                                 <?php foreach ($types as $type) : ?>
-                                    <?php if ($type['ticket_type_id'] != $ticket['type']) : ?>
+                                    <?php if ($type['ticket_type_id'] !== $new_ticket['type_id']) : ?>
                                         <option value="<?php echo $type['ticket_type_id'] ?>"><?php echo $type['ticket_type_name'] ?></option>
                                     <?php endif ?>
                                 <?php endforeach; ?>
@@ -92,9 +112,9 @@ include('shared/ui_frame.php');
 
                             <!-- Developer Assigned -->
                             <select class="w3-select" name="developer_assigned">
-                                <option value="<?php echo $ticket['developer_assigned'] ?>" selected><?php echo $ticket['developer_name'] ?></option>
+                                <option value="<?php echo $new_ticket['developer_assigned'] ?>" selected><?php echo $new_ticket['developer_name'] ?></option>
                                 <?php foreach ($developers as $developer) : ?>
-                                    <?php if ($developer['user_id'] != $ticket['developer_assigned']) : ?>
+                                    <?php if ($developer['user_id'] !== $new_ticket['developer_assigned']) : ?>
                                         <option value="<?php echo $developer['user_id'] ?>"><?php echo $developer['full_name'] ?></option>
                                     <?php endif ?>
                                 <?php endforeach; ?>
@@ -103,9 +123,9 @@ include('shared/ui_frame.php');
 
                             <!-- Ticket Status -->
                             <select class="w3-select" name="status_id">
-                                <option value="<?php echo $ticket['status'] ?>" selected><?php echo $ticket['ticket_status_name'] ?></option>
+                                <option value="<?php echo $new_ticket['status_id'] ?>" selected><?php echo $new_ticket['ticket_status_name'] ?></option>
                                 <?php foreach ($status_types as $status_type) : ?>
-                                    <?php if ($status_type['ticket_status_id'] != $ticket['status']) : ?>
+                                    <?php if ($status_type['ticket_status_id'] !== $new_ticket['status_id']) : ?>
                                         <option value="<?php echo $status_type['ticket_status_id'] ?>"><?php echo $status_type['ticket_status_name'] ?></option>
                                     <?php endif ?>
                                 <?php endforeach; ?>
@@ -113,8 +133,9 @@ include('shared/ui_frame.php');
                             <label>Ticket Status</label>
 
                             <!-- Ticket Id -->
-                            <input type="hidden" name="ticket_id" value="<?php echo $ticket['ticket_id']; ?>">
+                            <input type="hidden" name="ticket_id" value="<?php echo $new_ticket['ticket_id']; ?>">
 
+                            <!-- Error Message -->
                             <p class="error w3-center">
                                 <?php echo $errors['no_changes_error'] ?? '' ?>
                             </p>

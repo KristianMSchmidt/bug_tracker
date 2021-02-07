@@ -57,7 +57,7 @@ class CreateTicketHandler extends TicketValidator
         echo "              
             <form action='project_details.php' method='post' id='form'>
                 <input type='hidden' name='project_id' value='{$this->new_ticket['project_id']}'>
-                <input type='hidden' name='requested_action' value='show_created_ticket_succes_message'>
+                <input type='hidden' name='show_created_ticket_succes_message'>
                 <input type='hidden' name='ticket_title' value='{$this->new_ticket['title']}'>
                 <input type='hidden' name='ticket_description' value='{$this->new_ticket['description']}'>
             </form>

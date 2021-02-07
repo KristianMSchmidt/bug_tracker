@@ -16,6 +16,13 @@ class TicketValidator extends TicketAndProjectValidator
         }
     }
 
+    protected function validate_title_and_description()
+    {
+        $this->validate_title_length($this->new_ticket['title'], 'Ticket');
+        $this->validate_description($this->new_ticket['description'], 'Ticket');
+    }
+
+
     protected function validate_title_unique($type)
     {
         $title = trim($this->new_ticket['title']);
@@ -28,11 +35,5 @@ class TicketValidator extends TicketAndProjectValidator
                 $this->add_error('title', 'The selected project already has a ticket by that name');
             }
         }
-    }
-
-    protected function validate_title_and_description()
-    {
-        $this->validate_title_length($this->new_ticket['title'], 'Ticket');
-        $this->validate_description($this->new_ticket['description'], 'Ticket');
     }
 }

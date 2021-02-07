@@ -169,9 +169,9 @@ class Controller extends Model
         return $ticket_status_types;
     }
 
-    public function set_ticket($data)
+    public function update_ticket($data)
     {
-        $this->db_set_ticket($data);
+        $this->db_update_ticket($data);
     }
 
 

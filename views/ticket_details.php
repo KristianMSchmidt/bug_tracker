@@ -91,7 +91,6 @@ $comments = $contr->get_ticket_comments($ticket_id);
                         <form action="" method="post">
                             <input style="width:80%" type="text" name="new_comment" maxlength="200" placeholder="Write a comment on the ticket">
                             <input type="hidden" name="ticket_id" value="<?php echo $ticket_id ?>">
-                            <input type="hidden" name="requested_action">
                             <input type="submit" class="btn-primary" style="width:5em;" value="ADD">
                         </form>
                     </div>
@@ -182,17 +181,16 @@ $comments = $contr->get_ticket_comments($ticket_id);
 
 <form action="" method="post" id="form">
     <input type="hidden" name="ticket_id" value="<?php echo $ticket_id ?>">
-    <input type="hidden" name="project_id" value="<?php echo $ticket['project'] ?>">
-    <input type="hidden" name="requested_action">
+    <input type="hidden" name="project_id" value="<?php echo $ticket['project_id'] ?>">
+    <input type="hidden" name="go_to_edit_ticket" value="submit">
 </form>
+
 <script>
     function form_submitter(action) {
         document.getElementById('form').action = action;
         document.getElementById('form').submit();
     }
 </script>
-
-
 
 
 <?php include('shared/closing_tags.php') ?>

@@ -100,7 +100,6 @@ if (isset($_POST['project_id'])) {
 
                     <form action='project_details.php' method='post' id="project_details_form">
                         <input type="hidden" name="project_id" value="<?php echo $_POST['project_id'] ?? '' ?>">
-                        <input type="hidden" name="requested_action">
                     </form>
                 </div>
             </div>

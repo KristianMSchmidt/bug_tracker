@@ -124,7 +124,7 @@ $tickets = $contr->get_tickets_by_project($_POST['project_id']);
 </div>
 
 <!-- Model response message for created ticket -->
-<?php if ($_POST['requested_action'] == 'show_created_ticket_succes_message') : ?>
+<?php if (isset($_POST['show_created_ticket_succes_message'])) : ?>
     <div id="id01" class="w3-modal">
         <div class="w3-modal-content">
             <div class="w3-container">
@@ -156,7 +156,7 @@ $tickets = $contr->get_tickets_by_project($_POST['project_id']);
 
 
 <!-- Model response message for created ticket -->
-<?php if ($_POST['requested_action'] == 'show_project_edited_succes_message') : ?>
+<?php if (isset($_POST['show_project_edited_succes_message'])) : ?>
     <div id="id02" class="w3-modal">
         <div class="w3-modal-content">
             <div class="w3-container">
@@ -176,7 +176,6 @@ $tickets = $contr->get_tickets_by_project($_POST['project_id']);
 
 <form action="ticket_details.php" method="post" id="form">
     <input type="hidden" name="ticket_id" id="ticket_id" value="">
-    <input type="hidden" name="requested_action" value="">
 </form>
 
 
