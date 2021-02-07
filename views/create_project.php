@@ -4,7 +4,7 @@ include('../includes/post_check.inc.php');
 
 if (isset($_POST['create_project_attempt'])) {
     include('../classes/form_handlers/CreateProjectHandler.class.php');
-    $create_project_handler = new CreateProjectHandler($_POST);
+    $create_project_handler = new CreateProjectHandler(array('new_project' => $_POST));
     $errors = $create_project_handler->process_input();
 }
 include('shared/ui_frame.php');

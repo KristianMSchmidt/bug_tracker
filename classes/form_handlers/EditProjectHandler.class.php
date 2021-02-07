@@ -1,85 +1,40 @@
 <?php
 include_once('../classes/form_handlers/ProjectValidator.class.php');
 
-class EditProjectHandler
+class EditProjectHandler extends ProjectValidator
 {
-    private $old_project_name;
-    private $old_project_description;
-    private $new_project_name;
-    private $new_project_description;
-    private $project_id;
-    private $errors = [];
-
-    public function __construct($post_data)
-    {
-        $this->old_project_name = trim($post_data['old_project_name']);
-        $this->old_project_descrition = trim($post_data['old_project_description']);
-        $this->new_project_name = trim($post_data['new_project_name']);
-        $this->new_project_description = trim($post_data['new_project_description']);
-        $this->project_id = $post_data['project_id'];
-    }
-
     public function process_input()
     {
-        $this->validate_title();
-        $this->validate_description();
+        $this->validate_title_and_description('edit');
 
         if (!$this->errors) {
-            $this->attempt_edit();
+            $this->validate_changes_made();
         }
-
         if (!$this->errors) {
+            $this->edit();
             $this->redirect();
         }
-
         return $this->errors;
     }
 
-    private function validate_title()
-    {
-
-        $val = $this->new_project_name;
-
-        if (empty($val)) {
-            $this->add_error('title', 'Project needs a title');
-        } else {
-            if (!(strlen($val) < 31 && strlen($val) > 5)) {
-                $this->add_error('title', 'Title must be 6-30 chars');
-            }
-        }
-    }
-
-    private function validate_description()
-    {
-
-        $val = $this->new_project_description;
-
-        if (empty($val)) {
-            $this->add_error('description', 'Project needs a description');
-        } else {
-            if (!(strlen($val) < 201 && strlen($val) > 5)) {
-                $this->add_error('description', 'Description must be 6-200 chars');
-            }
-        }
-    }
-
-    private function attempt_edit()
+    private function validate_changes_made()
     {
         $changes = False;
-        $contr = new Controller();
 
-        if ($this->old_project_name != $this->new_project_name) {
+        if ($this->old_project['title'] !== $this->new_project['title']) {
             $changes = True;
         }
-        if ($this->old_project_description != $this->new_project_description) {
+        if ($this->old_project['description'] !== $this->new_project['description']) {
             $changes = True;
         }
         if (!$changes) {
-            $this->add_error('no_changes_error', 'No changes made to ticket');
-        } else {
-            $contr = new Controller();
-            $contr->set_project($this->new_project_name, $this->new_project_description, $this->project_id);
+            $this->add_error('no_changes_error', 'No changes made to project');
         }
+    }
+
+    private function edit()
+    {
+        $this->contr->set_project($this->new_project['title'], $this->new_project['description'], $this->project_id);
     }
 
     private function redirect()
@@ -92,10 +47,5 @@ class EditProjectHandler
             <script>
                 document.getElementById('form').submit();
             </script>";
-    }
-
-    private function add_error($key, $val)
-    {
-        $this->errors[$key] = $val;
     }
 }

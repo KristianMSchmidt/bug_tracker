@@ -76,8 +76,7 @@ $tickets = $contr->get_tickets_by_project($_POST['project_id']);
             <div class="bottom-right">
                 <form action="create_ticket.php" method="post">
                     <input type="hidden" name="project_id" value="<?php echo $_POST['project_id']; ?>">
-                    <input type="hidden" name="requested_action" value="go_to_create_ticket_page">
-                    <input type="submit" value="CREATE NEW TICKET" class="btn-primary large">
+                    <input type="submit" name="go_to_edit_project" value=" CREATE NEW TICKET" class="btn-primary large">
                 </form>
                 <div class="card">
                     <div class="w3-container card-head">
@@ -190,10 +189,10 @@ $tickets = $contr->get_tickets_by_project($_POST['project_id']);
 
 
 <form action="edit_project.php" method="post" id="go_to_edit_form">
-    <input type="hidden" name="project_id" value=<?php echo $project['project_id'] ?>>
-    <input type="hidden" name="old_project_name" value=<?php echo $project['project_name'] ?>>
-    <input type="hidden" name="old_project_description" value=<?php echo $project['project_description'] ?>>
-    <input type="hidden" name="go_to_edit_project" value="">
+    <input type="hidden" name="project_id" value="<?php echo $project['project_id'] ?>">
+    <input type="hidden" name="old_project_name" value="<?php echo $project['project_name'] ?>">
+    <input type="hidden" name="old_project_description" value="<?php echo $project['project_description'] ?>">
+    <input type="hidden" name="go_to_edit_project" value="submit">
 </form>
 
 <?php include('shared/closing_tags.php') ?>

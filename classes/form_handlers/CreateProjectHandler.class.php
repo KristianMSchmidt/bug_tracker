@@ -5,11 +5,7 @@ class CreateProjectHandler extends ProjectValidator
 {
     public function process_input()
     {
-        $this->validate_title_length($this->post_data['title'], 'Project');
-        if (!$this->errors) {
-            $this->validate_title_unique();
-        }
-        $this->validate_description($this->post_data['description'], 'Project');
+        $this->validate_title_and_description('create');
 
         if (!$this->errors) {
             $this->create();
@@ -21,15 +17,15 @@ class CreateProjectHandler extends ProjectValidator
 
     private function create()
     {
-        $this->contr->create_project($this->post_data);
+        $this->contr->create_project($this->new_project);
     }
 
     private function redirect()
     {
         echo "              
             <form action='my_projects.php' method='post' id='form'>
-                <input type='hidden' name='project_title' value='{$this->post_data['title']}'>
-                <input type='hidden' name='project_description' value='{$this->post_data['description']}'>
+                <input type='hidden' name='project_title' value='{$this->new_project['title']}'>
+                <input type='hidden' name='project_description' value='{$this->new_project['description']}'>
                 <input type='hidden' name='show_created_project_succes_message'>
             </form>
             <script>

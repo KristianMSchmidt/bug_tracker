@@ -244,11 +244,11 @@ class Model extends Dbh
 
     public function db_get_project_by_title($project_name)
     {
-        $sql = "SELECT project_id FROM projects WHERE project_name = ?";
+        $sql = "SELECT project_name FROM projects WHERE project_name = ?";
         $stmt = $this->connect()->prepare($sql);
-        $stmt->execute([$project_name]);
-        $project = $stmt->fetch();
-        return $project;
+        $stmt->execute([trim($project_name)]);
+        $result = $stmt->fetch();
+        return $result;
     }
 
     public function db_get_ticket_by_title($ticket_name, $project_id)

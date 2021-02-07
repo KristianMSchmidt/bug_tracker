@@ -10,7 +10,11 @@ if (isset($_POST['go_to_edit_project'])) {
     include('../classes/form_handlers/EditProjectHandler.class.php');
     $new_project_name = $_POST['new_project_name'];
     $new_project_description = $_POST['new_project_description'];
-    $edit_project_handler = new EditProjectHandler($_POST);
+    $new_project = array('title' => $new_project_name, 'description' => $new_project_description);
+    $old_project = array('title' => $_POST['old_project_name'], 'description' => $_POST['old_project_description']);
+    $edit_project_handler = new EditProjectHandler(
+        array('new_project' => $new_project, 'old_project' => $old_project, 'project_id' => $_POST['project_id'])
+    );
     $errors = $edit_project_handler->process_input();
 }
 
@@ -31,7 +35,7 @@ include('shared/ui_frame.php');
                     <div class="left">
                         <p>
                             <input type="text" name="new_project_name" maxlength="30" class="w3-input title" value="<?php echo $new_project_name ?>">
-                            <label>Project Title</label><br>
+                            <label>Project Name</label><br>
                             <span class="error">
                                 <?php echo $errors['title'] ?? '' ?>
                             </span>
@@ -50,8 +54,8 @@ include('shared/ui_frame.php');
 
                     <!-- Hidden input -->
                     <input type="hidden" name="project_id" value="<?php echo $_POST['project_id'] ?>">
-                    <input type="hidden" name="old_project_name" value=<?php echo $_POST['old_project_name'] ?>>
-                    <input type="hidden" name="old_project_description" value=<?php echo $_POST['old_project_description'] ?>>
+                    <input type="hidden" name="old_project_name" value="<?php echo $_POST['old_project_name'] ?>">
+                    <input type="hidden" name="old_project_description" value="<?php echo $_POST['old_project_description'] ?>">
 
                     <p class="error w3-center">
                         <?php echo $errors['no_changes_error'] ?? '' ?>

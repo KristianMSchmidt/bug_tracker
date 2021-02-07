@@ -57,7 +57,7 @@ include('shared/ui_frame.php');
                                 <option value="<?php echo $ticket['project'] ?>" selected><?php echo $ticket['project_name']; ?></option>
                                 <?php foreach ($projects as $project) : ?>
                                     <?php if ($project['project_id'] != $ticket['project']) : ?>
-                                        <option value=<?php echo $project['project_id'] ?>><?php echo $project['project_name'] ?></option>
+                                        <option value="<?php echo $project['project_id'] ?>"><?php echo $project['project_name'] ?></option>
                                     <?php endif ?>
                                 <?php endforeach; ?>
                             </select>
@@ -65,10 +65,10 @@ include('shared/ui_frame.php');
 
                             <!-- Ticket Priority -->
                             <select class="w3-select" name="priority">
-                                <option value=<?php echo $ticket['priority'] ?> selected><?php echo $ticket['ticket_priority_name']; ?></option>
+                                <option value="<?php echo $ticket['priority'] ?>" selected><?php echo $ticket['ticket_priority_name']; ?></option>
                                 <?php foreach ($priorities as $priority) : ?>
                                     <?php if ($priority['ticket_priority_id'] != $ticket['priority']) : ?>
-                                        <option value=<?php echo $priority['ticket_priority_id'] ?>><?php echo $priority['ticket_priority_name'] ?></option>
+                                        <option value="<?php echo $priority['ticket_priority_id'] ?>"><?php echo $priority['ticket_priority_name'] ?></option>
                                     <?php endif ?>
                                 <?php endforeach; ?>
                             </select>
@@ -76,10 +76,10 @@ include('shared/ui_frame.php');
 
                             <!-- Ticket Type -->
                             <select class="w3-select" name="type">
-                                <option value=<?php echo $ticket['type'] ?> selected><?php echo $ticket['ticket_type_name'] ?></option>
+                                <option value="<?php echo $ticket['type'] ?>" selected><?php echo $ticket['ticket_type_name'] ?></option>
                                 <?php foreach ($types as $type) : ?>
                                     <?php if ($type['ticket_type_id'] != $ticket['type']) : ?>
-                                        <option value=<?php echo $type['ticket_type_id'] ?>><?php echo $type['ticket_type_name'] ?></option>
+                                        <option value="<?php echo $type['ticket_type_id'] ?>"><?php echo $type['ticket_type_name'] ?></option>
                                     <?php endif ?>
                                 <?php endforeach; ?>
                             </select>
@@ -89,10 +89,10 @@ include('shared/ui_frame.php');
 
                             <!-- Developer Assigned -->
                             <select class="w3-select" name="developer_assigned">
-                                <option value=<?php echo $ticket['developer_assigned'] ?> selected><?php echo $ticket['developer_name'] ?></option>
+                                <option value="<?php echo $ticket['developer_assigned'] ?>" selected><?php echo $ticket['developer_name'] ?></option>
                                 <?php foreach ($developers as $developer) : ?>
                                     <?php if ($developer['user_id'] != $ticket['developer_assigned']) : ?>
-                                        <option value=<?php echo $developer['user_id'] ?>><?php echo $developer['full_name'] ?></option>
+                                        <option value="<?php echo $developer['user_id'] ?>"><?php echo $developer['full_name'] ?></option>
                                     <?php endif ?>
                                 <?php endforeach; ?>
                             </select>
@@ -100,10 +100,10 @@ include('shared/ui_frame.php');
 
                             <!-- Ticket Status -->
                             <select class="w3-select" name="status">
-                                <option value=<?php echo $ticket['status'] ?> selected><?php echo $ticket['ticket_status_name'] ?></option>
+                                <option value="<?php echo $ticket['status'] ?>" selected><?php echo $ticket['ticket_status_name'] ?></option>
                                 <?php foreach ($status_types as $status_type) : ?>
                                     <?php if ($status_type['ticket_status_id'] != $ticket['status']) : ?>
-                                        <option value=<?php echo $status_type['ticket_status_id'] ?>><?php echo $status_type['ticket_status_name'] ?></option>
+                                        <option value="<?php echo $status_type['ticket_status_id'] ?>"><?php echo $status_type['ticket_status_name'] ?></option>
                                     <?php endif ?>
                                 <?php endforeach; ?>
                             </select>

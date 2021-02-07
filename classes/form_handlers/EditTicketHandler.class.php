@@ -70,9 +70,6 @@ class EditTicketHandler
         $new_ticket['ticket_status_name'] = $contr->get_ticket_status_name_by_id($new_ticket['status'])['ticket_status_name'];
         $new_ticket['developer_name'] = $contr->get_user_by_id($new_ticket['developer_assigned'])['full_name'];
 
-        //print_r($new_ticket['ticket_status_name']);
-        //  exit();
-
         if ($old_ticket['title'] != $new_ticket['title']) {
             $contr->add_to_ticket_history($ticket_id, "TitleChange", $old_ticket['title'], $new_ticket['title']);
             $changes = True;
