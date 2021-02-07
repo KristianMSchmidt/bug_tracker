@@ -4,6 +4,7 @@ class CreateProjectHandler
 {
     private $post_data;
     private $errors = [];
+    private $contr;
 
     public function __construct($post_data)
     {
@@ -25,17 +26,23 @@ class CreateProjectHandler
 
     private function validate_title()
     {
-
         $val = trim($this->post_data['title']);
 
         if (empty($val)) {
             $this->add_error('title', 'Ticket needs a title');
+        } else if (!(strlen($val) < 31 && strlen($val)) > 5) {
+            $this->add_error('title', 'Title must be 6-30 chars');
         } else {
-            if (!(strlen($val) < 31 && strlen($val) > 5)) {
-                $this->add_error('title', 'Title must be 6-30 chars');
+            include_once('../includes/auto_loader.inc.php');
+
+            $contr = new Controller();
+            $this->contr = $contr;
+            if ($contr->get_project_by_title($val)) {
+                $this->add_error('title', 'There is already a project by that name');
             }
         }
     }
+
 
     private function validate_description()
     {
@@ -44,20 +51,14 @@ class CreateProjectHandler
 
         if (empty($val)) {
             $this->add_error('description', 'Ticket needs a description');
-        } else {
-            if (!(strlen($val) < 201 && strlen($val) > 5)) {
-                $this->add_error('description', 'Description must be 6-200 chars');
-            }
+        } else if (!(strlen($val) < 201 && strlen($val) > 5)) {
+            $this->add_error('description', 'Description must be 6-200 chars');
         }
     }
 
     private function create()
     {
-        include_once('../includes/auto_loader.inc.php');
-        $contr = new Controller();
-        $contr->create_project($this->post_data);
-        //notify assigned developer
-
+        $this->contr->create_project($this->post_data);
     }
 
     private function redirect()

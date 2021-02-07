@@ -112,6 +112,19 @@ class Controller extends Model
         $results = $this->db_get_project_users($project_id);
         return $results;
     }
+    public function get_project_by_title($project_name)
+    {
+        $results = $this->db_get_project_by_title($project_name);
+        return $results;
+    }
+
+    public function get_ticket_by_title($ticket_name, $project_id)
+    {
+        $results = $this->db_get_ticket_by_title($ticket_name, $project_id);
+        return $results;
+    }
+
+
     public function get_users_not_enrolled_in_project($project_id)
     {
         $results = $this->db_get_users_not_enrolled_in_project($project_id);

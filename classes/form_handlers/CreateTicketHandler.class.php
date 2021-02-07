@@ -3,6 +3,7 @@ class CreateTicketHandler
 {
     private $post_data;
     private $errors = [];
+    private $contr;
 
     public function __construct($post_data)
     {
@@ -30,9 +31,14 @@ class CreateTicketHandler
 
         if (empty($val)) {
             $this->add_error('title', 'Ticket needs a title');
+        } else if (!(strlen($val) < 31 && strlen($val) > 5)) {
+            $this->add_error('title', 'Title must be 6-30 chars');
         } else {
-            if (!(strlen($val) < 31 && strlen($val) > 5)) {
-                $this->add_error('title', 'Title must be 6-30 chars');
+            include_once('../includes/auto_loader.inc.php');
+            $contr = new Controller();
+            $this->contr = $contr;
+            if ($contr->get_ticket_by_title($val, $this->post_data['project_id'])) {
+                $this->add_error('title', 'Project already has a ticket by that name');
             }
         }
     }
@@ -71,7 +77,7 @@ class CreateTicketHandler
 
     private function create()
     {
-        $contr = new Controller();
+        $contr = $this->contr;
         $contr->create_ticket($this->post_data);
         //Check if developer is enrolled in project
         $check = $contr->check_project_enrollment($this->post_data['project_id'], $this->post_data['developer_assigned']);

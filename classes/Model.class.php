@@ -242,6 +242,28 @@ class Model extends Dbh
         return $project;
     }
 
+    public function db_get_project_by_title($project_name)
+    {
+        $sql = "SELECT project_id FROM projects WHERE project_name = ?";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute([$project_name]);
+        $project = $stmt->fetch();
+        return $project;
+    }
+
+    public function db_get_ticket_by_title($ticket_name, $project_id)
+    {
+        $sql = "SELECT ticket_id 
+                FROM tickets 
+                WHERE title = ? AND project =?";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute([$ticket_name, $project_id]);
+        $project = $stmt->fetch();
+        return $project;
+    }
+
+
+
     protected function db_get_project_users($project_id)
     //all users assigned to project
     {
@@ -556,8 +578,8 @@ class Model extends Dbh
                 VALUES (?,?,?)";
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute([
-            $data['title'],
-            $data['description'],
+            trim($data['title']),
+            trim($data['description']),
             $data['created_by']
         ]);
     }
