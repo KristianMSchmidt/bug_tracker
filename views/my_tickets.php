@@ -39,46 +39,44 @@ $tickets = $contr->get_tickets_by_user($_SESSION['user_id'], $_SESSION['role_nam
                         <?php endif ?>
                     </p>
                 </div>
-                <div class="w3-container card-content">
-                    <div class="w3-container w3-responsive card-content">
-                        <table class="table w3-small striped bordered">
+                <div class="w3-container w3-responsive card-content">
+                    <table class="table w3-small striped bordered">
+                        <tr>
+                            <th>Title</th>
+                            <th> Project Name</th>
+                            <th class="hide_last">Ticket Priority</th>
+                            <th>Ticket Status</th>
+                            <th class="hide_if_needed">Ticket Type</th>
+                            <th class="hide_if_needed">Developer Assigned</th>
+                            <th class="hide_if_needed"> Submitter</th>
+                            <th class="hide_last">Created</th>
+                        </tr>
+                        <?php
+                        //$tickets = array();
+                        ?>
+                        <?php foreach ($tickets as $ticket) : ?>
                             <tr>
-                                <th>Title</th>
-                                <th> Project Name</th>
-                                <th class="hide_last">Ticket Priority</th>
-                                <th>Ticket Status</th>
-                                <th class="hide_if_needed">Ticket Type</th>
-                                <th class="hide_if_needed">Developer Assigned</th>
-                                <th class="hide_if_needed"> Submitter</th>
-                                <th class="hide_last">Created</th>
+                                <td><?php echo $ticket['title'] ?></td>
+                                <td><?php echo $ticket['project_name'] ?></td>
+                                <td class="hide_last"><?php echo $ticket['ticket_priority_name'] ?></td>
+                                <td><?php echo $ticket['ticket_status_name'] ?></td>
+                                <td class="hide_if_needed"><?php echo $ticket['ticket_type_name'] ?></td>
+                                <td class="hide_if_needed"><?php echo $ticket['developer_name'] ?></td>
+                                <td class="hide_if_needed"><?php echo $ticket['submitter_name'] ?></td>
+                                <td class="hide_last"><?php echo $ticket['created_at'] ?></td>
+                                <td><a href="#" onclick="ticket_details_submitter(<?php echo $ticket['ticket_id'] ?>)">Details</a></td>
                             </tr>
-                            <?php
-                            //$tickets = array();
-                            ?>
-                            <?php foreach ($tickets as $ticket) : ?>
-                                <tr>
-                                    <td><?php echo $ticket['title'] ?></td>
-                                    <td><?php echo $ticket['project_name'] ?></td>
-                                    <td class="hide_last"><?php echo $ticket['ticket_priority_name'] ?></td>
-                                    <td><?php echo $ticket['ticket_status_name'] ?></td>
-                                    <td class="hide_if_needed"><?php echo $ticket['ticket_type_name'] ?></td>
-                                    <td class="hide_if_needed"><?php echo $ticket['developer_name'] ?></td>
-                                    <td class="hide_if_needed"><?php echo $ticket['submitter_name'] ?></td>
-                                    <td class="hide_last"><?php echo $ticket['created_at'] ?></td>
-                                    <td><a href="#" onclick="ticket_details_submitter(<?php echo $ticket['ticket_id'] ?>)">Details</a></td>
-                                </tr>
-                            <?php endforeach ?>
-                        </table>
-                        <?php if (count($tickets) == 0) : ?>
-                            <div class="empty-table-row">
-                                <p>You have no tickets in the database</p>
-                            </div>
-                            <p class="entry-info">Showing 0-0 of 0 entries</p>
-                        <?php else : ?>
-                            <p class="entry-info">Showing 1-<?php echo count($tickets); ?> of <?php echo count($tickets); ?> entries</p>
-                        <?php endif ?>
+                        <?php endforeach ?>
+                    </table>
+                    <?php if (count($tickets) == 0) : ?>
+                        <div class="empty-table-row">
+                            <p>You have no tickets in the database</p>
+                        </div>
+                        <p class="entry-info">Showing 0-0 of 0 entries</p>
+                    <?php else : ?>
+                        <p class="entry-info">Showing 1-<?php echo count($tickets); ?> of <?php echo count($tickets); ?> entries</p>
+                    <?php endif ?>
 
-                    </div>
                 </div>
             </div>
         </div>

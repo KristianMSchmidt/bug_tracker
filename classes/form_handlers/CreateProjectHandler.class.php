@@ -6,31 +6,22 @@ class CreateProjectHandler extends ProjectValidator
     public function process_input()
     {
         $this->validate_title_and_description('create');
-
-        if (!$this->errors) {
-            $this->create();
-            $this->redirect();
+        $_SESSION['post_data'] = $this->new_project;
+        if ($this->errors) {
+            $_SESSION['errors'] = $this->errors;
+            header('location:create_project.php');
         } else {
+            $this->contr->create_project($this->new_project);
+            header('location:my_projects.php');
             return $this->errors;
         }
     }
-
-    private function create()
-    {
-        $this->contr->create_project($this->new_project);
-    }
-
-    private function redirect()
-    {
-        echo "              
-            <form action='my_projects.php' method='post' id='form'>
-                <input type='hidden' name='project_title' value='{$this->new_project['title']}'>
-                <input type='hidden' name='project_description' value='{$this->new_project['description']}'>
-                <input type='hidden' name='show_created_project_succes_message'>
-            </form>
-            <script>
-                document.getElementById('form').submit();
-            </script>
-            ";
-    }
 }
+
+
+
+/* Note to self:
+   The redirects above are essential for the Post Redirect Get (PRG) design pattern. 
+   Without the redirects, the site works poorly (backbutton causes error messages) and is considered unsafe. 
+
+*/

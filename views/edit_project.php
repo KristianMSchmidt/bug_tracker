@@ -2,8 +2,8 @@
 include('../includes/login_check.inc.php');
 include('../includes/post_check.inc.php');
 
-/* 'old' refers to values currently stored in the database */
-/* 'new' is what is to be shown in form ' */
+/* 'old' refers to values currently stored in the database 
+   'new' is what is to be shown in form ' */
 
 if (isset($_POST['go_to_edit_project'])) {
     $new_project_name = $_POST['old_project_name'];

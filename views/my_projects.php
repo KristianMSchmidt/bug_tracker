@@ -9,7 +9,7 @@ $projects = $contr->get_projects_by_user_id($_SESSION['user_id'], $_SESSION['rol
 <div class="main">
     <div class="my_projects">
         <div class="wrapper">
-            <form action="create_project.php" method="POST">
+            <form action="create_project.php" method="get">
                 <input type="submit" name="submit" value="CREATE NEW PROJECT" class="btn-primary">
             </form>
             <div class="card w3-responsive">
@@ -28,26 +28,32 @@ $projects = $contr->get_projects_by_user_id($_SESSION['user_id'], $_SESSION['rol
                             All projects your are assigned to
                         <?php endif ?>
                     </p>
-                    <div class="w3-container">
-                        <table class="table w3-small striped bordered">
+                </div>
+                <div class="w3-container w3-responsive card-content">
+                    <table class="table w3-small striped bordered">
+                        <tr>
+                            <th>Project Name</th>
+                            <th>Description</th>
+                            <th>Created By</th>
+                            <th>Created</th>
+                            <th>Last Update</th>
+                        </tr>
+                        <?php
+                        //$projects = array();
+                        ?>
+                        <?php foreach ($projects as $project) : ?>
                             <tr>
-                                <th>Project Name</th>
-                                <th>Description</th>
+                                <td><?php echo $project['project_name'] ?></td>
+                                <td><?php echo $project['project_description'] ?></td>
+                                <td><?php echo $project['created_by'] ?></td>
+                                <td><?php echo $project['created_at'] ?></th>
+                                <td><?php echo $project['updated_at'] ?></td>
+                                <td>
+                                    <a href="#" onclick="details_submitter(<?php echo $project['project_id'] ?>)">Details</a>
+                                </td>
                             </tr>
-                            <?php
-                            //$projects = array();
-                            ?>
-                            <?php foreach ($projects as $project) : ?>
-                                <tr>
-                                    <td><?php echo $project['project_name'] ?></td>
-                                    <td style="padding-right:2em;"><?php echo $project['project_description'] ?></td>
-                                    <td>
-                                        <a href="#" onclick="details_submitter(<?php echo $project['project_id'] ?>)">Details</a>
-                                    </td>
-                                </tr>
-                            <?php endforeach ?>
-                        </table>
-                    </div>
+                        <?php endforeach ?>
+                    </table>
                     <?php if (count($projects) == 0) : ?>
                         <div class="empty-table-row">
                             <p>You have no projects in the database</p>
@@ -60,35 +66,35 @@ $projects = $contr->get_projects_by_user_id($_SESSION['user_id'], $_SESSION['rol
             </div>
         </div>
     </div>
-    <?php if (isset($_POST['show_created_project_succes_message'])) : ?>
-        <div id="id01" class="w3-modal">
-            <div class="w3-modal-content">
-                <div class="w3-container">
-                    <span onclick="document.getElementById('id01').style.display='none'" class="w3-button w3-display-topright">&times;</span>
-                    <div class="w3-container">
-                        <h5>
-                            You succesfully created the following project:
-                        </h5>
-                        <div class="w3-container w3-responsive">
-                            <table class="table striped bordered">
-                                <tr>
-                                    <th>Project</th>
-                                    <th>Description</th>
-                                </tr>
-                                <tr>
-                                    <td><?php echo $_POST['project_title'] ?></td>
-                                    <td><?php echo $_POST['project_description'] ?></td>
-                                </tr>
-                            </table>
-                        </div>
+</div>
+<?php if (isset($_SESSION['post_data'])) : ?>
+    <div id="id01" class="w3-modal">
+        <div class="w3-modal-content">
+            <div class="w3-container">
+                <span onclick="document.getElementById('id01').style.display='none'" class="w3-button w3-display-topright">&times;</span>
+                <div class="w3-container" style="padding-bottom:3em;">
+                    <h5>
+                        You succesfully created the following project:
+                    </h5>
+                    <div class="w3-container w3-responsive">
+                        <table class="table striped bordered">
+                            <tr>
+                                <th>Project</th>
+                                <th>Description</th>
+                            </tr>
+                            <tr>
+                                <td><?php echo $_SESSION['post_data']['title'] ?></td>
+                                <td><?php echo $_SESSION['post_data']['description'] ?></td>
+                            </tr>
                     </div>
                 </div>
             </div>
         </div>
-        <script>
-            document.getElementById('id01').style.display = 'block';
-        </script>
-    <?php endif ?>
+    </div>
+    <script>
+        document.getElementById('id01').style.display = 'block';
+    </script>
+<?php endif ?>
 </div>
 
 <form action="project_details.php" method="post" id="form">
@@ -107,3 +113,7 @@ $projects = $contr->get_projects_by_user_id($_SESSION['user_id'], $_SESSION['rol
 <script>
     set_active_link("my_projects")
 </script>
+
+<?php if (isset($_SESSION['post_data'])) {
+    unset($_SESSION['post_data']);
+}

@@ -82,8 +82,12 @@ class Model extends Dbh
         $sql = "SELECT 
                 projects.project_id,
                 projects.project_name,
-                projects.project_description
-                FROM projects";
+                projects.project_description,
+                projects.created_at,
+                projects.updated_at,
+                users.full_name as created_by
+                FROM projects 
+                JOIN users ON projects.created_by = users.user_id";
 
         if ($role_name !== 'Admin') {
             $sql .= " WHERE projects.project_id IN 
@@ -235,7 +239,13 @@ class Model extends Dbh
 
     protected function db_get_project_by_id($project_id)
     {
-        $sql = "SELECT * FROM projects WHERE project_id = ?";
+        $sql = "SELECT projects.project_name, 
+                       projects.project_description, 
+                       projects.created_at, 
+                       projects.updated_at, 
+                       users.full_name as created_by
+                FROM projects JOIN users ON projects.created_by = users.user_id
+                WHERE project_id = ?";
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute([$project_id]);
         $project = $stmt->fetch();

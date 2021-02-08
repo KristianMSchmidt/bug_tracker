@@ -19,14 +19,18 @@ $tickets = $contr->get_tickets_by_project($_POST['project_id']);
             <div class="w3-container">
                 <table class="table bordered">
                     <tr>
-                        <th>Project ID</th>
                         <th>Project Name</th>
                         <th>Description</th>
+                        <th>Created By</th>
+                        <th>Created</th>
+                        <th>Last Update</th>
                     </tr>
                     <tr>
-                        <td style="width:15%"><?php echo $_POST['project_id'] ?></td>
-                        <td style="width:35%"><?php echo $project['project_name'] ?></td>
-                        <td style="width:50%"><?php echo $project['project_description'] ?></td>
+                        <td><?php echo $project['project_name'] ?></td>
+                        <td><?php echo $project['project_description'] ?></td>
+                        <td><?php echo $project['created_by'] ?></td>
+                        <td><?php echo $project['created_at'] ?></th>
+                        <td><?php echo $project['updated_at'] ?></td>
                     </tr>
                 </table>
             </div>
