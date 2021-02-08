@@ -14,3 +14,9 @@ classes: MyClassName (camel case)
 class files: myclassname.class.php
 other files: lower_with_under
 functions/methods: lower_with_under
+
+Design-Patterns:
+PRG Post-Redirect-Get: https://icodemag.com/prg-pattern-in-php-what-why-and-how/
+Reflexive. Site is supported down to screen width 600ppx.
+Database queries - PHP - and presentational code are held pretty separate. It is a strict MCV-patterns - this would be easier to implement in
+webframework like Flask or Django or Laravel.
