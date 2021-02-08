@@ -87,7 +87,7 @@ if (isset($_POST['project_id'])) {
                             <?php if (isset($_POST['project_id'])) : ?>
                                 <td><?php echo $_POST['project_id'] ?></td>
                                 <td><?php echo $project_name ?></td>
-                                <td> <a href="#" class="right" onclick="document.getElementById('project_details_form').submit()">Project Details</a></td>
+                                <td> <a href="project_details.php?project_id=<?php echo $_POST['project_id'] ?>" class="right">Project Details</a></td>
                             <?php else : ?>
                                 <td></td>
                                 <td></td>
@@ -96,10 +96,6 @@ if (isset($_POST['project_id'])) {
                         </tr>
                     </table>
                     <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="post" id="select_other_form"></form>
-
-                    <form action='project_details.php' method='post' id="project_details_form">
-                        <input type="hidden" name="project_id" value="<?php echo $_POST['project_id'] ?? '' ?>">
-                    </form>
                 </div>
             </div>
         </div>

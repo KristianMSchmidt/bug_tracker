@@ -19,7 +19,7 @@ include('shared/ui_frame.php');
                     <form action="create_project.php" method="POST">
                         <!-- Title -->
                         <p>
-                            <input type="text" name="title" maxlength="30" class="w3-input title" value="<?php echo $_SESSION['post_data']['title'] ?? '' ?>">
+                            <input type="text" name="project_name" maxlength="30" class="w3-input title" value="<?php echo $_SESSION['data']['project_name'] ?? '' ?>">
                             <label>Project Title</label><br>
 
                             <span class="error">
@@ -28,7 +28,7 @@ include('shared/ui_frame.php');
                         </p>
                         <!-- Description -->
                         <p>
-                            <input type="text" name="description" maxlength="200" class="w3-input" value="<?php echo $_SESSION['post_data']['description'] ?? '' ?>">
+                            <input type="text" name="project_description" maxlength="200" class="w3-input" value="<?php echo $_SESSION['data']['project_description'] ?? '' ?>">
                             <label>Description</label><br>
                             <span class=" error">
                                 <?php echo $_SESSION['errors']['description'] ?? '' ?>
@@ -51,16 +51,11 @@ include('shared/ui_frame.php');
     <?php endif ?>
 </div>
 
-<?
-if (isset($_SESSION['post_data'])) {
-    unset($_SESSION['post_data']);
-}
-if (isset($_SESSION['errors'])) {
-    unset($_SESSION['errors']);
-}
+<?php
+unset($_SESSION['data']);
+unset($_SESSION['errors']);
+include('shared/closing_tags.php');
 ?>
-
-<?php include('shared/closing_tags.php'); ?>
 <script>
-    set_active_link("manage_project_users");
+    set_active_link("my_projects");
 </script>

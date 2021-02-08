@@ -1,25 +1,15 @@
 <?php
 include('../includes/login_check.inc.php');
-if (isset($_POST['submit'])) {
+include_once('../includes/auto_loader.inc.php');
+
+if (isset($_GET['project_id'])) {
+    $contr = new Controller();
+    $project_id = $_GET['project_id'];
+    $_SESSION['data'] = $contr->get_project_by_id($project_id);
+} else if (isset($_POST['submit'])) {
     include('../classes/form_handlers/EditProjectHandler.class.php');
-    $edit_project_handler = new EditProjectHandler(ray('new_project' => $_POST));
-    $create_project_handler->process_input();
-}
-    /* 'new' is what is to be shown in form ' */
-    $new_project_name = $_POST['old_project_name'];
-    $new_project_description = $_POST['old_project_description'];
-} else if (isset($_POST['edit_submit'])) {
-    include_once('../includes/auto_loader.inc.php');
-    include('../classes/form_handlers/EditProjectHandler.class.php');
-    $new_project_name = $_POST['new_project_name'];
-    $new_project_description = $_POST['new_project_description'];
-    $new_project = array('title' => $new_project_name, 'description' => $new_project_description);
-    /*'old' refers to values currently stored in the database */
-    $old_project = array('title' => $_POST['old_project_name'], 'description' => $_POST['old_project_description']);
-    $edit_project_handler = new EditProjectHandler(
-        array('new_project' => $new_project, 'old_project' => $old_project, 'project_id' => $_POST['project_id'])
-    );
-    $errors = $edit_project_handler->process_input();
+    $edit_project_handler = new EditProjectHandler($_POST);
+    $edit_project_handler->process_input();
 }
 
 include('shared/ui_frame.php');
@@ -30,7 +20,7 @@ include('shared/ui_frame.php');
         <div class="card">
             <div class="w3-container card-head">
                 <h3>Edit Project</h3>
-                <a href="#" onclick="document.getElementById('details_form').submit()"> Project Details</a>
+                <a href="project_details.php?project_id=<?php echo $_SESSION['data']['project_id'] ?>"> Project Details</a>
             </div>
 
             <div class="card-content">
@@ -39,36 +29,36 @@ include('shared/ui_frame.php');
                     <!-- Title -->
                     <div class="left">
                         <p>
-                            <input type="text" name="new_project_name" maxlength="30" class="w3-input title" value="<?php echo $new_project_name ?>">
+                            <input type="text" name="project_name" maxlength="30" class="w3-input title" value="<?php echo $_SESSION['data']['project_name'] ?? '' ?>">
                             <label>Project Name</label><br>
                             <span class="error">
-                                <?php echo $errors['title'] ?? '' ?>
+                                <?php echo $_SESSION['errors']['title'] ?? '' ?>
                             </span>
                         </p>
                     </div>
+
                     <!-- Description -->
                     <div class="right">
                         <p>
-                            <input type="text" name="new_project_description" maxlength="200" class="w3-input" value="<?php echo $new_project_description ?>">
+                            <input type="text" name="project_description" maxlength="200" class="w3-input" value="<?php echo $_SESSION['data']['project_description'] ?? '' ?>">
                             <label>Project Description</label><br>
                             <span class="error">
-                                <?php echo $errors['description'] ?? '' ?>
+                                <?php echo $_SESSION['errors']['description'] ?? '' ?>
                             </span>
                         </p>
                     </div>
 
                     <!-- Hidden input -->
-                    <input type="hidden" name="project_id" value="<?php echo $_POST['project_id'] ?>">
-                    <input type="hidden" name="old_project_name" value="<?php echo $_POST['old_project_name'] ?>">
-                    <input type="hidden" name="old_project_description" value="<?php echo $_POST['old_project_description'] ?>">
+                    <input type="hidden" name="project_id" value="<?php echo $_SESSION['data']['project_id'] ?>">
+
 
                     <p class="error w3-center">
-                        <?php echo $errors['no_changes_error'] ?? '' ?>
+                        <?php echo $_SESSION['errors']['no_changes_error'] ?? '' ?>
                     </p>
 
                     <!-- Submit button -->
                     <div class="w3-container w3-center">
-                        <input type="submit" name="edit_submit" class="btn-primary" value="Make Changes">
+                        <input type="submit" name="submit" class="btn-primary" value="Make Changes">
                     </div>
                 </form>
 
@@ -77,13 +67,16 @@ include('shared/ui_frame.php');
     </div>
 </div>
 
-<form action="project_details.php" method="post" id="details_form">
-    <input type="hidden" name="project_id" value="<?php echo $_POST['project_id'] ?>">
-</form>
 
-<?php include('shared/closing_tags.php') ?>
-
-
+<?php
+unset($_SESSION['data']);
+unset($_SESSION['errors']);
+include('shared/closing_tags.php');
+?>
 <script>
-    set_active_link("my_projects")
+    set_active_link("my_projects");
 </script>
+
+<?php
+unset($_SESSION['edit_project_succes']);
+?>

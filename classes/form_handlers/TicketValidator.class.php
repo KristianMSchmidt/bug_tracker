@@ -25,7 +25,7 @@ class TicketValidator extends TicketAndProjectValidator
 
     protected function validate_title_unique($type)
     {
-        $title = trim($this->new_ticket['title']);
+        $title = trim($this->new_ticket['project_name']);
         include_once('../includes/auto_loader.inc.php');
         $contr = new Controller();
         $this->contr = $contr;

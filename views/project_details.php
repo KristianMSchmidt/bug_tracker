@@ -1,12 +1,16 @@
 <?php
 include('../includes/login_check.inc.php');
-include('../includes/post_check.inc.php');
 include('shared/ui_frame.php');
 
 $contr = new controller;
-$project = $contr->get_project_by_id($_POST['project_id']);
-$users = $contr->get_project_users($_POST['project_id']);
-$tickets = $contr->get_tickets_by_project($_POST['project_id']);
+if (isset($_POST['project_id'])) {
+    $project_id = $_POST['project_id'];
+} else if (isset($_GET['project_id'])) {
+    $project_id = $_GET['project_id'];
+}
+$project = $contr->get_project_by_id($project_id);
+$users = $contr->get_project_users($project_id);
+$tickets = $contr->get_tickets_by_project($project_id);
 ?>
 
 <div class="main">
@@ -14,9 +18,9 @@ $tickets = $contr->get_tickets_by_project($_POST['project_id']);
         <div class="card">
             <div class="w3-container card-head top" style="display:flex;">
                 <h3>Project Details</h3>
-                <a href="#" onclick="document.getElementById('go_to_edit_form').submit()"> Edit Project</a>
+                <a href="edit_project.php?project_id=<?php echo $project_id ?>">Edit Project</a>
             </div>
-            <div class="w3-container">
+            <div class=" w3-container">
                 <table class="table bordered">
                     <tr>
                         <th>Project Name</th>
@@ -39,7 +43,7 @@ $tickets = $contr->get_tickets_by_project($_POST['project_id']);
         <div class="bottom">
             <div class="bottom-left">
                 <form action="manage_project_users.php" method="post">
-                    <input type="hidden" name="project_id" value="<?php echo $_POST['project_id']; ?>">
+                    <input type="hidden" name="project_id" value="<?php echo $project_id; ?>">
                     <input type="submit" value="MANAGE PROJECT USERS" class="btn-primary">
                 </form>
                 <div class="card">
@@ -77,7 +81,7 @@ $tickets = $contr->get_tickets_by_project($_POST['project_id']);
             </div>
             <div class="bottom-right">
                 <form action="create_ticket.php" method="post">
-                    <input type="hidden" name="project_id" value="<?php echo $_POST['project_id']; ?>">
+                    <input type="hidden" name="project_id" value="<?php echo $project_id; ?>">
                     <input type="submit" name="go_to_edit_project" value="ADD TICKET TO PROJECT" class="btn-primary">
                 </form>
                 <div class="card">
@@ -156,8 +160,8 @@ $tickets = $contr->get_tickets_by_project($_POST['project_id']);
 <?php endif ?>
 
 
-<!-- Model response message for created ticket -->
-<?php if (isset($_POST['show_project_edited_succes_message'])) : ?>
+<!-- Model response message for edited project succes -->
+<?php if (isset($_SESSION['edit_project_succes'])) : ?>
     <div id="id02" class="w3-modal">
         <div class="w3-modal-content">
             <div class="w3-container">
@@ -187,16 +191,12 @@ $tickets = $contr->get_tickets_by_project($_POST['project_id']);
     }
 </script>
 
-
-<form action="edit_project.php" method="post" id="go_to_edit_form">
-    <input type="hidden" name="project_id" value="<?php echo $project['project_id'] ?>">
-    <input type="hidden" name="old_project_name" value="<?php echo $project['project_name'] ?>">
-    <input type="hidden" name="old_project_description" value="<?php echo $project['project_description'] ?>">
-    <input type="hidden" name="go_to_edit_project" value="submit">
-</form>
-
 <?php include('shared/closing_tags.php') ?>
 
 <script>
     set_active_link("my_projects")
 </script>
+
+<?php
+unset($_SESSION['edit_project_succes']);
+?>

@@ -53,7 +53,8 @@ class CreateTicketHandler extends TicketValidator
     }
 
     private function redirect()
-    {
+    {   //dette skal laves om til sesssion og get[project_id gerne i url]
+        //husk også at slette referencen til $_POST i project_details....
         echo "              
             <form action='project_details.php' method='post' id='form'>
                 <input type='hidden' name='project_id' value='{$this->new_ticket['project_id']}'>

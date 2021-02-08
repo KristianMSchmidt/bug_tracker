@@ -243,6 +243,7 @@ class Model extends Dbh
                        projects.project_description, 
                        projects.created_at, 
                        projects.updated_at, 
+                       projects.project_id,
                        users.full_name as created_by
                 FROM projects JOIN users ON projects.created_by = users.user_id
                 WHERE project_id = ?";
@@ -254,7 +255,7 @@ class Model extends Dbh
 
     protected function db_get_project_by_title($project_name)
     {
-        $sql = "SELECT project_name FROM projects WHERE project_name = ?";
+        $sql = "SELECT project_name, project_id FROM projects WHERE project_name = ?";
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute([trim($project_name)]);
         $result = $stmt->fetch();
@@ -586,8 +587,8 @@ class Model extends Dbh
                 VALUES (?,?,?)";
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute([
-            trim($data['title']),
-            trim($data['description']),
+            trim($data['project_name']),
+            trim($data['project_description']),
             $data['created_by']
         ]);
     }

@@ -49,7 +49,7 @@ $projects = $contr->get_projects_by_user_id($_SESSION['user_id'], $_SESSION['rol
                                 <td><?php echo $project['created_at'] ?></th>
                                 <td><?php echo $project['updated_at'] ?></td>
                                 <td>
-                                    <a href="#" onclick="details_submitter(<?php echo $project['project_id'] ?>)">Details</a>
+                                    <a href="project_details.php?project_id=<?php echo $project['project_id'] ?>">Details</a>
                                 </td>
                             </tr>
                         <?php endforeach ?>
@@ -67,7 +67,7 @@ $projects = $contr->get_projects_by_user_id($_SESSION['user_id'], $_SESSION['rol
         </div>
     </div>
 </div>
-<?php if (isset($_SESSION['post_data'])) : ?>
+<?php if (isset($_SESSION['create_project_succes'])) : ?>
     <div id="id01" class="w3-modal">
         <div class="w3-modal-content">
             <div class="w3-container">
@@ -83,8 +83,8 @@ $projects = $contr->get_projects_by_user_id($_SESSION['user_id'], $_SESSION['rol
                                 <th>Description</th>
                             </tr>
                             <tr>
-                                <td><?php echo $_SESSION['post_data']['title'] ?></td>
-                                <td><?php echo $_SESSION['post_data']['description'] ?></td>
+                                <td><?php echo $_SESSION['data']['project_name'] ?></td>
+                                <td><?php echo $_SESSION['data']['project_description'] ?></td>
                             </tr>
                     </div>
                 </div>
@@ -95,25 +95,13 @@ $projects = $contr->get_projects_by_user_id($_SESSION['user_id'], $_SESSION['rol
         document.getElementById('id01').style.display = 'block';
     </script>
 <?php endif ?>
-</div>
-
-<form action="project_details.php" method="post" id="form">
-    <input type="hidden" name="project_id" id="project_id" value="">
-</form>
-
-<script>
-    function details_submitter(project_id) {
-        document.getElementById("project_id").value = project_id;
-        document.getElementById("form").submit();
-    }
-</script>
-
 <?php include('shared/closing_tags.php') ?>
 
 <script>
     set_active_link("my_projects")
 </script>
 
-<?php if (isset($_SESSION['post_data'])) {
-    unset($_SESSION['post_data']);
-}
+<?php
+unset($_SESSION['create_project_succes']);
+unset($_SESSION['data']);
+?>

@@ -12,7 +12,7 @@ Overvej, om Mange User Roles -siden kan gøres mere brugbar? Søgefelt under "Se
 det ville tage mig 1-2 timer at lave, tror jeg. Ville gøre en stor forskel
 
 Overvej, hvor det smarteste sted er at placere "inlucde authorize"
-
+Når jeg er færdig med at ændre posts til gets, så søg hele dokumentet igennem for methods="post" og $_POST for at se, om der er nogle glemte steder
 
 Til allersidst: Lav nogle virkelige ticket med de ting, jeg faktisk mangler (men som jeg 
  - brugere skal kunne redigere
