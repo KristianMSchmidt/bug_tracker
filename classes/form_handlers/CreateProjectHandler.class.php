@@ -3,6 +3,11 @@ include_once('../classes/form_handlers/ProjectValidator.class.php');
 
 class CreateProjectHandler extends ProjectValidator
 {
+    public function __construct($post_data)
+    {
+        $this->new_project = $post_data;
+    }
+
     public function process_input()
     {
         $this->validate_title_and_description('create');

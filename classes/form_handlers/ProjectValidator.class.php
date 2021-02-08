@@ -9,17 +9,6 @@ class ProjectValidator extends TicketAndProjectValidator
     protected $errors = [];
     protected $contr;
 
-    public function __construct($post_data)
-    {
-        $this->new_project = $post_data['new_project'];
-        if (isset($post_data['old_project'])) {
-            $this->old_project = $post_data['old_project'];
-        }
-        if (isset($post_data['project_id'])) {
-            $this->project_id = $post_data['project_id'];
-        }
-    }
-
     protected function validate_title_unique($type)
     {
         $title = trim($this->new_project['title']);

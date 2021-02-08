@@ -2,7 +2,7 @@
 include('../includes/login_check.inc.php');
 if (isset($_POST['submit'])) {
     include('../classes/form_handlers/CreateProjectHandler.class.php');
-    $create_project_handler = new CreateProjectHandler(array('new_project' => $_POST));
+    $create_project_handler = new CreateProjectHandler($_POST);
     $create_project_handler->process_input();
 }
 include('shared/ui_frame.php');
@@ -52,9 +52,11 @@ include('shared/ui_frame.php');
 </div>
 
 <?
+if (isset($_SESSION['post_data'])) {
+    unset($_SESSION['post_data']);
+}
 if (isset($_SESSION['errors'])) {
     unset($_SESSION['errors']);
-    unset($_SESSION['post_data']);
 }
 ?>
 

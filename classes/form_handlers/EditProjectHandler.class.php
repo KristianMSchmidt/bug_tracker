@@ -3,6 +3,18 @@ include_once('../classes/form_handlers/ProjectValidator.class.php');
 
 class EditProjectHandler extends ProjectValidator
 {
+
+    public function __construct($post_data)
+    {
+        $this->new_project = $post_data['new_project'];
+        if (isset($post_data['old_project'])) {
+            $this->old_project = $post_data['old_project'];
+        }
+        if (isset($post_data['project_id'])) {
+            $this->project_id = $post_data['project_id'];
+        }
+    }
+
     public function process_input()
     {
         $this->validate_title_and_description('edit');

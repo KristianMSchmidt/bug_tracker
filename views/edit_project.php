@@ -1,11 +1,11 @@
 <?php
 include('../includes/login_check.inc.php');
-include('../includes/post_check.inc.php');
-
-/* 'old' refers to values currently stored in the database 
-   'new' is what is to be shown in form ' */
-
-if (isset($_POST['go_to_edit_project'])) {
+if (isset($_POST['submit'])) {
+    include('../classes/form_handlers/EditProjectHandler.class.php');
+    $edit_project_handler = new EditProjectHandler(ray('new_project' => $_POST));
+    $create_project_handler->process_input();
+}
+    /* 'new' is what is to be shown in form ' */
     $new_project_name = $_POST['old_project_name'];
     $new_project_description = $_POST['old_project_description'];
 } else if (isset($_POST['edit_submit'])) {
@@ -14,6 +14,7 @@ if (isset($_POST['go_to_edit_project'])) {
     $new_project_name = $_POST['new_project_name'];
     $new_project_description = $_POST['new_project_description'];
     $new_project = array('title' => $new_project_name, 'description' => $new_project_description);
+    /*'old' refers to values currently stored in the database */
     $old_project = array('title' => $_POST['old_project_name'], 'description' => $_POST['old_project_description']);
     $edit_project_handler = new EditProjectHandler(
         array('new_project' => $new_project, 'old_project' => $old_project, 'project_id' => $_POST['project_id'])
