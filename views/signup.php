@@ -1,19 +1,3 @@
-<?php
-
-if (isset($_POST['signup_submit'])) {
-    include_once('../includes/shared/auto_loader.inc.php');
-    include('../classes/form_handlers/SignupHandler.class.php');
-    $signup_handler = new SignUpHandler($_POST);
-    $feedback = $signup_handler->process_input();
-
-    if ($feedback['signup_succes']) {
-        header('location:dashboard.php');
-        exit();
-    }
-}
-?>
-
-
 <?php include('shared/ui_frame.php'); ?>
 
 <div class="main">
@@ -24,24 +8,24 @@ if (isset($_POST['signup_submit'])) {
                 <h3>Sign up</h3>
             </div>
             <div class="w3-container">
-                <p class="error"><?php echo $feedback['signup_error'] ?? '' ?>
+                <p class="error"><?php echo $_SESSION['signup_error'] ?? '' ?>
                 </p>
             </div>
 
 
-            <form action=" <?php echo $_SERVER['PHP_SELF'] ?>" method="POST" class="w3-container">
+            <form action="../includes/signup.inc.php" method="POST" class="w3-container">
                 <p>
-                    <input type="text" name="full_name" class="w3-input" value="<?php echo $_POST['full_name'] ?? '' ?>">
+                    <input type="text" name="full_name" class="w3-input" value="<?php echo $_SESSION['post_data']['full_name'] ?? '' ?>">
                     <label>Full name</label>
                 </p>
-                <p class="error"><?php echo $feedback['input_errors']['full_name'] ?? '' ?>
+                <p class="error"><?php echo $_SESSION['errors']['full_name'] ?? '' ?>
 
                 <p>
-                    <input type="text" name="email" class="w3-input" value="<?php echo $_POST['email'] ?? '' ?>">
+                    <input type="text" name="email" class="w3-input" value="<?php echo $_SESSION['post_data']['email'] ?? '' ?>">
                     <label>Email</label>
                 </p>
                 <p class="error">
-                    <?php echo $feedback['input_errors']['email'] ?? '' ?>
+                    <?php echo $_SESSION['errors']['email'] ?? '' ?>
                 </p>
 
                 <p>
@@ -49,7 +33,7 @@ if (isset($_POST['signup_submit'])) {
                     <label>Password</label>
                 </p>
                 <p class="error">
-                    <?php echo $feedback['input_errors']['pwd'] ?? '' ?>
+                    <?php echo $_SESSION['errors']['pwd'] ?? '' ?>
                 </p>
 
                 <p>
@@ -57,7 +41,7 @@ if (isset($_POST['signup_submit'])) {
                     <label>Repeat password</label>
                 </p>
                 <p class="error">
-                    <?php echo $feedback['input_errors']['pwd_repeat'] ?? '' ?>
+                    <?php echo $_SESSION['errors']['pwd_repeat'] ?? '' ?>
                 </p>
 
                 <div class="w3-container w3-center">
@@ -73,4 +57,7 @@ if (isset($_POST['signup_submit'])) {
         </div>
     </div>
 </div>
-<?php include('shared/closing_tags.php') ?>
+<?php
+include('shared/closing_tags.php');
+include('../includes/shared/clean_session.inc.php');
+?>

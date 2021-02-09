@@ -4,12 +4,6 @@ include('shared/ui_frame.php');
 
 $contr = new Controller();
 $ticket_id = $_GET['ticket_id'];
-if (isset($_POST['new_comment'])) {
-    include('../classes/form_handlers/AddCommentHandler.class.php');
-    $comment_handler = new AddCommentHandler($_SESSION['user_id'], $ticket_id, $_POST);
-    $errors = $comment_handler->process_input();
-}
-
 $ticket = $contr->get_ticket_by_id($ticket_id);
 $history_entries = $contr->get_ticket_history($ticket_id);
 $files = array();
@@ -21,9 +15,9 @@ $comments = $contr->get_ticket_comments($ticket_id);
         <div class="card">
             <div class="w3-container card-head top">
                 <h3>Ticket Details</h3>
-                <a href="#" onclick="form_submitter('edit_ticket.php')"> Edit Ticket</a>
+                <a href="edit_ticket.php?ticket_id=<?php echo $ticket_id ?>&show_original=true"> Edit Ticket</a>
             </div>
-            <div class="w3-container w3-responsive wrapper">
+            <div class=" w3-container w3-responsive wrapper">
                 <table class="table w3-small bordered">
                     <tr>
                         <td style="width:30%">Ticket ID</td>
@@ -41,7 +35,7 @@ $comments = $contr->get_ticket_comments($ticket_id);
                     </tr>
                     <tr>
                         <td>Project</td>
-                        <td><a href='#' onclick="form_submitter('project_details.php')"><?php echo $ticket['project_name'] ?> </a></td>
+                        <td><a href="project_details.php?project_id=<?php echo $ticket['project_id'] ?>"><?php echo $ticket['project_name'] ?> </a></td>
                     </tr>
                     <tr>
                         <td>Assigned Developer</td>
@@ -84,12 +78,12 @@ $comments = $contr->get_ticket_comments($ticket_id);
                 <div class="w3-container">
                     <h5>Add a comment?</h5>
                     <div class="w3-container" style="padding-bottom:0.6em;">
-                        <p class="error"><?php echo $errors['comment'] ?? '' ?></p>
-                        <form action="" method="post">
+                        <form action="../includes/ticket_details.inc.php" method="post">
                             <input style="width:80%" type="text" name="new_comment" maxlength="200" placeholder="Write a comment on the ticket">
                             <input type="hidden" name="ticket_id" value="<?php echo $ticket_id ?>">
                             <input type="submit" class="btn-primary" style="width:5em;" value="ADD">
                         </form>
+                        <p class="error"><?php echo $_SESSION['errors']['comment'] ?? '' ?></p>
                     </div>
                 </div>
                 <h5 class="w3-container">All comments for this project</h5>
@@ -156,7 +150,7 @@ $comments = $contr->get_ticket_comments($ticket_id);
     </div>
 </div>
 
-<!-- Model response message -->
+<!-- Modal response message -->
 <?php if (isset($_POST['show_ticket_edited_succes_message'])) : ?>
     <div id="id01" class="w3-modal">
         <div class="w3-modal-content">
@@ -174,23 +168,12 @@ $comments = $contr->get_ticket_comments($ticket_id);
         document.getElementById('id01').style.display = 'block';
     </script>
 <?php endif ?>
-</div>
 
-<form action="" method="post" id="form">
-    <input type="hidden" name="ticket_id" value="<?php echo $ticket_id ?>">
-    <input type="hidden" name="project_id" value="<?php echo $ticket['project_id'] ?>">
-    <input type="hidden" name="go_to_edit_ticket" value="submit">
-</form>
+<?php
+include('shared/closing_tags.php');
+include('../includes/shared/clean_session.inc.php');
+?>
 
-<script>
-    function form_submitter(action) {
-        document.getElementById('form').action = action;
-        document.getElementById('form').submit();
-    }
-</script>
-
-
-<?php include('shared/closing_tags.php') ?>
 <script>
     set_active_link("my_tickets");
 </script>

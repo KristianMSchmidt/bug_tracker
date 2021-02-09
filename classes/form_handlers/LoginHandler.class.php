@@ -1,15 +1,12 @@
 <?php
-include_once('../includes/shared/set_session_vars.inc.php');
-include_once('../includes/shared/auto_loader.inc.php');
+include_once('shared/set_session_vars.inc.php');
+include_once('shared/auto_loader.inc.php');
 
 
 class LoginHandler
 {
   private $data;
-  private $input_errors = [];
-  private $login_error = "";
-  private $login_succes = False;
-  private static $fields = ['email', 'pwd'];
+  private $errors = [];
 
   public function __construct($post_data)
   {
@@ -18,25 +15,26 @@ class LoginHandler
 
   public function process_input()
   {
-    foreach (self::$fields as $field) {
-      if (!array_key_exists($field, $this->data)) {
-        trigger_error("'$field' is not present in the data");
-        return;
-      }
-    }
+    session_start();
 
     $this->validate_email();
     $this->validate_pwd();
 
-    if (!$this->input_errors) {
+    if (!$this->errors) {
       $this->login_attempt();
     }
 
-    return array(
-      'input_errors' => $this->input_errors,
-      'login_error' => $this->login_error,
-      'login_succes' => $this->login_succes
-    );
+    if (!$this->errors) {
+      // login succesfull
+      header('location: ../views/dashboard.php');
+      exit();
+    } else {
+      //return with error messages and data
+      $_SESSION['errors'] = $this->errors;
+      $_SESSION['post_data'] = $this->data;
+      header('location: ../views/login.php');
+      exit();
+    }
   }
 
   private function validate_email()
@@ -45,7 +43,7 @@ class LoginHandler
     $val = trim($this->data['email']);
 
     if (empty($val)) {
-      $this->add_input_error('email', 'Please fill in email');
+      $this->add_error('email', 'Please fill in email');
     }
   }
 
@@ -55,19 +53,13 @@ class LoginHandler
     $val = trim($this->data['pwd']);
 
     if (empty($val)) {
-      $this->add_input_error('pwd', 'Please fill in password');
+      $this->add_error('pwd', 'Please fill in password');
     }
   }
 
-  private function add_input_error($key, $val)
-  {
-    $this->input_errors[$key] = $val;
-  }
 
   private function login_attempt()
-  // To do: Move this functionality to controller?
   {
-    $this->login_error = 'Wrong email or password';
     $contr = new Controller();
     $pwd = $this->data['pwd'];
     $user = $contr->get_user_by_email($this->data['email']);
@@ -75,10 +67,18 @@ class LoginHandler
       $pwd_db = $user['password'];
       $psw_check = password_verify($pwd, $pwd_db);
       if ($psw_check) {
-        $this->login_succes = True;
-        $this->login_error = '';
+        //log in user
         set_session_vars($user, $contr);
+      } else {
+        $this->add_error('login_error', 'Wrong email or password');
       }
+    } else {
+      $this->add_error('login_error', 'Wrong email or password');
     }
+  }
+
+  private function add_error($key, $val)
+  {
+    $this->errors[$key] = $val;
   }
 }

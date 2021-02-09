@@ -2,19 +2,15 @@
 if (!isset($_SESSION)) {
     session_start();
 }
-
 if (isset($_SESSION['user_id'])) {
     include_once('../includes/shared/auto_loader.inc.php');
     include('../includes/shared/human_timing.inc.php');
     $contr = new Controller;
-
     if (isset($_GET['seen'])) {
         $contr->make_notifications_seen($_SESSION['user_id']);
     }
-
     $data = $contr->get_notifications_by_user_id($_SESSION['user_id']);
 }
-
 ?>
 
 <!DOCTYPE html>

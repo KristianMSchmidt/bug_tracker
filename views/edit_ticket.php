@@ -1,14 +1,15 @@
 <?php
 include('../includes/shared/login_check.inc.php');
-include('../includes/shared/post_check.inc.php');
 
 /* 'old' refers to values currently stored in the database */
 /* 'new' is what is to be shown in form ' */
 
 include_once('../includes/shared/auto_loader.inc.php');
 $contr = new Controller();
-$old_ticket = $contr->get_ticket_by_id($_POST['ticket_id']);
-
+$old_ticket = $contr->get_ticket_by_id($_GET['ticket_id']);
+if (isset($_GET['show_original'])) {
+    $new_ticket = $old_ticket;
+}
 if (isset($_POST['go_to_edit_ticket'])) {
     $new_ticket = $old_ticket;
 } else if (isset($_POST['edit_submit'])) {
@@ -155,8 +156,8 @@ include('shared/ui_frame.php');
             </div>
         </div>
     </div>
-    <form action="ticket_details.php" method="post" id="details_form">
-        <input type="hidden" name="ticket_id" value="<?php echo $_POST['ticket_id'] ?>">
+    <form action="ticket_details.php" method="get" id="details_form">
+        <input type="hidden" name="ticket_id" value="<?php echo $_GET['ticket_id'] ?>">
     </form>
 </div>
 

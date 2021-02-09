@@ -47,7 +47,7 @@ class Model extends Dbh
         $sql = "SELECT COUNT(tickets.ticket_id) as count, users.full_name
         FROM tickets 
         LEFT JOIN users ON tickets.developer_assigned = users.user_id    
-        WHERE tickets.status = 1
+        WHERE tickets.status = 3 
         GROUP BY tickets.developer_assigned
         ORDER BY count(tickets.ticket_id) ASC LIMIT 5";
         $stmt = $this->connect()->prepare($sql);

@@ -61,26 +61,26 @@ if (isset($_SESSION['user_id'])) {
 </div>
 
 
-<form class="hidden" id="admin_login" action="login.php" method="POST">
+<form class="hidden" id="admin_login" action="../includes/login.inc.php" method="POST">
     <input type="hidden" name="email" value="demoadmin@gmail.com">
     <input type="hidden" name="pwd" value="stjerne">
     <input type="hidden" name="login_submit" value="">
 </form>
 
-<form class="hidden" id="dev_login" action="login.php" method="POST">
+<form class="hidden" id="dev_login" action="../includes/login.inc.php" method="POST">
     <input type="hidden" name="email" value="demodev@gmail.com">
     <input type="hidden" name="pwd" value="stjerne">
     <input type="hidden" name="login_submit" value="">
 </form>
 
 
-<form class="hidden" id="pm_login" action="login.php" method="POST">
+<form class="hidden" id="pm_login" action="../includes/login.inc.php" method="POST">
     <input type="hidden" name="email" value="demopm@gmail.com">
     <input type="hidden" name="pwd" value="stjerne">
     <input type="hidden" name="login_submit" value="">
 </form>
 
-<form class="hidden" id="submitter_login" action="login.php" method="POST">
+<form class="hidden" id="submitter_login" action="../includes/login.inc.php" method="POST">
     <input type="hidden" name="email" value="demosub@gmail.com">
     <input type="hidden" name="pwd" value="stjerne">
     <input type="hidden" name="login_submit" value="">

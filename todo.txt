@@ -27,3 +27,6 @@ Til allersidst: Lav nogle virkelige ticket med de ting, jeg faktisk mangler (men
 
  Æstetik: 
  Hav kun classer, som laver ren form-error checking. De skal ikke redirecte... 
+
+
+ til sidst: løb non-view filerne igennem i browseren og se om de opfører sig ok ... 
