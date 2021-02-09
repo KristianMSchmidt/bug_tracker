@@ -183,5 +183,5 @@ $tickets = $contr->get_tickets_by_project($project_id);
 </script>
 
 <?php
-unset($_SESSION['edit_project_succes']);
+include('../includes/shared/clean_session.inc.php');
 ?>

@@ -14,12 +14,12 @@ class CreateProjectHandler extends ProjectValidator
         $_SESSION['data'] = $this->new_project;
         if ($this->errors) {
             $_SESSION['errors'] = $this->errors;
-            header('location:create_project.php');
+            header('location:../views/create_project.php');
             exit();
         } else {
             $this->contr->create_project($this->new_project);
             $_SESSION['create_project_succes'] = true;
-            header('location:my_projects.php');
+            header('location:../views/my_projects.php');
             exit();
         }
     }

@@ -1,10 +1,5 @@
 <?php
 include('../includes/login_check.inc.php');
-if (isset($_POST['submit'])) {
-    include('../classes/form_handlers/CreateProjectHandler.class.php');
-    $create_project_handler = new CreateProjectHandler($_POST);
-    $create_project_handler->process_input();
-}
 include('shared/ui_frame.php');
 ?>
 
@@ -16,7 +11,7 @@ include('shared/ui_frame.php');
                     <h3>Create Project</h3>
                 </div>
                 <div class="w3-container">
-                    <form action="create_project.php" method="POST">
+                    <form action="../includes/create_project.inc.php" method="POST">
                         <!-- Title -->
                         <p>
                             <input type="text" name="project_name" maxlength="30" class="w3-input title" value="<?php echo $_SESSION['data']['project_name'] ?? '' ?>">
@@ -52,8 +47,7 @@ include('shared/ui_frame.php');
 </div>
 
 <?php
-unset($_SESSION['data']);
-unset($_SESSION['errors']);
+include('../includes/shared/clean_session.inc.php');
 include('shared/closing_tags.php');
 ?>
 <script>

@@ -1,10 +1,8 @@
 <?php
 include('../includes/login_check.inc.php');
 include_once('../includes/auto_loader.inc.php');
-
 $contr = new Controller;
 $projects = $contr->get_projects();
-
 if (isset($_GET['project_id'])) {
     $project_id = $_GET['project_id'];
     $project_users = $contr->get_project_users($project_id);
@@ -14,37 +12,8 @@ if (isset($_GET['project_id'])) {
 } else if (isset($_GET['select_project_submit'])) {
     $select_project_error = 'Select a project';
 }
-
-if (isset($_POST['enroll_users_submit'])) {
-    $selected_users = json_decode($_POST['user_ids']);
-    $project_name = $contr->get_project_name_by_id($_POST['project_id'])['project_name'];
-    $notification_message = "enrolled you in the project '{$project_name}'";
-    foreach ($selected_users as $user_id) {
-        $contr->assign_to_project($user_id, $_POST['project_id']);
-        $contr->create_notification(4, $user_id, $notification_message, $_SESSION['user_id']);
-    }
-    $_SESSION['enroll_users_succes'] = true;
-    $_SESSION['selected_users'] = $selected_users;
-    header("location: manage_project_users.php?project_id={$_POST['project_id']}");
-    exit();
-}
-
-if (isset($_POST['disenroll_users_submit'])) {
-    $selected_users = json_decode($_POST['user_ids']);
-    $project_name = $contr->get_project_name_by_id($_POST['project_id'])['project_name'];
-    $notification_message = "disenrolled your from the project '{$project_name}'";
-    foreach ($selected_users as $user_id) {
-        $contr->unassign_from_project($user_id, $_POST['project_id']);
-        $contr->create_notification(5, $user_id, $notification_message, $_SESSION['user_id']);
-    }
-    $_SESSION['disenroll_users_succes'] = true;
-    $_SESSION['selected_users'] = $selected_users;
-    header("location: manage_project_users.php?project_id={$_POST['project_id']}");
-    exit();
-}
 include('shared/ui_frame.php');
 ?>
-
 
 <div class="main">
     <?php if (in_array($_SESSION['role_name'], ['Admin', 'Project Manager'])) : ?>
@@ -56,7 +25,7 @@ include('shared/ui_frame.php');
                         <h3 class="project">Select Project</h3>
 
                         <div class="w3-container">
-                            <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="get" id="project_form">
+                            <form action="" method="get" id="project_form">
                                 <select class="w3-select" name="project_id">
                                     <?php if (!isset($project_id)) : ?>
                                         <option value="" disabled selected>Choose Project</option>
@@ -130,7 +99,7 @@ include('shared/ui_frame.php');
                 </div>
                 <?php if (isset($project_id)) : ?>
                     <!-- Enroll form -->
-                    <form action="" method="post" id="enroll_form">
+                    <form action="../includes/manage_project_users.inc.php" method="post" id="enroll_form">
                         <input type="hidden" name="user_ids" value="" id="users_to_enroll">
                         <input type="hidden" name="enroll_users_submit" value="Submitted">
                         <input type="hidden" name="project_id" value="<?php echo $project_id ?>">
@@ -160,7 +129,7 @@ include('shared/ui_frame.php');
                 <?php if (isset($project_id)) : ?>
 
                     <!-- Disenroll form -->
-                    <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="post" id="disenroll_form">
+                    <form action="../includes/manage_project_users.inc.php" method="post" id="disenroll_form">
                         <input type="hidden" name="user_ids" value="" id="users_to_disenroll">
                         <input type="hidden" name="disenroll_users_submit" value="Submitted">
                         <input type="hidden" name="project_id" value="<?php echo $project_id ?>">
@@ -316,14 +285,11 @@ include('shared/ui_frame.php');
 </script>
 
 
-
 <?php
-//TODO lav lille script der sletter midlertidlige session variable
-unset($_SESSION['disenroll_users_succes']);
-unset($_SESSION['enroll_users_succes']);
-unset($_SESSION['selected_users']);
 include('shared/closing_tags.php');
+include('../includes/shared/clean_session.inc.php');
 ?>
+
 <script>
     set_active_link("manage_project_users");
 </script>

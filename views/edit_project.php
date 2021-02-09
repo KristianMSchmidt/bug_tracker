@@ -69,8 +69,7 @@ include('shared/ui_frame.php');
 
 
 <?php
-unset($_SESSION['data']);
-unset($_SESSION['errors']);
+include('../includes/shared/clean_session.inc.php');
 include('shared/closing_tags.php');
 ?>
 <script>
@@ -78,5 +77,5 @@ include('shared/closing_tags.php');
 </script>
 
 <?php
-unset($_SESSION['edit_project_succes']);
+include('../includes/shared/clean_session.inc.php');
 ?>
