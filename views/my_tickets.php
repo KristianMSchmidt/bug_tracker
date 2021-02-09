@@ -1,10 +1,9 @@
 <?php
-
-/*
-Administrators will see all tickets in the database
-Project Managers will see all tickets to the projects they are enrolled in
-Developers will see all tickets that they are assigned to as 'assigned developer'
-Submitters will see all tickets they have submitted
+/* How it should work 
+Administrators should see all tickets in the database
+Project Managers should see all tickets to the projects they are enrolled in
+Developers should seea ll tickets that they are assigned to as 'assigned developer'
+Submitters should see all tickets they have submitted 
 */
 
 include('../includes/login_check.inc.php');
@@ -12,7 +11,6 @@ include('shared/ui_frame.php');
 
 $contr = new Controller;
 $tickets = $contr->get_tickets_by_user($_SESSION['user_id'], $_SESSION['role_name']);
-
 ?>
 
 
@@ -51,9 +49,7 @@ $tickets = $contr->get_tickets_by_user($_SESSION['user_id'], $_SESSION['role_nam
                             <th class="hide_if_needed"> Submitter</th>
                             <th class="hide_last">Created</th>
                         </tr>
-                        <?php
-                        //$tickets = array();
-                        ?>
+
                         <?php foreach ($tickets as $ticket) : ?>
                             <tr>
                                 <td><?php echo $ticket['title'] ?></td>
@@ -64,7 +60,7 @@ $tickets = $contr->get_tickets_by_user($_SESSION['user_id'], $_SESSION['role_nam
                                 <td class="hide_if_needed"><?php echo $ticket['developer_name'] ?></td>
                                 <td class="hide_if_needed"><?php echo $ticket['submitter_name'] ?></td>
                                 <td class="hide_last"><?php echo $ticket['created_at'] ?></td>
-                                <td><a href="#" onclick="ticket_details_submitter(<?php echo $ticket['ticket_id'] ?>)">Details</a></td>
+                                <td><a href="ticket_details.php?ticket_id=<?php echo $ticket['ticket_id'] ?>">Details</a></td>
                             </tr>
                         <?php endforeach ?>
                     </table>
@@ -82,19 +78,7 @@ $tickets = $contr->get_tickets_by_user($_SESSION['user_id'], $_SESSION['role_nam
         </div>
     </div>
 </div>
-</div>
 
-<form action="ticket_details.php" method="post" id="form">
-    <input type="hidden" name="ticket_id" id="ticket_id" value="">
-</form>
-
-
-<script>
-    function ticket_details_submitter(ticket_id) {
-        document.getElementById("ticket_id").value = ticket_id;
-        document.getElementById("form").submit()
-    }
-</script>
 
 <?php include('shared/closing_tags.php') ?>
 <script>

@@ -1,11 +1,9 @@
 <?php
 include('../includes/login_check.inc.php');
-include('../includes/post_check.inc.php');
 include('shared/ui_frame.php');
 
 $contr = new Controller();
-$ticket_id = $_POST['ticket_id'];
-
+$ticket_id = $_GET['ticket_id'];
 if (isset($_POST['new_comment'])) {
     include('../classes/form_handlers/AddCommentHandler.class.php');
     $comment_handler = new AddCommentHandler($_SESSION['user_id'], $ticket_id, $_POST);

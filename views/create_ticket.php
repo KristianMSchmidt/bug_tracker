@@ -1,6 +1,5 @@
 <?php
 include('../includes/login_check.inc.php');
-include('../includes/post_check.inc.php');
 include_once('../includes/auto_loader.inc.php');
 $contr = new Controller();
 
