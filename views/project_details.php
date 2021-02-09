@@ -1,9 +1,7 @@
 <?php
-include('../includes/login_check.inc.php');
+include('../includes/shared/login_check.inc.php');
 include('shared/ui_frame.php');
-
 $project_id = $_GET['project_id'];
-
 $contr = new controller;
 $project = $contr->get_project_by_id($project_id);
 $users = $contr->get_project_users($project_id);
@@ -15,7 +13,7 @@ $tickets = $contr->get_tickets_by_project($project_id);
         <div class="card">
             <div class="w3-container card-head top" style="display:flex;">
                 <h3>Project Details</h3>
-                <a href="edit_project.php?project_id=<?php echo $project_id ?>">Edit Project</a>
+                <a href="edit_project.php?show_original=&project_id=<?php echo $project_id ?>">Edit Project</a>
             </div>
             <div class=" w3-container">
                 <table class="table bordered">
@@ -79,7 +77,7 @@ $tickets = $contr->get_tickets_by_project($project_id);
             <div class="bottom-right">
                 <form action="create_ticket.php" method="get">
                     <input type="hidden" name="project_id" value="<?php echo $project_id; ?>">
-                    <input type="submit" name="go_to_edit_project" value="ADD TICKET TO PROJECT" class="btn-primary">
+                    <input type="submit" value="ADD TICKET TO PROJECT" class="btn-primary">
                 </form>
                 <div class="card">
                     <div class="w3-container card-head">
@@ -105,7 +103,7 @@ $tickets = $contr->get_tickets_by_project($project_id);
                                     <td><?php echo $ticket['developer_name'] ?></td>
                                     <td><?php echo $ticket['ticket_status_name'] ?></td>
                                     <td><?php echo explode(" ", $ticket['created_at'])[0] ?></td>
-                                    <td><a href="ticket_details?ticket_id=<?php echo $ticket['ticket_id'] ?>">Details</a></td>
+                                    <td><a href="ticket_details.php?ticket_id=<?php echo $ticket['ticket_id'] ?>">Details</a></td>
                                 </tr>
                             <?php endforeach; ?>
                         </table>
@@ -142,8 +140,8 @@ $tickets = $contr->get_tickets_by_project($project_id);
                                 <th>Ticket Description</th>
                             </tr>
                             <tr>
-                                <td><?php echo $_SESSION['ticket_title'] ?></td>
-                                <td><?php echo $_SESSION['ticket_description'] ?></td>
+                                <td><?php echo $_SESSION['data']['title'] ?></td>
+                                <td><?php echo $_SESSION['data']['description'] ?></td>
                             </tr>
                         </table>
                     </div>

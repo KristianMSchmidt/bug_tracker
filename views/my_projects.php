@@ -1,5 +1,5 @@
 <?php
-include('../includes/login_check.inc.php');
+include('../includes/shared/login_check.inc.php');
 include('shared/ui_frame.php');
 
 $contr = new controller;

@@ -1,6 +1,6 @@
 <?php
-include('../includes/login_check.inc.php');
-include_once('../includes/auto_loader.inc.php');
+include('../includes/shared/login_check.inc.php');
+include_once('../includes/shared/auto_loader.inc.php');
 
 $contr = new Controller();
 $priorities = $contr->get_ticket_priority_count();

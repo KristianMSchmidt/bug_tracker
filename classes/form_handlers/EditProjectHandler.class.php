@@ -15,16 +15,16 @@ class EditProjectHandler extends ProjectValidator
     public function process_input()
     {
         $this->check_all_errors();
-
+        session_start();
         if ($this->errors) {
             $_SESSION['errors'] = $this->errors;
             $_SESSION['data'] = $this->new_project;
-            header('location:edit_project.php');
+            header('location:../views/edit_project.php');
             exit();
         } else {
             $this->contr->set_project($this->new_project['project_name'], $this->new_project['project_description'], $this->project_id);
             $_SESSION['edit_project_succes'] = true;
-            header("location:project_details.php?project_id={$this->new_project['project_id']}");
+            header("location:../views/project_details.php?project_id={$this->new_project['project_id']}");
             exit();
         }
     }

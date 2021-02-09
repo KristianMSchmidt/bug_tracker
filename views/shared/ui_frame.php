@@ -4,8 +4,8 @@ if (!isset($_SESSION)) {
 }
 
 if (isset($_SESSION['user_id'])) {
-    include_once('../includes/auto_loader.inc.php');
-    include('../includes/human_timing.inc.php');
+    include_once('../includes/shared/auto_loader.inc.php');
+    include('../includes/shared/human_timing.inc.php');
     $contr = new Controller;
 
     if (isset($_GET['seen'])) {

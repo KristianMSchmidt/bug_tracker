@@ -1,11 +1,11 @@
 <?php
-include('../includes/login_check.inc.php');
-include('../includes/post_check.inc.php');
+include('../includes/shared/login_check.inc.php');
+include('../includes/shared/post_check.inc.php');
 
 /* 'old' refers to values currently stored in the database */
 /* 'new' is what is to be shown in form ' */
 
-include_once('../includes/auto_loader.inc.php');
+include_once('../includes/shared/auto_loader.inc.php');
 $contr = new Controller();
 $old_ticket = $contr->get_ticket_by_id($_POST['ticket_id']);
 

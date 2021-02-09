@@ -11,6 +11,7 @@ class CreateProjectHandler extends ProjectValidator
     public function process_input()
     {
         $this->validate_title_and_description('create');
+        session_start();
         $_SESSION['data'] = $this->new_project;
         if ($this->errors) {
             $_SESSION['errors'] = $this->errors;

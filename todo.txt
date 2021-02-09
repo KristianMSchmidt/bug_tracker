@@ -22,3 +22,8 @@ Til allersidst: Lav nogle virkelige ticket med de ting, jeg faktisk mangler (men
  
 
  w-3 responsive er faktisk godt ifm tabellerne med megte data... se fx my projecsts og overvej, om det skal implementeres andre steder også 
+
+
+
+ Æstetik: 
+ Hav kun classer, som laver ren form-error checking. De skal ikke redirecte... 

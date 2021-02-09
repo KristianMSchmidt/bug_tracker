@@ -9,7 +9,7 @@ class ProjectValidator extends TicketAndProjectValidator
 
     protected function validate_title_unique($type)
     {
-        include_once('../includes/auto_loader.inc.php');
+        include_once('../includes/shared/auto_loader.inc.php');
         $this->contr = new Controller();
         $potential_other_project = $this->contr->get_project_by_title(trim($this->new_project['project_name']));
         if ($potential_other_project) {

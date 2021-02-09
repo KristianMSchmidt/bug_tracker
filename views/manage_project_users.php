@@ -1,6 +1,6 @@
 <?php
-include('../includes/login_check.inc.php');
-include_once('../includes/auto_loader.inc.php');
+include('../includes/shared/login_check.inc.php');
+include_once('../includes/shared/auto_loader.inc.php');
 $contr = new Controller;
 $projects = $contr->get_projects();
 if (isset($_GET['project_id'])) {

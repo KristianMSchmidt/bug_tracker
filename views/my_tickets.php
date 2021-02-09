@@ -6,7 +6,7 @@ Developers should seea ll tickets that they are assigned to as 'assigned develop
 Submitters should see all tickets they have submitted 
 */
 
-include('../includes/login_check.inc.php');
+include('../includes/shared/login_check.inc.php');
 include('shared/ui_frame.php');
 
 $contr = new Controller;
@@ -17,7 +17,7 @@ $tickets = $contr->get_tickets_by_user($_SESSION['user_id'], $_SESSION['role_nam
 <div class="main">
     <div class="my_tickets">
         <div class="wrapper">
-            <form action="create_ticket.php" method="POST">
+            <form action="create_ticket.php" method="get">
                 <input type="submit" name="submit" value="CREATE NEW TICKET" class="btn-primary">
             </form>
             <div class="card w3-responsive">

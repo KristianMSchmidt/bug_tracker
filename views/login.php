@@ -8,7 +8,7 @@ if (isset($_SESSION['user_id'])) {
     exit();
 }
 
-include_once('../includes/auto_loader.inc.php');
+include_once('../includes/shared/auto_loader.inc.php');
 include('../classes/form_handlers/LoginHandler.class.php');
 
 if (isset($_POST['login_submit'])) {
