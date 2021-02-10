@@ -11,7 +11,7 @@ class Model extends Dbh
                  FROM users JOIN user_roles
                  ON users.role_id = user_roles.role_id
                  ORDER by users.full_name";
-        $stmt = $this->connect()->query($sql); //stmt is a "PDO Stamement Object"
+        $stmt = $this->connect()->query($sql);
         $results = $stmt->fetchAll();
 
         return $results;
@@ -25,7 +25,7 @@ class Model extends Dbh
              ON users.role_id = user_roles.role_id 
              WHERE user_id = ?";
         $stmt = $this->connect()->prepare($sql);
-        $stmt->execute([$user_id]); //stmt is a "PDO Stamement Object"
+        $stmt->execute([$user_id]);
         $result = $stmt->fetch();
         return $result;
     }
@@ -37,7 +37,7 @@ class Model extends Dbh
                 ON users.role_id = user_roles.role_id 
                 WHERE email = ?";
         $stmt = $this->connect()->prepare($sql);
-        $stmt->execute([$email]); //stmt is a "PDO Stamement Object"
+        $stmt->execute([$email]);
         $results = $stmt->fetch();
         return $results;
     }
@@ -136,7 +136,6 @@ class Model extends Dbh
 
         endif;
 
-        // latest project at top
         $sql .= " ORDER BY tickets.created_at DESC";
 
         $stmt = $this->connect()->prepare($sql);
@@ -542,7 +541,6 @@ class Model extends Dbh
 
 
     protected function db_ticket_status_name_by_id($status_id)
-
     {
         $sql = "SELECT ticket_status_name
                 FROM ticket_status_types
@@ -624,7 +622,8 @@ class Model extends Dbh
 }
 
 
-/*
+/* Notes to self: 
+stmt is PDO statement object
 A 'statement' is any command that database understands
 A 'query' is a select statement
 

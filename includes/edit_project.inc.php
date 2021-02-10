@@ -1,5 +1,5 @@
 <?php
-include_once('../includes/shared/post_check.inc.php');
+include('../includes/shared/post_check.inc.php');
 include('../classes/form_handlers/EditProjectHandler.class.php');
 session_start();
 

@@ -1,7 +1,7 @@
 <?php
-include_once('../includes/shared/post_check.inc.php');
+include('../includes/shared/post_check.inc.php');
 include('../classes/form_handlers/EditTicketHandler.class.php');
-include_once('shared/auto_loader.inc.php');
+include('shared/auto_loader.inc.php');
 
 session_start();
 

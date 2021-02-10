@@ -1,5 +1,5 @@
 function set_active_link(new_active_item) {
-    // Function used to higlight sidebar menu links
+    // Function used to higlight active sidebar menu links
 
     sidebar_items = sidebar_items = [
         "dashboard",

@@ -1,5 +1,5 @@
 <?php
-include_once('../includes/shared/post_check.inc.php');
+include('../includes/shared/post_check.inc.php');
 include('../classes/form_handlers/SignupHandler.class.php');
 
 $signup_handler = new SignUpHandler($_POST);

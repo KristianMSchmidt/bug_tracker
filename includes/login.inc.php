@@ -1,4 +1,5 @@
 <?php
+include('../includes/shared/post_check.inc.php');
 include('../classes/form_handlers/LoginHandler.class.php');
 
 if (isset($_POST['login_submit'])) {

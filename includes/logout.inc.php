@@ -1,4 +1,5 @@
 <?php
+include('../includes/shared/post_check.inc.php');
 
 // Get acces to session variable
 session_start();

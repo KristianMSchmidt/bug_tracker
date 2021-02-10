@@ -1,4 +1,5 @@
 <?php
+include('../includes/shared/post_check.inc.php');
 include('../classes/form_handlers/CreateTicketHandler.class.php');
 session_start();
 
