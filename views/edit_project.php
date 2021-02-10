@@ -1,6 +1,6 @@
 <?php
-include('../includes/shared/login_check.inc.php');
-include_once('../includes/shared/auto_loader.inc.php');
+include_once('../control/shared/login_check.inc.php');
+include_once('../control/controller.class.php');
 
 if (isset($_GET['show_original'])) {
     $contr = new Controller();
@@ -11,7 +11,7 @@ if (!isset($_SESSION['data']['project_id'])) {
     header("location: my_projects.php");
 }
 
-include('shared/ui_frame.php');
+include_once('shared/ui_frame.php');
 ?>
 
 <div class="main">
@@ -24,7 +24,7 @@ include('shared/ui_frame.php');
                 </div>
 
                 <div class="card-content">
-                    <form action="../includes/edit_project.inc.php" method="POST" class="w3-container">
+                    <form action="../control/edit_project.inc.php" method="POST" class="w3-container">
 
                         <!-- Title -->
                         <div class="left">
@@ -72,8 +72,8 @@ include('shared/ui_frame.php');
 
 
 <?php
-include('../includes/shared/clean_session.inc.php');
-include('shared/closing_tags.php');
+include_once('../control/shared/clean_session.inc.php');
+include_once('shared/closing_tags.php');
 ?>
 <script>
     set_active_link("my_projects");

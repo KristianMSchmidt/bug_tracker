@@ -1,6 +1,8 @@
 <?php
-include('../includes/shared/post_check.inc.php');
-include('../classes/form_handlers/LoginHandler.class.php');
+include_once('shared/post_check.inc.php');
+include_once('../controller.class.php');
+
+include_once('form_handlers/LoginHandler.class.php');
 
 if (isset($_POST['login_submit'])) {
     $login_handler = new LoginHandler($_POST);

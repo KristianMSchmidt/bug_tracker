@@ -1,8 +1,10 @@
 <?php
-include('../includes/shared/login_check.inc.php');
-include_once('../includes/shared/auto_loader.inc.php');
+include_once('../control/shared/login_check.inc.php');
+include_once('../control/controller.class.php');
+
 $contr = new Controller;
 $projects = $contr->get_projects();
+
 if (isset($_GET['project_id'])) {
     $project_id = $_GET['project_id'];
     $project_users = $contr->get_project_users($project_id);
@@ -12,7 +14,8 @@ if (isset($_GET['project_id'])) {
 } else if (isset($_GET['select_project_submit'])) {
     $select_project_error = 'Select a project';
 }
-include('shared/ui_frame.php');
+
+include_once('shared/ui_frame.php');
 ?>
 
 <div class="main">
@@ -99,7 +102,7 @@ include('shared/ui_frame.php');
                 </div>
                 <?php if (isset($project_id)) : ?>
                     <!-- Enroll form -->
-                    <form action="../includes/manage_project_users.inc.php" method="post" id="enroll_form">
+                    <form action="../control/manage_project_users.inc.php" method="post" id="enroll_form">
                         <input type="hidden" name="user_ids" value="" id="users_to_enroll">
                         <input type="hidden" name="enroll_users_submit" value="Submitted">
                         <input type="hidden" name="project_id" value="<?php echo $project_id ?>">
@@ -129,7 +132,7 @@ include('shared/ui_frame.php');
                 <?php if (isset($project_id)) : ?>
 
                     <!-- Disenroll form -->
-                    <form action="../includes/manage_project_users.inc.php" method="post" id="disenroll_form">
+                    <form action="../control/manage_project_users.inc.php" method="post" id="disenroll_form">
                         <input type="hidden" name="user_ids" value="" id="users_to_disenroll">
                         <input type="hidden" name="disenroll_users_submit" value="Submitted">
                         <input type="hidden" name="project_id" value="<?php echo $project_id ?>">
@@ -286,8 +289,8 @@ include('shared/ui_frame.php');
 
 
 <?php
-include('shared/closing_tags.php');
-include('../includes/shared/clean_session.inc.php');
+include_once('shared/closing_tags.php');
+include_once('../control/shared/clean_session.inc.php');
 ?>
 
 <script>

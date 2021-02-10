@@ -1,7 +1,5 @@
 <?php
-include_once('../classes/form_handlers/TicketValidator.class.php');
-include_once('../includes/shared/auto_loader.inc.php');
-
+include_once('form_handlers/TicketValidator.class.php');
 
 class EditTicketHandler extends TicketValidator
 {

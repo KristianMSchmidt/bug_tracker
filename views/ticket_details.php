@@ -1,6 +1,6 @@
 <?php
-include('../includes/shared/login_check.inc.php');
-include('shared/ui_frame.php');
+include_once('../control/shared/login_check.inc.php');
+include_once('shared/ui_frame.php');
 
 $contr = new Controller();
 $ticket_id = $_GET['ticket_id'];
@@ -79,7 +79,7 @@ $comments = $contr->get_ticket_comments($ticket_id);
                     <div class="w3-container">
                         <h5>Add a comment?</h5>
                         <div class="w3-container" style="padding-bottom:0.6em;">
-                            <form action="../includes/ticket_details.inc.php" method="post">
+                            <form action="../control/ticket_details.inc.php" method="post">
                                 <input style="width:80%" type="text" name="new_comment" maxlength="200" placeholder="Write a comment on the ticket">
                                 <input type="hidden" name="ticket_id" value="<?php echo $ticket_id ?>">
                                 <input type="submit" class="btn-primary" style="width:5em;" value="ADD">
@@ -174,8 +174,8 @@ $comments = $contr->get_ticket_comments($ticket_id);
 <?php endif ?>
 
 <?php
-include('shared/closing_tags.php');
-include('../includes/shared/clean_session.inc.php');
+include_once('shared/closing_tags.php');
+include_once('../control/shared/clean_session.inc.php');
 ?>
 
 <script>

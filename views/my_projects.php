@@ -1,6 +1,6 @@
 <?php
-include('../includes/shared/login_check.inc.php');
-include('shared/ui_frame.php');
+include_once('../control/shared/login_check.inc.php');
+include_once('shared/ui_frame.php');
 
 $contr = new controller;
 $projects = $contr->get_projects_by_user_id($_SESSION['user_id'], $_SESSION['role_name']);
@@ -95,12 +95,12 @@ $projects = $contr->get_projects_by_user_id($_SESSION['user_id'], $_SESSION['rol
         document.getElementById('id01').style.display = 'block';
     </script>
 <?php endif ?>
-<?php include('shared/closing_tags.php') ?>
+<?php include_once('shared/closing_tags.php') ?>
 
 <script>
     set_active_link("my_projects")
 </script>
 
 <?php
-include('../includes/shared/clean_session.inc.php');
+include_once('../control/shared/clean_session.inc.php');
 ?>

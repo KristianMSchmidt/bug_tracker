@@ -9,7 +9,7 @@ if (isset($_SESSION['user_id'])) {
 }
 ?>
 
-<?php include('shared/ui_frame.php'); ?>
+<?php include_once('shared/ui_frame.php'); ?>
 <div class="main">
     <div class="demo_login">
         <div class="card">
@@ -61,29 +61,29 @@ if (isset($_SESSION['user_id'])) {
 </div>
 
 
-<form class="hidden" id="admin_login" action="../includes/login.inc.php" method="POST">
+<form class="hidden" id="admin_login" action="../control/login.inc.php" method="POST">
     <input type="hidden" name="email" value="demoadmin@gmail.com">
     <input type="hidden" name="pwd" value="stjerne">
     <input type="hidden" name="login_submit" value="">
 </form>
 
-<form class="hidden" id="dev_login" action="../includes/login.inc.php" method="POST">
+<form class="hidden" id="dev_login" action="../control/login.inc.php" method="POST">
     <input type="hidden" name="email" value="demodev@gmail.com">
     <input type="hidden" name="pwd" value="stjerne">
     <input type="hidden" name="login_submit" value="">
 </form>
 
 
-<form class="hidden" id="pm_login" action="../includes/login.inc.php" method="POST">
+<form class="hidden" id="pm_login" action="../control/login.inc.php" method="POST">
     <input type="hidden" name="email" value="demopm@gmail.com">
     <input type="hidden" name="pwd" value="stjerne">
     <input type="hidden" name="login_submit" value="">
 </form>
 
-<form class="hidden" id="submitter_login" action="../includes/login.inc.php" method="POST">
+<form class="hidden" id="submitter_login" action="../control/login.inc.php" method="POST">
     <input type="hidden" name="email" value="demosub@gmail.com">
     <input type="hidden" name="pwd" value="stjerne">
     <input type="hidden" name="login_submit" value="">
 </form>
 
-<?php include('shared/closing_tags.php') ?>
+<?php include_once('shared/closing_tags.php') ?>

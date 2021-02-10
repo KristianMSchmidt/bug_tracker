@@ -1,9 +1,10 @@
 <?php
-include('../includes/shared/login_check.inc.php');
-include_once('../includes/shared/auto_loader.inc.php');
+include_once('../control/shared/login_check.inc.php');
+include_once('../control/controller.class.php');
+
 $contr = new Controller;
 $users = $contr->get_users();
-include('shared/ui_frame.php');
+include_once('shared/ui_frame.php');
 ?>
 
 <div class="main">
@@ -29,7 +30,7 @@ include('shared/ui_frame.php');
                         <h4>Select role to assign</h4>
                         <div class="w3-container">
 
-                            <form action="../includes/manage_user_roles.inc.php" method="post" id="assign_role_form">
+                            <form action="../control/manage_user_roles.inc.php" method="post" id="assign_role_form">
                                 <input type="hidden" name="user_ids" value="" id="input_user_ids">
                                 <input type="hidden" name="new_role" value="">
                                 <input type="hidden" name="assign_role_submit" value="" id="assign_role_submit">
@@ -170,8 +171,8 @@ include('shared/ui_frame.php');
     }
 </script>
 <?php
-include('shared/closing_tags.php');
-include('../includes/shared/clean_session.inc.php');
+include_once('shared/closing_tags.php');
+include_once('../control/shared/clean_session.inc.php');
 ?>
 <script>
     set_active_link("manage_user_roles");

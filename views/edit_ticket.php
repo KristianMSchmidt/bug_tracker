@@ -1,6 +1,7 @@
 <?php
-include('../includes/shared/login_check.inc.php');
-include_once('../includes/shared/auto_loader.inc.php');
+include_once('../control/shared/login_check.inc.php');
+include_once('../control/controller.class.php');
+
 $contr = new Controller();
 
 if (isset($_GET['show_original'])) {
@@ -14,7 +15,7 @@ $types = $contr->get_ticket_types();
 $status_types = $contr->get_ticket_status_types();
 $developers = $contr->get_users_by_role_id(3);
 
-include('shared/ui_frame.php');
+include_once('shared/ui_frame.php');
 ?>
 
 <div class="main">
@@ -25,7 +26,7 @@ include('shared/ui_frame.php');
                 <a href="ticket_details.php?ticket_id=<?php echo $_SESSION['data']['ticket_id'] ?>">Ticket Details</a>
             </div>
             <div class="card-content">
-                <form action="../includes/edit_ticket.inc.php" method="post" class="w3-container">
+                <form action="../control/edit_ticket.inc.php" method="post" class="w3-container">
                     <div class="text-input">
                         <div class="left">
                             <!-- Title -->
@@ -131,8 +132,8 @@ include('shared/ui_frame.php');
 
 
 <?php
-include('shared/closing_tags.php');
-include('../includes/shared/clean_session.inc.php');
+include_once('shared/closing_tags.php');
+include_once('../control/shared/clean_session.inc.php');
 ?>
 
 

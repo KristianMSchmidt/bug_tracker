@@ -1,12 +1,14 @@
 <?php
-/*
-Only class direcly querying and modifying database. 
-
-TODO: Refactor a little too shorten code. E.g.: get_user_by_id -> get_user_by(id)
-*/
+include_once('../model/model.class.php');
 
 class Controller extends Model
 {
+    /*
+
+    Public interface for the Model class. 
+
+    */
+
     public function get_users()
     {
         $results = $this->db_get_users();
@@ -21,7 +23,6 @@ class Controller extends Model
 
     public function get_user_by_email($email)
     {
-
         $results = $this->db_get_user_by_email($email);
         return $results;
     }
@@ -123,7 +124,6 @@ class Controller extends Model
         return $results;
     }
 
-
     public function get_users_not_enrolled_in_project($project_id)
     {
         $results = $this->db_get_users_not_enrolled_in_project($project_id);
@@ -173,7 +173,6 @@ class Controller extends Model
     {
         $this->db_update_ticket($data);
     }
-
 
     public function set_project($project_name, $project_description, $project_id)
     {

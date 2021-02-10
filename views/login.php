@@ -6,7 +6,7 @@ if (isset($_SESSION['user_id'])) {
     exit();
 }
 ?>
-<?php include('shared/ui_frame.php'); ?>
+<?php include_once('shared/ui_frame.php'); ?>
 
 <div class="main">
     <div class="login">
@@ -18,7 +18,7 @@ if (isset($_SESSION['user_id'])) {
                 <p class="error"><?php echo $_SESSION['errors']['login_error'] ?? '' ?>
                 </p>
             </div>
-            <form action="../includes/login.inc.php" method="POST" class="w3-container">
+            <form action="../control/login.inc.php" method="POST" class="w3-container">
                 <p>
                     <input type="text" name="email" class="w3-input" value="<?php echo $_SESSION['post_data']['email'] ?? '' ?>">
                     <label>Email</label>
@@ -47,6 +47,6 @@ if (isset($_SESSION['user_id'])) {
 </div>
 
 <?php
-include('shared/closing_tags.php');
-include('../includes/shared/clean_session.inc.php');
+include_once('shared/closing_tags.php');
+include_once('../control/shared/clean_session.inc.php');
 ?>

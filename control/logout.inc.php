@@ -1,6 +1,4 @@
 <?php
-include('../includes/shared/post_check.inc.php');
-
 // Get acces to session variable
 session_start();
 
@@ -11,4 +9,4 @@ session_unset();
 session_destroy();
 
 // redirect to login page
-header('location: ../views/demo_login.php?');
+header('location: ../views/demo_login.php');

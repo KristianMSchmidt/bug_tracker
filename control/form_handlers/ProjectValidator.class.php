@@ -1,5 +1,5 @@
 <?php
-include_once('../classes/form_handlers/TicketAndProjectValidator.class.php');
+include_once('form_handlers/TicketAndProjectValidator.class.php');
 
 class ProjectValidator extends TicketAndProjectValidator
 {

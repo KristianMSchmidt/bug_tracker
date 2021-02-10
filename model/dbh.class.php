@@ -1,15 +1,11 @@
 <?php
 
-/*
-    Database handler. Takes care of database connection. 
-    TODO: Read up on database error handling here: 
-    https://phpdelusions.net/pdo
-
-*/
-
 class Dbh
-
 {
+    /*
+        Database handler. Takes care of database connection. 
+    */
+
     private $host = "localhost";
     private $user = "kimarokko";
     private $pwd = "stjerne";
@@ -21,8 +17,8 @@ class Dbh
     {
         $dsn = 'mysql:host=' . $this->host . ';dbname=' . $this->dbName . ';charset=' .  $this->charset;
 
-        // Create PDO ('PHD Data Object')
-        // The try->catch is important here, as password might otherwise get shown
+        // Create PDO ('Php Data Object')
+        // NB: thee try->catch is important here, as password might otherwise get shown to users.
         try {
             $pdo = new PDO($dsn, $this->user, $this->pwd);
         } catch (\PDOException $e) {
@@ -31,9 +27,9 @@ class Dbh
 
         // Pull out data as associative array (optional)
         $pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+
         // Show errors
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
 
         return $pdo;
     }

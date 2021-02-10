@@ -1,6 +1,6 @@
 <?php
-include('../includes/shared/post_check.inc.php');
-include('../includes/shared/auto_loader.inc.php');
+include_once('shared/post_check.inc.php');
+include_once('controller.class.php');
 session_start();
 $contr = new Controller();
 

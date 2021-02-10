@@ -6,8 +6,8 @@ Developers should seea ll tickets that they are assigned to as 'assigned develop
 Submitters should see all tickets they have submitted 
 */
 
-include('../includes/shared/login_check.inc.php');
-include('shared/ui_frame.php');
+include_once('../control/shared/login_check.inc.php');
+include_once('shared/ui_frame.php');
 
 $contr = new Controller;
 $tickets = $contr->get_tickets_by_user($_SESSION['user_id'], $_SESSION['role_name']);
@@ -80,7 +80,7 @@ $tickets = $contr->get_tickets_by_user($_SESSION['user_id'], $_SESSION['role_nam
 </div>
 
 
-<?php include('shared/closing_tags.php') ?>
+<?php include_once('shared/closing_tags.php') ?>
 <script>
     set_active_link("my_tickets")
 </script>

@@ -1,6 +1,6 @@
 <?php
-include('../includes/shared/login_check.inc.php');
-include('shared/ui_frame.php');
+include_once('../control/shared/login_check.inc.php');
+include_once('shared/ui_frame.php');
 ?>
 
 <div class="main">
@@ -34,4 +34,4 @@ include('shared/ui_frame.php');
 </div>
 </div>
 
-<?php include('shared/closing_tags.php') ?>
+<?php include_once('shared/closing_tags.php') ?>

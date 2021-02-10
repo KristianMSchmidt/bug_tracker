@@ -3,8 +3,8 @@ if (!isset($_SESSION)) {
     session_start();
 }
 if (isset($_SESSION['user_id'])) {
-    include_once('../includes/shared/auto_loader.inc.php');
-    include('../includes/shared/human_timing.inc.php');
+    include_once('../control/controller.class.php');
+    include_once('../control/shared/human_timing.inc.php');
     $contr = new Controller;
     if (isset($_GET['seen'])) {
         $contr->make_notifications_seen($_SESSION['user_id']);
@@ -115,7 +115,7 @@ if (isset($_SESSION['user_id'])) {
                     <!-- user actions dropdown content -->
                     <div id="user_actions" class="dropdown-content user_actions">
                         <a href="profile_settings.php">Profile settings</a>
-                        <a href="../includes/logout.inc.php">Log out</a>
+                        <a href="../control/logout.inc.php">Log out</a>
                     </div>
                 </div>
             <?php endif ?>

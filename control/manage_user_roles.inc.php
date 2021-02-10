@@ -1,6 +1,6 @@
 <?php
-include('shared/post_check.inc.php');
-include('shared/auto_loader.inc.php');
+include_once('shared/post_check.inc.php');
+include_once('controller.class.php');
 
 $selected_users = json_decode($_POST['user_ids']);
 

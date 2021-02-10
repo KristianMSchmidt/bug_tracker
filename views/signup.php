@@ -1,4 +1,4 @@
-<?php include('shared/ui_frame.php'); ?>
+<?php include_once('shared/ui_frame.php'); ?>
 
 <div class="main">
     <div class="login">
@@ -13,7 +13,7 @@
             </div>
 
 
-            <form action="../includes/signup.inc.php" method="POST" class="w3-container">
+            <form action="../control/signup.inc.php" method="POST" class="w3-container">
                 <p>
                     <input type="text" name="full_name" class="w3-input" value="<?php echo $_SESSION['post_data']['full_name'] ?? '' ?>">
                     <label>Full name</label>
@@ -58,6 +58,6 @@
     </div>
 </div>
 <?php
-include('shared/closing_tags.php');
-include('../includes/shared/clean_session.inc.php');
+include_once('shared/closing_tags.php');
+include_once('../control/shared/clean_session.inc.php');
 ?>

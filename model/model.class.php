@@ -1,10 +1,14 @@
 <?php
-/*
-This is the only class direcly querying and modifying database. Only protected methods.
-*/
+include_once('dbh.class.php');
 
 class Model extends Dbh
 {
+    /*
+        This is the only class that direcly queries or modifies database. 
+
+        TODO: Refactor a little too shorten code. E.g.: get_user_by_id -> get_user_by(id)
+    */
+
     protected function db_get_users()
     {
         $sql  = "SELECT * 
@@ -18,7 +22,6 @@ class Model extends Dbh
     }
 
     protected function db_get_user_by_id($user_id)
-    //to do: refactor db_get_user_by_property('user_id')
     {
         $sql = "SELECT * 
              FROM users JOIN user_roles

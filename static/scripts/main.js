@@ -18,7 +18,6 @@ function set_active_link(new_active_item) {
     document.getElementById(new_active_item + "_link").classList.add("active");
 }
 
-
 window.onclick = function(event) {
     // Eventlistener used to close down dropdown menus if they are uopn. 
     var e = event.target;

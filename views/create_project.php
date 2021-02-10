@@ -1,6 +1,6 @@
 <?php
-include('../includes/shared/login_check.inc.php');
-include('shared/ui_frame.php');
+include_once('../control/shared/login_check.inc.php');
+include_once('shared/ui_frame.php');
 ?>
 
 <div class="main">
@@ -11,7 +11,7 @@ include('shared/ui_frame.php');
                     <h3>Create Project</h3>
                 </div>
                 <div class="w3-container">
-                    <form action="../includes/create_project.inc.php" method="POST">
+                    <form action="../control/create_project.inc.php" method="POST">
                         <!-- Title -->
                         <p>
                             <input type="text" name="project_name" maxlength="30" class="w3-input title" value="<?php echo $_SESSION['data']['project_name'] ?? '' ?>">
@@ -47,8 +47,8 @@ include('shared/ui_frame.php');
 </div>
 
 <?php
-include('../includes/shared/clean_session.inc.php');
-include('shared/closing_tags.php');
+include_once('../control/shared/clean_session.inc.php');
+include_once('shared/closing_tags.php');
 ?>
 <script>
     set_active_link("my_projects");

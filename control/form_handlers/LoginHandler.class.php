@@ -1,7 +1,6 @@
 <?php
 include_once('shared/set_session_vars.inc.php');
-include_once('shared/auto_loader.inc.php');
-
+include_once('controller.class.php');
 
 class LoginHandler
 {
@@ -44,7 +43,6 @@ class LoginHandler
       $this->add_error('pwd', 'Please fill in password');
     }
   }
-
 
   private function login_attempt()
   {

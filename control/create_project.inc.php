@@ -1,6 +1,8 @@
 <?php
-include('../includes/shared/post_check.inc.php');
-include('../classes/form_handlers/CreateProjectHandler.class.php');
+include_once('shared/post_check.inc.php');
+include_once('form_handlers/CreateProjectHandler.class.php');
+include_once('controller.class.php');
+
 session_start();
 
 $create_project_handler = new CreateProjectHandler($_POST);

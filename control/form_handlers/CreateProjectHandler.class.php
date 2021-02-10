@@ -1,6 +1,6 @@
 <?php
-include_once('../classes/form_handlers/ProjectValidator.class.php');
-include_once('../includes/shared/auto_loader.inc.php');
+include_once('form_handlers/ProjectValidator.class.php');
+include_once('../controller.class.php');
 
 class CreateProjectHandler extends ProjectValidator
 {

@@ -1,6 +1,6 @@
 <?php
-include('../includes/shared/login_check.inc.php');
-include_once('../includes/shared/auto_loader.inc.php');
+include_once('../control/shared/login_check.inc.php');
+include_once('../control/controller.class.php');
 $contr = new Controller();
 $projects = $contr->get_projects();
 $priorities = $contr->get_priorities();
@@ -12,7 +12,7 @@ if (isset($_GET['project_id'])) {
     $_SESSION['data']['project_name'] = $contr->get_project_name_by_id($_GET['project_id'])['project_name'];
     $_SESSION['data']['project_id'] = $_GET['project_id'];
 }
-include('shared/ui_frame.php');
+include_once('shared/ui_frame.php');
 ?>
 
 
@@ -24,7 +24,7 @@ include('shared/ui_frame.php');
                     <h3>Create Ticket</h3>
                 </div>
                 <div class="card-content">
-                    <form action="../includes/create_ticket.inc.php" method="POST" class="w3-container">
+                    <form action="../control/create_ticket.inc.php" method="POST" class="w3-container">
                         <div class="text-input">
                             <div class="left">
                                 <!-- Title -->
@@ -131,8 +131,8 @@ include('shared/ui_frame.php');
 
 
 <?php
-include('../includes/shared/clean_session.inc.php');
-include('shared/closing_tags.php')
+include_once('../control/shared/clean_session.inc.php');
+include_once('shared/closing_tags.php')
 ?>
 
 <script>

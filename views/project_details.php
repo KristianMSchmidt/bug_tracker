@@ -1,6 +1,6 @@
 <?php
-include('../includes/shared/login_check.inc.php');
-include('shared/ui_frame.php');
+include_once('../control/shared/login_check.inc.php');
+include_once('shared/ui_frame.php');
 $project_id = $_GET['project_id'];
 $contr = new controller;
 $project = $contr->get_project_by_id($project_id);
@@ -174,12 +174,12 @@ $tickets = $contr->get_tickets_by_project($project_id);
     </script>
 <?php endif ?>
 
-<?php include('shared/closing_tags.php') ?>
+<?php include_once('shared/closing_tags.php') ?>
 
 <script>
     set_active_link("my_projects")
 </script>
 
 <?php
-include('../includes/shared/clean_session.inc.php');
+include_once('../control/shared/clean_session.inc.php');
 ?>

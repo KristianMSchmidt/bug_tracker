@@ -1,3 +1,5 @@
+/* This script can be used the re-generate the whole database with reasonable content */
+
 SHOW DATABASES;
 DROP DATABASE IF EXISTS test;
 CREATE DATABASE test;   
