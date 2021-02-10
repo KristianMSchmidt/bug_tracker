@@ -1,29 +1,9 @@
 <?php
 include('../includes/shared/login_check.inc.php');
-if ($_SESSION['role_name'] !== 'Admin') {
-    header('location: dashboard.php');
-}
-include('shared/ui_frame.php');
-$contr = new controller;
-
-if (isset($_POST['assign_role_submit'])) {
-    $selected_users = json_decode($_POST['user_ids']);
-    $new_role = $contr->get_role_name_by_role_id($_POST['new_role']);
-    foreach ($selected_users as $user_id) {
-        $contr->set_role(trim($user_id),  $_POST['new_role']);
-        $message = "updated your role to '{$new_role['role_name']}'";
-        $contr->create_notification(1, $user_id, $message, $_SESSION['user_id']);
-    }
-}
-
-/* Converting PHP array into js-object. I don't use this yet, but will later */
+include_once('../includes/shared/auto_loader.inc.php');
+$contr = new Controller;
 $users = $contr->get_users();
-$json =  json_encode($users);
-echo "
-<script>
-        var users_js = {$json};
-        console.log(users_js)
-</script>";
+include('shared/ui_frame.php');
 ?>
 
 <div class="main">
@@ -49,7 +29,7 @@ echo "
                         <h4>Select role to assign</h4>
                         <div class="w3-container">
 
-                            <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="post" id="assign_role_form">
+                            <form action="../includes/manage_user_roles.inc.php" method="post" id="assign_role_form">
                                 <input type="hidden" name="user_ids" value="" id="input_user_ids">
                                 <input type="hidden" name="new_role" value="">
                                 <input type="hidden" name="assign_role_submit" value="" id="assign_role_submit">
@@ -115,22 +95,22 @@ echo "
 </div>
 
 <!-- Model response message -->
-<?php if (isset($_POST['assign_role_submit'])) : ?>
+<?php if (isset($_SESSION['role_change_succes'])) : ?>
     <?php $num_changed = 0 ?>
     <div id="id01" class="w3-modal">
         <div class="w3-modal-content">
             <div class="w3-container">
                 <span onclick="document.getElementById('id01').style.display='none'" class="w3-button w3-display-topright">&times;</span>
                 <div class="w3-container">
-                    <h5>You succesfully updated the following users</h5>
+                    <h5>You succesfully set the role of the following users</h5>
                     <div class="w3-container w3-responsive">
                         <table class="table striped bordered">
                             <tr>
                                 <th>Name</th>
                                 <th>Email</th>
-                                <th>New Role</th>
+                                <th>Role</th>
                             </tr>
-                            <?php foreach ($selected_users as $user_id) : ?>
+                            <?php foreach ($_SESSION['selected_users'] as $user_id) : ?>
                                 <?php
                                 $user = $contr->get_user_by_id($user_id);
                                 $num_changed += 1
@@ -189,8 +169,10 @@ echo "
         }
     }
 </script>
-</div>
-<?php include('shared/closing_tags.php') ?>
+<?php
+include('shared/closing_tags.php');
+include('../includes/shared/clean_session.inc.php');
+?>
 <script>
     set_active_link("manage_user_roles");
 </script>

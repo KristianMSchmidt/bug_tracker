@@ -30,3 +30,16 @@ Til allersidst: Lav nogle virkelige ticket med de ting, jeg faktisk mangler (men
 
 
  til sidst: løb non-view filerne igennem i browseren og se om de opfører sig ok ... 
+
+
+/* Converting PHP array into js-object. I don't use this yet, but will later */
+
+
+ $json =  json_encode($users);
+echo "
+<script>
+        var users_js = {$json};
+        console.log(users_js)
+</script>";
+
+include('shared/ui_frame.php');
