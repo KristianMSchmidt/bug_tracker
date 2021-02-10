@@ -1,16 +1,18 @@
 <?php
 include_once('../classes/form_handlers/ProjectValidator.class.php');
+include_once('../includes/shared/auto_loader.inc.php');
 
 class CreateProjectHandler extends ProjectValidator
 {
     public function __construct($data)
     {
         $this->new_project = $data;
+        $this->contr = new Controller();
     }
 
     public function process_input()
     {
-        $this->validate_title_and_description('create');
+        $this->validate_title_and_description();
         session_start();
         $_SESSION['data'] = $this->new_project;
         if ($this->errors) {
@@ -25,11 +27,3 @@ class CreateProjectHandler extends ProjectValidator
         }
     }
 }
-
-
-
-/* Note to self:
-   The redirects above are essential for the Post Redirect Get (PRG) design pattern. 
-   Without the redirects, the site works poorly (backbutton causes error messages) and is considered unsafe. 
-
-*/

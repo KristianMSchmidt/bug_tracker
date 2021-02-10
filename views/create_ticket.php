@@ -23,7 +23,6 @@ include('shared/ui_frame.php');
                 <div class="w3-container card-head">
                     <h3>Create Ticket</h3>
                 </div>
-
                 <div class="card-content">
                     <form action="../includes/create_ticket.inc.php" method="POST" class="w3-container">
                         <div class="text-input">

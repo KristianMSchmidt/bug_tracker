@@ -117,9 +117,9 @@ class Controller extends Model
         return $results;
     }
 
-    public function get_ticket_by_title($ticket_name, $project_id)
+    public function get_ticket_by_title($title)
     {
-        $results = $this->db_get_ticket_by_title($ticket_name, $project_id);
+        $results = $this->db_get_ticket_by_title($title);
         return $results;
     }
 

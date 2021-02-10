@@ -1,20 +1,33 @@
 <?php
 include_once('../classes/form_handlers/TicketValidator.class.php');
+include_once('../includes/shared/auto_loader.inc.php');
+
 
 class CreateTicketHandler extends TicketValidator
 {
+
+    public function __construct($post_data)
+    {
+        $this->new_ticket = $post_data;
+        $this->contr = new Controller();
+    }
     public function process_input()
     {
         $this->validate_title_and_description();
         $this->validate_other();
 
-        session_start();
-
-        $_SESSION['data'] = $this->new_ticket;
-
         if (!$this->errors) {
             $this->validate_title_unique('create');
         }
+
+
+        print_r($this->errors);
+        exit();
+
+
+        session_start();
+        $_SESSION['data'] = $this->new_ticket;
+
         if (!$this->errors) {
             $this->create();
             $_SESSION['created_ticket_succes'] = true;
@@ -22,7 +35,7 @@ class CreateTicketHandler extends TicketValidator
             exit();
         } else {
             $_SESSION['errors'] = $this->errors;
-            header("location:../views/create_ticket.php?project_id={$this->new_ticket['project_id']}");
+            header("location:../views/create_ticket.php");
             exit();
         }
     }

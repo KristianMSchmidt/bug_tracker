@@ -1,15 +1,15 @@
 <?php
 include_once('../classes/form_handlers/ProjectValidator.class.php');
+include_once('../includes/shared/auto_loader.inc.php');
 
 class EditProjectHandler extends ProjectValidator
 {
-    private $old_project;
-    private $project_id;
-
-    public function __construct($data)
+    public function __construct($post_data)
     {
-        $this->new_project = $data;
-        $this->project_id = $data['project_id'];
+        $this->new_project = $post_data;
+        $this->project_id = $post_data['project_id'];
+        $this->contr = new Controller();
+        $this->old_project = $this->contr->get_project_by_id($this->project_id);
     }
 
     public function process_input()
@@ -31,7 +31,7 @@ class EditProjectHandler extends ProjectValidator
 
     private function check_all_errors()
     {
-        $this->validate_title_and_description('edit');
+        $this->validate_title_and_description();
         if (!$this->errors) {
             $this->validate_changes_made();
         }

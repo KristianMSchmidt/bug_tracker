@@ -262,13 +262,13 @@ class Model extends Dbh
         return $result;
     }
 
-    protected function db_get_ticket_by_title($ticket_name, $project_id)
+    protected function db_get_ticket_by_title($ticket_title)
     {
-        $sql = "SELECT title 
+        $sql = "SELECT ticket_id, project 
                 FROM tickets 
-                WHERE title = ? AND project =?";
+                WHERE title = ?";
         $stmt = $this->connect()->prepare($sql);
-        $stmt->execute([$ticket_name, $project_id]);
+        $stmt->execute([$ticket_title]);
         $project = $stmt->fetch();
         return $project;
     }
@@ -575,7 +575,7 @@ class Model extends Dbh
             $data['priority_id'],
             $data['status_id'],
             $data['type_id'],
-            $data['description'],
+            $data['project_description'],
             $data['submitter']
         ]);
     }

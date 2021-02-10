@@ -74,7 +74,3 @@ include('shared/closing_tags.php');
 <script>
     set_active_link("my_projects");
 </script>
-
-<?php
-include('../includes/shared/clean_session.inc.php');
-?>

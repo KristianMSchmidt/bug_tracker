@@ -4,17 +4,9 @@ include_once('../classes/form_handlers/TicketAndProjectValidator.class.php');
 class TicketValidator extends TicketAndProjectValidator
 {
     protected $new_ticket;
-    protected $old_ticket;
+    protected $ticket_id = 'undefined';
     protected $errors = [];
     protected $contr;
-
-    public function __construct($post_data)
-    {
-        $this->new_ticket = $post_data['new_ticket'];
-        if (isset($post_data['old_ticket'])) {
-            $this->old_ticket = $post_data['old_ticket'];
-        }
-    }
 
     protected function validate_title_and_description()
     {
@@ -22,16 +14,31 @@ class TicketValidator extends TicketAndProjectValidator
         $this->validate_description($this->new_ticket['description'], 'Ticket');
     }
 
-
-    protected function validate_title_unique($type)
+    protected function validate_title_unique()
     {
-        $title = trim($this->new_ticket['title']);
-        include_once('../includes/shared/auto_loader.inc.php');
-        $contr = new Controller();
-        $this->contr = $contr;
-        $title = $contr->get_ticket_by_title($title, $this->new_ticket['project_id']);
-        if ($title) {
-            if ($type == 'create' || ($type == 'edit' && ($title['title'] !== $this->new_ticket['title']))) {
+        //check if the selected project already has a ticket with this title
+        $potential_other_ticket = $this->contr->get_ticket_by_title(trim($this->new_ticket['title']));
+
+        if ($potential_other_ticket) {
+            /*
+            echo "OTHER TICKET WITH SAME NAME: {$this->new_ticket['title']}";
+            echo "<br>";
+
+            print_r($potential_other_ticket);
+
+            echo "<br>";
+
+            echo "Other ticket project id {$potential_other_ticket['project']}";
+            echo "<br>";
+            echo "This ticket project id {$this->new_ticket['project_id']}";
+            echo "<br>";
+            echo "Other ticket's id: {$potential_other_ticket['ticket_id']}";
+            echo " <br> ";
+            echo " This ticket's id {$this->ticket_id}";
+            //exit();*/
+        }
+        if ($potential_other_ticket) {
+            if (($potential_other_ticket['ticket_id'] !== $this->ticket_id) && ($potential_other_ticket['project'] == $this->new_ticket['project_id'])) {
                 $this->add_error('title', 'The selected project already has a ticket by that name');
             }
         }

@@ -1,10 +1,24 @@
 <?php
 include_once('../classes/form_handlers/TicketValidator.class.php');
+include_once('../includes/shared/auto_loader.inc.php');
+
 
 class EditTicketHandler extends TicketValidator
 {
+    protected $ticket_id;
+
+    public function __construct($post_data)
+    {
+        $this->new_ticket = $post_data;
+        $this->ticket_id = $post_data['ticket_id'];
+        $this->contr = new Controller();
+        $this->old_ticket = $this->contr->get_ticket_by_id($this->ticket_id);
+    }
+
     public function process_input()
     {
+        session_start();
+
         $this->validate_title_and_description();
 
         if (!$this->errors) {
@@ -15,19 +29,28 @@ class EditTicketHandler extends TicketValidator
         }
 
         if (!$this->errors) {
-            $this->redirect();
+            $_SESSION['edit_ticket_succes'] = true;
+            header("location:../views/ticket_details.php?ticket_id={$this->ticket_id}");
+            exit();
+        } else {
+            $_SESSION['errors'] = $this->errors;
+            $_SESSION['data'] = $this->new_ticket;
+            $_SESSION['data']['project_name'] = $this->contr->get_project_name_by_id($this->new_ticket['project_id'])['project_name'];
+            $_SESSION['data']['ticket_priority_name'] = $this->contr->get_priority_name_by_id($this->new_ticket['priority_id'])['ticket_priority_name'];
+            $_SESSION['data']['ticket_type_name'] = $this->contr->get_ticket_type_name_by_id($this->new_ticket['type_id'])['ticket_type_name'];
+            $_SESSION['data']['ticket_status_name'] = $this->contr->get_ticket_status_name_by_id($this->new_ticket['status_id'])['ticket_status_name'];
+            $_SESSION['data']['developer_name'] = $this->contr->get_user_by_id($this->new_ticket['developer_assigned'])['full_name'];
+            header('location:../views/edit_ticket.php');
+            exit();
         }
-
-        return $this->errors;
     }
-
 
     private function attempt_edit()
     {
-        $contr = new Controller();
         $old_ticket = $this->old_ticket;
         $new_ticket = $this->new_ticket;
-        $ticket_id = $this->new_ticket['ticket_id'];
+        $ticket_id = $this->ticket_id;
+        $contr = $this->contr;
 
         $changes = False;
 
@@ -78,17 +101,5 @@ class EditTicketHandler extends TicketValidator
         } else {
             $contr->update_ticket($new_ticket);
         }
-    }
-
-    private function redirect()
-    {
-        echo "              
-            <form action='ticket_details.php' method='post' id='form'>
-                <input type='hidden' name='ticket_id' value='{$this->new_ticket['ticket_id']}'>
-                <input type='hidden' name='show_ticket_edited_succes_message'>
-            </form>
-            <script>
-                document.getElementById('form').submit();
-            </script>";
     }
 }
