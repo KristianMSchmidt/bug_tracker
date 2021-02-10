@@ -3,5 +3,16 @@ include('../classes/form_handlers/LoginHandler.class.php');
 
 if (isset($_POST['login_submit'])) {
     $login_handler = new LoginHandler($_POST);
-    $login_handler->process_input();
+    $errors = $login_handler->do_login();
+}
+
+if (!$errors) {
+    header('location: ../views/dashboard.php');
+    exit();
+} else {
+    session_start();
+    $_SESSION['errors'] = $errors;
+    $_SESSION['post_data'] = $_POST;
+    header('location: ../views/login.php');
+    exit();
 }

@@ -180,33 +180,30 @@ html {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  margin-top: 1em;
+  -webkit-box-pack: stretch;
+      -ms-flex-pack: stretch;
+          justify-content: stretch;
+  -webkit-box-align: stretch;
+      -ms-flex-align: stretch;
+          align-items: stretch;
 }
 
-.ticket_details .wrapper .card {
+.ticket_details .wrapper .left {
   -webkit-box-flex: 1;
       -ms-flex: 1;
           flex: 1;
-  margin-top: 1em;
-}
-
-.ticket_details .wrapper .card.left {
   margin-right: 0.5em;
 }
 
-.ticket_details .wrapper .card.right {
+.ticket_details .wrapper .right {
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
   margin-left: 0.5em;
 }
 
-.ticket_details .grid-container {
-  display: -ms-grid;
-  display: grid;
-  -ms-grid-columns: 1fr 1fr;
-      grid-template-columns: 1fr 1fr;
-  gap: 1em;
-  grid-auto-flow: dense;
-}
-
-.ticket_details li {
+.ticket_details .wrapper li {
   padding-top: 0;
   padding-bottom: 0;
 }
@@ -217,6 +214,12 @@ html {
     -webkit-box-direction: normal;
         -ms-flex-direction: column;
             flex-direction: column;
+  }
+  .ticket_details .wrapper .right {
+    margin-left: 0;
+  }
+  .ticket_details .wrapper .left {
+    margin-right: 0;
   }
 }
 

@@ -13,9 +13,8 @@ class LoginHandler
     $this->data = $post_data;
   }
 
-  public function process_input()
+  public function do_login()
   {
-    session_start();
 
     $this->validate_email();
     $this->validate_pwd();
@@ -23,18 +22,7 @@ class LoginHandler
     if (!$this->errors) {
       $this->login_attempt();
     }
-
-    if (!$this->errors) {
-      // login succesfull
-      header('location: ../views/dashboard.php');
-      exit();
-    } else {
-      //return with error messages and data
-      $_SESSION['errors'] = $this->errors;
-      $_SESSION['post_data'] = $this->data;
-      header('location: ../views/login.php');
-      exit();
-    }
+    return $this->errors;
   }
 
   private function validate_email()

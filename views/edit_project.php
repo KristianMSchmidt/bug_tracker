@@ -7,6 +7,10 @@ if (isset($_GET['show_original'])) {
     $project_id = $_GET['project_id'];
     $_SESSION['data'] = $contr->get_project_by_id($project_id);
 }
+if (!isset($_SESSION['data']['project_id'])) {
+    header("location: my_projects.php");
+}
+
 include('shared/ui_frame.php');
 ?>
 

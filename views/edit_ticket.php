@@ -7,6 +7,7 @@ if (isset($_GET['show_original'])) {
     $ticket_id = $_GET['ticket_id'];
     $_SESSION['data'] = $contr->get_ticket_by_id($ticket_id);
 }
+
 $projects = $contr->get_projects();
 $priorities = $contr->get_priorities();
 $types = $contr->get_ticket_types();

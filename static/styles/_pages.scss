@@ -12,30 +12,29 @@
     }
     .wrapper {
         display: flex;
-        .card {
+        margin-top: 1em;
+        justify-content: stretch;
+        align-items: stretch;
+        .left {
             flex: 1;
-            margin-top: 1em;
-            &.left {
-                margin-right: 0.5em;
-            }
-            &.right {
-                margin-left: 0.5em;
-            }
+            margin-right: 0.5em;
         }
-    }
-    .grid-container {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 1em;
-        grid-auto-flow: dense;
-    }
-    li {
-        padding-top: 0;
-        padding-bottom: 0;
-    }
-    @media only screen and (max-width: 1050px) {
-        .wrapper {
+        .right {
+            flex: 1;
+            margin-left: 0.5em;
+        }
+        li {
+            padding-top: 0;
+            padding-bottom: 0;
+        }
+        @media only screen and (max-width: 1050px) {
             flex-direction: column;
+            .right {
+                margin-left: 0;
+            }
+            .left {
+                margin-right: 0;
+            }
         }
     }
 }

@@ -20,22 +20,6 @@ class TicketValidator extends TicketAndProjectValidator
         $potential_other_ticket = $this->contr->get_ticket_by_title(trim($this->new_ticket['title']));
 
         if ($potential_other_ticket) {
-            /*
-            echo "OTHER TICKET WITH SAME NAME: {$this->new_ticket['title']}";
-            echo "<br>";
-
-            print_r($potential_other_ticket);
-
-            echo "<br>";
-
-            echo "Other ticket project id {$potential_other_ticket['project']}";
-            echo "<br>";
-            echo "This ticket project id {$this->new_ticket['project_id']}";
-            echo "<br>";
-            echo "Other ticket's id: {$potential_other_ticket['ticket_id']}";
-            echo " <br> ";
-            echo " This ticket's id {$this->ticket_id}";
-            //exit();*/
         }
         if ($potential_other_ticket) {
             if (($potential_other_ticket['ticket_id'] !== $this->ticket_id) && ($potential_other_ticket['project'] == $this->new_ticket['project_id'])) {

@@ -43,3 +43,6 @@ echo "
 </script>";
 
 include('shared/ui_frame.php');
+
+
+Løb alle filer igennem "ude fra"(fra fil-oversigten i localhost) - både som logged ind og ikke-logged ind -- og se, om de opfører sig hensigtsmæssigt. 

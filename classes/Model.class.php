@@ -575,7 +575,7 @@ class Model extends Dbh
             $data['priority_id'],
             $data['status_id'],
             $data['type_id'],
-            $data['project_description'],
+            $data['description'],
             $data['submitter']
         ]);
     }

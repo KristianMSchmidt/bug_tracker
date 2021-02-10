@@ -11,7 +11,7 @@ class CreateTicketHandler extends TicketValidator
         $this->new_ticket = $post_data;
         $this->contr = new Controller();
     }
-    public function process_input()
+    public function create_ticket()
     {
         $this->validate_title_and_description();
         $this->validate_other();
@@ -19,25 +19,10 @@ class CreateTicketHandler extends TicketValidator
         if (!$this->errors) {
             $this->validate_title_unique('create');
         }
-
-
-        print_r($this->errors);
-        exit();
-
-
-        session_start();
-        $_SESSION['data'] = $this->new_ticket;
-
         if (!$this->errors) {
             $this->create();
-            $_SESSION['created_ticket_succes'] = true;
-            header("location:../views/project_details.php?project_id={$this->new_ticket['project_id']}");
-            exit();
-        } else {
-            $_SESSION['errors'] = $this->errors;
-            header("location:../views/create_ticket.php");
-            exit();
         }
+        return $this->errors;
     }
 
     private function validate_other()

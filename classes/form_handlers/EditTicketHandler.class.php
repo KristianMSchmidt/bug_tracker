@@ -15,7 +15,7 @@ class EditTicketHandler extends TicketValidator
         $this->old_ticket = $this->contr->get_ticket_by_id($this->ticket_id);
     }
 
-    public function process_input()
+    public function edit_ticket()
     {
         session_start();
 
@@ -27,22 +27,7 @@ class EditTicketHandler extends TicketValidator
         if (!$this->errors) {
             $this->attempt_edit();
         }
-
-        if (!$this->errors) {
-            $_SESSION['edit_ticket_succes'] = true;
-            header("location:../views/ticket_details.php?ticket_id={$this->ticket_id}");
-            exit();
-        } else {
-            $_SESSION['errors'] = $this->errors;
-            $_SESSION['data'] = $this->new_ticket;
-            $_SESSION['data']['project_name'] = $this->contr->get_project_name_by_id($this->new_ticket['project_id'])['project_name'];
-            $_SESSION['data']['ticket_priority_name'] = $this->contr->get_priority_name_by_id($this->new_ticket['priority_id'])['ticket_priority_name'];
-            $_SESSION['data']['ticket_type_name'] = $this->contr->get_ticket_type_name_by_id($this->new_ticket['type_id'])['ticket_type_name'];
-            $_SESSION['data']['ticket_status_name'] = $this->contr->get_ticket_status_name_by_id($this->new_ticket['status_id'])['ticket_status_name'];
-            $_SESSION['data']['developer_name'] = $this->contr->get_user_by_id($this->new_ticket['developer_assigned'])['full_name'];
-            header('location:../views/edit_ticket.php');
-            exit();
-        }
+        return $this->errors;
     }
 
     private function attempt_edit()

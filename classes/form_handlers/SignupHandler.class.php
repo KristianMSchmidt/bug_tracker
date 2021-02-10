@@ -11,7 +11,7 @@ class SignupHandler
     {
         $this->data = $post_data;
     }
-    public function process_input()
+    public function sign_up()
     {
         session_start();
         $this->validate_full_name();
@@ -28,18 +28,7 @@ class SignupHandler
         if (!$this->errors) {
             $this->signup_attempt();
         }
-
-        if (!$this->errors) {
-            // login succesfull
-            header('location: ../views/dashboard.php');
-            exit();
-        } else {
-            //return with error messages and data
-            $_SESSION['errors'] = $this->errors;
-            $_SESSION['post_data'] = $this->data;
-            header('location: ../views/signup.php');
-            exit();
-        }
+        return $this->errors;
     }
 
     private function validate_full_name()
@@ -77,7 +66,7 @@ class SignupHandler
             $this->add_error('pwd', 'Please fill in password');
         } else {
             if (!preg_match('/^\w{5,}$/', $val)) {
-                $this->add_error('pwd', 'password must be alphanumeric & longer than or equals 5 chars');
+                $this->add_error('pwd', 'password must be alphanumeric & longer than or equals to 5 chars');
             }
         }
     }

@@ -1,7 +1,6 @@
 <?php
 class AddCommentHandler
 {
-    private $ticket_id;
     private $comment;
     private $errors = [];
 
@@ -11,20 +10,14 @@ class AddCommentHandler
         $this->ticket_id = $post_data['ticket_id'];
     }
 
-    public function process_input()
+    public function add_comment()
     {
-        session_start();
-
         $this->validate_comment();
-
         if (!$this->errors) {
             $this->save_comment();
-        } else {
-            $_SESSION['errors'] = $this->errors;
         }
-        header("location: ../views/ticket_details.php?ticket_id={$this->ticket_id}");
+        return $this->errors;
     }
-
 
     private function validate_comment()
     {

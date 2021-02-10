@@ -10,20 +10,12 @@ class CreateProjectHandler extends ProjectValidator
         $this->contr = new Controller();
     }
 
-    public function process_input()
+    public function create_project()
     {
         $this->validate_title_and_description();
-        session_start();
-        $_SESSION['data'] = $this->new_project;
-        if ($this->errors) {
-            $_SESSION['errors'] = $this->errors;
-            header('location:../views/create_project.php');
-            exit();
-        } else {
+        if (!$this->errors) {
             $this->contr->create_project($this->new_project);
-            $_SESSION['create_project_succes'] = true;
-            header('location:../views/my_projects.php');
-            exit();
         }
+        return $this->errors;
     }
 }
