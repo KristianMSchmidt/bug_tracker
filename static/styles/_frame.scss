@@ -74,12 +74,14 @@ html {
     .sidebar {
         display: flex;
         flex-direction: column;
+        /* how much of the flexbox space should the sidebar take, relative to main area*/
         flex: 5;
         padding-top: 2em;
-        /* how much of the flexbox space should the sidebar take, relative to main area*/
         /*align-items: center;*/
         background-color: lightsteelblue;
         line-height: 1rem;
+        max-width: 180px;
+        min-width: 170px;
         a {
             padding: 1em 0.7em 1rem 0.7rem;
             /*top, right, bottom, left */
@@ -103,5 +105,49 @@ html {
         padding-left: 1.5em;
         padding-right: 1.5em;
         padding-top: 1.2em;
+    }
+}
+
+@media only screen and (max-width: 1250px) {
+    .my_navbar {
+        flex-direction: column;
+        //height: auto;
+        .main_nav {
+            width: 92%;
+            padding-right: 0;
+            padding-left: 0;
+        }
+    }
+    .sidebar_and_main_container {
+        flex-direction: column;
+        .sidebar {
+            flex: 1;
+            flex-direction: row;
+            align-items: stretch;
+            justify-content: space-evenly;
+            padding-top: 0;
+            max-width: none;
+            a {
+                flex: 1;
+                padding-left: 1em;
+                padding-right: 0em;
+            }
+        }
+    }
+}
+
+@media only screen and (max-width: 340px) {
+    .sidebar_and_main_container {
+        flex-direction: column;
+        .sidebar {
+            flex-direction: column;
+            align-items: stretch;
+        }
+    }
+    .branding_area {
+        display: none;
+    }
+    .hide_xsmall {
+        display: none;
     }
 }

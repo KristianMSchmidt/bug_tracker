@@ -10,6 +10,7 @@ $users = $contr->get_most_busy_users();
 ?>
 
 <?php require('shared/ui_frame.php'); ?>
+
 <div class="main">
     <div class="dashboard">
         <div class="row">
@@ -36,7 +37,7 @@ $users = $contr->get_most_busy_users();
 
 <script>
     var ctx = document.getElementById('type_chart').getContext('2d');
-    var myChart = new Chart(ctx, {
+    var typeChart = new Chart(ctx, {
         type: 'bar',
         data: {
             labels: [<?php foreach ($types as $type) {
@@ -45,7 +46,7 @@ $users = $contr->get_most_busy_users();
 
             datasets: [{
                 label: '# of Tickets',
-                //data: [12, 19, 3, 5],
+
                 data: [<?php foreach ($types as $type) {
                             echo "'{$type['COUNT(tickets.ticket_id)']}',";
                         } ?>],
@@ -76,25 +77,24 @@ $users = $contr->get_most_busy_users();
                         beginAtZero: true
                     }
                 }]
-            }
+            },
         }
     });
 </script>
 
-
 <script>
     var ctx = document.getElementById('status_chart').getContext('2d');
-    var myChart = new Chart(ctx, {
+    var statusChart = new Chart(ctx, {
         type: 'bar',
         data: {
             labels: ['Open', 'Closed', 'In Progress', 'Info Required'],
-            /* labels: [<?php foreach ($statuses as $status) {
-                            echo "'{$status['status']}',";
-                        } ?>],*/
+            /*  [<?php foreach ($statuses as $status) {
+                        echo "'{$status['ticket_status_name']}',";
+                    } ?>], */
 
             datasets: [{
                 label: '# of Tickets',
-                //data: [12, 19, 3, 10],
+
                 data: [<?php foreach ($statuses as $status) {
                             echo "'{$status['count']}',";
                         } ?>],
@@ -136,9 +136,8 @@ $users = $contr->get_most_busy_users();
 
 <script>
     var ctx = document.getElementById('priority_chart').getContext('2d');
-    //  Chart.defaults.global.title.position = 'bottom';
 
-    var myChart = new Chart(ctx, {
+    var priorityChart = new Chart(ctx, {
         type: 'bar',
         data: {
             /* labels: ['Low','Medium', 'High', 'Urgent'], */
@@ -148,7 +147,6 @@ $users = $contr->get_most_busy_users();
 
             datasets: [{
                 label: '# of Tickets',
-                /* data: [12, 19, 3, 5], */
                 data: [<?php foreach ($priorities as $priority) {
                             echo "'{$priority['count']}',";
                         } ?>],
@@ -191,7 +189,7 @@ $users = $contr->get_most_busy_users();
 
 <script>
     var ctx = document.getElementById('top_busy_users_chart').getContext('2d');
-    var myChart = new Chart(ctx, {
+    var Chart = new Chart(ctx, {
         type: 'doughnut',
         data: {
             labels: [<?php foreach ($users as $user) {

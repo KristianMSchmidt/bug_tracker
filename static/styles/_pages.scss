@@ -344,23 +344,38 @@
     display: flex;
     flex-direction: column;
     .card {
-        box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+        flex: 1;
         padding-top: 1em;
         padding-left: 4em;
         padding-right: 4em;
         padding-bottom: 1em;
         margin: 0.5em;
-        flex: 1;
+        canvas {
+            width: 100% !important;
+            height: auto !important;
+        }
     }
-    @media only screen and (max-width: 1100px) {
+    @media only screen and (max-width: 950px) {
         .row {
             flex-direction: column;
         }
         .card {
-            margin-left: 3em;
-            margin-right: 3em;
-            padding-left: 7em;
-            padding-right: 7em;
+            margin-left: 8em;
+            margin-right: 8em;
+            padding-left: 1em;
+            padding-right: 1em;
+        }
+    }
+    @media only screen and (max-width: 800px) {
+        .card {
+            margin-left: 4em;
+            margin-right: 4em;
+        }
+    }
+    @media only screen and (max-width: 600px) {
+        .card {
+            margin-left: 0;
+            margin-right: 0;
         }
     }
 }
