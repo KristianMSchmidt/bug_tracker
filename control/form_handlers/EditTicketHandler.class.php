@@ -1,5 +1,5 @@
 <?php
-include_once('form_handlers/TicketValidator.class.php');
+require_once('form_handlers/TicketValidator.class.php');
 
 class EditTicketHandler extends TicketValidator
 {

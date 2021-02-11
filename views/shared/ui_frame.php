@@ -3,8 +3,8 @@ if (!isset($_SESSION)) {
     session_start();
 }
 if (isset($_SESSION['user_id'])) {
-    include_once('../control/controller.class.php');
-    include_once('../control/shared/human_timing.inc.php');
+    require_once('../control/controller.class.php');
+    require('../control/shared/human_timing.inc.php');
     $contr = new Controller;
     if (isset($_GET['seen'])) {
         $contr->make_notifications_seen($_SESSION['user_id']);

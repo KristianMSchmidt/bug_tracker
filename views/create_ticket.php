@@ -1,6 +1,7 @@
 <?php
-include_once('../control/shared/login_check.inc.php');
-include_once('../control/controller.class.php');
+require('../control/shared/login_check.inc.php');
+require_once('../control/controller.class.php');
+
 $contr = new Controller();
 $projects = $contr->get_projects();
 $priorities = $contr->get_priorities();
@@ -12,7 +13,7 @@ if (isset($_GET['project_id'])) {
     $_SESSION['data']['project_name'] = $contr->get_project_name_by_id($_GET['project_id'])['project_name'];
     $_SESSION['data']['project_id'] = $_GET['project_id'];
 }
-include_once('shared/ui_frame.php');
+require('shared/ui_frame.php');
 ?>
 
 
@@ -131,8 +132,8 @@ include_once('shared/ui_frame.php');
 
 
 <?php
-include_once('../control/shared/clean_session.inc.php');
-include_once('shared/closing_tags.php')
+require_once('../control/shared/clean_session.inc.php');
+require_once('shared/closing_tags.php')
 ?>
 
 <script>

@@ -1,6 +1,6 @@
 <?php
-include_once('form_handlers/ProjectValidator.class.php');
-include_once('../controller.class.php');
+require_once('form_handlers/ProjectValidator.class.php');
+require_once('controller.class.php');
 
 class CreateProjectHandler extends ProjectValidator
 {

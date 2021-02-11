@@ -1018,6 +1018,31 @@ form label {
   background-color: #fcfcfc;
 }
 
+a {
+  color: blue;
+}
+
+.error {
+  color: #f44336;
+  margin: 0;
+  padding: 0;
+}
+
+.entry-info {
+  font-size: 12px;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
 @media only screen and (max-width: 1250px) {
   .my_navbar {
     -webkit-box-orient: vertical;
@@ -1152,30 +1177,5 @@ form label {
 
 .w3-input.title {
   width: 270px;
-}
-
-a {
-  color: blue;
-}
-
-.entry-info {
-  font-size: 12px;
-}
-
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
-
-/* Firefox */
-input[type="number"] {
-  -moz-appearance: textfield;
-}
-
-.error {
-  color: #f44336;
-  margin: 0;
-  padding: 0;
 }
 /*# sourceMappingURL=main.css.map */

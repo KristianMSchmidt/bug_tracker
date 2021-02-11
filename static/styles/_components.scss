@@ -194,3 +194,31 @@ form {
 .non-table-card {
     background-color: #fcfcfc;
 }
+
+a {
+    color: blue;
+}
+
+.error {
+    color: #f44336;
+    margin: 0;
+    padding: 0;
+}
+
+.entry-info {
+    font-size: 12px;
+}
+
+// Hide arrows from number input
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+
+/* Firefox */
+
+input[type="number"] {
+    -moz-appearance: textfield;
+}

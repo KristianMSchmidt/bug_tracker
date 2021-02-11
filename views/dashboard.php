@@ -1,6 +1,6 @@
 <?php
-include_once('../control/shared/login_check.inc.php');
-include_once('../control/controller.class.php');
+require_once('../control/shared/login_check.inc.php');
+require_once('../control/controller.class.php');
 
 $contr = new Controller();
 $priorities = $contr->get_ticket_priority_count();
@@ -9,7 +9,7 @@ $types = $contr->get_tickets_type_count();
 $users = $contr->get_most_busy_users();
 ?>
 
-<?php include_once('shared/ui_frame.php'); ?>
+<?php require('shared/ui_frame.php'); ?>
 <div class="main">
     <div class="dashboard">
         <div class="row">
@@ -240,7 +240,7 @@ $users = $contr->get_most_busy_users();
     });
 </script>
 
-<?php include_once('shared/closing_tags.php') ?>
+<?php require_once('shared/closing_tags.php') ?>
 
 <script>
     set_active_link("dashboard");

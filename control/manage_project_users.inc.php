@@ -1,6 +1,6 @@
 <?php
-include_once('shared/post_check.inc.php');
-include_once('controller.class.php');
+require('shared/post_check.inc.php');
+require_once('controller.class.php');
 session_start();
 $contr = new Controller();
 

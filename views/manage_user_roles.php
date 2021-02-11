@@ -1,10 +1,10 @@
 <?php
-include_once('../control/shared/login_check.inc.php');
-include_once('../control/controller.class.php');
+require('../control/shared/login_check.inc.php');
+require_once('../control/controller.class.php');
 
 $contr = new Controller;
 $users = $contr->get_users();
-include_once('shared/ui_frame.php');
+require('shared/ui_frame.php');
 ?>
 
 <div class="main">
@@ -171,8 +171,8 @@ include_once('shared/ui_frame.php');
     }
 </script>
 <?php
-include_once('shared/closing_tags.php');
-include_once('../control/shared/clean_session.inc.php');
+require_once('shared/closing_tags.php');
+require_once('../control/shared/clean_session.inc.php');
 ?>
 <script>
     set_active_link("manage_user_roles");

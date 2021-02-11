@@ -6,7 +6,7 @@ if (isset($_SESSION['user_id'])) {
     exit();
 }
 ?>
-<?php include_once('shared/ui_frame.php'); ?>
+<?php require('shared/ui_frame.php'); ?>
 
 <div class="main">
     <div class="login">
@@ -47,6 +47,6 @@ if (isset($_SESSION['user_id'])) {
 </div>
 
 <?php
-include_once('shared/closing_tags.php');
-include_once('../control/shared/clean_session.inc.php');
+require_once('shared/closing_tags.php');
+require_once('../control/shared/clean_session.inc.php');
 ?>

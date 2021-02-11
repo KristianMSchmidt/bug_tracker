@@ -1,6 +1,6 @@
 <?php
-include_once('shared/post_check.inc.php');
-include_once('form_handlers/AddCommentHandler.class.php');
+require('shared/post_check.inc.php');
+require_once('form_handlers/AddCommentHandler.class.php');
 session_start();
 
 $comment_handler = new AddCommentHandler($_POST);

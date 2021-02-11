@@ -1,12 +1,12 @@
 <?php
-include_once('../model/model.class.php');
+require_once('../model/model.class.php');
 
 class Controller extends Model
 {
     /*
 
     Public interface for the Model class. 
-
+    
     */
 
     public function get_users()
@@ -72,8 +72,7 @@ class Controller extends Model
 
     public function get_tickets_type_count()
     {
-        $results = $this->db_get_tickets_type_count();
-        return $results;
+        return $this->db_get_tickets_type_count();
     }
 
     public function get_notifications_by_user_id($user_id)

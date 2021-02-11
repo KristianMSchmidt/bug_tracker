@@ -42,10 +42,13 @@ echo "
         console.log(users_js)
 </script>";
 
-include_once('shared/ui_frame.php');
+require('shared/ui_frame.php');
 
 
 Løb alle filer igennem "ude fra"(fra fil-oversigten i localho) - både som logged ind og ikke-logged ind -- og se, om de opfører sig hensigtsmæssigt. 
 
 
 Some of the sql functions could be refactored, e.g.:     //to do: refactor db_get_user_by_property('user_id')
+
+
+Modals: Lav ensartet god padding på dem alle (på én gangen)

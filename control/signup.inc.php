@@ -1,6 +1,6 @@
 <?php
-include_once('shared/post_check.inc.php');
-include_once('form_handlers/SignupHandler.class.php');
+require('shared/post_check.inc.php');
+require_once('form_handlers/SignupHandler.class.php');
 
 $signup_handler = new SignUpHandler($_POST);
 $errors = $signup_handler->sign_up();

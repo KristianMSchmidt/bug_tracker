@@ -1,6 +1,6 @@
 <?php
-include_once('shared/post_check.inc.php');
-include_once('form_handlers/CreateTicketHandler.class.php');
+require('shared/post_check.inc.php');
+require_once('form_handlers/CreateTicketHandler.class.php');
 session_start();
 
 $create_ticket_handler = new CreateTicketHandler($_POST);

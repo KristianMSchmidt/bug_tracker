@@ -1,4 +1,4 @@
-<?php include_once('shared/ui_frame.php'); ?>
+<?php require('shared/ui_frame.php'); ?>
 
 <div class="main">
     <div class="login">
@@ -58,6 +58,6 @@
     </div>
 </div>
 <?php
-include_once('shared/closing_tags.php');
-include_once('../control/shared/clean_session.inc.php');
+require_once('shared/closing_tags.php');
+require_once('../control/shared/clean_session.inc.php');
 ?>

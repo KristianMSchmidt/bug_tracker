@@ -1,6 +1,6 @@
 <?php
-include_once('../control/shared/set_session_vars.inc.php');
-include_once('../controller.class.php');
+require('../control/shared/set_session_vars.inc.php');
+require_once('controller.class.php');
 
 class SignupHandler
 {

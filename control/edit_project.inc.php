@@ -1,6 +1,6 @@
 <?php
-include_once('shared/post_check.inc.php');
-include_once('form_handlers/EditProjectHandler.class.php');
+require('shared/post_check.inc.php');
+require_once('form_handlers/EditProjectHandler.class.php');
 session_start();
 
 $edit_project_handler = new EditProjectHandler($_POST);

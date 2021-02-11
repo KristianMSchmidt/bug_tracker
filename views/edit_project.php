@@ -1,6 +1,6 @@
 <?php
-include_once('../control/shared/login_check.inc.php');
-include_once('../control/controller.class.php');
+require('../control/shared/login_check.inc.php');
+require_once('../control/controller.class.php');
 
 if (isset($_GET['show_original'])) {
     $contr = new Controller();
@@ -11,7 +11,7 @@ if (!isset($_SESSION['data']['project_id'])) {
     header("location: my_projects.php");
 }
 
-include_once('shared/ui_frame.php');
+require('shared/ui_frame.php');
 ?>
 
 <div class="main">
@@ -72,8 +72,8 @@ include_once('shared/ui_frame.php');
 
 
 <?php
-include_once('../control/shared/clean_session.inc.php');
-include_once('shared/closing_tags.php');
+require_once('../control/shared/clean_session.inc.php');
+require_once('shared/closing_tags.php');
 ?>
 <script>
     set_active_link("my_projects");

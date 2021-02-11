@@ -1,7 +1,6 @@
 <?php
-include_once('form_handlers/TicketValidator.class.php');
-include_once('../controller.class.php');
-
+require_once('form_handlers/TicketValidator.class.php');
+require_once('controller.class.php');
 
 class CreateTicketHandler extends TicketValidator
 {

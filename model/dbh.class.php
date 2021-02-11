@@ -12,13 +12,12 @@ class Dbh
     private $dbName = "bugtracker";
     private $charset = 'utf8mb4';
 
-
     protected function connect()
     {
         $dsn = 'mysql:host=' . $this->host . ';dbname=' . $this->dbName . ';charset=' .  $this->charset;
 
-        // Create PDO ('Php Data Object')
-        // NB: thee try->catch is important here, as password might otherwise get shown to users.
+        // Create PDO ('Php Data Object'). 
+        // Try->catch is important here, as password might otherwise get shown to users.
         try {
             $pdo = new PDO($dsn, $this->user, $this->pwd);
         } catch (\PDOException $e) {

@@ -1,12 +1,12 @@
 <?php
-include_once('dbh.class.php');
+require_once('dbh.class.php');
 
 class Model extends Dbh
 {
     /*
-        This is the only class that direcly queries or modifies database. 
 
-        TODO: Refactor a little too shorten code. E.g.: get_user_by_id -> get_user_by(id)
+        This is the only class that direcly queries or modifies the database. 
+
     */
 
     protected function db_get_users()
@@ -454,7 +454,6 @@ class Model extends Dbh
         ]);
     }
 
-
     protected function db_set_project($project_title, $project_description, $project_id)
     {
 
@@ -468,7 +467,6 @@ class Model extends Dbh
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute([$project_title, $project_description, $project_id]);
     }
-
 
     protected function db_get_role_name_by_role_id($role_id)
     {

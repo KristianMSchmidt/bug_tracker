@@ -1,6 +1,6 @@
 <?php
-include_once('../control/shared/login_check.inc.php');
-include_once('shared/ui_frame.php');
+require('../control/shared/login_check.inc.php');
+require('shared/ui_frame.php');
 
 $contr = new Controller();
 $ticket_id = $_GET['ticket_id'];
@@ -174,8 +174,8 @@ $comments = $contr->get_ticket_comments($ticket_id);
 <?php endif ?>
 
 <?php
-include_once('shared/closing_tags.php');
-include_once('../control/shared/clean_session.inc.php');
+require_once('shared/closing_tags.php');
+require_once('../control/shared/clean_session.inc.php');
 ?>
 
 <script>

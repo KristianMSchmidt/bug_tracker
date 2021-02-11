@@ -1,6 +1,6 @@
 <?php
-include_once('../control/shared/login_check.inc.php');
-include_once('shared/ui_frame.php');
+require('../control/shared/login_check.inc.php');
+require('shared/ui_frame.php');
 ?>
 
 <div class="main">
@@ -47,8 +47,8 @@ include_once('shared/ui_frame.php');
 </div>
 
 <?php
-include_once('../control/shared/clean_session.inc.php');
-include_once('shared/closing_tags.php');
+require_once('../control/shared/clean_session.inc.php');
+require_once('shared/closing_tags.php');
 ?>
 <script>
     set_active_link("my_projects");
