@@ -238,7 +238,7 @@ $users = $contr->get_most_busy_users();
     });
 </script>
 
-<?php require_once('shared/closing_tags.php') ?>
+<?php require('shared/closing_tags.php') ?>
 
 <script>
     set_active_link("dashboard");

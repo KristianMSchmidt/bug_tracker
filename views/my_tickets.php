@@ -80,7 +80,7 @@ $tickets = $contr->get_tickets_by_user($_SESSION['user_id'], $_SESSION['role_nam
 </div>
 
 
-<?php require_once('shared/closing_tags.php') ?>
+<?php require('shared/closing_tags.php') ?>
 <script>
     set_active_link("my_tickets")
 </script>

@@ -175,12 +175,11 @@ $tickets = $contr->get_tickets_by_project($project_id);
     </script>
 <?php endif ?>
 
-<?php require_once('shared/closing_tags.php') ?>
+<?php
+require('../control/shared/clean_session.inc.php');
+require('shared/closing_tags.php')
+?>
 
 <script>
     set_active_link("my_projects")
 </script>
-
-<?php
-require_once('../control/shared/clean_session.inc.php');
-?>

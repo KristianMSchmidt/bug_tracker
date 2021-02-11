@@ -11,7 +11,7 @@ if (isset($_GET['project_id'])) {
     $non_project_users = $contr->get_users_not_enrolled_in_project($project_id);
     $project_name = $contr->get_project_name_by_id($project_id)['project_name'];
     echo "<script>var project_id = true</script>";
-} else if (isset($_GET['select_project_submit'])) {
+} elseif (isset($_GET['select_project_submit'])) {
     $select_project_error = 'Select a project';
 }
 
@@ -23,41 +23,42 @@ require('shared/ui_frame.php');
         <div class="manage_project_users">
             <div class="wrapper">
                 <div class="orto-wrapper left top card non-table-card">
-
                     <div class="w3-container">
-                        <h3 class="project">Select Project</h3>
-
+                        <h4 class="project">Select Project</h4>
                         <div class="w3-container">
-                            <form action="" method="get" id="project_form">
+                            <p>All projects in the database</p>
+                            <form action="manage_project_users.php" method="get" id="project_form">
                                 <select class="w3-select" name="project_id">
                                     <?php if (!isset($project_id)) : ?>
-                                        <option value="" disabled selected>Choose Project</option>
+                                        <option value="" disabled selected>Select Project</option>
                                         <?php foreach ($projects as $project) : ?>
-                                            <option value=" <?php echo $project['project_id'] ?>"><?php echo $project['project_name'] ?></option>
+                                            <option value="<?php echo $project['project_id'] ?>"><?php echo $project['project_name'] ?></option>
                                         <?php endforeach ?>
                                     <?php else : ?>
                                         <?php foreach ($projects as $project) : ?>
-                                            <?php if ($project['project_id'] == $_POST['project_id']) : ?>
-                                                <option value=" <?php echo $project['project_id'] ?>" selected> <?php echo $project['project_name'] ?></option>
+                                            <?php if ($project['project_id'] == $_GET['project_id']) : ?>
+                                                <option value="<?php echo $project['project_id'] ?>" selected> <?php echo $project['project_name'] ?></option>
                                             <?php else : ?>
                                                 <option value="<?php echo $project['project_id'] ?>"> <?php echo $project['project_name'] ?></option>
                                             <?php endif ?>
                                         <?php endforeach ?>
                                     <?php endif ?>
                                 </select>
-                                <input type="hidden" name="select_project_submit" value="Select" class="btn-primary" form="project_form">
                             </form>
-                            <p class="error"><?php echo $select_project_error ?? '' ?></p>
-                            <input type="submit" value="Select" class="btn-primary" form="project_form">
+                            <?php if (isset($select_project_error)) : ?>
+                                <p class="error"><?php echo $select_project_error ?></p>
+                            <?php endif ?>
+                            <input type="submit" name="select_project_submit" value="Select" class="btn-primary" form="project_form">
                         </div>
                     </div>
                 </div>
+
                 <div class="orto-wrapper right card ">
                     <div class="w3-container card-head">
                         <h4>Selected Project</h4>
                     </div>
                     <div class="w3-container">
-                        <table class=" table bordered">
+                        <table class="table bordered" style="margin-top:1em;">
                             <tr>
                                 <th>Project ID</th>
                                 <th>Project Name</th>
@@ -68,13 +69,14 @@ require('shared/ui_frame.php');
                                     <td><?php echo $project_id ?></td>
                                     <td><?php echo $project_name ?></td>
                                     <td> <a href="project_details.php?project_id=<?php echo $project_id ?>" class="right">Project Details</a></td>
-                                <?php else : ?>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
                                 <?php endif ?>
                             </tr>
                         </table>
+                        <?php if (!isset($project_id)) : ?>
+                            <div class="empty-table-row">
+                                <p>No selected project</p>
+                            </div>
+                        <?php endif ?>
                     </div>
                 </div>
             </div>
@@ -82,18 +84,21 @@ require('shared/ui_frame.php');
             <div class="wrapper">
                 <!-- Select Enroll -->
                 <div class="orto-wrapper left w3-container card non-table-card">
-                    <h3> Select Users to Enroll</h3>
+                    <h4> Select Users to Enroll</h4>
                     <div class="w3-container">
                         <p>Users not enrolled in project</p>
+                        <input type="text" id="search_field_enroll" class="search_field" placeholder="Search name">
                         <div class="scroll">
                             <?php if (isset($project_id)) : ?>
                                 <?php foreach ($non_project_users as $npu) : ?>
-                                    <p id="available_user_<?php echo $npu['user_id'] ?>" onclick="toggle_users_to_enroll(<?php echo $npu['user_id'] ?>)"><?php echo $npu['full_name'] . ' | ' . $npu['role_name'] ?></p>
+                                    <p id="available_user_<?php echo $npu['user_id'] ?>" class="searchable_enroll" onclick="toggle_users_to_enroll(<?php echo $npu['user_id'] ?>)"><?php echo $npu['full_name'] . ' | ' . $npu['role_name'] ?></p>
                                 <?php endforeach ?>
 
                                 <?php if (count($non_project_users) == 0) : ?>
                                     <p>All users are are currently enrolled in this project</p>
                                 <?php endif ?>
+                            <?php else : ?>
+                                <p style="color:grey;"><i>No project selected</i></p>
                             <?php endif ?>
                         </div>
                         <p id="enroll_error" class="error"></p>
@@ -111,18 +116,22 @@ require('shared/ui_frame.php');
 
                 <!-- Select Disenroll -->
                 <div class="orto-wrapper right w3-container card non-table-card">
-                    <h3> Select Users to Disenroll</h3>
+                    <h4> Select Users to Disenroll</h4>
                     <div class="w3-container">
                         <p>Users enrolled in project</p>
+                        <input type="text" id="search_field_disenroll" class="search_field" placeholder="Search name">
                         <div class="scroll">
                             <?php if (isset($project_id)) : ?>
                                 <?php foreach ($project_users as $pu) : ?>
-                                    <p id="enrolled_user_<?php echo $pu['user_id'] ?>" onclick="toggle_users_to_disenroll(<?php echo $pu['user_id'] ?>)"><?php echo $pu['full_name'] . ' | ' . $pu['role_name'] ?></p>
+                                    <p id="enrolled_user_<?php echo $pu['user_id'] ?>" class="searchable_disenroll" onclick="toggle_users_to_disenroll(<?php echo $pu['user_id'] ?>)"><?php echo $pu['full_name'] . ' | ' . $pu['role_name'] ?></p>
                                 <?php endforeach ?>
                                 <?php if (count($project_users) == 0) : ?>
                                     <p>There are currently no users enrolled in this project</p>
                                 <?php endif ?>
+                            <?php else : ?>
+                                <p style="color:grey;"><i>No project selected</i></p>
                             <?php endif ?>
+
                         </div>
                         <p id="disenroll_error" class="error"></p>
                         <input type="button" value="Disenroll" class="btn-primary" onclick="submit_disenroll_form()">
@@ -138,7 +147,6 @@ require('shared/ui_frame.php');
                         <input type="hidden" name="project_id" value="<?php echo $project_id ?>">
                     </form>
                 <?php endif ?>
-
             </div>
 
             <!-- Modal response message for enrolled users-->
@@ -285,12 +293,37 @@ require('shared/ui_frame.php');
             document.getElementById("disenroll_form").submit();
         }
     }
+
+
+    var search_items_enroll = document.getElementsByClassName("searchable_enroll");
+    document.getElementById("search_field_enroll").addEventListener("input", function() {
+        search_input_enroll = document.getElementById("search_field_enroll").value;
+        for (let item of search_items_enroll) {
+            if (!item.innerHTML.toLowerCase().includes(search_input_enroll.toLowerCase())) {
+                document.getElementById(item.id).style.display = "none";
+            } else {
+                document.getElementById(item.id).style.display = "block";
+            }
+        }
+    });
+
+
+    var search_items_disenroll = document.getElementsByClassName("searchable_disenroll");
+    document.getElementById("search_field_disenroll").addEventListener("input", function() {
+        search_input_disenroll = document.getElementById("search_field_disenroll").value;
+        for (let item of search_items_disenroll) {
+            if (!item.innerHTML.toLowerCase().includes(search_input_disenroll.toLowerCase())) {
+                document.getElementById(item.id).style.display = "none";
+            } else {
+                document.getElementById(item.id).style.display = "block";
+            }
+        }
+    });
 </script>
 
-
 <?php
-require_once('shared/closing_tags.php');
-require_once('../control/shared/clean_session.inc.php');
+require('shared/closing_tags.php');
+require('../control/shared/clean_session.inc.php');
 ?>
 
 <script>

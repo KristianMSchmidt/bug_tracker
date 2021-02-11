@@ -102,5 +102,5 @@ $projects = $contr->get_projects_by_user_id($_SESSION['user_id'], $_SESSION['rol
 </script>
 
 <?php
-require_once('../control/shared/clean_session.inc.php');
+require('../control/shared/clean_session.inc.php');
 ?>

@@ -23,7 +23,8 @@ Til allersidst: Lav nogle virkelige ticket med de ting, jeg faktisk mangler (men
 
  w-3 responsive er faktisk godt ifm tabellerne med megte data... se fx my projecsts og overvej, om det skal implementeres andre steder også 
 
-
+VIGTIGT: Tjek at siderne opfører sig godt i firefox! Eller skriv helt klart, at "I've done most
+testing in google chrome!" 
 
  Æstetik: 
  Hav kun classer, som laver ren form-error checking. De skal ikke redirecte... 
@@ -52,3 +53,9 @@ Some of the sql functions could be refactored, e.g.:     //to do: refactor db_ge
 
 
 Modals: Lav ensartet god padding på dem alle (på én gangen)
+
+
+Ensart mellemrum mellem over blå kanpper på mange project users --- og ud med inline style
+
+clean session -> closing tags?
+overvej at flytte scipts til js -bibliotek--> en js fil pr side

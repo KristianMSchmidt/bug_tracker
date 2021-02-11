@@ -12,15 +12,17 @@ require('shared/ui_frame.php');
         <div class="manage_user_roles">
             <div class="wrapper">
                 <div class="orto-wrapper left card non-table-card">
+
                     <div class="w3-container">
 
                         <h4>Select one or more users </h4>
                         <div class="w3-container">
+                            <input type="text" id="search_field" placeholder="Search name or role" style="width:300px;margin-bottom:5px;">
                             <div class="scroll w2-light-grey">
                                 <?php foreach ($users as $user) : ?>
                                     <?php $demo_users = array("Demo Admin", "Demo PM", "Demo Dev", "Demo Sub") ?>
                                     <?php if (!in_array($user['full_name'], $demo_users)) : ?>
-                                        <p id="<?php echo $user['user_id'] ?>" onclick="toggle_user(<?php echo $user['user_id'] ?>)"><?php echo $user['full_name'] . ' | ' . $user['role_name'] ?></p>
+                                        <p id="<?php echo $user['user_id'] ?>" class="searchable" onclick="toggle_user(<?php echo $user['user_id'] ?>)"><?php echo $user['full_name'] . ' | ' . $user['role_name'] ?></p>
                                     <?php endif ?>
                                 <?php endforeach ?>
                             </div>
@@ -52,8 +54,8 @@ require('shared/ui_frame.php');
                         </div>
 
                     </div>
-                </div>
 
+                </div>
                 <div class="orto-wrapper right card">
                     <div class="w3-container card-head">
                         <h3>Your Personnel</h3>
@@ -169,10 +171,23 @@ require('shared/ui_frame.php');
             document.getElementById("assign_role_form").submit();
         }
     }
+
+    var search_items = document.getElementsByClassName("searchable");
+    document.getElementById("search_field").addEventListener("input", function() {
+        search_input = document.getElementById("search_field").value;
+        for (let item of search_items) {
+            var name = item.innerHTML;
+            if (!name.toLowerCase().includes(search_input.toLowerCase())) {
+                document.getElementById(item.id).style.display = "none";
+            } else {
+                document.getElementById(item.id).style.display = "block";
+            }
+        }
+    });
 </script>
 <?php
-require_once('shared/closing_tags.php');
-require_once('../control/shared/clean_session.inc.php');
+require('shared/closing_tags.php');
+require('../control/shared/clean_session.inc.php');
 ?>
 <script>
     set_active_link("manage_user_roles");

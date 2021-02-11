@@ -85,4 +85,4 @@ if (isset($_SESSION['user_id'])) {
     <input type="hidden" name="login_submit" value="">
 </form>
 
-<?php require_once('shared/closing_tags.php') ?>
+<?php require('shared/closing_tags.php') ?>

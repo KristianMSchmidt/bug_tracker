@@ -34,4 +34,4 @@ require('shared/ui_frame.php');
 </div>
 </div>
 
-<?php require_once('shared/closing_tags.php') ?>
+<?php require('shared/closing_tags.php') ?>

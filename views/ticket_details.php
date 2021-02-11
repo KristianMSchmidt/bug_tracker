@@ -174,8 +174,8 @@ $comments = $contr->get_ticket_comments($ticket_id);
 <?php endif ?>
 
 <?php
-require_once('shared/closing_tags.php');
-require_once('../control/shared/clean_session.inc.php');
+require('shared/closing_tags.php');
+require('../control/shared/clean_session.inc.php');
 ?>
 
 <script>
