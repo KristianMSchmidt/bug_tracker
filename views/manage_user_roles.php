@@ -111,7 +111,7 @@ require('shared/ui_frame.php');
                             <tr>
                                 <th>Name</th>
                                 <th>Email</th>
-                                <th>Role</th>
+                                <th>New Role</th>
                             </tr>
                             <?php foreach ($_SESSION['selected_users'] as $user_id) : ?>
                                 <?php

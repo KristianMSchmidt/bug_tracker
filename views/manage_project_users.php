@@ -86,8 +86,8 @@ require('shared/ui_frame.php');
                 <div class="orto-wrapper left w3-container card non-table-card">
                     <h4> Select Users to Enroll</h4>
                     <div class="w3-container">
-                        <p>Users not enrolled in project</p>
                         <input type="text" id="search_field_enroll" class="search_field" placeholder="Search name">
+                        <p>Available users</p>
                         <div class="scroll">
                             <?php if (isset($project_id)) : ?>
                                 <?php foreach ($non_project_users as $npu) : ?>
@@ -118,8 +118,8 @@ require('shared/ui_frame.php');
                 <div class="orto-wrapper right w3-container card non-table-card">
                     <h4> Select Users to Disenroll</h4>
                     <div class="w3-container">
-                        <p>Users enrolled in project</p>
                         <input type="text" id="search_field_disenroll" class="search_field" placeholder="Search name">
+                        <p>Users already enrolled in project</p>
                         <div class="scroll">
                             <?php if (isset($project_id)) : ?>
                                 <?php foreach ($project_users as $pu) : ?>

@@ -498,7 +498,8 @@ html {
 
 .manage_project_users .search_field {
   width: 300px;
-  margin-bottom: 5px;
+  margin-top: 1.5em;
+  margin-bottom: 1em;
 }
 
 .manage_project_users .btn-primary {
