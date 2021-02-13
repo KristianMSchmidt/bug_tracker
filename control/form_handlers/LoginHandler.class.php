@@ -47,13 +47,12 @@ class LoginHandler
   private function login_attempt()
   {
     $contr = new Controller();
-    $pwd = $this->data['pwd'];
+    $pwd = trim($this->data['pwd']);
     $user = $contr->get_user_by_email($this->data['email']);
     if ($user) {
       $pwd_db = $user['password'];
       $psw_check = password_verify($pwd, $pwd_db);
       if ($psw_check) {
-        //log in user
         set_session_vars($user, $contr);
       } else {
         $this->add_error('login_error', 'Wrong email or password');

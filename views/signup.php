@@ -1,7 +1,7 @@
 <?php require('shared/ui_frame.php'); ?>
 
 <div class="main">
-    <div class="login">
+    <div class="signup">
         <div class="card">
 
             <div class="w3-container card-head w3-center">

@@ -1,9 +1,9 @@
 <?php
 /* How it should work 
 Administrators should see all tickets in the database
-Project Managers should see all tickets to the projects they are enrolled in
-Developers should seea ll tickets that they are assigned to as 'assigned developer'
-Submitters should see all tickets they have submitted 
+Project Managers should see all tickets to the projects they are enrolled in or are submitter 
+Developers should seea ll tickets that they are assigned to as 'assigned developer' OR submitteer (change this)
+Submitters should see all tickets they have submitted (os are dev assigned)
 */
 
 require('../control/shared/login_check.inc.php');
@@ -28,12 +28,8 @@ $tickets = $contr->get_tickets_by_user($_SESSION['user_id'], $_SESSION['role_nam
                     <p>
                         <?php if ($_SESSION['role_name'] == 'Admin') : ?>
                             All tickets in the database
-                        <?php elseif ($_SESSION['role_name'] == "Project Manager") : ?>
-                            All tickets to the projects you manage
-                        <?php elseif ($_SESSION['role_name'] == "Developer") : ?>
-                            All tickets you are assigned to as developer
-                        <?php elseif ($_SESSION['role_name'] == "Submitter") : ?>
-                            All tickets you have submitted
+                        <?php else : ?>
+                            All your tickets in the database
                         <?php endif ?>
                     </p>
                 </div>

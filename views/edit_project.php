@@ -16,7 +16,7 @@ require('shared/ui_frame.php');
 
 <div class="main">
     <?php if (in_array($_SESSION['role_name'], ['Admin', 'Project Manager'])) : ?>
-        <div class="edit_ticket">
+        <div class="edit_project">
             <div class="card">
                 <div class="w3-container card-head">
                     <h3>Edit Project</h3>

@@ -14,12 +14,12 @@ class SignupHandler
     public function sign_up()
     {
         session_start();
+
         $this->validate_full_name();
+
         $this->validate_email();
 
-        if (!$this->errors) {
-            $this->validate_pwd();
-        }
+        $this->validate_pwd();
 
         if (!$this->errors) {
             $this->validate_pwd_repeat();
@@ -28,6 +28,7 @@ class SignupHandler
         if (!$this->errors) {
             $this->signup_attempt();
         }
+
         return $this->errors;
     }
 
@@ -88,12 +89,13 @@ class SignupHandler
     private function signup_attempt()
     {
         $contr = new Controller();
-        $email_taken = $contr->get_user_by_email($this->data['email']);
-        if ($email_taken) {
+        $email_occupied = $contr->get_user_by_email($this->data['email']);
+        if ($email_occupied) {
             $this->add_error('signup_error', 'There is already a user with this email');
         } else {
             $this->data['role_id'] = 3; // New users start out as developers.
-            $contr->set_user(trim($this->data['full_name']), trim($this->data['pwd']), trim($this->data['email']), $this->data['role_id']);
+            $pwd_hashed = password_hash(trim($this->data['pwd']), PASSWORD_DEFAULT);
+            $contr->create_user(trim($this->data['full_name']), $pwd_hashed, trim($this->data['email']), $this->data['role_id']);
             $new_user = $contr->get_user_by_email($this->data['email']);
             set_session_vars($new_user, $contr);
         }

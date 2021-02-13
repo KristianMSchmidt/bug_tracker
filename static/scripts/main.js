@@ -6,20 +6,20 @@ function set_active_link(new_active_item) {
         "manage_project_users",
         "manage_user_roles",
         "my_projects",
-        "my_tickets"
+        "my_tickets",
+        "users_overview"
     ];
 
     sidebar_items.forEach(item => {
-        if (document.body.contains(document.getElementById(item))) {
+        if (document.body.contains(document.getElementById(item + "_link"))) {
             document.getElementById(item + "_link").classList.remove("active");
         }
     });
-
     document.getElementById(new_active_item + "_link").classList.add("active");
 }
 
 window.onclick = function(event) {
-    // Eventlistener used to close down dropdown menus if they are uopn. 
+    // Eventlistener used to close down dropdown menus if they are open. 
     var e = event.target;
     if (!event.target.classList.contains("notifications")) {
         document.getElementById("notifications").classList.remove("show");

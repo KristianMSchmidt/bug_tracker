@@ -5,39 +5,61 @@ require('shared/ui_frame.php');
 $project_id = $_GET['project_id'];
 $contr = new controller;
 $project = $contr->get_project_by_id($project_id);
+$enrollment_start = $contr->get_enrollment_start($project_id, $_SESSION['user_id']);
 $users = $contr->get_project_users($project_id);
 $tickets = $contr->get_tickets_by_project($project_id);
 ?>
 
 <div class="main">
-    <div class="project_details">
-        <div class="card">
-            <div class="w3-container card-head top" style="display:flex;">
+    <div class="user_details">
+        <div class="card top project">
+            <div class="w3-container card-head">
                 <h3>Project Details</h3>
                 <a href="edit_project.php?show_original=&project_id=<?php echo $project_id ?>">Edit Project</a>
             </div>
-            <div class=" w3-container">
+            <div class="w3-container wrapper">
                 <table class="table bordered">
                     <tr>
-                        <th>Project Name</th>
-                        <th>Description</th>
-                        <th>Created By</th>
-                        <th>Created</th>
-                        <th>Last Update</th>
+                        <td class="td-details">Project ID:</td>
+                        <td><?php echo $project_id ?></td>
                     </tr>
                     <tr>
+                        <td>Project Name:</td>
                         <td><?php echo $project['project_name'] ?></td>
+                    </tr>
+
+                    <tr>
+                        <td>Description:</td>
                         <td><?php echo $project['project_description'] ?></td>
+                    </tr>
+
+                    <tr>
+                        <td>Created By</td>
                         <td><?php echo $project['created_by'] ?></td>
-                        <td><?php echo $project['created_at'] ?></th>
+                    </tr>
+                </table>
+                <table class="table bordered">
+
+                    <tr>
+                        <td class="td-details">Created</td>
+                        <td><?php echo $project['created_at'] ?></td>
+
+                    </tr>
+                    <tr>
+                        <td>Last Update</td>
                         <td><?php echo $project['updated_at'] ?></td>
+                    </tr>
+
+                    <tr>
+                        <td>Enrolled since: </td>
+                        <td><?php echo $enrollment_start ?></td>
                     </tr>
                 </table>
             </div>
         </div>
 
-        <div class="bottom">
-            <div class="bottom-left">
+        <div class="wrapper bottom project">
+            <div class="left">
                 <form action="manage_project_users.php" method="get">
                     <input type="hidden" name="project_id" value="<?php echo $project_id; ?>">
                     <input type="submit" name="got_to_manage_project_users" value="MANAGE PROJECT USERS" class="btn-primary">
@@ -75,7 +97,7 @@ $tickets = $contr->get_tickets_by_project($project_id);
                     </div>
                 </div>
             </div>
-            <div class="bottom-right">
+            <div class="right">
                 <form action="create_ticket.php" method="get">
                     <input type="hidden" name="project_id" value="<?php echo $project_id; ?>">
                     <input type="submit" value="ADD TICKET TO PROJECT" class="btn-primary">
@@ -119,18 +141,17 @@ $tickets = $contr->get_tickets_by_project($project_id);
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
 </div>
 
-<!-- Model response message for created ticket -->
+<!-- Modal response message for created ticket -->
 <?php if (isset($_SESSION['created_ticket_succes'])) : ?>
     <div id="id01" class="w3-modal">
         <div class="w3-modal-content">
             <div class="w3-container">
                 <span onclick="document.getElementById('id01').style.display='none'" class="w3-button w3-display-topright">&times;</span>
-                <div class="w3-container">
+                <div class="w3-container modal-one-row-table">
                     <h5>
                         You succesfully created a new ticket for this project:
                     </h5>
@@ -156,11 +177,11 @@ $tickets = $contr->get_tickets_by_project($project_id);
 <?php endif ?>
 
 
-<!-- Model response message for edited project succes -->
+<!-- Modal response message for edited project succes -->
 <?php if (isset($_SESSION['edit_project_succes'])) : ?>
     <div id="id02" class="w3-modal">
         <div class="w3-modal-content">
-            <div class="w3-container">
+            <div class="w3-container modal-one-row-table">
                 <span onclick="document.getElementById('id02').style.display='none'" class="w3-button w3-display-topright">&times;</span>
                 <div class="w3-container">
                     <h5>

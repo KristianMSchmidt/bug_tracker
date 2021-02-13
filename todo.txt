@@ -1,4 +1,15 @@
 
+Manage Project Users :: Vælg projeckt --> projectet bliver automatisk loaded i databasen. Easy Fix. Væk med knappen og submit automatisk. 
+
+Manage User Roles: Updater KUN de roller, som faktisk ændres. Det kan ikke være så svært. I succes-meddelesnsen: Vis også kun de nye roller, eller fortæl
+om "fejlen" -- det andet er utjekket. 
+Updataed by -- stregn hvis aldrig
+
+Kan CSS fra manage project users og mange user roles ikke slåes sammen til en?
+
+Lav oversisgt over alle brugerer --- dette tager no time. 
+
+
 Ui-frame  skal sikres mod direkte adgang....
 Lav åbnlyse post-requests om til get-requests 
 My Ticket -eksperiment: Vælg set ordering... dette burde faktisk være nemt
@@ -59,3 +70,42 @@ Ensart mellemrum mellem over blå kanpper på mange project users --- og ud med 
 
 clean session -> closing tags?
 overvej at flytte scipts til js -bibliotek--> en js fil pr side
+
+
+My Tickets --- Pas på med at man ikke ser få få tickets.... hvad nu, hvis rollen bliver ændret.  Noget af en løsning kunne være, at man kan 
+assigne tickets til alle users - ikke kun "developers". Det giver egentlig fin mening, at den pm også kanvære developer assigned på nogle projekter. 
+
+ensart details -siderne. få fx project detaisl og user details. til at lige ticket detail? også mere respnsive
+
+Overvej: At vise "selected users" på manage project users siden. Ligesom "selected project". Det ville ikke tage lang tid at lave. Det er bare en visning afde valgte
+og toglle() functionen kan bruges
+
+overvej, hvilke links som bør åbnes i nye vinduer
+
+
+$json =  json_encode($users);
+echo "
+<script>
+        var users_js = {$json};
+</script>";
+<script>
+    var users_js_alrt = <?php echo   $json ?>;
+</script>
+
+
+drop order set
+set->created
+set->update
+
+
+Jeg tror, at jeg har glemt at hashe mine passwords...
+
+
+CREATE ACCOUNT-->sendes ikke rigtigt videre?
+
+Demo Users bør ikke vises i oversigten i "manage user roels"
+visningsfeltet i Ḿanage user roles er for smalt.... 
+
+De sider, som kræver et id for at blive vist rigtigt, skal sikres mod uønsket direkte adgang via url (som i edit_ticket)
+
+BUG: ticket history::: den nye developer bliver ikke skrivet ordentligt på... tjek også de andre. 

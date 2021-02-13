@@ -3,7 +3,7 @@ require('../control/shared/login_check.inc.php');
 require('shared/ui_frame.php');
 
 $contr = new controller;
-$projects = $contr->get_projects_by_user_id($_SESSION['user_id'], $_SESSION['role_name']);
+$projects = $contr->get_projects_by_user($_SESSION['user_id'], $_SESSION['role_name']);
 ?>
 
 <div class="main">
@@ -19,13 +19,9 @@ $projects = $contr->get_projects_by_user_id($_SESSION['user_id'], $_SESSION['rol
                 <div class="w3-container">
                     <p>
                         <?php if ($_SESSION['role_name'] == 'Admin') : ?>
-                            All projects in your database
-                        <?php elseif ($_SESSION['role_name'] == "Project Manager") : ?>
-                            All projects you are assigned to
-                        <?php elseif ($_SESSION['role_name'] == "Developer") : ?>
-                            All projects you are assighed to
-                        <?php elseif ($_SESSION['role_name'] == "Submitter") : ?>
-                            All projects your are assigned to
+                            All projects in the database
+                        <?php else : ?>
+                            All projects you are in enrolled in
                         <?php endif ?>
                     </p>
                 </div>
@@ -34,20 +30,21 @@ $projects = $contr->get_projects_by_user_id($_SESSION['user_id'], $_SESSION['rol
                         <tr>
                             <th>Project Name</th>
                             <th>Description</th>
-                            <th>Created By</th>
-                            <th>Created</th>
+                            <th class="hide_if_needed">Created By</th>
+                            <th lass="hide_if_needed"> Created</th>
                             <th>Last Update</th>
+                            <th>Enrolllment start</th>
                         </tr>
                         <?php
-                        //$projects = array();
                         ?>
                         <?php foreach ($projects as $project) : ?>
                             <tr>
                                 <td><?php echo $project['project_name'] ?></td>
                                 <td><?php echo $project['project_description'] ?></td>
-                                <td><?php echo $project['created_by'] ?></td>
-                                <td><?php echo $project['created_at'] ?></th>
+                                <td class="hide_if_needed"><?php echo $project['created_by'] ?></td>
+                                <td class="hide_if_needed"><?php echo $project['created_at'] ?></th>
                                 <td><?php echo $project['updated_at'] ?></td>
+                                <td><?php echo $project['enrollment_start'] ?></td>
                                 <td>
                                     <a href="project_details.php?project_id=<?php echo $project['project_id'] ?>">Details</a>
                                 </td>

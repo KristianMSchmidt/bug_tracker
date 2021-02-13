@@ -59,28 +59,26 @@ if (isset($_SESSION['user_id'])) {
 
 </div>
 
-
 <form class="hidden" id="admin_login" action="../control/login.inc.php" method="POST">
-    <input type="hidden" name="email" value="demoadmin@gmail.com">
+    <input type="hidden" name="email" value="demoadmin@mail.com">
+    <input type="hidden" name="pwd" value="stjerne">
+    <input type="hidden" name="login_submit" value="">
+</form>
+
+<form class="hidden" id="pm_login" action="../control/login.inc.php" method="POST">
+    <input type="hidden" name="email" value="demopm@mail.com">
     <input type="hidden" name="pwd" value="stjerne">
     <input type="hidden" name="login_submit" value="">
 </form>
 
 <form class="hidden" id="dev_login" action="../control/login.inc.php" method="POST">
-    <input type="hidden" name="email" value="demodev@gmail.com">
-    <input type="hidden" name="pwd" value="stjerne">
-    <input type="hidden" name="login_submit" value="">
-</form>
-
-
-<form class="hidden" id="pm_login" action="../control/login.inc.php" method="POST">
-    <input type="hidden" name="email" value="demopm@gmail.com">
+    <input type="hidden" name="email" value="demodev@mail.com">
     <input type="hidden" name="pwd" value="stjerne">
     <input type="hidden" name="login_submit" value="">
 </form>
 
 <form class="hidden" id="submitter_login" action="../control/login.inc.php" method="POST">
-    <input type="hidden" name="email" value="demosub@gmail.com">
+    <input type="hidden" name="email" value="demosub@mail.com">
     <input type="hidden" name="pwd" value="stjerne">
     <input type="hidden" name="login_submit" value="">
 </form>

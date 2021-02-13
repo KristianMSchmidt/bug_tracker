@@ -1,9 +1,9 @@
 /* This script can be used the re-generate the whole database with reasonable content */
 
 SHOW DATABASES;
-DROP DATABASE IF EXISTS test;
-CREATE DATABASE test;   
-USE test;
+DROP DATABASE IF EXISTS bug_tracker;
+CREATE DATABASE bug_tracker;   
+USE bug_tracker;
 
 DROP TABLE IF EXISTS user_roles;
 CREATE TABLE user_roles(
@@ -12,12 +12,10 @@ CREATE TABLE user_roles(
 );
 DESCRIBE user_roles;
 
-INSERT INTO user_roles(role_name) VALUES('Admin');
-INSERT INTO user_roles(role_name) VALUES('Project Manager');
-INSERT INTO user_roles(role_name) VALUES('Developer');
-INSERT INTO user_roles(role_name) VALUES('Submitter');
+INSERT INTO user_roles(role_name) VALUES('Admin'),('Project Manager'), ('Developer'), ('Submitter');
 
 SELECT * from user_roles;
+
 DROP TABLE IF EXISTS users;
 CREATE TABLE users(
     user_id INT AUTO_INCREMENT PRIMARY KEY, 
@@ -26,8 +24,8 @@ CREATE TABLE users(
     email VARCHAR(30) NOT NULL UNIQUE,
     role_id INT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, 
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    updated_by INT,
+    updated_at TIMESTAMP NULL ON UPDATE CURRENT_TIMESTAMP,
+    updated_by INT NULL,
     FOREIGN KEY (role_id) REFERENCES user_roles(role_id) ON DELETE SET NULL ON UPDATE CASCADE,
     FOREIGN KEY (updated_by) REFERENCES users(user_id) ON DELETE SET NULL ON UPDATE CASCADE
 );
@@ -53,7 +51,6 @@ INSERT INTO users(full_name, password, email, role_id) VALUES('Peter Singer', '$
 INSERT INTO users(full_name, password, email, role_id) VALUES('Nick Bostrom','$2y$10$aaHfd.sfetH.JY6JMFkQveIF0UjKl85tBZBE7VGkfWI3vBIXZjPFK','nbostrom@mail.com', 3);
 INSERT INTO users(full_name, password, email, role_id) VALUES('Niels Bohr', '$2y$10$aaHfd.sfetH.JY6JMFkQveIF0UjKl85tBZBE7VGkfWI3vBIXZjPFK','nbohr@gmail.com', 4);
 
-
 INSERT INTO users(full_name, password, email, role_id) VALUES('Demo Admin','$2y$10$aaHfd.sfetH.JY6JMFkQveIF0UjKl85tBZBE7VGkfWI3vBIXZjPFK','demoadmin@gmail.com', 1);
 INSERT INTO users(full_name, password, email, role_id) VALUES('Demo PM','$2y$10$aaHfd.sfetH.JY6JMFkQveIF0UjKl85tBZBE7VGkfWI3vBIXZjPFK','demopm@gmail.com', 2);
 INSERT INTO users(full_name, password, email, role_id) VALUES('Demo Dev','$2y$10$aaHfd.sfetH.JY6JMFkQveIF0UjKl85tBZBE7VGkfWI3vBIXZjPFK','demodev@gmail.com', 3);
@@ -68,7 +65,7 @@ CREATE TABLE projects(
     project_description TINYTEXT, 
     created_by INT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, 
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP NULL ON UPDATE CURRENT_TIMESTAMP,
     FOREIGN KEY (created_by) REFERENCES users(user_id) ON DELETE SET NULL ON UPDATE CASCADE
     );
 DESCRIBE projects;
@@ -174,9 +171,8 @@ CREATE TABLE ticket_types(
     ticket_type_id INT AUTO_INCREMENT PRIMARY KEY,
     ticket_type_name TINYTEXT NOT NULL
 );
-INSERT INTO ticket_types(ticket_type_name) VALUES('Feature Request');
-INSERT INTO ticket_types(ticket_type_name) VALUES('Bug/Error');
-INSERT INTO ticket_types(ticket_type_name) VALUES('Other');
+INSERT INTO ticket_types(ticket_type_name) 
+VALUES('Feature Request'),('Bug/Error'),('Other');
     
 DESCRIBE ticket_types;
 SELECT * FROM ticket_types;
@@ -186,10 +182,9 @@ CREATE TABLE ticket_status_types(
     ticket_status_id INT AUTO_INCREMENT PRIMARY KEY,
     ticket_status_name TINYTEXT NOT NULL
 );
-INSERT INTO ticket_status_types(ticket_status_name) VALUES('Open');
-INSERT INTO ticket_status_types(ticket_status_name) VALUES('Closed');
-INSERT INTO ticket_status_types(ticket_status_name) VALUES('In Progress');
-INSERT INTO ticket_status_types(ticket_status_name) VALUES('More Info Required');
+INSERT INTO ticket_status_types(ticket_status_name) 
+VALUES('Open'), ('Closed'), ('In Progress'), ('More Info Required');
+
 DESCRIBE ticket_status_types;
 SELECT * FROM ticket_status_types;
 
@@ -198,10 +193,9 @@ CREATE TABLE ticket_priorities(
     ticket_priority_id INT AUTO_INCREMENT PRIMARY KEY,
     ticket_priority_name TINYTEXT NOT NULL
 );
-INSERT INTO ticket_priorities(ticket_priority_name) VALUES('Low');
-INSERT INTO ticket_priorities(ticket_priority_name) VALUES('Medium');
-INSERT INTO ticket_priorities(ticket_priority_name) VALUES('High');
-INSERT INTO ticket_priorities(ticket_priority_name) VALUES('Urgent');
+INSERT INTO ticket_priorities(ticket_priority_name) 
+VALUES('Low'),('Medium'),('High'),('Urgent');
+
 DESCRIBE ticket_priorities;
 SELECT * FROM ticket_priorities;
 
@@ -218,7 +212,7 @@ CREATE TABLE tickets(
     description TEXT,
     submitter INT, /* the person submitting the ticket*/
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP NULL ON UPDATE CURRENT_TIMESTAMP,
     FOREIGN KEY (project) REFERENCES projects(project_id) ON DELETE CASCADE ON UPDATE CASCADE, /* if project gets deleted, all tickets will as well */
     FOREIGN KEY (developer_assigned) REFERENCES users(user_id) ON DELETE SET NULL ON UPDATE CASCADE, /*developer can't be deleted, if he is assigned to a ticcket */
     FOREIGN KEY (submitter) REFERENCES users(user_id) ON DELETE SET NULL ON UPDATE CASCADE,
@@ -449,14 +443,14 @@ CREATE TABLE notification_types(
     notification_type tinytext
 );
 
-INSERT INTO notification_types(notification_type) VALUES('role updated'); 
-INSERT INTO notification_types(notification_type) VALUES('assigned to ticket'); 
-INSERT INTO notification_types(notification_type) VALUES('unassigned from ticket'); 
-INSERT INTO notification_types(notification_type) VALUES('enrolled to project'); 
-INSERT INTO notification_types(notification_type) VALUES('disenrolled from project'); 
-INSERT INTO notification_types(notification_type) VALUES('account created'); 
-
-
+INSERT INTO notification_types(notification_type) 
+VALUES
+        ('role updated'),
+        ('assigned to ticket'),
+        ('unassigned from ticket'),
+        ('enrolled to project'),
+        ('disenrolled from project'),
+        ('account created'); 
 
 DROP TABLE IF EXISTS notifications;
 CREATE TABLE notifications(

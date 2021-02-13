@@ -9,10 +9,7 @@ if (isset($_GET['project_id'])) {
     $project_id = $_GET['project_id'];
     $project_users = $contr->get_project_users($project_id);
     $non_project_users = $contr->get_users_not_enrolled_in_project($project_id);
-    $project_name = $contr->get_project_name_by_id($project_id)['project_name'];
-    echo "<script>var project_id = true</script>";
-} elseif (isset($_GET['select_project_submit'])) {
-    $select_project_error = 'Select a project';
+    $selected_project = $contr->get_project_by_id($project_id);
 }
 
 require('shared/ui_frame.php');
@@ -22,53 +19,42 @@ require('shared/ui_frame.php');
     <?php if (in_array($_SESSION['role_name'], ['Admin', 'Project Manager'])) : ?>
         <div class="manage_project_users">
             <div class="wrapper">
-                <div class="orto-wrapper left top card non-table-card">
+                <!-- Select Project -->
+                <div class="orto-wrapper left w3-container card non-table-card">
+                    <h4 class="project">Select Project</h4>
                     <div class="w3-container">
-                        <h4 class="project">Select Project</h4>
-                        <div class="w3-container">
-                            <p>All projects in the database</p>
-                            <form action="manage_project_users.php" method="get" id="project_form">
-                                <select class="w3-select" name="project_id">
-                                    <?php if (!isset($project_id)) : ?>
-                                        <option value="" disabled selected>Select Project</option>
-                                        <?php foreach ($projects as $project) : ?>
-                                            <option value="<?php echo $project['project_id'] ?>"><?php echo $project['project_name'] ?></option>
-                                        <?php endforeach ?>
-                                    <?php else : ?>
-                                        <?php foreach ($projects as $project) : ?>
-                                            <?php if ($project['project_id'] == $_GET['project_id']) : ?>
-                                                <option value="<?php echo $project['project_id'] ?>" selected> <?php echo $project['project_name'] ?></option>
-                                            <?php else : ?>
-                                                <option value="<?php echo $project['project_id'] ?>"> <?php echo $project['project_name'] ?></option>
-                                            <?php endif ?>
-                                        <?php endforeach ?>
-                                    <?php endif ?>
-                                </select>
-                            </form>
-                            <?php if (isset($select_project_error)) : ?>
-                                <p class="error"><?php echo $select_project_error ?></p>
+                        <input type="text" id="search_field_project" class="search_field" placeholder="Search project" value="<?php echo $_GET['search'] ?? '' ?>">
+                        <p>All projects in the database</p>
+                        <div class="scroll">
+                            <?php foreach ($projects as $project) : ?>
+                                <p id="project_<?php echo $project['project_id'] ?>" class="searchable_project" onclick="choose_project(<?php echo $project['project_id'] ?>)"><?php echo $project['project_name'] ?></p>
+                            <?php endforeach ?>
+                            <?php if (count($projects) == 0) : ?>
+                                <p>There are no projects in the database</p>
                             <?php endif ?>
-                            <input type="submit" name="select_project_submit" value="Select" class="btn-primary" form="project_form">
                         </div>
                     </div>
                 </div>
 
-                <div class="orto-wrapper right card ">
+                <!-- Selected Project -->
+                <div class=" orto-wrapper right card ">
                     <div class="w3-container card-head">
                         <h4>Selected Project</h4>
                     </div>
                     <div class="w3-container">
-                        <table class="table bordered" style="margin-top:1em;">
+                        <table class="table bordered table-no-description">
                             <tr>
                                 <th>Project ID</th>
                                 <th>Project Name</th>
+                                <th>Project Description</th>
                                 <th>Details</th>
                             </tr>
                             <tr>
                                 <?php if (isset($project_id)) : ?>
                                     <td><?php echo $project_id ?></td>
-                                    <td><?php echo $project_name ?></td>
-                                    <td> <a href="project_details.php?project_id=<?php echo $project_id ?>" class="right">Project Details</a></td>
+                                    <td><?php echo $selected_project['project_name']; ?></td>
+                                    <td><?php echo $selected_project['project_description']; ?></td>
+                                    <td> <a href="project_details.php?project_id=<?php echo $project_id ?>" class="right" target="_blank"> Project Details</a></td>
                                 <?php endif ?>
                             </tr>
                         </table>
@@ -83,7 +69,7 @@ require('shared/ui_frame.php');
 
             <div class="wrapper">
                 <!-- Select Enroll -->
-                <div class="orto-wrapper left w3-container card non-table-card">
+                <div class="orto-wrapper bottom left w3-container card non-table-card">
                     <h4> Select Users to Enroll</h4>
                     <div class="w3-container">
                         <input type="text" id="search_field_enroll" class="search_field" placeholder="Search name">
@@ -98,24 +84,24 @@ require('shared/ui_frame.php');
                                     <p>All users are are currently enrolled in this project</p>
                                 <?php endif ?>
                             <?php else : ?>
-                                <p style="color:grey;"><i>No project selected</i></p>
+                                <p style="color:grey;"><i>No selected project</i></p>
                             <?php endif ?>
                         </div>
                         <p id="enroll_error" class="error"></p>
                         <input type="button" value="Enroll" class="btn-primary" onclick="submit_enroll_form()">
                     </div>
+                    <?php if (isset($project_id)) : ?>
+                        <!-- Enroll form -->
+                        <form action="../control/manage_project_users.inc.php" method="post" id="enroll_form">
+                            <input type="hidden" name="user_ids" value="" id="users_to_enroll">
+                            <input type="hidden" name="enroll_users_submit" value="Submitted">
+                            <input type="hidden" name="project_id" value="<?php echo $project_id ?>">
+                        </form>
+                    <?php endif ?>
                 </div>
-                <?php if (isset($project_id)) : ?>
-                    <!-- Enroll form -->
-                    <form action="../control/manage_project_users.inc.php" method="post" id="enroll_form">
-                        <input type="hidden" name="user_ids" value="" id="users_to_enroll">
-                        <input type="hidden" name="enroll_users_submit" value="Submitted">
-                        <input type="hidden" name="project_id" value="<?php echo $project_id ?>">
-                    </form>
-                <?php endif ?>
 
                 <!-- Select Disenroll -->
-                <div class="orto-wrapper right w3-container card non-table-card">
+                <div class="orto-wrapper bottom right w3-container card non-table-card">
                     <h4> Select Users to Disenroll</h4>
                     <div class="w3-container">
                         <input type="text" id="search_field_disenroll" class="search_field" placeholder="Search name">
@@ -129,24 +115,24 @@ require('shared/ui_frame.php');
                                     <p>There are currently no users enrolled in this project</p>
                                 <?php endif ?>
                             <?php else : ?>
-                                <p style="color:grey;"><i>No project selected</i></p>
+                                <p style="color:grey;"><i>No selected project</p>
                             <?php endif ?>
 
                         </div>
                         <p id="disenroll_error" class="error"></p>
                         <input type="button" value="Disenroll" class="btn-primary" onclick="submit_disenroll_form()">
                     </div>
+
+                    <?php if (isset($project_id)) : ?>
+
+                        <!-- Disenroll form -->
+                        <form action="../control/manage_project_users.inc.php" method="post" id="disenroll_form">
+                            <input type="hidden" name="user_ids" value="" id="users_to_disenroll">
+                            <input type="hidden" name="disenroll_users_submit" value="Submitted">
+                            <input type="hidden" name="project_id" value="<?php echo $project_id ?>">
+                        </form>
+                    <?php endif ?>
                 </div>
-
-                <?php if (isset($project_id)) : ?>
-
-                    <!-- Disenroll form -->
-                    <form action="../control/manage_project_users.inc.php" method="post" id="disenroll_form">
-                        <input type="hidden" name="user_ids" value="" id="users_to_disenroll">
-                        <input type="hidden" name="disenroll_users_submit" value="Submitted">
-                        <input type="hidden" name="project_id" value="<?php echo $project_id ?>">
-                    </form>
-                <?php endif ?>
             </div>
 
             <!-- Modal response message for enrolled users-->
@@ -165,10 +151,10 @@ require('shared/ui_frame.php');
                                         <tr>
                                             <th>Name</th>
                                             <th>Email</th>
-                                            <th>New Role</th>
+                                            <th>Role</th>
                                         </tr>
                                         <?php foreach ($_SESSION['selected_users'] as $user_id) : ?>
-                                            <?php $user = $contr->get_user_by_id($user_id);
+                                            <?php $user = $contr->get_users($user_id)[0];
                                             $num_changed += 1 ?>
                                             <tr>
                                                 <td><?php echo $user['full_name'] ?></td>
@@ -207,7 +193,7 @@ require('shared/ui_frame.php');
                                             <th>New Role</th>
                                         </tr>
                                         <?php foreach ($_SESSION['selected_users'] as $user_id) : ?>
-                                            <?php $user = $contr->get_user_by_id($user_id);
+                                            <?php $user = $contr->get_users($user_id)[0];
                                             $num_changed += 1 ?>
                                             <tr>
                                                 <td><?php echo $user['full_name'] ?></td>
@@ -227,105 +213,136 @@ require('shared/ui_frame.php');
                 </script>
             <?php endif ?>
 
+        <?php else : ?>
+            <div class="main">Only administrators and project managers have acces to this page. </div>
+        <?php endif ?>
         </div>
 
-    <?php else : ?>
-        <div class="main">Only administrators and project managers have acces to this page. </div>
-    <?php endif ?>
-</div>
+        <script>
+            var selected_users_to_enroll = [];
+            var selected_users_to_disenroll = [];
 
-<script>
-    var selected_users_to_enroll = [];
-    var selected_users_to_disenroll = [];
-
-    function toggle_users_to_enroll(user_id) {
-        if (!document.getElementById('available_user_' + user_id).classList.contains("active")) {
-            document.getElementById('available_user_' + user_id).classList.add("active");
-            selected_users_to_enroll.push(user_id);
-        } else {
-            document.getElementById('available_user_' + user_id).classList.remove("active");
-            selected_users_to_enroll = selected_users_to_enroll.filter(function(value, index, arr) {
-                return value != user_id;
-            })
-        }
-    }
-
-    function toggle_users_to_disenroll(user_id) {
-        if (!document.getElementById('enrolled_user_' + user_id).classList.contains("active")) {
-            document.getElementById('enrolled_user_' + user_id).classList.add("active");
-            selected_users_to_disenroll.push(user_id);
-        } else {
-            document.getElementById('enrolled_user_' + user_id).classList.remove("active");
-            selected_users_to_disenroll = selected_users_to_disenroll.filter(function(value, index, arr) {
-                return value != user_id;
-            })
-        }
-    }
-
-    function submit_enroll_form() {
-        var errors = false;
-        if (typeof(project_id) == 'undefined') {
-            document.getElementById("enroll_error").innerHTML = "No selected project";
-        } else if (selected_users_to_enroll.length == 0) {
-            document.getElementById("enroll_error").innerHTML = "No selected users";
-            errors = true;
-        } else {
-            document.getElementById("enroll_error").innerHTML = "";
-        }
-        if (!errors) {
-            document.getElementById("users_to_enroll").value = JSON.stringify(selected_users_to_enroll);
-            document.getElementById("enroll_form").submit();
-        }
-    }
-
-    function submit_disenroll_form() {
-        var errors = false;
-        if (typeof(project_id) == 'undefined') {
-            document.getElementById("disenroll_error").innerHTML = "No selected project";
-        } else if (selected_users_to_disenroll.length == 0) {
-            document.getElementById("disenroll_error").innerHTML = "No selected users";
-            errors = true;
-        } else {
-            document.getElementById("disenroll_error").innerHTML = "";
-        }
-        if (!errors) {
-            document.getElementById("users_to_disenroll").value = JSON.stringify(selected_users_to_disenroll);
-            document.getElementById("disenroll_form").submit();
-        }
-    }
-
-
-    var search_items_enroll = document.getElementsByClassName("searchable_enroll");
-    document.getElementById("search_field_enroll").addEventListener("input", function() {
-        search_input_enroll = document.getElementById("search_field_enroll").value;
-        for (let item of search_items_enroll) {
-            if (!item.innerHTML.toLowerCase().includes(search_input_enroll.toLowerCase())) {
-                document.getElementById(item.id).style.display = "none";
-            } else {
-                document.getElementById(item.id).style.display = "block";
+            function choose_project(project_id) {
+                search_input = document.getElementById("search_field_project").value;
+                url = 'manage_project_users.php?project_id=' + project_id + '&search=' + search_input;
+                window.location = url;
             }
-        }
-    });
 
 
-    var search_items_disenroll = document.getElementsByClassName("searchable_disenroll");
-    document.getElementById("search_field_disenroll").addEventListener("input", function() {
-        search_input_disenroll = document.getElementById("search_field_disenroll").value;
-        for (let item of search_items_disenroll) {
-            if (!item.innerHTML.toLowerCase().includes(search_input_disenroll.toLowerCase())) {
-                document.getElementById(item.id).style.display = "none";
-            } else {
-                document.getElementById(item.id).style.display = "block";
+            function toggle_users_to_enroll(user_id) {
+                if (!document.getElementById('available_user_' + user_id).classList.contains("active")) {
+                    document.getElementById('available_user_' + user_id).classList.add("active");
+                    selected_users_to_enroll.push(user_id);
+                } else {
+                    document.getElementById('available_user_' + user_id).classList.remove("active");
+                    selected_users_to_enroll = selected_users_to_enroll.filter(function(value, index, arr) {
+                        return value != user_id;
+                    })
+                }
             }
-        }
-    });
-</script>
 
-<?php
-require('shared/closing_tags.php');
-require('../control/shared/clean_session.inc.php');
-?>
+            function toggle_users_to_disenroll(user_id) {
+                if (!document.getElementById('enrolled_user_' + user_id).classList.contains("active")) {
+                    document.getElementById('enrolled_user_' + user_id).classList.add("active");
+                    selected_users_to_disenroll.push(user_id);
+                } else {
+                    document.getElementById('enrolled_user_' + user_id).classList.remove("active");
+                    selected_users_to_disenroll = selected_users_to_disenroll.filter(function(value, index, arr) {
+                        return value != user_id;
+                    })
+                }
+            }
 
-<script>
-    set_active_link("manage_project_users");
-</script>
+            function submit_enroll_form() {
+                var errors = false;
+                if (typeof(project_id) == 'undefined') {
+                    document.getElementById("enroll_error").innerHTML = "No selected project";
+                } else if (selected_users_to_enroll.length == 0) {
+                    document.getElementById("enroll_error").innerHTML = "No selected users";
+                    errors = true;
+                } else {
+                    document.getElementById("enroll_error").innerHTML = "";
+                }
+                if (!errors) {
+                    document.getElementById("users_to_enroll").value = JSON.stringify(selected_users_to_enroll);
+                    document.getElementById("enroll_form").submit();
+                }
+            }
+
+            function submit_disenroll_form() {
+                var errors = false;
+                if (typeof(project_id) == 'undefined') {
+                    document.getElementById("disenroll_error").innerHTML = "No selected project";
+                } else if (selected_users_to_disenroll.length == 0) {
+                    document.getElementById("disenroll_error").innerHTML = "No selected users";
+                    errors = true;
+                } else {
+                    document.getElementById("disenroll_error").innerHTML = "";
+                }
+                if (!errors) {
+                    document.getElementById("users_to_disenroll").value = JSON.stringify(selected_users_to_disenroll);
+                    document.getElementById("disenroll_form").submit();
+                }
+            }
+
+            var search_items_enroll = document.getElementsByClassName("searchable_enroll");
+            document.getElementById("search_field_enroll").addEventListener("input", function() {
+                search_input_enroll = document.getElementById("search_field_enroll").value;
+                for (let item of search_items_enroll) {
+                    if (!item.innerHTML.toLowerCase().includes(search_input_enroll.toLowerCase())) {
+                        document.getElementById(item.id).style.display = "none";
+                    } else {
+                        document.getElementById(item.id).style.display = "block";
+                    }
+                }
+            });
+
+
+            var search_items_disenroll = document.getElementsByClassName("searchable_disenroll");
+            document.getElementById("search_field_disenroll").addEventListener("input", function() {
+                search_input_disenroll = document.getElementById("search_field_disenroll").value;
+                for (let item of search_items_disenroll) {
+                    if (!item.innerHTML.toLowerCase().includes(search_input_disenroll.toLowerCase())) {
+                        document.getElementById(item.id).style.display = "none";
+                    } else {
+                        document.getElementById(item.id).style.display = "block";
+                    }
+                }
+            });
+
+            function thin_out_projects(search_input_project) {
+                for (let item of search_items_project) {
+                    if (!item.innerHTML.toLowerCase().includes(search_input_project.toLowerCase())) {
+                        document.getElementById(item.id).style.display = "none";
+                    } else {
+                        document.getElementById(item.id).style.display = "block";
+                    }
+                }
+            }
+
+            var search_items_project = document.getElementsByClassName("searchable_project");
+            document.getElementById("search_field_project").addEventListener("input", function() {
+                search_input_project = document.getElementById("search_field_project").value;
+                thin_out_projects(search_input_project);
+
+            });
+
+            const urlParams = new URLSearchParams(window.location.search);
+            search = urlParams.get('search');
+            project_id = urlParams.get('project_id')
+            if (search !== null) {
+                thin_out_projects(search);
+            }
+            if (project_id !== null) {
+                document.getElementById('project_' + project_id).classList.add("active");
+            }
+        </script>
+
+        <?php
+        require('shared/closing_tags.php');
+        require('../control/shared/clean_session.inc.php');
+        ?>
+
+        <script>
+            set_active_link("manage_project_users");
+        </script>

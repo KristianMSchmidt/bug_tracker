@@ -1,5 +1,5 @@
 <?php
-require_once('../model/model.class.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/php/repos/bug_tracker/model/model.class.php');
 
 class Controller extends Model
 {
@@ -9,16 +9,10 @@ class Controller extends Model
     
     */
 
-    public function get_users()
+    public function get_users($user_id)
     {
-        $results = $this->db_get_users();
+        $results = $this->db_get_users($user_id);
         return $results;
-    }
-
-    public function get_user_by_id($user_id)
-    {
-        $result = $this->db_get_user_by_id($user_id);
-        return $result;
     }
 
     public function get_user_by_email($email)
@@ -39,16 +33,18 @@ class Controller extends Model
         return $results;
     }
 
-    public function set_user($full_name, $pwd, $email, $role_id)
+    public function create_user($full_name, $pwd, $email, $role_id)
     {
-        $this->db_set_user($full_name, $pwd, $email, $role_id);
+        $this->db_create_user($full_name, $pwd, $email, $role_id);
     }
 
-    public function get_projects_by_user_id($user_id, $role_name)
+    public function get_projects_by_user($user_id, $role_name)
     {
-
-        $results = $this->db_get_projects_by_user_id($user_id, $role_name);
-        return $results;
+        $projects = $this->db_get_projects_by_user($user_id, $role_name);
+        for ($i = 0; $i < count($projects); $i++) {
+            $projects[$i]['enrollment_start'] = $this->get_enrollment_start($projects[$i]['project_id'], $user_id);
+        }
+        return $projects;
     }
 
     public function get_tickets_by_user($user_id, $role_name)
@@ -96,9 +92,9 @@ class Controller extends Model
         $this->db_set_session($user_id, $session_id);
     }
 
-    public function set_role($user_id, $role_id)
+    public function update_role($role_id, $updater, $user_id)
     {
-        $this->db_set_role($user_id, $role_id);
+        $this->db_update_role($role_id, $updater, $user_id);
     }
 
     public function get_project_by_id($project_id)
@@ -253,5 +249,20 @@ class Controller extends Model
     public function check_project_enrollment($project_id, $user_id)
     {
         return $this->db_check_project_enrollment($project_id, $user_id);
+    }
+
+    public function get_enrollment_start($project_id, $user_id)
+    {
+        $result = $this->db_get_enrollment_start($project_id, $user_id);
+
+        if (isset($result[0])) {
+            $enrollment_start = $result[0]['enrollment_start'];
+        } else if (isset($result[1])) {
+            echo "Error: double enrollment -- don't forget to unenroll";
+            exit();
+        } else {
+            $enrollment_start = "Not personally enrolled";
+        }
+        return $enrollment_start;
     }
 }

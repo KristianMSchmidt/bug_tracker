@@ -8,29 +8,45 @@ class Model extends Dbh
         This is the only class that direcly queries or modifies the database. 
 
     */
-
-    protected function db_get_users()
+    protected function db_get_enrollment_start($project_id, $user_id)
     {
-        $sql  = "SELECT * 
-                 FROM users JOIN user_roles
-                 ON users.role_id = user_roles.role_id
-                 ORDER by users.full_name";
-        $stmt = $this->connect()->query($sql);
-        $results = $stmt->fetchAll();
+        $sql = "SELECT
+                project_enrollments.enrollment_start 
+                FROM project_enrollments 
+                WHERE project_id = ? 
+                AND user_id = ?";
 
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute([$project_id, $user_id]);
+        $results = $stmt->fetchAll();
         return $results;
     }
 
-    protected function db_get_user_by_id($user_id)
+    protected function db_get_users($user_id)
     {
-        $sql = "SELECT * 
-             FROM users JOIN user_roles
-             ON users.role_id = user_roles.role_id 
-             WHERE user_id = ?";
-        $stmt = $this->connect()->prepare($sql);
-        $stmt->execute([$user_id]);
-        $result = $stmt->fetch();
-        return $result;
+        $sql  = "SELECT 
+                    users.user_id,
+                    users.full_name,
+                    users.email, 
+                    users.updated_at, 
+                    users.created_at,
+                    user_roles.role_name,
+                    ub.full_name AS updated_by 
+                 FROM users 
+                 JOIN user_roles ON users.role_id = user_roles.role_id
+                 LEFT JOIN users ub ON users.updated_by = ub.user_id"; /* alias necessary */
+
+        if ($user_id !== "all_users") {
+            $sql .= " WHERE users.user_id = ?";
+            $sql .= " ORDER by users.full_name";
+            $stmt = $this->connect()->prepare($sql);
+            $stmt->execute([$user_id]);
+        } else {
+            $sql .= " ORDER by users.full_name";
+            $stmt = $this->connect()->query($sql);
+        }
+        $results = $stmt->fetchAll();
+        return $results;
     }
 
     protected function db_get_user_by_email($email)
@@ -69,8 +85,7 @@ class Model extends Dbh
         return $results;
     }
 
-
-    protected function db_set_user($full_name, $pwd, $email, $role_id)
+    protected function db_create_user($full_name, $pwd, $email, $role_id)
     {
 
         $sql = "INSERT INTO users(full_name, password, email, role_id)
@@ -80,7 +95,7 @@ class Model extends Dbh
         $stmt->execute([$full_name, $pwd, $email, $role_id]);
     }
 
-    protected function db_get_projects_by_user_id($user_id, $role_name)
+    protected function db_get_projects_by_user($user_id, $role_name)
     {
         $sql = "SELECT 
                 projects.project_id,
@@ -126,16 +141,18 @@ class Model extends Dbh
            JOIN ticket_priorities ON tickets.priority = ticket_priorities.ticket_priority_id
            JOIN ticket_types ON tickets.type =ticket_types.ticket_type_id";
 
-        // add conditions to sql depending on user type
+        // Admins should see all tickets
+        // Project Managers, Developers and Submitters should see all tickets where they are submitter or developer assigned
+        // Project Managers should in addition see all ticket to all the projects are part of. 
+
+        if ($role_name !== 'Admin') :
+            $sql .= " WHERE tickets.submitter = {$user_id} OR tickets.developer_assigned = {$user_id}";
+        endif;
+
+
         if ($role_name == 'Project Manager') :
-            $sql .= " WHERE tickets.project IN 
-              (SELECT project_id FROM project_enrollments WHERE user_id = ?)";
-
-        elseif ($role_name == 'Developer') :
-            $sql .= " WHERE tickets.developer_assigned = ?";
-
-        elseif ($role_name == 'Submitter') :
-            $sql .= " WHERE tickets.submitter = ?";
+            $sql .= " OR (tickets.project IN 
+              (SELECT project_id FROM project_enrollments WHERE user_id = {$user_id}))";
 
         endif;
 
@@ -143,11 +160,7 @@ class Model extends Dbh
 
         $stmt = $this->connect()->prepare($sql);
 
-        if ($role_name == 'Admin') :
-            $stmt->execute();
-        else :
-            $stmt->execute([$user_id]);
-        endif;
+        $stmt->execute();
 
         $results = $stmt->fetchAll();
 
@@ -232,11 +245,14 @@ class Model extends Dbh
         $stmt->execute([$user_id, $session_id]);
     }
 
-    protected function db_set_role($user_id, $role_id)
+    protected function db_update_role($role_id, $updater, $user_id)
     {
-        $sql = "UPDATE users SET role_id = ? WHERE user_id = ?";
+        $sql = "UPDATE users SET
+                role_id = ?,
+                updated_by = ? 
+                WHERE user_id = ?";
         $stmt = $this->connect()->prepare($sql);
-        $stmt->execute([$role_id, $user_id]);
+        $stmt->execute([$role_id, $updater, $user_id]);
     }
 
     protected function db_get_project_by_id($project_id)
@@ -475,7 +491,7 @@ class Model extends Dbh
                 WHERE role_id = ?";
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute([$role_id]);
-        $role_name = $stmt->fetch();
+        $role_name = $stmt->fetch()['role_name'];
         return $role_name;
     }
 

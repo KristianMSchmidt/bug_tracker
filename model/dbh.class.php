@@ -9,7 +9,7 @@ class Dbh
     private $host = "localhost";
     private $user = "kimarokko";
     private $pwd = "stjerne";
-    private $dbName = "bugtracker";
+    private $dbName = "bug_tracker";
     private $charset = 'utf8mb4';
 
     protected function connect()

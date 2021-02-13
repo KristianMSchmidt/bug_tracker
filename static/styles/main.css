@@ -229,7 +229,59 @@ html {
 }
 
 /* Style of individual pages, i.e. the content of the main area */
-.ticket_details .card-head.top {
+.users .wrapper,
+.my_projects .wrapper,
+.my_tickets .wrapper {
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+}
+
+.users .wrapper .card,
+.my_projects .wrapper .card,
+.my_tickets .wrapper .card {
+  margin-bottom: 2em;
+  padding-bottom: 1em;
+}
+
+.users .wrapper .btn-primary,
+.my_projects .wrapper .btn-primary,
+.my_tickets .wrapper .btn-primary {
+  margin-bottom: 0.5em;
+}
+
+@media only screen and (max-width: 750px) {
+  .users .wrapper,
+  .my_projects .wrapper,
+  .my_tickets .wrapper {
+    width: 100%;
+  }
+  .users .wrapper td,
+  .users .wrapper th,
+  .my_projects .wrapper td,
+  .my_projects .wrapper th,
+  .my_tickets .wrapper td,
+  .my_tickets .wrapper th {
+    font-size: 12px;
+  }
+  .users .hide_if_needed,
+  .my_projects .hide_if_needed,
+  .my_tickets .hide_if_needed {
+    display: none;
+  }
+}
+
+@media only screen and (max-width: 485px) {
+  .users .hide_last,
+  .my_projects .hide_last,
+  .my_tickets .hide_last {
+    display: none;
+  }
+}
+
+.user_details .top .card-head,
+.ticket_details .top .card-head,
+.project_details .top .card-head {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -242,11 +294,21 @@ html {
   margin-bottom: 1em;
 }
 
-.ticket_details .card-head.top h3 {
+.user_details .top .card-head h3,
+.ticket_details .top .card-head h3,
+.project_details .top .card-head h3 {
   margin-right: auto;
 }
 
-.ticket_details .wrapper {
+.user_details .top .td-details,
+.ticket_details .top .td-details,
+.project_details .top .td-details {
+  width: 165px;
+}
+
+.user_details .wrapper,
+.ticket_details .wrapper,
+.project_details .wrapper {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -259,49 +321,91 @@ html {
           align-items: stretch;
 }
 
-.ticket_details .wrapper .left {
+.user_details .wrapper form,
+.ticket_details .wrapper form,
+.project_details .wrapper form {
+  margin-bottom: 0.5em;
+}
+
+.user_details .wrapper.bottom,
+.ticket_details .wrapper.bottom,
+.project_details .wrapper.bottom {
+  margin-bottom: 2em;
+  margin-top: 0;
+}
+
+.user_details .wrapper .left,
+.ticket_details .wrapper .left,
+.project_details .wrapper .left {
   -webkit-box-flex: 1;
       -ms-flex: 1;
           flex: 1;
   margin-right: 0.5em;
+  margin-top: 1em;
 }
 
-.ticket_details .wrapper .right {
+.user_details .wrapper .right,
+.ticket_details .wrapper .right,
+.project_details .wrapper .right {
   -webkit-box-flex: 1;
       -ms-flex: 1;
           flex: 1;
   margin-left: 0.5em;
+  margin-top: 1em;
 }
 
-.ticket_details .wrapper li {
+.user_details .wrapper li,
+.ticket_details .wrapper li,
+.project_details .wrapper li {
   padding-top: 0;
   padding-bottom: 0;
 }
 
+.user_details .wrapper .btn-primary,
+.ticket_details .wrapper .btn-primary,
+.project_details .wrapper .btn-primary {
+  margin-top: 0;
+}
+
 @media only screen and (max-width: 1050px) {
-  .ticket_details .wrapper {
+  .user_details .wrapper,
+  .ticket_details .wrapper,
+  .project_details .wrapper {
     -webkit-box-orient: vertical;
     -webkit-box-direction: normal;
         -ms-flex-direction: column;
             flex-direction: column;
   }
-  .ticket_details .wrapper .right {
+  .user_details .wrapper .right,
+  .ticket_details .wrapper .right,
+  .project_details .wrapper .right {
     margin-left: 0;
   }
-  .ticket_details .wrapper .left {
+  .user_details .wrapper .left,
+  .ticket_details .wrapper .left,
+  .project_details .wrapper .left {
     margin-right: 0;
   }
 }
 
-.edit_ticket .card {
+.edit_ticket .card,
+.edit_project .card,
+.create_project .card,
+.create_ticket .card {
   padding-bottom: 1em;
 }
 
-.edit_ticket .card label {
+.edit_ticket .card label,
+.edit_project .card label,
+.create_project .card label,
+.create_ticket .card label {
   margin-bottom: 1em;
 }
 
-.edit_ticket .card .card-head {
+.edit_ticket .card .card-head,
+.edit_project .card .card-head,
+.create_project .card .card-head,
+.create_ticket .card .card-head {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -314,11 +418,17 @@ html {
   margin-bottom: 1em;
 }
 
-.edit_ticket .card .card-head h3 {
+.edit_ticket .card .card-head h3,
+.edit_project .card .card-head h3,
+.create_project .card .card-head h3,
+.create_ticket .card .card-head h3 {
   margin-right: auto;
 }
 
-.edit_ticket .card .card-content .text-input {
+.edit_ticket .card .card-content .text-input,
+.edit_project .card .card-content .text-input,
+.create_project .card .card-content .text-input,
+.create_ticket .card .card-content .text-input {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -328,7 +438,10 @@ html {
           flex-direction: row;
 }
 
-.edit_ticket .card .card-content .other-input {
+.edit_ticket .card .card-content .other-input,
+.edit_project .card .card-content .other-input,
+.create_project .card .card-content .other-input,
+.create_ticket .card .card-content .other-input {
   margin-top: 1.5em;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -339,7 +452,10 @@ html {
           flex-direction: row;
 }
 
-.edit_ticket .card .card-content .left {
+.edit_ticket .card .card-content .left,
+.edit_project .card .card-content .left,
+.create_project .card .card-content .left,
+.create_ticket .card .card-content .left {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -354,7 +470,10 @@ html {
   padding-left: 1em;
 }
 
-.edit_ticket .card .card-content .right {
+.edit_ticket .card .card-content .right,
+.edit_project .card .card-content .right,
+.create_project .card .card-content .right,
+.create_ticket .card .card-content .right {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -370,13 +489,19 @@ html {
 }
 
 @media only screen and (max-width: 1050px) {
-  .edit_ticket .card .card-content .text-input {
+  .edit_ticket .card .card-content .text-input,
+  .edit_project .card .card-content .text-input,
+  .create_project .card .card-content .text-input,
+  .create_ticket .card .card-content .text-input {
     -webkit-box-orient: vertical;
     -webkit-box-direction: normal;
         -ms-flex-direction: column;
             flex-direction: column;
   }
-  .edit_ticket .card .card-content .other-input {
+  .edit_ticket .card .card-content .other-input,
+  .edit_project .card .card-content .other-input,
+  .create_project .card .card-content .other-input,
+  .create_ticket .card .card-content .other-input {
     -webkit-box-orient: vertical;
     -webkit-box-direction: normal;
         -ms-flex-direction: column;
@@ -384,164 +509,15 @@ html {
   }
 }
 
-.project_details {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-}
-
-.project_details .card-head.top {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  -webkit-box-pack: end;
-      -ms-flex-pack: end;
-          justify-content: flex-end;
-}
-
-.project_details .card-head.top h3 {
-  margin-right: auto;
-}
-
-.project_details .btn-primary {
-  margin-top: 2em;
-  margin-bottom: 1em;
-}
-
-.project_details .bottom {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: row;
-          flex-direction: row;
-}
-
-.project_details .bottom-left {
-  padding-top: 1em;
-  margin-right: 1em;
-  -webkit-box-flex: 2;
-      -ms-flex: 2;
-          flex: 2;
-}
-
-.project_details .bottom-right {
-  padding-top: 1em;
-  -webkit-box-flex: 3;
-      -ms-flex: 3;
-          flex: 3;
-}
-
-@media only screen and (max-width: 1050px) {
-  .project_details .bottom {
-    -webkit-box-orient: vertical;
-    -webkit-box-direction: normal;
-        -ms-flex-direction: column;
-            flex-direction: column;
-  }
-  .project_details .bottom-left {
-    margin-right: 0;
-  }
-}
-
-.manage_project_users .wrapper {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  padding-bottom: 1em;
-}
-
-.manage_project_users .orto-wrapper {
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-  padding-bottom: 2em;
-}
-
-.manage_project_users .orto-wrapper.left {
-  margin-right: 0.5em;
-  -webkit-box-flex: 1;
-      -ms-flex: 1;
-          flex: 1;
-}
-
-.manage_project_users .orto-wrapper.left.top .w3-select {
-  min-width: 300px;
-  max-width: -webkit-fit-content;
-  max-width: -moz-fit-content;
-  max-width: fit-content;
-}
-
-.manage_project_users .orto-wrapper.right {
-  margin-left: 0.5em;
-  -webkit-box-flex: 1;
-      -ms-flex: 1;
-          flex: 1;
-}
-
-.manage_project_users p {
-  margin-top: 0;
-}
-
-.manage_project_users form {
-  margin-bottom: 0;
-}
-
-.manage_project_users .search_field {
-  width: 300px;
-  margin-top: 1.5em;
-  margin-bottom: 1em;
-}
-
-.manage_project_users .btn-primary {
-  margin-top: 5px;
-  width: 300px;
-}
-
-.manage_project_users .scroll {
-  background-color: #f9f9f9;
-}
-
-.manage_project_users p {
-  margin-bottom: 0;
-}
-
-.manage_project_users .card {
-  margin-top: 0;
-}
-
-@media only screen and (max-width: 820px) {
-  .manage_project_users .wrapper {
-    -webkit-box-orient: vertical;
-    -webkit-box-direction: normal;
-        -ms-flex-direction: column;
-            flex-direction: column;
-    padding-bottom: 0em;
-  }
-  .manage_project_users .orto-wrapper {
-    margin-bottom: 1.5em;
-  }
-  .manage_project_users .orto-wrapper.right, .manage_project_users .orto-wrapper.left {
-    margin-left: 0;
-    margin-right: 0;
-  }
-}
-
+.manage_project_users .wrapper,
 .manage_user_roles .wrapper {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  padding-bottom: 1em;
 }
 
+.manage_project_users .orto-wrapper,
 .manage_user_roles .orto-wrapper {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -550,44 +526,25 @@ html {
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
+  padding-bottom: 2em;
 }
 
+.manage_project_users .orto-wrapper.left,
 .manage_user_roles .orto-wrapper.left {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-  height: -webkit-fit-content;
-  height: -moz-fit-content;
-  height: fit-content;
+  margin-right: 0.5em;
   -webkit-box-flex: 1;
       -ms-flex: 1;
           flex: 1;
-  margin-right: 0.5em;
 }
 
-.manage_user_roles .orto-wrapper.left .card {
-  padding: 1em;
+.manage_project_users .orto-wrapper.left.bottom,
+.manage_user_roles .orto-wrapper.left.bottom {
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
 }
 
-.manage_user_roles .orto-wrapper.left .w3-select {
-  min-width: 300px;
-  max-width: -webkit-fit-content;
-  max-width: -moz-fit-content;
-  max-width: fit-content;
-}
-
-.manage_user_roles .orto-wrapper.left h3 {
-  margin-bottom: 0.2em;
-}
-
-.manage_user_roles .orto-wrapper.left .w3-container {
-  margin-bottom: 1em;
-}
-
+.manage_project_users .orto-wrapper.right,
 .manage_user_roles .orto-wrapper.right {
   margin-left: 0.5em;
   -webkit-box-flex: 2;
@@ -595,16 +552,66 @@ html {
           flex: 2;
 }
 
-.manage_user_roles .btn-primary {
-  width: 300px;
+.manage_project_users .orto-wrapper.right.bottom,
+.manage_user_roles .orto-wrapper.right.bottom {
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+}
+
+.manage_project_users .orto-wrapper.right.bottom,
+.manage_user_roles .orto-wrapper.right.bottom {
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+}
+
+.manage_project_users p,
+.manage_user_roles p {
   margin-top: 0;
 }
 
+.manage_project_users form,
+.manage_user_roles form {
+  margin-bottom: 0;
+}
+
+.manage_project_users input,
+.manage_user_roles input {
+  width: 300px;
+  margin-bottom: 5px;
+}
+
+.manage_project_users .search_field,
+.manage_user_roles .search_field {
+  width: 300px;
+  margin-top: 0em;
+  margin-bottom: 0.7em;
+}
+
+.manage_project_users .w3-select,
+.manage_user_roles .w3-select {
+  width: 300px;
+}
+
+.manage_project_users .btn-primary,
+.manage_user_roles .btn-primary {
+  margin-top: 5px;
+  width: 300px;
+}
+
+.manage_project_users .scroll,
 .manage_user_roles .scroll {
   background-color: #f9f9f9;
 }
 
-@media only screen and (max-width: 870px) {
+.manage_project_users p,
+.manage_user_roles p {
+  margin-bottom: 0;
+}
+
+@media only screen and (max-width: 820px) {
+  .manage_project_users .wrapper,
   .manage_user_roles .wrapper {
     -webkit-box-orient: vertical;
     -webkit-box-direction: normal;
@@ -612,16 +619,21 @@ html {
             flex-direction: column;
     padding-bottom: 0em;
   }
+  .manage_project_users .orto-wrapper,
   .manage_user_roles .orto-wrapper {
     margin-bottom: 1.5em;
   }
-  .manage_user_roles .orto-wrapper.right, .manage_user_roles .orto-wrapper.left {
+  .manage_project_users .orto-wrapper.right, .manage_project_users .orto-wrapper.left,
+  .manage_user_roles .orto-wrapper.right,
+  .manage_user_roles .orto-wrapper.left {
     margin-left: 0;
     margin-right: 0;
   }
 }
 
-.profile_settings {
+.profile_settings,
+.login,
+.signup {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -637,87 +649,36 @@ html {
           justify-content: center;
 }
 
-.profile_settings .card {
-  min-width: 500px;
+.profile_settings .card,
+.login .card,
+.signup .card {
+  width: 50%;
   text-align: center;
   padding-bottom: 1em;
+  margin-top: 1em;
+  margin-bottom: 1em;
+  margin-bottom: 1em;
 }
 
-.profile_settings table {
+.profile_settings table,
+.login table,
+.signup table {
   padding-top: 1em;
   padding-bottom: 1em;
 }
 
-.login {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-}
-
-.login .card {
-  width: 50%;
-  margin-top: 1em;
-  margin-bottom: 1em;
-  padding-bottom: 1em;
-  margin-bottom: 1em;
-}
-
-.login p {
+.profile_settings p,
+.login p,
+.signup p {
   margin-top: 0.5em;
   margin-bottom: 0.5em;
 }
 
 @media only screen and (max-width: 900px) {
-  .login .card {
-    width: 60%;
-  }
-}
-
-.my_projects .wrapper,
-.my_tickets .wrapper {
-  -webkit-box-flex: 1;
-      -ms-flex: 1;
-          flex: 1;
-}
-
-.my_projects .wrapper .card,
-.my_tickets .wrapper .card {
-  margin-top: 1em;
-  margin-bottom: 2em;
-  padding-bottom: 1em;
-}
-
-.my_projects .wrapper .btn-primary,
-.my_tickets .wrapper .btn-primary {
-  margin-top: 0;
-}
-
-@media only screen and (max-width: 750px) {
-  .my_tickets .wrapper {
-    width: 100%;
-  }
-  .my_tickets .wrapper td,
-  .my_tickets .wrapper th {
-    font-size: 12px;
-  }
-  .my_tickets .hide_if_needed {
-    display: none;
-  }
-}
-
-@media only screen and (max-width: 485px) {
-  .my_tickets .hide_last {
-    display: none;
+  .profile_settings .card,
+  .login .card,
+  .signup .card {
+    width: 90%;
   }
 }
 
@@ -1017,6 +978,14 @@ html {
 
 form label {
   color: grey;
+}
+
+.modal-one-row-table {
+  padding-bottom: 2em;
+}
+
+.table-no-description {
+  margin-top: 1em;
 }
 
 .scroll {

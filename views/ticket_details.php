@@ -12,65 +12,63 @@ $comments = $contr->get_ticket_comments($ticket_id);
 
 <div class="main">
     <div class="ticket_details">
-        <div class="card">
-            <div class="w3-container card-head top">
+        <div class="card top">
+            <div class="w3-container card-head">
                 <h3>Ticket Details</h3>
-                <a href="edit_ticket.php?ticket_id=<?php echo $ticket_id ?>&show_original=true"> Edit Ticket</a>
+                <a href="edit_ticket.php?ticket_id=<?php echo $ticket_id ?>&show_original=true">Edit Ticket</a>
             </div>
-            <div class="w3-container w3-responsive wrapper">
-                <table class="table w3-small bordered">
+            <div class="w3-container wrapper">
+                <table class="table bordered">
                     <tr>
-                        <td style="width:30%">Ticket ID</td>
+                        <td class="td-details">Ticket ID:</td>
                         <td><?php echo $ticket_id ?></td>
                     </tr>
-
                     <tr>
-                        <td>Ticket name</td>
+                        <td>Ticket name:</td>
                         <td><?php echo $ticket['title'] ?></td>
                     </tr>
-
                     <tr>
-                        <td>Description</td>
-                        <td><?php echo $ticket['description'] ?></td>
-                    </tr>
-                    <tr>
-                        <td>Project</td>
+                        <td>Project:</td>
                         <td><a href="project_details.php?project_id=<?php echo $ticket['project_id'] ?>"><?php echo $ticket['project_name'] ?> </a></td>
                     </tr>
                     <tr>
-                        <td>Assigned Developer</td>
+                        <td>Assigned Developer:</td>
                         <td><?php echo $ticket['developer_name'] ?></td>
                     </tr>
                     <tr>
-                        <td>Submitter</td>
+                        <td>Submitter:</td>
                         <td><?php echo $ticket['submitter_name'] ?></td>
                     </tr>
-                </table>
-                <table class=" table w3-small bordered">
                     <tr>
-                        <td style="width:30%">Priority</td>
+                        <td>Description:</td>
+                        <td><?php echo $ticket['description'] ?></td>
+                    </tr>
+                </table>
+                <table class="table bordered">
+                    <tr>
+                        <td class="td-details">Priority:</td>
                         <td><?php echo $ticket['ticket_priority_name'] ?></td>
                     </tr>
                     <tr>
-                        <td>Type</td>
+                        <td>Type:</td>
                         <td><?php echo $ticket['ticket_type_name'] ?></td>
                     </tr>
                     <tr>
-                        <td>Status</td>
+                        <td>Status:</td>
                         <td><?php echo $ticket['ticket_status_name'] ?></td>
                     </tr>
                     <tr>
-                        <td>Created</td>
+                        <td>Created:</td>
                         <td><?php echo $ticket['created_at'] ?></td>
                     </tr>
                     <tr>
-                        <td>Last update</td>
+                        <td>Last update:</td>
                         <td><?php echo $ticket['updated_at'] ?></td>
                     </tr>
                 </table>
             </div>
         </div>
-        <div class="wrapper">
+        <div class="wrapper bottom">
             <div class="left">
                 <div class="card">
                     <div class="w3-container card-head">
@@ -78,7 +76,7 @@ $comments = $contr->get_ticket_comments($ticket_id);
                     </div>
                     <div class="w3-container">
                         <h5>Add a comment?</h5>
-                        <div class="w3-container" style="padding-bottom:0.6em;">
+                        <div class="w3-container">
                             <form action="../control/ticket_details.inc.php" method="post">
                                 <input style="width:80%" type="text" name="new_comment" maxlength="200" placeholder="Write a comment on the ticket">
                                 <input type="hidden" name="ticket_id" value="<?php echo $ticket_id ?>">
@@ -121,7 +119,7 @@ $comments = $contr->get_ticket_comments($ticket_id);
                     </div>
                     <h5 class="w3-container">All history information for this ticket</h5>
 
-                    <div class="w3-container w3-responsive">
+                    <div class="w3-container">
                         <table class="table w3-small striped bordered">
                             <tr>
                                 <th>Property</th>
