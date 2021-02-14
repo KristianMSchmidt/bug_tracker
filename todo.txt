@@ -72,3 +72,21 @@ til at lave hjemmesider på denne måde fremover.
 HUSK at man altid skal være enrolled i de projecter, som man har ticket til. Husk dette især, hvis tickets oprestts maskinelt. s
 
 chekc_persmissions_og andre ging, som brger databasen, bør vel nok ligge som methods til controller? gælder måske også nogle af dem, unedr "shared"
+
+
+Mandag: Overvej nøje edit & create ticket
+- Jeg slipper for en masse problemer, hvis man kun kan skabe tickets fra det valgte projeckt. Og især hvis man ikke kan ændre projektet. 
+- overvej om ticket_permission tjekker de rigtige ting, og udelukker de rigtige? Er det snarere project_permissions som skal tjekkes? 
+- hvem skal kunne vælges som "developer assigned"? Giver nok bedst mening, at det er developers og pm's med tilknytning til projektet. 
+  Ikke admins eller submitters.Heller ikke alle developers. Så slipper jeg for det her med luskede med, at developers i det skjulte tilknyttes nyt projek, 
+  når de får en ticket. 
+-  
+
+Hvis projektet IKKE KAN ændres ved edit ticket: 
+ - lav link fra edit ticket: "Back to Project"
+
+ Hvis projektet KAN ændres ved edit ticket:
+ - Når projektet vælges, vises de relevante muligheder for developers. 
+-  Kun projekter, man er tilknyttet, vises (nemt) 
+-  Submitter & Developer assigned forbliver i det gamle projekt, men tilknyttes det nye: Giv besked om dette. 
+
