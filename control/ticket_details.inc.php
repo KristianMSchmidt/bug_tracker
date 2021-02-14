@@ -6,4 +6,4 @@ session_start();
 $comment_handler = new AddCommentHandler($_POST);
 $_SESSION['errors'] = $comment_handler->add_comment();
 
-header("location: ../views/ticket_details.php?ticket_id={$_POST['ticket_id']}");
+header("location: ../view/ticket_details.php?ticket_id={$_POST['ticket_id']}");

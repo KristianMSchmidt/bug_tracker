@@ -11,7 +11,7 @@ if (!isset($_SESSION['data']['project_id'])) {
     header("location: my_projects.php");
 }
 
-require('shared/ui_frame.php');
+require('page_frame/ui_frame.php');
 ?>
 
 <div class="main">
@@ -73,7 +73,7 @@ require('shared/ui_frame.php');
 
 <?php
 require('../control/shared/clean_session.inc.php');
-require('shared/closing_tags.php');
+require('page_frame/closing_tags.php');
 ?>
 <script>
     set_active_link("my_projects");

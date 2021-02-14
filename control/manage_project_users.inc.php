@@ -8,8 +8,6 @@ $selected_users = json_decode($_POST['user_ids']);
 $project_name = $contr->get_project_name_by_id($_POST['project_id'])['project_name'];
 $_SESSION['selected_users'] = $selected_users;
 
-
-
 if (isset($_POST['enroll_users_submit'])) {
     $notification_message = "enrolled you in the project '{$project_name}'";
     foreach ($selected_users as $user_id) {
@@ -28,5 +26,5 @@ if (isset($_POST['disenroll_users_submit'])) {
     $_SESSION['disenroll_users_succes'] = true;
 }
 
-header("location: ../views/manage_project_users.php?project_id={$_POST['project_id']}");
+header("location: ../view/manage_project_users.php?project_id={$_POST['project_id']}");
 exit();

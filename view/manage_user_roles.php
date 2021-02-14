@@ -4,7 +4,7 @@ require_once('../control/controller.class.php');
 
 $contr = new Controller;
 $users = $contr->get_users("all_users");
-require('shared/ui_frame.php');
+require('page_frame/ui_frame.php');
 
 ?>
 <div class="main">
@@ -13,7 +13,7 @@ require('shared/ui_frame.php');
             <div class="wrapper">
                 <!-- Select Users -->
                 <div class="orto-wrapper left w3-container card non-table-card">
-                    <h4>Select one or more users </h4>
+                    <h4>Select users </h4>
                     <div class="w3-container">
                         <input type="text" id="search_field" placeholder="Search name or role">
                         <p>All users in your database</p>
@@ -60,7 +60,7 @@ require('shared/ui_frame.php');
                                     <?php endforeach ?>
                                 </tbody>
                             </table>
-                            <div id=" no_selected_users_info" class="empty-table-row">
+                            <div id="no_selected_users_info" class="empty-table-row">
                                 <p>No selected users</p>
                             </div>
                         </div>
@@ -107,35 +107,37 @@ require('shared/ui_frame.php');
     <?php endif ?>
 </div>
 
-<?php if (isset($_SESSION['role_change_succes'])) : ?>
+<?php if (isset($_SESSION['role_change_feedback'])) : ?>
     <!-- Modal response message -->
     <div id="id01" class="w3-modal">
         <div class="w3-modal-content">
             <div class="w3-container">
                 <span onclick="document.getElementById('id01').style.display='none'" class="w3-button w3-display-topright">&times;</span>
                 <div class="w3-container">
-                    <h5>You succesfully changed the role of the following users</h5>
                     <div class="w3-container w3-responsive">
                         <table class="table striped bordered">
                             <tr>
                                 <th>Name</th>
-                                <th>Email</th>
-                                <th>Old role</th>
-                                <th>New Role</th>
+                                <th>Old Role</th>
+                                <th>Current Role</th>
+                                <th>Role Changed</th>
                             </tr>
-                            <?php $num_changed = 0 ?>
-                            <?php foreach ($_SESSION['updated_users'] as $updated_user) : ?>
-                                <?php $num_changed += 1 ?>
+                            <?php foreach ($_SESSION['selected_users'] as $selected_user) : ?>
                                 <tr>
-                                    <td><?php echo $updated_user['full_name'] ?></td>
-                                    <td><?php echo $updated_user['email'] ?></td>
-                                    <td><?php echo $updated_user['role_name'] ?></td>
+                                    <td><?php echo $selected_user['full_name'] ?></td>
+                                    <td><?php echo $selected_user['role_name'] ?></td>
                                     <td><?php echo $_SESSION['new_role_name'] ?></td>
+                                    <?php if ($selected_user['role_name'] !== $_SESSION['new_role_name']) : ?>
+                                        <td style="color:green">Yes</td>
+                                    <?php else : ?>
+                                        <td style="color:red">No</td>
+                                    <?php endif ?>
                                 </tr>
                             <?php endforeach; ?>
                         </table>
                     </div>
-                    <p>Showing 1-<?php echo $num_changed; ?> of <?php echo $num_changed; ?> entries</p>
+                    <?php $num_selected = count($_SESSION['selected_users']); ?>
+                    <p>Showing 1-<?php echo $num_selected; ?> of <?php echo $num_selected; ?> entries</p>
                 </div>
             </div>
         </div>
@@ -208,7 +210,7 @@ require('shared/ui_frame.php');
     });
 </script>
 <?php
-require('shared/closing_tags.php');
+require('page_frame/closing_tags.php');
 require('../control/shared/clean_session.inc.php');
 ?>
 <script>

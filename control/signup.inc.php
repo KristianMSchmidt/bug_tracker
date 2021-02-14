@@ -7,11 +7,11 @@ $errors = $signup_handler->sign_up();
 session_start();
 
 if (!$errors) {
-    header('location: ../views/dashboard.php');
+    header('location: ../view/dashboard.php');
     exit();
 } else {
     $_SESSION['errors'] = $errors;
     $_SESSION['post_data'] = $_POST;
-    header('location: ../views/signup.php');
+    header('location: ../view/signup.php');
     exit();
 }

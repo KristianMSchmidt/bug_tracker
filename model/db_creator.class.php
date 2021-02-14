@@ -6,7 +6,7 @@ class DbCreator extends Dbh
     /*
         This class is not used by the live program. 
 
-        I use it for development purposes - to generate the database tables & content.
+        I used it for development purposes - to generate the database tables & content.
     */
 
     public function show_tables()
@@ -335,8 +335,8 @@ class DbCreator extends Dbh
         $sql = "CREATE TABLE ticket_history(
                     id INT AUTO_INCREMENT PRIMARY KEY,
                     ticket_id INT,
-                    event_type TEXT,  /* I could make a table of eventy_types and turn this into a foreign key */
-                    old_value TEXT,   /* this has to represent many things... so I wont use foreign keys. */
+                    event_type TEXT,  /* I could make a table of event_types and turn this into a foreign key */
+                    old_value TEXT,   /* This could be many things - an old comment, a user  etc - so I wont use foreign key here. */
                     new_value TEXT,
                     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                     FOREIGN KEY (ticket_id) REFERENCES tickets (ticket_id) ON DELETE CASCADE ON UPDATE CASCADE

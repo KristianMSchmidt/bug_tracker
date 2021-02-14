@@ -54,7 +54,7 @@ echo "
         console.log(users_js)
 </script>";
 
-require('shared/ui_frame.php');
+require('page_frame/ui_frame.php');
 
 
 Løb alle filer igennem "ude fra"(fra fil-oversigten i localho) - både som logged ind og ikke-logged ind -- og se, om de opfører sig hensigtsmæssigt. 

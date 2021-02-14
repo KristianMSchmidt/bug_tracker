@@ -24,10 +24,10 @@ if (isset($_SESSION['user_id'])) {
     <link href="../static/styles/font-awesome/css/all.css" rel="stylesheet">
 
     <!-- w3-css style sheet -->
-    <link rel="stylesheet" href="../static/styles/w3.css">
+    <link rel="stylesheet" href="css/w3.css">
 
     <!-- My custom css -->
-    <link rel="stylesheet" href="../static/styles/main.css">
+    <link rel="stylesheet" href="css/main.css">
 
     <!-- JS chart library -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.bundle.min.js"></script>
@@ -98,7 +98,6 @@ if (isset($_SESSION['user_id'])) {
                                 <?php echo $notification["message"]; ?>
                                 <?php $elapsed_time = human_timing(strtotime($notification["created_at"])); ?>
                                 <?php echo '<br>' . $elapsed_time . ' ago'; ?>
-
                                 </a>
                             <?php endforeach; ?>
                         <?php endif ?>

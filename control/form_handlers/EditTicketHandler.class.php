@@ -5,11 +5,11 @@ class EditTicketHandler extends TicketValidator
 {
     protected $ticket_id;
 
-    public function __construct($post_data)
+    public function __construct($new_ticket, $contr)
     {
-        $this->new_ticket = $post_data;
-        $this->ticket_id = $post_data['ticket_id'];
-        $this->contr = new Controller();
+        $this->new_ticket = $new_ticket;
+        $this->ticket_id = $new_ticket['ticket_id'];
+        $this->contr = $contr;
         $this->old_ticket = $this->contr->get_ticket_by_id($this->ticket_id);
     }
 
@@ -36,6 +36,7 @@ class EditTicketHandler extends TicketValidator
         $contr = $this->contr;
 
         $changes = False;
+
 
         if ($old_ticket['title'] !== trim($new_ticket['title'])) {
             $contr->add_to_ticket_history($ticket_id, "TitleChange", $old_ticket['title'], $new_ticket['title']);

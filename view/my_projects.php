@@ -1,6 +1,6 @@
 <?php
 require('../control/shared/login_check.inc.php');
-require('shared/ui_frame.php');
+require('page_frame/ui_frame.php');
 
 $contr = new controller;
 $projects = $contr->get_projects_by_user($_SESSION['user_id'], $_SESSION['role_name']);
@@ -92,7 +92,7 @@ $projects = $contr->get_projects_by_user($_SESSION['user_id'], $_SESSION['role_n
         document.getElementById('id01').style.display = 'block';
     </script>
 <?php endif ?>
-<?php require_once('shared/closing_tags.php') ?>
+<?php require_once('page_frame/closing_tags.php') ?>
 
 <script>
     set_active_link("my_projects")

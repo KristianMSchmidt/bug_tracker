@@ -1,8 +1,8 @@
 <?php
 session_start();
 if (isset($_SESSION['user_id'])) {
-    header('location: views/dashboard.php');
+    header('location: view/dashboard.php');
     exit();
 } else {
-    header('location: views/demo_login.php');
+    header('location: view/demo_login.php');
 }

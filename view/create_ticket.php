@@ -13,7 +13,7 @@ if (isset($_GET['project_id'])) {
     $_SESSION['data']['project_name'] = $contr->get_project_name_by_id($_GET['project_id'])['project_name'];
     $_SESSION['data']['project_id'] = $_GET['project_id'];
 }
-require('shared/ui_frame.php');
+require('page_frame/ui_frame.php');
 ?>
 
 
@@ -133,7 +133,8 @@ require('shared/ui_frame.php');
 
 <?php
 require('../control/shared/clean_session.inc.php');
-require('shared/closing_tags.php')
+require('page_frame/closing_tags.php')
+
 ?>
 
 <script>

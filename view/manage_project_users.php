@@ -12,7 +12,7 @@ if (isset($_GET['project_id'])) {
     $selected_project = $contr->get_project_by_id($project_id);
 }
 
-require('shared/ui_frame.php');
+require('page_frame/ui_frame.php');
 ?>
 
 <div class="main">
@@ -21,7 +21,7 @@ require('shared/ui_frame.php');
             <div class="wrapper">
                 <!-- Select Project -->
                 <div class="orto-wrapper left w3-container card non-table-card">
-                    <h4 class="project">Select Project</h4>
+                    <h4 class="project">Select a project</h4>
                     <div class="w3-container">
                         <input type="text" id="search_field_project" class="search_field" placeholder="Search project" value="<?php echo $_GET['search'] ?? '' ?>">
                         <p>All projects in the database</p>
@@ -44,17 +44,17 @@ require('shared/ui_frame.php');
                     <div class="w3-container">
                         <table class="table bordered table-no-description">
                             <tr>
-                                <th>Project ID</th>
                                 <th>Project Name</th>
                                 <th>Project Description</th>
+                                <th>Project ID</th>
                                 <th>Details</th>
                             </tr>
                             <tr>
                                 <?php if (isset($project_id)) : ?>
-                                    <td><?php echo $project_id ?></td>
                                     <td><?php echo $selected_project['project_name']; ?></td>
                                     <td><?php echo $selected_project['project_description']; ?></td>
-                                    <td> <a href="project_details.php?project_id=<?php echo $project_id ?>" class="right" target="_blank"> Project Details</a></td>
+                                    <td><?php echo $project_id ?></td>
+                                    <td> <a href="project_details.php?project_id=<?php echo $project_id ?>" class="right"> Project Details</a></td>
                                 <?php endif ?>
                             </tr>
                         </table>
@@ -70,7 +70,7 @@ require('shared/ui_frame.php');
             <div class="wrapper">
                 <!-- Select Enroll -->
                 <div class="orto-wrapper bottom left w3-container card non-table-card">
-                    <h4> Select Users to Enroll</h4>
+                    <h4> Select users enroll</h4>
                     <div class="w3-container">
                         <input type="text" id="search_field_enroll" class="search_field" placeholder="Search name">
                         <p>Available users</p>
@@ -102,7 +102,7 @@ require('shared/ui_frame.php');
 
                 <!-- Select Disenroll -->
                 <div class="orto-wrapper bottom right w3-container card non-table-card">
-                    <h4> Select Users to Disenroll</h4>
+                    <h4> Select users to disenroll</h4>
                     <div class="w3-container">
                         <input type="text" id="search_field_disenroll" class="search_field" placeholder="Search name">
                         <p>Users already enrolled in project</p>
@@ -297,7 +297,6 @@ require('shared/ui_frame.php');
                 }
             });
 
-
             var search_items_disenroll = document.getElementsByClassName("searchable_disenroll");
             document.getElementById("search_field_disenroll").addEventListener("input", function() {
                 search_input_disenroll = document.getElementById("search_field_disenroll").value;
@@ -339,7 +338,7 @@ require('shared/ui_frame.php');
         </script>
 
         <?php
-        require('shared/closing_tags.php');
+        require('page_frame/closing_tags.php');
         require('../control/shared/clean_session.inc.php');
         ?>
 

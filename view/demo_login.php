@@ -8,7 +8,7 @@ if (isset($_SESSION['user_id'])) {
 }
 ?>
 
-<?php require('shared/ui_frame.php'); ?>
+<?php require('page_frame/ui_frame.php'); ?>
 <div class="main">
     <div class="demo_login">
         <div class="card">
@@ -83,4 +83,5 @@ if (isset($_SESSION['user_id'])) {
     <input type="hidden" name="login_submit" value="">
 </form>
 
-<?php require('shared/closing_tags.php') ?>
+<?php require('page_frame/closing_tags.php')
+?>

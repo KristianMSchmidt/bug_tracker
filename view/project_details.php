@@ -1,6 +1,6 @@
 <?php
 require('../control/shared/login_check.inc.php');
-require('shared/ui_frame.php');
+require('page_frame/ui_frame.php');
 
 $project_id = $_GET['project_id'];
 $contr = new controller;
@@ -198,7 +198,8 @@ $tickets = $contr->get_tickets_by_project($project_id);
 
 <?php
 require('../control/shared/clean_session.inc.php');
-require('shared/closing_tags.php')
+require('page_frame/closing_tags.php')
+
 ?>
 
 <script>

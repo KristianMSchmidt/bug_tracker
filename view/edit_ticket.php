@@ -4,7 +4,7 @@ require_once('../control/controller.class.php');
 
 $contr = new Controller();
 
-if (!(isset($_GET['show_original']) || isset($_SESSON['data']['ticket_id']))) {
+if (!(isset($_GET['show_original']) || isset($_SESSION['data']['ticket_id']))) {
     header('location: dashboard.php');
 }
 
@@ -19,7 +19,7 @@ $types = $contr->get_ticket_types();
 $status_types = $contr->get_ticket_status_types();
 $developers = $contr->get_users_by_role_id(3);
 
-require('shared/ui_frame.php');
+require('page_frame/ui_frame.php');
 ?>
 
 <div class="main">
@@ -140,7 +140,7 @@ require('shared/ui_frame.php');
 
 
 <?php
-require('shared/closing_tags.php');
+require('page_frame/closing_tags.php');
 require('../control/shared/clean_session.inc.php');
 ?>
 

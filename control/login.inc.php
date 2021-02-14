@@ -9,12 +9,12 @@ if (isset($_POST['login_submit'])) {
 }
 
 if (!$errors) {
-    header('location: ../views/dashboard.php');
+    header('location: ../view/dashboard.php');
     exit();
 } else {
     session_start();
     $_SESSION['errors'] = $errors;
     $_SESSION['post_data'] = $_POST;
-    header('location: ../views/login.php');
+    header('location: ../view/login.php');
     exit();
 }

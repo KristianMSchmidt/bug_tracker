@@ -449,8 +449,7 @@ VALUES
         ('assigned to ticket'),
         ('unassigned from ticket'),
         ('enrolled to project'),
-        ('disenrolled from project'),
-        ('account created'); 
+        ('disenrolled from project');
 
 DROP TABLE IF EXISTS notifications;
 CREATE TABLE notifications(

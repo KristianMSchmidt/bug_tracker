@@ -12,10 +12,10 @@ $_SESSION['data'] = $_POST;
 
 if ($errors) {
     $_SESSION['errors'] = $errors;
-    header('location:../views/create_project.php');
+    header('location:../view/create_project.php');
     exit();
 } else {
     $_SESSION['create_project_succes'] = true;
-    header('location:../views/my_projects.php');
+    header('location:../view/my_projects.php');
     exit();
 }

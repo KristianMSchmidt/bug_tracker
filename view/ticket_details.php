@@ -1,6 +1,6 @@
 <?php
 require('../control/shared/login_check.inc.php');
-require('shared/ui_frame.php');
+require('page_frame/ui_frame.php');
 
 $contr = new Controller();
 $ticket_id = $_GET['ticket_id'];
@@ -153,14 +153,14 @@ $comments = $contr->get_ticket_comments($ticket_id);
 </div>
 
 <!-- Modal response message -->
-<?php if (isset($_POST['show_ticket_edited_succes_message'])) : ?>
+<?php if (isset($_SESSION['edit_ticket_succes'])) : ?>
     <div id="id01" class="w3-modal">
         <div class="w3-modal-content">
             <div class="w3-container">
                 <span onclick="document.getElementById('id01').style.display='none'" class="w3-button w3-display-topright">&times;</span>
                 <div class="w3-container">
                     <h5>
-                        You succesfully updated the the ticket
+                        You succesfully updated this ticket
                     </h5>
                 </div>
             </div>
@@ -172,7 +172,7 @@ $comments = $contr->get_ticket_comments($ticket_id);
 <?php endif ?>
 
 <?php
-require('shared/closing_tags.php');
+require('page_frame/closing_tags.php');
 require('../control/shared/clean_session.inc.php');
 ?>
 

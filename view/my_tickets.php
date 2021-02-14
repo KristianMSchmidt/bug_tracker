@@ -7,7 +7,7 @@ Submitters should see all tickets they have submitted (os are dev assigned)
 */
 
 require('../control/shared/login_check.inc.php');
-require('shared/ui_frame.php');
+require('page_frame/ui_frame.php');
 
 $contr = new Controller;
 $tickets = $contr->get_tickets_by_user($_SESSION['user_id'], $_SESSION['role_name']);
@@ -76,7 +76,8 @@ $tickets = $contr->get_tickets_by_user($_SESSION['user_id'], $_SESSION['role_nam
 </div>
 
 
-<?php require('shared/closing_tags.php') ?>
+<?php require('page_frame/closing_tags.php')
+?>
 <script>
     set_active_link("my_tickets")
 </script>

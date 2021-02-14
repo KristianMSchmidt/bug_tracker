@@ -10,10 +10,10 @@ $_SESSION['data'] = $_POST;
 
 if (!$errors) {
     $_SESSION['created_ticket_succes'] = true;
-    header("location:../views/project_details.php?project_id={$_POST['project_id']}");
+    header("location:../view/project_details.php?project_id={$_POST['project_id']}");
     exit();
 } else {
     $_SESSION['errors'] = $errors;
-    header("location:../views/create_ticket.php");
+    header("location:../view/create_ticket.php");
     exit();
 }

@@ -1,6 +1,6 @@
 <?php
 require('../control/shared/login_check.inc.php');
-require('shared/ui_frame.php');
+require('page_frame/ui_frame.php');
 $user_id = $_GET['user_id'];
 
 $contr = new controller;
@@ -126,7 +126,8 @@ $tickets = $contr->get_tickets_by_user($user_id, $user['role_name']);
 
 <?php
 require('../control/shared/clean_session.inc.php');
-require('shared/closing_tags.php')
+require('page_frame/closing_tags.php')
+
 ?>
 
 <script>

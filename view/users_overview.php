@@ -1,6 +1,6 @@
 <?php
 require('../control/shared/login_check.inc.php');
-require('shared/ui_frame.php');
+require('page_frame/ui_frame.php');
 
 $contr = new controller;
 $users = $contr->get_users("all_users");
@@ -57,7 +57,7 @@ $users = $contr->get_users("all_users");
     </div>
 </div>
 
-<?php require_once('shared/closing_tags.php') ?>
+<?php require_once('page_frame/closing_tags.php') ?>
 
 <script>
     set_active_link("users_overview")

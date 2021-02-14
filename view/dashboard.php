@@ -9,7 +9,7 @@ $types = $contr->get_tickets_type_count();
 $users = $contr->get_most_busy_users();
 ?>
 
-<?php require('shared/ui_frame.php'); ?>
+<?php require('page_frame/ui_frame.php'); ?>
 
 <div class="main">
     <div class="dashboard">
@@ -238,7 +238,8 @@ $users = $contr->get_most_busy_users();
     });
 </script>
 
-<?php require('shared/closing_tags.php') ?>
+<?php require('page_frame/closing_tags.php')
+?>
 
 <script>
     set_active_link("dashboard");

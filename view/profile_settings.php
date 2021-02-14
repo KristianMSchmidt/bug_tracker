@@ -1,6 +1,6 @@
 <?php
 require('../control/shared/login_check.inc.php');
-require('shared/ui_frame.php');
+require('page_frame/ui_frame.php');
 ?>
 
 <div class="main">
@@ -34,4 +34,5 @@ require('shared/ui_frame.php');
 </div>
 </div>
 
-<?php require('shared/closing_tags.php') ?>
+<?php require('page_frame/closing_tags.php')
+?>
