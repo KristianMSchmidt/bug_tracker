@@ -16,7 +16,7 @@ class EditProjectHandler extends ProjectValidator
     {
         $this->check_all_errors();
         if (!$this->errors) {
-            $this->contr->set_project($this->new_project['project_name'], $this->new_project['project_description'], $this->project_id);
+            $this->contr->update_project($this->new_project['project_name'], $this->new_project['project_description'], $this->project_id);
         }
         return $this->errors;
     }

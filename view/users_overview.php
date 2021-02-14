@@ -24,7 +24,7 @@ $users = $contr->get_users("all_users");
                             <th>Role</th>
                             <th>Created</th>
                             <th class="hide_if_needed">Last Update</th>
-                            <th class="hide_if_needed">Updated By</th>
+                            <th>User Details</th>
                         </tr>
                         <?php
                         //$users = array();
@@ -36,7 +36,6 @@ $users = $contr->get_users("all_users");
                                 <td><?php echo $user['role_name'] ?></td>
                                 <td class="hide_last"><?php echo $user['created_at'] ?></th>
                                 <td class="hide_if_needed"><?php echo $user['updated_at'] ?></td>
-                                <td class="hide_if_needed"><?php echo $user['updated_by'] ?></td>
                                 <td>
                                     <a href="user_details.php?user_id=<?php echo $user['user_id'] ?>">Details</a>
                                 </td>

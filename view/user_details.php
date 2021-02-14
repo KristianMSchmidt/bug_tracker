@@ -38,11 +38,6 @@ $tickets = $contr->get_tickets_by_user($user_id, $user['role_name']);
                     <tr>
                         <td>Last Update:</td>
                         <td><?php echo $user['updated_at'] ?></td>
-
-                    <tr>
-                        <td>Updated By:</td>
-                        <td><?php echo $user['updated_by'] ?></td>
-                    </tr>
                 </table>
             </div>
         </div>
@@ -53,22 +48,20 @@ $tickets = $contr->get_tickets_by_user($user_id, $user['role_name']);
                         <h4>Project Enrollments</h4>
                     </div>
                     <div class="w3-container">
-                        <h5>User's Projects</h5>
+                        <h5>The selected user is enrolled in these projects</h5>
                     </div>
-                    <div class="w3-container w3-responsive">
+                    <div class="w3-container">
                         <table class="table striped bordered">
                             <tr>
                                 <th>Project Name</th>
                                 <th>Enrollment started</th>
+                                <th>Project Details</th>
                             </tr>
                             <?php foreach ($projects as $project) : ?>
-                                <?php $enrollment_start = $contr->get_enrollment_start($project['project_id'], $user_id);
-                                print_r($enrollment_start);
-                                exit(); ?>
+                                <?php $enrollment_start = $contr->get_enrollment_start($project['project_id'], $user_id); ?>
                                 <tr>
-                                    <td><?php echo $project['project_name'] ?>
-                                    </td>
-                                    <td><?php echo "..."; ?></td>
+                                    <td><?php echo $project['project_name'] ?></td>
+                                    <td><?php echo $enrollment_start; ?></td>
                                     <td><a href="project_details.php?project_id=<?php echo $project['project_id'] ?>">Details</a></td>
                                 </tr>
                             <?php endforeach ?>
@@ -84,7 +77,7 @@ $tickets = $contr->get_tickets_by_user($user_id, $user['role_name']);
                     </div>
                 </div>
             </div>
-            <div class="right">
+            <div class="right" style="flex:2" ;>
                 <div class="card">
                     <div class="w3-container card-head">
                         <h4>Tickets</h4>
@@ -96,6 +89,7 @@ $tickets = $contr->get_tickets_by_user($user_id, $user['role_name']);
                                 <th>Submitter</th>
                                 <th>Developer</th>
                                 <th>Project</th>
+                                <th>Ticket Details</th>
                             </tr>
 
                             <?php foreach ($tickets as $ticket) : ?>

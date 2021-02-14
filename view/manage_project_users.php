@@ -45,15 +45,15 @@ require('page_frame/ui_frame.php');
                         <table class="table bordered table-no-description">
                             <tr>
                                 <th>Project Name</th>
-                                <th>Project Description</th>
-                                <th>Project ID</th>
+                                <th class="hide_if_needed"> Created</th>
+                                <th>Last Update</th>
                                 <th>Details</th>
                             </tr>
                             <tr>
                                 <?php if (isset($project_id)) : ?>
                                     <td><?php echo $selected_project['project_name']; ?></td>
-                                    <td><?php echo $selected_project['project_description']; ?></td>
-                                    <td><?php echo $project_id ?></td>
+                                    <td><?php echo $selected_project['created_at']; ?></td>
+                                    <td><?php echo $selected_project['updated_at']; ?></td>
                                     <td> <a href="project_details.php?project_id=<?php echo $project_id ?>" class="right"> Project Details</a></td>
                                 <?php endif ?>
                             </tr>

@@ -20,10 +20,6 @@ $tickets = $contr->get_tickets_by_project($project_id);
             <div class="w3-container wrapper">
                 <table class="table bordered">
                     <tr>
-                        <td class="td-details">Project ID:</td>
-                        <td><?php echo $project_id ?></td>
-                    </tr>
-                    <tr>
                         <td>Project Name:</td>
                         <td><?php echo $project['project_name'] ?></td>
                     </tr>
@@ -32,10 +28,13 @@ $tickets = $contr->get_tickets_by_project($project_id);
                         <td>Description:</td>
                         <td><?php echo $project['project_description'] ?></td>
                     </tr>
-
                     <tr>
                         <td>Created By</td>
                         <td><?php echo $project['created_by'] ?></td>
+                    </tr>
+                    <tr>
+                        <td class="td-details">Project ID:</td>
+                        <td><?php echo $project_id ?></td>
                     </tr>
                 </table>
                 <table class="table bordered">
@@ -66,10 +65,10 @@ $tickets = $contr->get_tickets_by_project($project_id);
                 </form>
                 <div class="card">
                     <div class="w3-container card-head">
-                        <h4>Assigned Personel</h4>
+                        <h4>Personel</h4>
                     </div>
                     <div class="w3-container">
-                        <h5>Current Users on this Project</h5>
+                        <h5>All users currently enrolled in this project</h5>
                     </div>
                     <div class="w3-container w3-responsive">
                         <table class="table striped bordered">
@@ -104,10 +103,10 @@ $tickets = $contr->get_tickets_by_project($project_id);
                 </form>
                 <div class="card">
                     <div class="w3-container card-head">
-                        <h4>Tickets for this Project</h4>
+                        <h4>Project Tickets</h4>
                     </div>
                     <div class="w3-container">
-                        <h5>Condensed Ticket Details</h5>
+                        <h5>All tickets on this project</h5>
                     </div>
                     <div class="w3-container w3-responsive">
                         <table class="table striped bordered">

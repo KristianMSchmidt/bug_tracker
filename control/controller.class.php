@@ -169,9 +169,9 @@ class Controller extends Model
         $this->db_update_ticket($data);
     }
 
-    public function set_project($project_name, $project_description, $project_id)
+    public function set_update($project_name, $project_description, $project_id)
     {
-        $this->db_set_project($project_name, $project_description, $project_id);
+        $this->db_update_project($project_name, $project_description, $project_id);
     }
 
     public function get_role_name_by_role_id($role_id)

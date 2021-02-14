@@ -29,18 +29,17 @@ $projects = $contr->get_projects_by_user($_SESSION['user_id'], $_SESSION['role_n
                     <table class="table w3-small striped bordered">
                         <tr>
                             <th>Project Name</th>
-                            <th>Description</th>
                             <th class="hide_if_needed">Created By</th>
-                            <th lass="hide_if_needed"> Created</th>
+                            <th class="hide_if_needed"> Created</th>
                             <th>Last Update</th>
                             <th>Enrolllment start</th>
+                            <th>Project Details</th>
                         </tr>
                         <?php
                         ?>
                         <?php foreach ($projects as $project) : ?>
                             <tr>
                                 <td><?php echo $project['project_name'] ?></td>
-                                <td><?php echo $project['project_description'] ?></td>
                                 <td class="hide_if_needed"><?php echo $project['created_by'] ?></td>
                                 <td class="hide_if_needed"><?php echo $project['created_at'] ?></th>
                                 <td><?php echo $project['updated_at'] ?></td>

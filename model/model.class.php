@@ -470,7 +470,7 @@ class Model extends Dbh
         ]);
     }
 
-    protected function db_set_project($project_title, $project_description, $project_id)
+    protected function db_update_project($project_title, $project_description, $project_id)
     {
 
         $sql = "UPDATE projects 

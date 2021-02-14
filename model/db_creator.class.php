@@ -56,7 +56,7 @@ class DbCreator extends Dbh
             email VARCHAR(30) NOT NULL UNIQUE,
             role_id INT,
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, 
-            updated_at TIMESTAMP NULL ON UPDATE CURRENT_TIMESTAMP,
+            updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
             updated_by INT NULL,
             FOREIGN KEY (role_id) REFERENCES user_roles(role_id) ON DELETE SET NULL ON UPDATE CASCADE,
             FOREIGN KEY (updated_by) REFERENCES users(user_id) ON DELETE SET NULL ON UPDATE CASCADE
@@ -105,7 +105,7 @@ class DbCreator extends Dbh
                     project_description TINYTEXT, 
                     created_by INT,
                     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, 
-                    updated_at TIMESTAMP NULL ON UPDATE CURRENT_TIMESTAMP,
+                    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
                     FOREIGN KEY (created_by) REFERENCES users(user_id) ON DELETE SET NULL ON UPDATE CASCADE
                 )";
         $stmt = $this->connect()->prepare($sql);
@@ -214,7 +214,7 @@ class DbCreator extends Dbh
             description TEXT,
             submitter INT, /* the person creating the ticket*/
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-            updated_at TIMESTAMP NULL ON UPDATE CURRENT_TIMESTAMP,
+            updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
             FOREIGN KEY (project) REFERENCES projects(project_id) ON DELETE CASCADE ON UPDATE CASCADE, /* if project gets deleted, all tickets will as well */
             FOREIGN KEY (developer_assigned) REFERENCES users(user_id) ON DELETE SET NULL ON UPDATE CASCADE, /*developer can't be deleted, if he is assigned to a ticcket */
             FOREIGN KEY (submitter) REFERENCES users(user_id) ON DELETE SET NULL ON UPDATE CASCADE,

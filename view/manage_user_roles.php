@@ -39,23 +39,27 @@ require('page_frame/ui_frame.php');
                                 <thead>
                                     <tr>
                                         <th>Name</th>
-                                        <th>Email</th>
                                         <th>Role</th>
                                         <th>Created</th>
                                         <th>Last Update</th>
                                         <th>Updated By</th>
+                                        <th>User Details</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <?php foreach ($users as $user) : ?>
                                         <tr id="row_<?php echo $user['user_id'] ?>" style="display:none;">
                                             <td><?php echo $user['full_name'] ?></td>
-                                            <td><?php echo $user['email'] ?></td>
                                             <td><?php echo $user['role_name'] ?></td>
                                             <td><?php echo $user['created_at'] ?></td>
                                             <td><?php echo $user['updated_at'] ?></td>
-                                            <td><?php echo $user['updated_by'] ?></td>
-                                            <td><a href="user_details.php?user_id=<?php echo $user['user_id'] ?>">User Details</td>
+                                            <?php if (isset($user['updated_by'])) : ?>
+                                                <td><?php echo $user['updated_by'] ?></td>
+                                            <?php else : ?>
+                                                <td>None</td>
+                                            <?php endif ?>
+                                            <td><a href="user_details.php?user_id=<?php echo $user['user_id'] ?>">Details</td>
+
                                         </tr>
                                     <?php endforeach ?>
                                 </tbody>

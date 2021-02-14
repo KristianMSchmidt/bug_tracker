@@ -44,6 +44,7 @@ $tickets = $contr->get_tickets_by_user($_SESSION['user_id'], $_SESSION['role_nam
                             <th class="hide_if_needed">Developer Assigned</th>
                             <th class="hide_if_needed"> Submitter</th>
                             <th class="hide_last">Created</th>
+                            <th>Ticket Details</th>
                         </tr>
 
                         <?php foreach ($tickets as $ticket) : ?>
