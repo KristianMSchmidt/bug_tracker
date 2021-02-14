@@ -1,5 +1,5 @@
 <?php
 if (!$_POST) {
-    header('location: dashboard.php');
+    header('location: ../view/dashboard.php');
     exit();
 }

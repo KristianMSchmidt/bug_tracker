@@ -9,9 +9,11 @@ $projects = $contr->get_projects_by_user($_SESSION['user_id'], $_SESSION['role_n
 <div class="main">
     <div class="my_projects">
         <div class="wrapper">
-            <form action="create_project.php" method="get">
-                <input type="submit" value="CREATE NEW PROJECT" class="btn-primary">
-            </form>
+            <?php if (in_array($_SESSION['role_name'], ['Admin', 'Project Manager'])) : ?>
+                <form action="create_project.php" method="get">
+                    <input type="submit" value="CREATE NEW PROJECT" class="btn-primary">
+                </form>
+            <?php endif ?>
             <div class="card w3-responsive">
                 <div class="w3-container card-head">
                     <h3>My projects</h3>

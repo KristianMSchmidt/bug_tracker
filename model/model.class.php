@@ -5,9 +5,10 @@ class Model extends Dbh
 {
     /*
 
-        This is the only class that direcly queries or modifies the database. 
+        This is the only class that direcly interacts (queries or modifies) the database. 
 
     */
+
     protected function db_get_enrollment_start($project_id, $user_id)
     {
         $sql = "SELECT
@@ -149,11 +150,9 @@ class Model extends Dbh
             $sql .= " WHERE tickets.submitter = {$user_id} OR tickets.developer_assigned = {$user_id}";
         endif;
 
-
         if ($role_name == 'Project Manager') :
             $sql .= " OR (tickets.project IN 
               (SELECT project_id FROM project_enrollments WHERE user_id = {$user_id}))";
-
         endif;
 
         $sql .= " ORDER BY tickets.created_at DESC";
@@ -172,7 +171,8 @@ class Model extends Dbh
         $sql = "SELECT COUNT(tickets.ticket_id) AS count, 
                 ticket_priorities.ticket_priority_name 
                 FROM tickets RIGHT JOIN ticket_priorities ON tickets.priority = ticket_priorities.ticket_priority_id 
-                GROUP BY ticket_priorities.ticket_priority_id ORDER BY ticket_priorities.ticket_priority_id";
+                GROUP BY ticket_priorities.ticket_priority_id 
+                ORDER BY ticket_priorities.ticket_priority_id";
 
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute();
@@ -292,7 +292,7 @@ class Model extends Dbh
     }
 
     protected function db_get_project_users($project_id)
-    //all users assigned to project
+    // all users assigned to project
     {
         $sql =
             "SELECT users.full_name, users.email, user_roles.role_name, users.user_id
@@ -323,7 +323,7 @@ class Model extends Dbh
     }
 
     protected function db_get_tickets_by_project($project_id)
-    //all tickets to given project
+    // all tickets to given project
     // TODO: merge this function with db_get_tickets_by_id
     {
         $sql = "SELECT
@@ -390,22 +390,23 @@ class Model extends Dbh
 
     protected function db_create_notification($notification_type, $user_id, $message, $created_by)
     {
-        $sql = "INSERT INTO notifications(notification_type, user_id, message, unseen, created_by) VALUES(?, ?, ?, ?,?)";
+        $sql = "INSERT INTO notifications(notification_type, user_id, message, unseen, created_by)
+                 VALUES(?, ?, ?, ?,?)";
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute([$notification_type, $user_id, $message, 1, $created_by]);
     }
 
-    protected function db_add_to_ticket_history($ticket_id, $event_type, $old_value, $new_value)
+    protected function db_add_to_ticket_events($ticket_id, $event_type, $old_value, $new_value)
     {
-        $sql = "INSERT INTO ticket_history(ticket_id, event_type, old_value, new_value) VALUES (?,?,?,?)";
+        $sql = "INSERT INTO ticket_events(ticket_id, event_type, old_value, new_value) VALUES (?,?,?,?)";
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute([$ticket_id, $event_type, $old_value, $new_value]);
     }
 
     protected function db_get_projects()
-    //All projects
     {
-        $sql = "SELECT project_id, project_name FROM projects";
+        $sql = "SELECT project_id, project_name
+                 FROM projects";
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute();
         $projects = $stmt->fetchAll();
@@ -414,9 +415,9 @@ class Model extends Dbh
 
 
     protected function db_get_priorities()
-    //All priority names and their id's
     {
-        $sql = "SELECT ticket_priority_id, ticket_priority_name FROM ticket_priorities";
+        $sql = "SELECT ticket_priority_id, ticket_priority_name
+                 FROM ticket_priorities";
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute();
         $priorities = $stmt->fetchAll();
@@ -425,7 +426,8 @@ class Model extends Dbh
 
     protected function db_get_ticket_types()
     {
-        $sql = "SELECT ticket_type_id, ticket_type_name FROM ticket_types";
+        $sql = "SELECT ticket_type_id, ticket_type_name 
+                FROM ticket_types";
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute();
         $types = $stmt->fetchAll();
@@ -433,9 +435,9 @@ class Model extends Dbh
     }
 
     protected function db_get_ticket_status_types()
-    //All status names and their id's
     {
-        $sql = "SELECT ticket_status_id, ticket_status_name FROM ticket_status_types";
+        $sql = "SELECT ticket_status_id, ticket_status_name 
+                FROM ticket_status_types";
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute();
         $status_types = $stmt->fetchAll();
@@ -444,7 +446,6 @@ class Model extends Dbh
 
     protected function db_update_ticket($data)
     {
-
         $sql = "UPDATE tickets 
                 SET 
                     title = ?,
@@ -495,16 +496,16 @@ class Model extends Dbh
         return $role_name;
     }
 
-    protected function db_get_ticket_history($ticket_id)
+    protected function db_get_ticket_events($ticket_id)
     {
         $sql = "SELECT * 
-                FROM ticket_history 
+                FROM ticket_events 
                 WHERE ticket_id = ?
                 ORDER BY created_at DESC";
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute([$ticket_id]);
-        $ticket_history = $stmt->fetchAll();
-        return $ticket_history;
+        $ticket_events = $stmt->fetchAll();
+        return $ticket_events;
     }
 
     protected function db_get_ticket_comments($ticket_id)
@@ -640,20 +641,15 @@ class Model extends Dbh
 
 
 /* Notes to self: 
-stmt is PDO statement object
-A 'statement' is any command that database understands
-A 'query' is a select statement
 
-I use prepared statements whenever user tries to change or insert or delete something on db
+    For security reasons, I use prepared statements whenever user tries to change or insert or delete something on db. 
 
-fetch returns 1 record as a single dimensional array
-fetchAll returns all records as a multi dimensional array 
+    Closing the db-connection manually does not seem necessary in PHP. From the official docs: 
 
-Closing the db-connection manually does not seem necessary in PHP. From the official docs: 
-"Upon successful connection to the database, an instance of the PDO class is returned
- to your script. The connection remains active for the lifetime of that PDO object.
-  To close the connection, you need to destroy the object by ensuring that all remaining 
-  references to it are deleted--you do this by assigning NULL to the variable that
-  holds the object.
-  If you don't do this explicitly, PHP will automatically close the connection when your script ends.
+        "Upon successful connection to the database, an instance of the PDO class is returned
+        to your script. The connection remains active for the lifetime of that PDO object.
+        To close the connection, you need to destroy the object by ensuring that all remaining 
+        references to it are deleted--you do this by assigning NULL to the variable that
+        holds the object.
+        If you don't do this explicitly, PHP will automatically close the connection when your script ends."
 */

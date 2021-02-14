@@ -42,7 +42,7 @@ require('page_frame/ui_frame.php');
             </div>
         </div>
     <?php else : ?>
-        <div class="main">Only administrators and project managers have acces to this page. </div>
+        <p>You don't have acces to this page. Please contact your local administrator or project manager.</p>
     <?php endif ?>
 </div>
 

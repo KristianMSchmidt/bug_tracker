@@ -5,7 +5,7 @@ class Controller extends Model
 {
     /*
 
-    Public interface for the Model class. 
+    Public interface for the model class. 
     
     */
 
@@ -179,14 +179,14 @@ class Controller extends Model
         return $this->db_get_role_name_by_role_id($role_id);
     }
 
-    public function add_to_ticket_history($ticket_id, $event_type, $old_value, $new_value)
+    public function add_to_ticket_events($ticket_id, $event_type, $old_value, $new_value)
     {
-        $this->db_add_to_ticket_history($ticket_id, $event_type, $old_value, $new_value);
+        $this->db_add_to_ticket_events($ticket_id, $event_type, $old_value, $new_value);
     }
 
-    public function get_ticket_history($ticket_id)
+    public function get_ticket_events($ticket_id)
     {
-        return $this->db_get_ticket_history($ticket_id);
+        return $this->db_get_ticket_events($ticket_id);
     }
 
     public function get_ticket_comments($ticket_id)
@@ -258,7 +258,7 @@ class Controller extends Model
         if (isset($result[0])) {
             $enrollment_start = $result[0]['enrollment_start'];
         } else if (isset($result[1])) {
-            echo "Error: double enrollment -- don't forget to unenroll";
+            echo "Error: Double project enrollment";
             exit();
         } else {
             $enrollment_start = "Not personally enrolled";

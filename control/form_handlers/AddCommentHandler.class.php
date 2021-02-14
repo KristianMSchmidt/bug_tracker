@@ -1,4 +1,5 @@
 <?php
+
 class AddCommentHandler
 {
     private $comment;
@@ -35,7 +36,7 @@ class AddCommentHandler
 
     private function save_comment()
     {
-        require_once('../controller.class.php');
+        require_once('controller.class.php');
         $contr = new Controller();
         $contr->add_ticket_comment($_SESSION['user_id'], $this->ticket_id, $this->comment);
     }

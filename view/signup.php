@@ -12,7 +12,6 @@
                 </p>
             </div>
 
-
             <form action="../control/signup.inc.php" method="POST" class="w3-container">
                 <p>
                     <input type="text" name="full_name" class="w3-input" value="<?php echo $_SESSION['post_data']['full_name'] ?? '' ?>">

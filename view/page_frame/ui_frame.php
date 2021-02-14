@@ -21,7 +21,7 @@ if (isset($_SESSION['user_id'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bug_Tracker</title>
     <!-- font awesome icon library -->
-    <link href="../static/styles/font-awesome/css/all.css" rel="stylesheet">
+    <link href="css/font-awesome/css/all.css" rel="stylesheet">
 
     <!-- w3-css style sheet -->
     <link rel="stylesheet" href="css/w3.css">
@@ -39,7 +39,6 @@ if (isset($_SESSION['user_id'])) {
 </style>
 
 <body>
-    <!--brand icon-->
     <div class="my_navbar">
         <div class="branding_area">
             <ul class="nav_list">
@@ -124,7 +123,7 @@ if (isset($_SESSION['user_id'])) {
     <div class="sidebar_and_main_container">
         <div class="sidebar">
             <?php if (isset($_SESSION['user_id'])) : ?>
-                <!-- Show sidebar links depending on role ?> -->
+                <!-- Show sidebar links depending on role -->
                 <a href="dashboard.php" id="dashboard_link"><i class="fas fa-home"></i> &nbsp;Dashboard</a>
                 <?php if ($_SESSION['role_name'] == 'Admin' || $_SESSION['role_name'] == 'Project Manager') : ?>
                     <a href="manage_project_users.php" id="manage_project_users_link"><i class="fas fa-user-plus"></i> &nbsp;Manage Project Users</a>
@@ -135,6 +134,5 @@ if (isset($_SESSION['user_id'])) {
                 <?php endif ?>
                 <a href="my_projects.php" id="my_projects_link"><i class="fas fa-industry"></i> &nbsp;My Projects</a>
                 <a href="my_tickets.php" id="my_tickets_link"><i class="fas fa-ticket-alt"></i> &nbsp;My Tickets</a>
-
             <?php endif ?>
         </div>

@@ -3,10 +3,10 @@ require_once('dbh.class.php');
 
 class DbCreator extends Dbh
 {
-    /*
-        This class is not used by the live program. 
+    /*   
+        Class to (re)-generate database with a decent content. 
 
-        I used it for development purposes - to generate the database tables & content.
+        This class is not used by the live web app.  
     */
 
     public function show_tables()
@@ -256,6 +256,15 @@ class DbCreator extends Dbh
         echo "Inserted values into tickets<br>";
     }
 
+    public function insert_project_enrollments()
+    {   /* These values should correspond to the ones above, as users should be enrolled in the projects they have ticket in */
+        $sql = "INSERT INTO project_enrollments (project_id, user_id) VALUES(1,3),(2,3),(2,7),(2,6),(2,5),(2,9),(3,14),(4,14),(4,10), (5,14),(5,11),(6,14),(6,12),(7,14),(2,8);";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute();
+        echo "Inserted values into project_enrollments<br>";
+    }
+
+
     public function create_notification_types()
     {
         $sql = "CREATE TABLE notification_types(
@@ -330,9 +339,9 @@ class DbCreator extends Dbh
         echo "Created ticket_comments<br>";
     }
 
-    public function create_ticket_history()
+    public function create_ticket_events()
     {
-        $sql = "CREATE TABLE ticket_history(
+        $sql = "CREATE TABLE ticket_events(
                     id INT AUTO_INCREMENT PRIMARY KEY,
                     ticket_id INT,
                     event_type TEXT,  /* I could make a table of event_types and turn this into a foreign key */
@@ -343,14 +352,19 @@ class DbCreator extends Dbh
                 )";
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute();
-        echo "Created ticket_history<br>";
+        echo "Created ticket_events<br>";
     }
 
     public function drop_all_tables()
     {
         echo "DROPPING TABLES:<br>";
+
+        $sql = "SET FOREIGN_KEY_CHECKS = 0";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute();
+
         $tables = [
-            'ticket_history',
+            'ticket_events',
             'notifications',
             'notification_types',
             'ticket_comments',
@@ -388,7 +402,7 @@ class DbCreator extends Dbh
         $this->create_notification_types();
         $this->create_notifications();
         $this->create_ticket_comments();
-        $this->create_ticket_history();
+        $this->create_ticket_events();
         $this->create_sessions();
     }
 
@@ -403,11 +417,16 @@ class DbCreator extends Dbh
         $this->insert_users();
         $this->insert_projects();
         $this->insert_tickets();
+        $this->insert_project_enrollments();
+    }
+
+    public function drop_create_insert_all()
+    {
+        $this->drop_all_tables();
+        $this->create_all_tables();
+        $this->insert_all_values();
     }
 }
 
-
 $dbc = new DbCreator();
-$dbc->drop_all_tables();
-$dbc->create_all_tables();
-$dbc->insert_all_values();
+$dbc->drop_create_insert_all();

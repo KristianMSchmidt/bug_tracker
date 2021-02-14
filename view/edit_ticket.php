@@ -1,5 +1,6 @@
 <?php
 require('../control/shared/login_check.inc.php');
+require('../control/shared/check_ticket_permission.inc.php');
 require_once('../control/controller.class.php');
 
 $contr = new Controller();
@@ -12,6 +13,8 @@ if (isset($_GET['show_original'])) {
     $ticket_id = $_GET['ticket_id'];
     $_SESSION['data'] = $contr->get_ticket_by_id($ticket_id);
 }
+$ticket_permission = check_ticket_permission($contr, $_SESSION['user_id'], $_SESSION['data']['ticket_id']);
+
 
 $projects = $contr->get_projects();
 $priorities = $contr->get_priorities();
@@ -23,7 +26,7 @@ require('page_frame/ui_frame.php');
 ?>
 
 <div class="main">
-    <?php if (in_array($_SESSION['role_name'], ['Admin', 'Project Manager'])) : ?>
+    <?php if ($ticket_permission && (in_array($_SESSION['role_name'], ['Admin', 'Project Manager']))) : ?>
         <div class="edit_ticket">
             <div class="card">
                 <div class="w3-container card-head">
@@ -35,13 +38,18 @@ require('page_frame/ui_frame.php');
                         <div class="text-input">
                             <div class="left">
                                 <!-- Title -->
-                                <p>
-                                    <input type="text" name="title" class="w3-input title" maxlength="30" value="<?php echo $_SESSION['data']['title'] ?? '' ?>">
-                                    <label>Ticket Title</label><br>
-                                    <span class="error">
-                                        <?php echo $_SESSION['errors']['title'] ?? '' ?>
-                                    </span>
-                                </p>
+                                <?php if (in_array($_SESSION['role_name'], ['Admin', 'Project Manager', 'Submitter'])) : ?>
+                                    <p>
+                                        <input type="text" name="title" class="w3-input title" maxlength="30" value="<?php echo $_SESSION['data']['title'] ?? '' ?>">
+                                        <label>Ticket Title</label><br>
+                                        <span class="error">
+                                            <?php echo $_SESSION['errors']['title'] ?? '' ?>
+                                        </span>
+                                    </p>
+                                <?php else : ?>
+                                    <p><?php echo $_SESSION['data']['title'] ?? '' ?></p>
+                                <?php endif ?>
+
                             </div>
                             <div class="right">
                                 <!-- Description -->
@@ -134,7 +142,7 @@ require('page_frame/ui_frame.php');
             <input type="hidden" name="ticket_id" value="<?php echo $_SESSION['data']['ticket_id'] ?>">
         </form>
     <?php else : ?>
-        <div class="main">Only administrators and project managers have acces to this page. </div>
+        <div class="main">You don't have permission to edit this ticket. Please contact your local admin or project manager.</div>
     <?php endif ?>
 </div>
 

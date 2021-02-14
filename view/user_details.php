@@ -1,7 +1,11 @@
 <?php
 require('../control/shared/login_check.inc.php');
 require('page_frame/ui_frame.php');
-$user_id = $_GET['user_id'];
+if (isset($_GET['user_id'])) {
+    $user_id = $_GET['user_id'];
+} else {
+    header('location: dashboard.php');
+}
 
 $contr = new controller;
 $user = $contr->get_users($user_id)[0];
@@ -14,7 +18,9 @@ $tickets = $contr->get_tickets_by_user($user_id, $user['role_name']);
         <div class="card top">
             <div class="w3-container card-head" style="display:flex;">
                 <h3>User Details</h3>
-                <a href="manage_user_roles.php?user_id=<?php echo $user_id ?>">Update Role</a>
+                <?php if (in_array($_SESSION['role_name'], ['Admin'])) : ?>
+                    <a href="manage_user_roles.php?user_id=<?php echo $user_id ?>">Update Role</a>
+                <?php endif ?>
             </div>
             <div class=" w3-container wrapper">
                 <table class="table bordered">

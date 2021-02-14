@@ -1,4 +1,4 @@
-/* Style of individual pages, i.e. the content of the main area */
+/* Style of individual pages, i.e. the content of the 'main' div */
 
 .users,
 .my_projects,
@@ -282,6 +282,12 @@
         canvas {
             width: 100% !important;
             height: auto !important;
+        }
+    }
+    @media only screen and (min-width: 1300px) {
+        .card {
+            padding-left: 8em;
+            padding-right: 8em;
         }
     }
     @media only screen and (max-width: 950px) {

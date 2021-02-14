@@ -1,21 +1,23 @@
 <?php
 require('../control/shared/login_check.inc.php');
+require('../control/shared/check_project_permission.inc.php');
 require_once('../control/controller.class.php');
+$contr = new Controller();
 
 if (isset($_GET['show_original'])) {
-    $contr = new Controller();
     $project_id = $_GET['project_id'];
     $_SESSION['data'] = $contr->get_project_by_id($project_id);
 }
 if (!isset($_SESSION['data']['project_id'])) {
     header("location: my_projects.php");
 }
+$project_permission = check_project_permission($contr, $_SESSION['user_id'], $_SESSION['data']['project_id']);
 
 require('page_frame/ui_frame.php');
 ?>
 
 <div class="main">
-    <?php if (in_array($_SESSION['role_name'], ['Admin', 'Project Manager'])) : ?>
+    <?php if ($project_permission && in_array($_SESSION['role_name'], ['Admin', 'Project Manager'])) : ?>
         <div class="edit_project">
             <div class="card">
                 <div class="w3-container card-head">

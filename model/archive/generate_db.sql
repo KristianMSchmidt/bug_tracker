@@ -1,4 +1,7 @@
-/* This script can be used the re-generate the whole database with reasonable content */
+/* 
+        This file is deprecated & not updated. 
+        Use 'db_creator.class.php' instead if you want to delete or re-create tables. 
+*/
 
 SHOW DATABASES;
 DROP DATABASE IF EXISTS bug_tracker;
@@ -501,8 +504,8 @@ INSERT INTO ticket_comments(commenter_user_id, ticket_id, message) VALUES(1, 1, 
 
 select * from tickets
 
-DROP TABLE IF EXISTS ticket_history;
-CREATE TABLE ticket_history(
+DROP TABLE IF EXISTS ticket_events;
+CREATE TABLE ticket_events(
     id INT AUTO_INCREMENT PRIMARY KEY,
     ticket_id INT,
     event_type TEXT,  /* I could make a table of eventy_types and turn this into a foreign key */
@@ -512,11 +515,11 @@ CREATE TABLE ticket_history(
     FOREIGN KEY (ticket_id) REFERENCES tickets (ticket_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-INSERT INTO ticket_history(ticket_id, event_type, old_value, new_value)
+INSERT INTO ticket_events(ticket_id, event_type, old_value, new_value)
 VALUES(1, "AssignedTo", "Steven Pinker", "Richard Dawkins"); 
 
 
-INSERT INTO ticket_history(ticket_id, event_type, old_value, new_value)
+INSERT INTO ticket_events(ticket_id, event_type, old_value, new_value)
 VALUES(1, "StatusChange", "In Progress", "Closed"); 
 
-select * from ticket_history;
+select * from ticket_events;

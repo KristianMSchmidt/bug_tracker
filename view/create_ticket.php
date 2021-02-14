@@ -1,6 +1,7 @@
 <?php
 require('../control/shared/login_check.inc.php');
 require_once('../control/controller.class.php');
+require('../control/shared/check_project_permission.inc.php');
 
 $contr = new Controller();
 $projects = $contr->get_projects();
@@ -13,9 +14,9 @@ if (isset($_GET['project_id'])) {
     $_SESSION['data']['project_name'] = $contr->get_project_name_by_id($_GET['project_id'])['project_name'];
     $_SESSION['data']['project_id'] = $_GET['project_id'];
 }
-require('page_frame/ui_frame.php');
+$project_permission =
+    require('page_frame/ui_frame.php');
 ?>
-
 
 <div class="main">
     <?php if (in_array($_SESSION['role_name'], ['Admin', 'Project Manager', 'Submitter'])) : ?>
@@ -126,7 +127,7 @@ require('page_frame/ui_frame.php');
             </div>
         </div>
     <?php else : ?>
-        <div class="main">Developers don't have acces to this page</div>
+        <p>Developers don't have acces to this page</p>
     <?php endif ?>
 </div>
 
