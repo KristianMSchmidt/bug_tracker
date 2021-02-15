@@ -13,6 +13,7 @@ if (isset($_GET['show_original'])) {
     $ticket_id = $_GET['ticket_id'];
     $_SESSION['data'] = $contr->get_ticket_by_id($ticket_id);
 }
+
 $ticket_permission = check_ticket_permission($contr, $_SESSION['user_id'], $_SESSION['data']['ticket_id']);
 
 $projects = $contr->get_projects_by_user($_SESSION['user_id'], $_SESSION['role_name']);
@@ -27,7 +28,8 @@ require('page_frame/ui_frame.php');
 ?>
 
 <div class="main">
-    <?php if ($ticket_permission && (in_array($_SESSION['role_name'], ['Admin', 'Project Manager']))) : ?>
+    <!-- Current all admins have access to edit ticket. Project Managers who are enrolled in ticket's parent project also have acces. -->
+    <?php if ($_SESSION['role_name'] == 'Admin' || (($_SESSION['role_name'] == 'Project Manager') && $ticket_permission)) : ?>
         <div class="edit_ticket">
             <div class="top">
                 <!-- Parent Project -->

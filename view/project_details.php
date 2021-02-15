@@ -18,6 +18,7 @@ $tickets = $contr->get_tickets_by_project($project_id);
 ?>
 
 <div class="main">
+    <!-- All admins have acces. PM's enrolled in this project also have acces -->
     <?php if ($project_permission) : ?>
         <div class="user_details">
             <div class="card top project">

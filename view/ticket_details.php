@@ -17,6 +17,7 @@ $comments = $contr->get_ticket_comments($ticket_id);
 ?>
 
 <div class="main">
+    <!-- Current all admins have acces. All PM's enrolled in ticket's parent project have acces. All who are devs or subs on the ticket have acces.-->
     <?php if ($ticket_permission) : ?>
         <div class="ticket_details">
             <div class="card top">

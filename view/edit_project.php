@@ -17,7 +17,8 @@ require('page_frame/ui_frame.php');
 ?>
 
 <div class="main">
-    <?php if ($project_permission && in_array($_SESSION['role_name'], ['Admin', 'Project Manager'])) : ?>
+    <!-- All admins have acces. PM's enrolled in this project also have acces -->
+    <?php if ($_SESSION['role_name'] == 'Admin' || (($_SESSION['role_name'] == 'Project Manager') && $ticket_permission)) : ?>
         <div class="edit_project">
             <div class="card">
                 <div class="w3-container card-head">

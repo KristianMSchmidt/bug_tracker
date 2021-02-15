@@ -121,3 +121,5 @@ Hide PHP in url??
 
 
 Overvej at gøre alle brugere tilknyttet et projekt valgbare som developer_assigned
+
+db_get_projects() bruges vist ikke rigt?
