@@ -5,7 +5,7 @@ session_start();
 $contr = new Controller();
 
 $selected_users = json_decode($_POST['user_ids']);
-$project_name = $contr->get_project_name_by_id($_POST['project_id'])['project_name'];
+$project_name = $contr->get_project_name_by_id($_POST['project_id']);
 $_SESSION['selected_users'] = $selected_users;
 
 if (isset($_POST['enroll_users_submit'])) {

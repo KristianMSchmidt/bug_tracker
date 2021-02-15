@@ -9,8 +9,9 @@ if (isset($_GET['user_id'])) {
 
 $contr = new controller;
 $user = $contr->get_users($user_id)[0];
-$projects = $contr->get_projects_by_user($user_id, $user['role_name']);
+$projects = $contr->get_project_enrollments($user_id);
 $tickets = $contr->get_tickets_by_user($user_id, $user['role_name']);
+
 ?>
 
 <div class="main">
@@ -64,10 +65,10 @@ $tickets = $contr->get_tickets_by_user($user_id, $user['role_name']);
                                 <th></th>
                             </tr>
                             <?php foreach ($projects as $project) : ?>
-                                <?php $enrollment_start = $contr->get_enrollment_start($project['project_id'], $user_id); ?>
+                                <?php $project_name = $contr->get_project_name_by_id(($project['project_id'])) ?>
                                 <tr>
-                                    <td><?php echo $project['project_name'] ?></td>
-                                    <td><?php echo $enrollment_start; ?></td>
+                                    <td><?php echo $project_name ?></td>
+                                    <td><?php echo $project['enrollment_start'] ?></td>
                                     <td><a href="project_details.php?project_id=<?php echo $project['project_id'] ?>">Project Details</a></td>
                                 </tr>
                             <?php endforeach ?>

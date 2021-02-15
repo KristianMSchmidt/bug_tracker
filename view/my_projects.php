@@ -45,7 +45,7 @@ $projects = $contr->get_projects_by_user($_SESSION['user_id'], $_SESSION['role_n
                                 <td class="hide_if_needed"><?php echo $project['created_by'] ?></td>
                                 <td class="hide_if_needed"><?php echo $project['created_at'] ?></th>
                                 <td><?php echo $project['updated_at'] ?></td>
-                                <td><?php echo $project['enrollment_start'] ?></td>
+                                <td><?php echo $project['enrolled_since'] ?></td>
                                 <td>
                                     <a href="project_details.php?project_id=<?php echo $project['project_id'] ?>">Details</a>
                                 </td>

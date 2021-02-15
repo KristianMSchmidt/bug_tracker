@@ -27,12 +27,6 @@ class Controller extends Model
         return $results;
     }
 
-    public function get_users_by_role_id($role_id)
-    {
-        $results = $this->db_get_users_by_role_id($role_id);
-        return $results;
-    }
-
     public function create_user($full_name, $pwd, $email, $role_id)
     {
         $this->db_create_user($full_name, $pwd, $email, $role_id);
@@ -41,9 +35,6 @@ class Controller extends Model
     public function get_projects_by_user($user_id, $role_name)
     {
         $projects = $this->db_get_projects_by_user($user_id, $role_name);
-        for ($i = 0; $i < count($projects); $i++) {
-            $projects[$i]['enrollment_start'] = $this->get_enrollment_start($projects[$i]['project_id'], $user_id);
-        }
         return $projects;
     }
 
@@ -251,18 +242,8 @@ class Controller extends Model
         return $this->db_check_project_enrollment($project_id, $user_id);
     }
 
-    public function get_enrollment_start($project_id, $user_id)
+    public function get_project_enrollments($user_id)
     {
-        $result = $this->db_get_enrollment_start($project_id, $user_id);
-
-        if (isset($result[0])) {
-            $enrollment_start = $result[0]['enrollment_start'];
-        } else if (isset($result[1])) {
-            echo "Error: Double project enrollment";
-            exit();
-        } else {
-            $enrollment_start = "Not personally enrolled";
-        }
-        return $enrollment_start;
+        return ($this->db_get_project_enrollments($user_id));
     }
 }

@@ -12,7 +12,6 @@ if (isset($_GET['project_id'])) {
 $contr = new controller;
 $project_permission = check_project_permission($contr, $_SESSION['user_id'], $project_id);
 $project = $contr->get_project_by_id($project_id);
-$enrollment_start = $contr->get_enrollment_start($project_id, $_SESSION['user_id']);
 $users = $contr->get_project_users($project_id, "all_roles");
 $tickets = $contr->get_tickets_by_project($project_id);
 ?>

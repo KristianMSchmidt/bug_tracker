@@ -9,20 +9,6 @@ class Model extends Dbh
 
     */
 
-    protected function db_get_enrollment_start($project_id, $user_id)
-    {
-        $sql = "SELECT
-                project_enrollments.enrollment_start 
-                FROM project_enrollments 
-                WHERE project_id = ? 
-                AND user_id = ?";
-
-        $stmt = $this->connect()->prepare($sql);
-        $stmt->execute([$project_id, $user_id]);
-        $results = $stmt->fetchAll();
-        return $results;
-    }
-
     protected function db_get_users($user_id)
     {
         $sql  = "SELECT 
@@ -62,6 +48,20 @@ class Model extends Dbh
         return $results;
     }
 
+    protected function db_get_project_enrollments($user_id)
+    {
+        $sql = "SELECT
+                project_enrollments.project_id,
+                project_enrollments.enrollment_start 
+                FROM project_enrollments 
+                WHERE user_id = ?";
+
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute([$user_id]);
+        $results = $stmt->fetchAll();
+        return $results;
+    }
+
     protected function db_get_most_busy_users()
     {
         $sql = "SELECT COUNT(tickets.ticket_id) as count, users.full_name
@@ -72,16 +72,6 @@ class Model extends Dbh
         ORDER BY count(tickets.ticket_id) ASC LIMIT 5";
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute();
-        $results = $stmt->fetchAll();
-        return $results;
-    }
-
-    protected function db_get_users_by_role_id($role_id)
-    {
-        $sql  = "SELECT *
-                FROM users
-                WHERE role_id = {$role_id}";
-        $stmt = $this->connect()->query($sql);
         $results = $stmt->fetchAll();
         return $results;
     }
@@ -536,7 +526,7 @@ class Model extends Dbh
                 WHERE project_id = ?";
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute([$project_id]);
-        $project_name = $stmt->fetch();
+        $project_name = $stmt->fetch()['project_name'];
         return $project_name;
     }
 
