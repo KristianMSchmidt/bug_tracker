@@ -13,13 +13,13 @@ $contr = new Controller;
 $tickets = $contr->get_tickets_by_user($_SESSION['user_id'], $_SESSION['role_name']);
 ?>
 
-
 <div class="main">
     <div class="my_tickets">
         <div class="wrapper">
             <?php if (in_array($_SESSION['role_name'], ['Admin', 'Project Manager', 'Submitter'])) : ?>
                 <form action="create_ticket.php" method="get">
-                    <input type="submit" name="submit" value="CREATE NEW TICKET" class="btn-primary">
+                    <input type="hidden" name="add_to_project" value="0">
+                    <input type="submit" value="CREATE NEW TICKET" class="btn-primary">
                 </form>
             <?php endif ?>
             <div class="card w3-responsive">

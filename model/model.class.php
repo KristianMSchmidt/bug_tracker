@@ -291,18 +291,25 @@ class Model extends Dbh
         return $project;
     }
 
-    protected function db_get_project_users($project_id)
+    protected function db_get_project_users($project_id, $role_id)
     // all users assigned to project
     {
         $sql =
-            "SELECT users.full_name, users.email, user_roles.role_name, users.user_id
+            "SELECT users.full_name, users.email, user_roles.role_name, users.user_id, project_enrollments.enrollment_start
             FROM users 
             JOIN project_enrollments ON users.user_id = project_enrollments.user_id
             JOIN user_roles ON user_roles.role_id = users.role_id
-            WHERE project_enrollments.project_id = ?
-            ORDER BY users.full_name";
-        $stmt = $this->connect()->prepare($sql);
-        $stmt->execute([$project_id]);
+            WHERE project_enrollments.project_id = ?";
+
+        if ($role_id !== "all_roles") {
+            $sql .= " AND users.role_id = ? ORDER BY users.full_name";
+            $stmt = $this->connect()->prepare($sql);
+            $stmt->execute([$project_id, $role_id]);
+        } else {
+            $sql .= " ORDER BY users.full_name";
+            $stmt = $this->connect()->prepare($sql);
+            $stmt->execute([$project_id]);
+        }
         $users = $stmt->fetchAll();
         return $users;
     }
@@ -449,7 +456,6 @@ class Model extends Dbh
         $sql = "UPDATE tickets 
                 SET 
                     title = ?,
-                    project = ?,
                     developer_assigned = ?,
                     priority=?,
                     status = ?,
@@ -461,7 +467,6 @@ class Model extends Dbh
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute([
             $data['title'],
-            $data['project_id'],
             $data['developer_assigned'],
             $data['priority_id'],
             $data['status_id'],

@@ -5,7 +5,6 @@ require_once('controller.class.php');
 
 $contr = new Controller();
 $new_ticket = $_POST;
-$new_ticket['project_name'] = $contr->get_project_name_by_id($_POST['project_id'])['project_name'];
 $new_ticket['ticket_priority_name'] = $contr->get_priority_name_by_id($_POST['priority_id'])['ticket_priority_name'];
 $new_ticket['ticket_type_name'] = $contr->get_ticket_type_name_by_id($_POST['type_id'])['ticket_type_name'];
 $new_ticket['ticket_status_name'] = $contr->get_ticket_status_name_by_id($_POST['status_id'])['ticket_status_name'];

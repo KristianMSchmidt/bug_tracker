@@ -23,7 +23,7 @@ $projects = $contr->get_projects_by_user($_SESSION['user_id'], $_SESSION['role_n
                         <?php if ($_SESSION['role_name'] == 'Admin') : ?>
                             All projects in the database
                         <?php else : ?>
-                            All projects you are in enrolled in
+                            All your projects in the database
                         <?php endif ?>
                     </p>
                 </div>

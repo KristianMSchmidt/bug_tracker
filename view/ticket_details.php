@@ -29,27 +29,23 @@ $comments = $contr->get_ticket_comments($ticket_id);
                 <div class="w3-container wrapper">
                     <table class="table bordered">
                         <tr>
-                            <td class="td-details">Ticket ID:</td>
-                            <td><?php echo $ticket_id ?></td>
-                        </tr>
-                        <tr>
-                            <td>Ticket name:</td>
+                            <td class="td-details">Ticket name:</td>
                             <td><?php echo $ticket['title'] ?></td>
                         </tr>
                         <tr>
-                            <td>Project:</td>
+                            <td class="td-details">Project:</td>
                             <td><a href="project_details.php?project_id=<?php echo $ticket['project_id'] ?>"><?php echo $ticket['project_name'] ?> </a></td>
                         </tr>
                         <tr>
-                            <td>Assigned Developer:</td>
+                            <td class="td-details">Developer:</td>
                             <td><?php echo $ticket['developer_name'] ?></td>
                         </tr>
                         <tr>
-                            <td>Submitter:</td>
+                            <td class="td-details">Submitter:</td>
                             <td><?php echo $ticket['submitter_name'] ?></td>
                         </tr>
                         <tr>
-                            <td>Description:</td>
+                            <td class="td-details">Description:</td>
                             <td><?php echo $ticket['description'] ?></td>
                         </tr>
                     </table>
@@ -59,19 +55,19 @@ $comments = $contr->get_ticket_comments($ticket_id);
                             <td><?php echo $ticket['ticket_priority_name'] ?></td>
                         </tr>
                         <tr>
-                            <td>Type:</td>
+                            <td class="td-details">Type:</td>
                             <td><?php echo $ticket['ticket_type_name'] ?></td>
                         </tr>
                         <tr>
-                            <td>Status:</td>
+                            <td class="td-details">Status:</td>
                             <td><?php echo $ticket['ticket_status_name'] ?></td>
                         </tr>
                         <tr>
-                            <td>Created:</td>
+                            <td class="td-details">Created:</td>
                             <td><?php echo $ticket['created_at'] ?></td>
                         </tr>
                         <tr>
-                            <td>Last update:</td>
+                            <td class="td-details">Last update:</td>
                             <td><?php echo $ticket['updated_at'] ?></td>
                         </tr>
                     </table>

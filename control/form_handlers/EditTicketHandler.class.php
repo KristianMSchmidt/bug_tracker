@@ -47,11 +47,6 @@ class EditTicketHandler extends TicketValidator
             $changes = True;
         }
 
-        if ($old_ticket['project_id'] !== $new_ticket['project_id']) {
-            $contr->add_to_ticket_events($ticket_id, "ProjectChange", $old_ticket['project_name'], $new_ticket['project_name']);
-            $changes = True;
-        }
-
         if ($old_ticket['priority_id'] !== $new_ticket['priority_id']) {
             $contr->add_to_ticket_events($ticket_id, "PriorityChange", $old_ticket['ticket_priority_name'], $new_ticket['ticket_priority_name']);
             $changes = True;

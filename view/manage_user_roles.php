@@ -4,8 +4,8 @@ require_once('../control/controller.class.php');
 
 $contr = new Controller;
 $users = $contr->get_users("all_users");
-require('page_frame/ui_frame.php');
 
+require('page_frame/ui_frame.php');
 ?>
 <div class="main">
     <?php if (in_array($_SESSION['role_name'], ['Admin'])) : ?>
@@ -19,10 +19,7 @@ require('page_frame/ui_frame.php');
                         <p>All users in your database</p>
                         <div class="scroll">
                             <?php foreach ($users as $user) : ?>
-                                <?php $demo_users = array("Demo Admin", "Demo PM", "Demo Dev", "Demo Sub") ?>
-                                <?php if (!in_array($user['full_name'], $demo_users)) : ?>
-                                    <p id="<?php echo $user['user_id'] ?>" class="searchable" onclick="toggle_user(<?php echo $user['user_id'] ?>)"><?php echo $user['full_name'] . ' | ' . $user['role_name'] ?></p>
-                                <?php endif ?>
+                                <p id="<?php echo $user['user_id'] ?>" class="searchable" onclick="toggle_user(<?php echo $user['user_id'] ?>)"><?php echo $user['full_name'] . ' | ' . $user['role_name'] ?></p>
                             <?php endforeach ?>
                         </div>
                         <p id="no_selected_users" class="error"></p>
@@ -40,7 +37,7 @@ require('page_frame/ui_frame.php');
                                     <tr>
                                         <th>Name</th>
                                         <th>Role</th>
-                                        <th>Created</th>
+                                        <th class="hide_if_needed">Created</th>
                                         <th>Last Update</th>
                                         <th>Updated By</th>
                                         <th>User Details</th>
@@ -51,13 +48,15 @@ require('page_frame/ui_frame.php');
                                         <tr id="row_<?php echo $user['user_id'] ?>" style="display:none;">
                                             <td><?php echo $user['full_name'] ?></td>
                                             <td><?php echo $user['role_name'] ?></td>
-                                            <td><?php echo $user['created_at'] ?></td>
+                                            <td class="hide_if_needed"><?php echo $user['created_at'] ?></td>
                                             <td><?php echo $user['updated_at'] ?></td>
-                                            <?php if (isset($user['updated_by'])) : ?>
-                                                <td><?php echo $user['updated_by'] ?></td>
-                                            <?php else : ?>
-                                                <td>None</td>
-                                            <?php endif ?>
+                                            <td>
+                                                <?php if (isset($user['updated_by'])) : ?>
+                                                    <?php echo $user['updated_by'] ?>
+                                                <?php else : ?>
+                                                    None
+                                                <?php endif ?>
+                                            </td>
                                             <td><a href="user_details.php?user_id=<?php echo $user['user_id'] ?>">Details</td>
 
                                         </tr>
@@ -110,7 +109,7 @@ require('page_frame/ui_frame.php');
     <?php endif ?>
 </div>
 
-<?php if (isset($_SESSION['role_change_feedback'])) : ?>
+<?php if (isset($_SESSION['feedback_users'])) : ?>
     <!-- Modal response message -->
     <div id="id01" class="w3-modal">
         <div class="w3-modal-content">
@@ -125,21 +124,17 @@ require('page_frame/ui_frame.php');
                                 <th>Current Role</th>
                                 <th>Role Changed</th>
                             </tr>
-                            <?php foreach ($_SESSION['selected_users'] as $selected_user) : ?>
+                            <?php foreach ($_SESSION['feedback_users'] as $feedback_user) : ?>
                                 <tr>
-                                    <td><?php echo $selected_user['full_name'] ?></td>
-                                    <td><?php echo $selected_user['role_name'] ?></td>
-                                    <td><?php echo $_SESSION['new_role_name'] ?></td>
-                                    <?php if ($selected_user['role_name'] !== $_SESSION['new_role_name']) : ?>
-                                        <td style="color:green">Yes</td>
-                                    <?php else : ?>
-                                        <td style="color:red">No</td>
-                                    <?php endif ?>
+                                    <td><?php echo $feedback_user['full_name'] ?></td>
+                                    <td><?php echo $feedback_user['old_role_name'] ?></td>
+                                    <td><?php echo $feedback_user['new_role_name'] ?></td>
+                                    <td style="color:<?php echo $feedback_user['color'] ?>"><?php echo $feedback_user['message'] ?></td>
                                 </tr>
                             <?php endforeach; ?>
                         </table>
                     </div>
-                    <?php $num_selected = count($_SESSION['selected_users']); ?>
+                    <?php $num_selected = count($_SESSION['feedback_users']); ?>
                     <p>Showing 1-<?php echo $num_selected; ?> of <?php echo $num_selected; ?> entries</p>
                 </div>
             </div>
@@ -149,6 +144,7 @@ require('page_frame/ui_frame.php');
         document.getElementById('id01').style.display = 'block';
     </script>
 <?php endif ?>
+
 <script>
     selected_users = [];
 
@@ -174,6 +170,7 @@ require('page_frame/ui_frame.php');
     const urlParams = new URLSearchParams(queryString);
     const user_id = urlParams.get('user_id');
     if (user_id) {
+        console.log(user_id);
         toggle_user(user_id);
     }
 
@@ -212,10 +209,12 @@ require('page_frame/ui_frame.php');
         }
     });
 </script>
+
 <?php
 require('page_frame/closing_tags.php');
 require('../control/shared/clean_session.inc.php');
 ?>
+
 <script>
     set_active_link("manage_user_roles");
 </script>

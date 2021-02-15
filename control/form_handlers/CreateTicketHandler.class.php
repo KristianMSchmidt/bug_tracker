@@ -4,7 +4,6 @@ require_once('controller.class.php');
 
 class CreateTicketHandler extends TicketValidator
 {
-
     public function __construct($post_data)
     {
         $this->new_ticket = $post_data;
@@ -48,10 +47,8 @@ class CreateTicketHandler extends TicketValidator
         $this->contr->create_ticket($this->new_ticket);
         $developer_is_enrolled_in_project = $this->contr->check_project_enrollment($this->new_ticket['project_id'], $this->new_ticket['developer_assigned']);
         if (!$developer_is_enrolled_in_project) {
-            $this->contr->assign_to_project($this->new_ticket['developer_assigned'], $this->new_ticket['project_id']);
-            $project_name = $this->contr->get_project_name_by_id($this->new_ticket['project_id'])['project_name'];
-            $message = "enrolled you in the project '{$project_name}'";
-            $this->contr->create_notification(4, $this->new_ticket['developer_assigned'], $message, $this->new_ticket['submitter']);
+            echo "Error: Developer is not enrolled in project";
+            exit();
         }
         $message = "assigned you to the ticket '{$this->new_ticket['title']}'";
         $this->contr->create_notification(2, $this->new_ticket['developer_assigned'], $message, $this->new_ticket['submitter']);

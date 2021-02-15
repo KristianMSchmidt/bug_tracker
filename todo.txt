@@ -90,3 +90,34 @@ Hvis projektet IKKE KAN ændres ved edit ticket:
 -  Kun projekter, man er tilknyttet, vises (nemt) 
 -  Submitter & Developer assigned forbliver i det gamle projekt, men tilknyttes det nye: Giv besked om dette. 
 
+
+Submit-knapper under create og ediet forms skal strømlines (under carded! og væk med <br>)
+
+Overvej: "Select Project ::: Når "select project" ... "all projects in the db" eller snarere "the projects your manage"? 
+
+
+Flødeskum: Overvej at gøre view <--> control rigtig adskilt ved også at sende get requests via page.inc.php, når der skal generees data. Redirect og overfør data
+via _SESSION. Det ville ikke tage lang tid at implementere. Skulle det gøres konsekvent, skulle der så slet ikke være nogen henvisning til "$contr" i mine views. 
+
+
+
+Gør "Details- link" visning i tabllen konsistens accreoss pages. 
+
+
+Lav table med ticket_event_types og gør den til foreing key i ticket_events. Så stemmer det overens med min øvrige praksis.
+
+
+Project_Details, Ticket_Details: Lav link øvers om til Blå knap: Edit Ticket, Edit Project?
+
+Edit ticket: Mine links er ikke konsistente. I Headeren? Eller om table entry?
+
+JS: If screen width < 450 : "Your screen is to small for this project"
+
+ADD ticket to project --> bør være lige som edit ticket med parent project og ikke mulighed for at vælge andet projeklt. 
+Jeg burrde nok lige tænkte igennem, præcis hvilke sider, der egentlig er ensart sådan
+ret ift css og genbrug af html. 
+
+Hide PHP in url??
+
+
+Overvej at gøre alle brugere tilknyttet et projekt valgbare som developer_assigned

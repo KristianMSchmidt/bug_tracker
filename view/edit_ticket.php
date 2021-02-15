@@ -15,19 +15,44 @@ if (isset($_GET['show_original'])) {
 }
 $ticket_permission = check_ticket_permission($contr, $_SESSION['user_id'], $_SESSION['data']['ticket_id']);
 
+$projects = $contr->get_projects_by_user($_SESSION['user_id'], $_SESSION['role_name']);
+$selected_project = $contr->get_project_by_id($_SESSION['data']['project_id']);
 
-$projects = $contr->get_projects();
 $priorities = $contr->get_priorities();
 $types = $contr->get_ticket_types();
 $status_types = $contr->get_ticket_status_types();
-$developers = $contr->get_users_by_role_id(3);
-
+$enrolled_developers = $contr->get_project_users($_SESSION['data']['project_id'], 3);
 require('page_frame/ui_frame.php');
+
 ?>
 
 <div class="main">
     <?php if ($ticket_permission && (in_array($_SESSION['role_name'], ['Admin', 'Project Manager']))) : ?>
         <div class="edit_ticket">
+            <div class="top">
+                <!-- Parent Project -->
+                <div class="card">
+                    <div class="w3-container card-head">
+                        <h3>Parent Project</h4>
+                    </div>
+                    <div class="w3-container">
+                        <table class="table bordered table-no-description">
+                            <tr>
+                                <th>Project Name</th>
+                                <th>Created</th>
+                                <th>Last Update</th>
+                                <th>Details</th>
+                            </tr>
+                            <tr>
+                                <td><?php echo $selected_project['project_name']; ?></td>
+                                <td><?php echo $selected_project['created_at']; ?></td>
+                                <td><?php echo $selected_project['updated_at']; ?></td>
+                                <td> <a href="project_details.php?project_id=<?php echo $_SESSION['data']['project_id'] ?>" class="right">Project Details</a></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
             <div class="card">
                 <div class="w3-container card-head">
                     <h3>Edit Ticket</h3>
@@ -64,16 +89,6 @@ require('page_frame/ui_frame.php');
                         </div>
                         <div class="other-input">
                             <div class="left">
-                                <!-- Project -->
-                                <select class="w3-select" name="project_id">
-                                    <option value="<?php echo $_SESSION['data']['project_id'] ?>" selected><?php echo $_SESSION['data']['project_name']; ?></option>
-                                    <?php foreach ($projects as $project) : ?>
-                                        <?php if ($project['project_id'] != $_SESSION['data']['project_id']) : ?>
-                                            <option value="<?php echo $project['project_id'] ?>"><?php echo $project['project_name'] ?></option>
-                                        <?php endif ?>
-                                    <?php endforeach; ?>
-                                </select>
-                                <label>Project</label>
 
                                 <!-- Ticket Priority -->
                                 <select class="w3-select" name="priority_id">
@@ -102,9 +117,9 @@ require('page_frame/ui_frame.php');
                                 <!-- Developer Assigned -->
                                 <select class="w3-select" name="developer_assigned">
                                     <option value="<?php echo $_SESSION['data']['developer_assigned'] ?>" selected><?php echo $_SESSION['data']['developer_name'] ?></option>
-                                    <?php foreach ($developers as $developer) : ?>
-                                        <?php if ($developer['user_id'] !== $_SESSION['data']['developer_assigned']) : ?>
-                                            <option value="<?php echo $developer['user_id'] ?>"><?php echo $developer['full_name'] ?></option>
+                                    <?php foreach ($enrolled_developers as $enrolled_developer) : ?>
+                                        <?php if ($enrolled_developer['user_id'] !== $_SESSION['data']['developer_assigned']) : ?>
+                                            <option value="<?php echo $enrolled_developer['user_id'] ?>"><?php echo $enrolled_developer['full_name'] ?></option>
                                         <?php endif ?>
                                     <?php endforeach; ?>
                                 </select>
@@ -124,8 +139,11 @@ require('page_frame/ui_frame.php');
                                 <!-- Ticket Id -->
                                 <input type="hidden" name="ticket_id" value="<?php echo $_SESSION['data']['ticket_id']; ?>">
 
+                                <!-- Project Id -->
+                                <input type="hidden" name="project_id" value="<?php echo $_SESSION['data']['project_id'] ?>">
+
                                 <!-- Error Message -->
-                                <p class="error w3-center">
+                                <p class=" error w3-center">
                                     <?php echo $_SESSION['errors']['no_changes_error'] ?? '' ?>
                                 </p>
                                 <!-- Submit button -->

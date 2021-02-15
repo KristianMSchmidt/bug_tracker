@@ -118,7 +118,7 @@ class DbCreator extends Dbh
         $sql = "INSERT INTO projects(project_name, project_description, created_by) VALUES
                 ('Portfolio', 'An online portfolio to show some of my work', 1),
                 ('Bug_Tracker PHP', 'A full featured bug tracking system made with PHP and MySQL', 1),
-                ('Bug_Tracker Djangon', 'A Django version of my Bug_Tracker', 1),
+                ('Bug_Tracker Django', 'A Django version of my Bug_Tracker', 1),
                 ('Fast Soduko Solver', 'A speed-uptimized sudoku solver using backtracking search and an arc-consistency algorithm.', 1),
                 ('Puzzle solver', 'A web app that solves 8- and 15-puzzles backend and shows the solutions in the web page', 1),
                 ('2048 AI-player', 'An AI-player for the classic 2048 game. AI uses mini-max search and different heuristics', 1),
@@ -344,7 +344,7 @@ class DbCreator extends Dbh
         $sql = "CREATE TABLE ticket_events(
                     id INT AUTO_INCREMENT PRIMARY KEY,
                     ticket_id INT,
-                    event_type TEXT,  /* I could make a table of event_types and turn this into a foreign key */
+                    event_type TEXT,  /* Perhaps I should make a table of event_types and turn this into a foreign key */
                     old_value TEXT,   /* This could be many things - an old comment, a user  etc - so I wont use foreign key here. */
                     new_value TEXT,
                     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,

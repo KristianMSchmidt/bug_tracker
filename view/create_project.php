@@ -11,7 +11,7 @@ require('page_frame/ui_frame.php');
                     <h3>Create Project</h3>
                 </div>
                 <div class="w3-container">
-                    <form action="../control/create_project.inc.php" method="POST">
+                    <form action="../control/create_project.inc.php" method="POST" id="create_project_form">
                         <!-- Title -->
                         <p>
                             <input type="text" name="project_name" maxlength="30" class="w3-input title" value="<?php echo $_SESSION['data']['project_name'] ?? '' ?>">
@@ -32,13 +32,14 @@ require('page_frame/ui_frame.php');
 
                         <!-- Submitter -->
                         <input type="hidden" name="created_by" value="<?php echo $_SESSION['user_id'] ?>">
-
-                        <!-- Submit button -->
-                        <div class="w3-container w3-center">
-                            <input type="submit" name="submit" class="btn-primary" value="Create Project">
-                        </div>
                     </form>
                 </div>
+            </div>
+            <br>
+            <br>
+            <!-- Submit button -->
+            <div class="w3-container w3-center">
+                <input type="submit" name="submit" class="btn-primary" value="Create Project" form="create_project_form">
             </div>
         </div>
     <?php else : ?>

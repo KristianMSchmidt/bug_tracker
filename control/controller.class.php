@@ -102,9 +102,9 @@ class Controller extends Model
         $results = $this->db_get_project_by_id($project_id);
         return $results;
     }
-    public function get_project_users($project_id)
+    public function get_project_users($project_id, $role_id)
     {
-        $results = $this->db_get_project_users($project_id);
+        $results = $this->db_get_project_users($project_id, $role_id);
         return $results;
     }
     public function get_project_by_title($project_name)

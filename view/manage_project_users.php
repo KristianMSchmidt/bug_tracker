@@ -3,15 +3,14 @@ require('../control/shared/login_check.inc.php');
 require_once('../control/controller.class.php');
 
 $contr = new Controller;
-$projects = $contr->get_projects();
+$projects = $contr->get_projects_by_user($_SESSION['user_id'], $_SESSION['role_name']);
 
 if (isset($_GET['project_id'])) {
     $project_id = $_GET['project_id'];
-    $project_users = $contr->get_project_users($project_id);
+    $project_users = $contr->get_project_users($project_id, "all_roles");
     $non_project_users = $contr->get_users_not_enrolled_in_project($project_id);
     $selected_project = $contr->get_project_by_id($project_id);
 }
-
 require('page_frame/ui_frame.php');
 ?>
 
@@ -24,7 +23,13 @@ require('page_frame/ui_frame.php');
                     <h4 class="project">Select a project</h4>
                     <div class="w3-container">
                         <input type="text" id="search_field_project" class="search_field" placeholder="Search project" value="<?php echo $_GET['search'] ?? '' ?>">
-                        <p>All projects in the database</p>
+                        <p>
+                            <?php if ($_SESSION['role_name'] == 'Admin') : ?>
+                                All projects in the database
+                            <?php else : ?>
+                                All your projects in the database
+                            <?php endif ?>
+                        </p>
                         <div class="scroll">
                             <?php foreach ($projects as $project) : ?>
                                 <p id="project_<?php echo $project['project_id'] ?>" class="searchable_project" onclick="choose_project(<?php echo $project['project_id'] ?>)"><?php echo $project['project_name'] ?></p>
@@ -35,7 +40,6 @@ require('page_frame/ui_frame.php');
                         </div>
                     </div>
                 </div>
-
                 <!-- Selected Project -->
                 <div class=" orto-wrapper right card ">
                     <div class="w3-container card-head">
@@ -66,7 +70,6 @@ require('page_frame/ui_frame.php');
                     </div>
                 </div>
             </div>
-
             <div class="wrapper">
                 <!-- Select Enroll -->
                 <div class="orto-wrapper bottom left w3-container card non-table-card">
@@ -99,7 +102,6 @@ require('page_frame/ui_frame.php');
                         </form>
                     <?php endif ?>
                 </div>
-
                 <!-- Select Disenroll -->
                 <div class="orto-wrapper bottom right w3-container card non-table-card">
                     <h4> Select users to disenroll</h4>
@@ -122,9 +124,7 @@ require('page_frame/ui_frame.php');
                         <p id="disenroll_error" class="error"></p>
                         <input type="button" value="Disenroll" class="btn-primary" onclick="submit_disenroll_form()">
                     </div>
-
                     <?php if (isset($project_id)) : ?>
-
                         <!-- Disenroll form -->
                         <form action="../control/manage_project_users.inc.php" method="post" id="disenroll_form">
                             <input type="hidden" name="user_ids" value="" id="users_to_disenroll">
@@ -135,6 +135,7 @@ require('page_frame/ui_frame.php');
                 </div>
             </div>
         </div>
+
     <?php else : ?>
         <p>You dont' have permission to this page. Please contact your local administrator or project.</p>
     <?php endif ?>
