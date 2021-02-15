@@ -34,18 +34,19 @@ $projects = $contr->get_projects_by_user($_SESSION['user_id'], $_SESSION['role_n
                             <th class="hide_if_needed">Created By</th>
                             <th class="hide_if_needed"> Created</th>
                             <th>Last Update</th>
-                            <th>Enrolllment start</th>
+                            <th>Enrollled since</th>
                             <th>Project Details</th>
                         </tr>
                         <?php
                         ?>
                         <?php foreach ($projects as $project) : ?>
+                            <?php $enrolled_since = $contr->get_enrollment_start_by_user_and_project($project['project_id'], $_SESSION['user_id']); ?>
                             <tr>
                                 <td><?php echo $project['project_name'] ?></td>
                                 <td class="hide_if_needed"><?php echo $project['created_by'] ?></td>
                                 <td class="hide_if_needed"><?php echo $project['created_at'] ?></th>
                                 <td><?php echo $project['updated_at'] ?></td>
-                                <td><?php echo $project['enrolled_since'] ?></td>
+                                <td><?php echo $enrolled_since ?></td>
                                 <td>
                                     <a href="project_details.php?project_id=<?php echo $project['project_id'] ?>">Details</a>
                                 </td>

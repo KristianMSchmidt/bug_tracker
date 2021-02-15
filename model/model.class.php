@@ -48,7 +48,7 @@ class Model extends Dbh
         return $results;
     }
 
-    protected function db_get_project_enrollments($user_id)
+    protected function db_get_project_enrollments_by_user_id($user_id)
     {
         $sql = "SELECT
                 project_enrollments.project_id,
@@ -111,7 +111,7 @@ class Model extends Dbh
         $results = $stmt->fetchAll();
         return $results;
     }
-    protected function db_get_tickets_by_user($user_id, $role_name)
+    protected function db_get_tickets_by_user_and_role($user_id, $role_name)
     {
         $sql =
             "SELECT 
@@ -622,9 +622,9 @@ class Model extends Dbh
         $stmt->execute([$user_id, $project_id]);
     }
 
-    protected function db_check_project_enrollment($project_id, $user_id)
+    protected function db_get_enrollment_start_by_user_and_project($project_id, $user_id)
     {
-        $sql = "SELECT * 
+        $sql = "SELECT enrollment_start
                 FROM project_enrollments 
                 WHERE project_id = ? AND user_id = ?";
         $stmt = $this->connect()->prepare($sql);

@@ -10,7 +10,7 @@ require('../control/shared/login_check.inc.php');
 require('page_frame/ui_frame.php');
 
 $contr = new Controller;
-$tickets = $contr->get_tickets_by_user($_SESSION['user_id'], $_SESSION['role_name']);
+$tickets = $contr->get_tickets_by_user_and_role($_SESSION['user_id'], $_SESSION['role_name']);
 ?>
 
 <div class="main">

@@ -61,7 +61,7 @@ class EditTicketHandler extends TicketValidator
         }
 
         if ($old_ticket['developer_assigned'] !== $new_ticket['developer_assigned']) {
-            $developer_is_enrolled_in_project = $contr->check_project_enrollment($new_ticket['project_id'], $new_ticket['developer_assigned']);
+            $developer_is_enrolled_in_project = $contr->db_get_enrollment_start_by_user_and_project($new_ticket['project_id'], $new_ticket['developer_assigned']);
             if (!$developer_is_enrolled_in_project) {
                 $contr->assign_to_project($new_ticket['developer_assigned'], $new_ticket['project_id']);
                 $message = "enrolled you in the project '{$new_ticket['project_name']}'";

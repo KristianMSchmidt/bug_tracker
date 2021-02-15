@@ -9,8 +9,10 @@ if (isset($_GET['user_id'])) {
 
 $contr = new controller;
 $user = $contr->get_users($user_id)[0];
-$projects = $contr->get_project_enrollments($user_id);
-$tickets = $contr->get_tickets_by_user($user_id, $user['role_name']);
+$projects = $contr->get_project_enrollments_by_user_id($user_id);
+//Dirty fix to get the right tickets for Admin & PM using existing code. I'll clean this code later. 
+//Here I only want to show ticket where the user in questing is either developer assigned or submitter
+$tickets = $contr->get_tickets_by_user_and_role($user_id, 'Developer');
 
 ?>
 
@@ -55,7 +57,7 @@ $tickets = $contr->get_tickets_by_user($user_id, $user['role_name']);
                         <h4>Project Enrollments</h4>
                     </div>
                     <div class="w3-container">
-                        <h5>The selected user is enrolled in these projects</h5>
+                        <h6>The selected user is enrolled in these projects</h6>
                     </div>
                     <div class="w3-container">
                         <table class="table striped bordered">
@@ -90,7 +92,7 @@ $tickets = $contr->get_tickets_by_user($user_id, $user['role_name']);
                         <h4>Tickets</h4>
                     </div>
                     <div class="w3-container">
-                        <h5>The selected user is assigned to these tickets</h5>
+                        <h6>The selected user is developer assigned or submitter on these tickets</h6>
                     </div>
                     <div class="w3-container w3-responsive">
                         <table class="table striped bordered">

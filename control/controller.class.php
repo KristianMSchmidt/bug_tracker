@@ -38,9 +38,9 @@ class Controller extends Model
         return $projects;
     }
 
-    public function get_tickets_by_user($user_id, $role_name)
+    public function get_tickets_by_user_and_role($user_id, $role_name)
     {
-        $results = $this->db_get_tickets_by_user($user_id, $role_name);
+        $results = $this->db_get_tickets_by_user_and_role($user_id, $role_name);
 
         return $results;
     }
@@ -237,13 +237,19 @@ class Controller extends Model
         $this->db_unassign_from_project($user_id, $project_id);
     }
 
-    public function check_project_enrollment($project_id, $user_id)
+    public function get_project_enrollments_by_user_id($user_id)
     {
-        return $this->db_check_project_enrollment($project_id, $user_id);
+        return ($this->db_get_project_enrollments_by_user_id($user_id));
     }
 
-    public function get_project_enrollments($user_id)
+    public function get_enrollment_start_by_user_and_project($project_id, $user_id)
     {
-        return ($this->db_get_project_enrollments($user_id));
+
+        $result = $this->db_get_enrollment_start_by_user_and_project($project_id, $user_id);
+        if (count($result) == 1) {
+            return $result[0]['enrollment_start'];
+        } else if (count($result) == 0) {
+            return "Not personally enrolled";
+        }
     }
 }
