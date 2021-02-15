@@ -35,11 +35,9 @@ require('page_frame/ui_frame.php');
                     </form>
                 </div>
             </div>
-            <br>
-            <br>
             <!-- Submit button -->
             <div class="w3-container w3-center">
-                <input type="submit" name="submit" class="btn-primary" value="Create Project" form="create_project_form">
+                <input type="submit" name="submit" class="btn-primary below-card" value="Create Project" form="create_project_form">
             </div>
         </div>
     <?php else : ?>

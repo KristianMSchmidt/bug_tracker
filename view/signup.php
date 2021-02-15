@@ -12,7 +12,7 @@
                 </p>
             </div>
 
-            <form action="../control/signup.inc.php" method="POST" class="w3-container">
+            <form action="../control/signup.inc.php" method="POST" class="w3-container" id="signup_form">
                 <p>
                     <input type="text" name="full_name" class="w3-input" value="<?php echo $_SESSION['post_data']['full_name'] ?? '' ?>">
                     <label>Full name</label>
@@ -42,12 +42,12 @@
                 <p class="error">
                     <?php echo $_SESSION['errors']['pwd_repeat'] ?? '' ?>
                 </p>
-
-                <div class="w3-container w3-center">
-                    <input type="submit" value="Sign up" name="signup_submit" class="btn-primary">
-                </div>
             </form>
         </div>
+        <div class="w3-container w3-center">
+            <input type="submit" value=" Sign Up " name="signup_submit" class="btn-primary below_card" form="signup_form">
+        </div>
+        <br>
         <div class="row">
             <div class="col">
                 <p>Have an account? <a href="login.php">Sign in</a></p>

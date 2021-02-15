@@ -61,7 +61,7 @@ require('page_frame/ui_frame.php');
                     <a href="ticket_details.php?ticket_id=<?php echo $_SESSION['data']['ticket_id'] ?>">Ticket Details</a>
                 </div>
                 <div class="card-content">
-                    <form action="../control/edit_ticket.inc.php" method="post" class="w3-container">
+                    <form action="../control/edit_ticket.inc.php" method="post" class="w3-container" id="edit_ticket_form">
                         <div class="text-input">
                             <div class="left">
                                 <!-- Title -->
@@ -148,14 +148,15 @@ require('page_frame/ui_frame.php');
                                 <p class=" error w3-center">
                                     <?php echo $_SESSION['errors']['no_changes_error'] ?? '' ?>
                                 </p>
-                                <!-- Submit button -->
-                                <div class="w3-container w3-center">
-                                    <input type="submit" name="edit_submit" class="btn-primary" value="Make Changes">
-                                </div>
+
                             </div>
                         </div>
                     </form>
                 </div>
+            </div>
+            <!-- Submit button -->
+            <div class="w3-container w3-center">
+                <input type="submit" name="edit_submit" class="btn-primary below-card" value="Make Changes" form="edit_ticket_form">
             </div>
         </div>
         <form action="ticket_details.php" method="get" id="details_form">

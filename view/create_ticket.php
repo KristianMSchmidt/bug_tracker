@@ -20,7 +20,7 @@ require('page_frame/ui_frame.php');
 <div class="main">
     <?php if (in_array($_SESSION['role_name'], ['Admin', 'Project Manager', 'Submitter'])) : ?>
         <?php if ($_GET['add_to_project'] == 0) : ?>
-            <div class="manage_project_users">
+            <div class="create_ticket_no_parent_project">
                 <div class="wrapper">
                     <!-- Select Project -->
                     <div class="orto-wrapper left w3-container card non-table-card">
@@ -58,7 +58,7 @@ require('page_frame/ui_frame.php');
                                     <th>Details</th>
                                 </tr>
                                 <tr>
-                                    <?php if (isset($project_id)) : ?>
+                                    <?php if (isset($project_id) && (!empty($project_id))) : ?>
                                         <td><?php echo $selected_project['project_name']; ?></td>
                                         <td><?php echo $selected_project['created_at']; ?></td>
                                         <td><?php echo $selected_project['updated_at']; ?></td>
@@ -75,7 +75,6 @@ require('page_frame/ui_frame.php');
                     </div>
                 </div>
             </div>
-
         <?php else : ?>
             <div class="create_ticket">
                 <div class="top">
@@ -184,7 +183,7 @@ require('page_frame/ui_frame.php');
                                 <?php if (isset($project_id)) : ?>
                                     <label>Developer Assigned</label>
                                 <?php else : ?>
-                                    <label>Developer Assigned (Select a Project to see Options)</label>
+                                    <label>Developer Assigned (select a project to see options)</label>
                                 <?php endif ?>
 
                                 <!-- Ticket Status -->
@@ -201,12 +200,7 @@ require('page_frame/ui_frame.php');
 
 
                                 <!-- Project ID -->
-                                <?php if (isset($project_id)) : ?>
-                                    <input type="hidden" name="project_id" value="<?php echo $project_id ?>" id="project_id_input">
-                                <?php else : ?>
-                                    <input type="hidden" name="project_id" value="" id="project_id_input">
-
-                                <?php endif ?>
+                                <input type="hidden" name="project_id" value="<?php echo $project_id ?? '' ?>" id="project_id_input">
 
                                 <!-- Search Input -->
                                 <input type="hidden" name="search_input" value="" id="search_input_to_post">
@@ -223,9 +217,8 @@ require('page_frame/ui_frame.php');
                 </div>
             </div>
             <!-- Submit button -->
-            <br>
             <div class="w3-container w3-center">
-                <input type="submit" class="btn-primary" value="Add Ticket to Project" form="create_ticket_form">
+                <input type="submit" class="btn-primary below-card" value="Add Ticket to Project" form="create_ticket_form">
             </div>
         </div>
     <?php else : ?>
