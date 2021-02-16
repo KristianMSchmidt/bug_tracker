@@ -135,7 +135,7 @@ $comments = $contr->get_ticket_comments($ticket_id);
                                 </tr>
                                 <?php foreach ($ticket_events as $ticket_event) : ?>
                                     <tr>
-                                        <td><?php echo $ticket_event['event_type'] ?></td>
+                                        <td><?php echo $ticket_event['ticket_event_type'] ?></td>
                                         <td><?php echo $ticket_event['old_value'] ?></td>
                                         <td><?php echo $ticket_event['new_value'] ?></td>
                                         <td><?php echo $ticket_event['created_at'] ?></td>

@@ -51,8 +51,16 @@ if (isset($_SESSION['user_id'])) {
                 <div class="dropdown">
                     <!-- notifications dropdown btn -->
                     <?php if ($data['num_unseen'] > 0) : ?>
+                        <script>
+                            function seen_redirect() {
+                                var url = new URL(window.location.href);
+                                url.searchParams.append('seen', 'true');
+                                //url.searchParams.set('seen', 'true');
+                                window.location.href = url;
+                            }
+                        </script>
 
-                        <button class='dropbtn notifications' onclick="window.location.href = window.location.href + '?seen='">
+                        <button class='dropbtn notifications' onclick="seen_redirect()">
                             <span id='bell' class='notifications dropbtn fa-stack'>
                                 <i class='notifications dropbtn fas fa-bell fa-stack' data-count=<?php echo $data['num_unseen'] ?>></i>
                             </span>
@@ -122,7 +130,7 @@ if (isset($_SESSION['user_id'])) {
                 <!-- Show sidebar links depending on role -->
                 <a href="dashboard.php" id="dashboard_link"><i class="fas fa-home"></i> &nbsp;Dashboard</a>
                 <?php if ($_SESSION['role_name'] == 'Admin' || $_SESSION['role_name'] == 'Project Manager') : ?>
-                    <a href="manage_project_users.php" id="manage_project_users_link"><i class="fas fa-user-plus"></i> &nbsp;Manage Project Users</a>
+                    <a href="manage_project_users.php?project_id=none" id="manage_project_users_link"><i class="fas fa-user-plus"></i> &nbsp;Manage Project Users</a>
                     <?php if ($_SESSION['role_name'] == 'Admin') : ?>
                         <a href="manage_user_roles.php" id="manage_user_roles_link"><i class="fas fa-users"></i> &nbsp;Manage User Roles</a>
                     <?php endif ?>

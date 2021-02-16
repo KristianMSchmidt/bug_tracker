@@ -39,35 +39,38 @@ class EditTicketHandler extends TicketValidator
 
 
         if ($old_ticket['title'] !== trim($new_ticket['title'])) {
-            $contr->add_to_ticket_events($ticket_id, "TitleChange", $old_ticket['title'], $new_ticket['title']);
+            $contr->add_to_ticket_events($ticket_id, 1, $old_ticket['title'], $new_ticket['title']);
             $changes = True;
         }
         if ($old_ticket['description'] !== trim($new_ticket['description'])) {
-            $contr->add_to_ticket_events($ticket_id, "DescriptionChange", $old_ticket['description'], $new_ticket['description']);
+            $contr->add_to_ticket_events($ticket_id, 2, $old_ticket['description'], $new_ticket['description']);
             $changes = True;
         }
 
         if ($old_ticket['priority_id'] !== $new_ticket['priority_id']) {
-            $contr->add_to_ticket_events($ticket_id, "PriorityChange", $old_ticket['ticket_priority_name'], $new_ticket['ticket_priority_name']);
+            $contr->add_to_ticket_events($ticket_id, 3, $old_ticket['ticket_priority_name'], $new_ticket['ticket_priority_name']);
             $changes = True;
         }
         if ($old_ticket['type_id'] !== $new_ticket['type_id']) {
-            $contr->add_to_ticket_events($ticket_id, "TypeChange", $old_ticket['ticket_type_name'], $new_ticket['ticket_type_name']);
+            $contr->add_to_ticket_events($ticket_id, 4, $old_ticket['ticket_type_name'], $new_ticket['ticket_type_name']);
+            $changes = True;
         }
 
         if ($old_ticket['status_id'] !== $new_ticket['status_id']) {
-            $contr->add_to_ticket_events($ticket_id, "StatusChange", $old_ticket['ticket_status_name'], $new_ticket['ticket_status_name']);
+            $contr->add_to_ticket_events($ticket_id, 5, $old_ticket['ticket_status_name'], $new_ticket['ticket_status_name']);
             $changes = True;
         }
 
         if ($old_ticket['developer_assigned'] !== $new_ticket['developer_assigned']) {
-            $developer_is_enrolled_in_project = $contr->db_get_enrollment_start_by_user_and_project($new_ticket['project_id'], $new_ticket['developer_assigned']);
+            $developer_is_enrolled_in_project = $contr->get_enrollment_start_by_user_and_project($new_ticket['project_id'], $new_ticket['developer_assigned']);
             if (!$developer_is_enrolled_in_project) {
-                $contr->assign_to_project($new_ticket['developer_assigned'], $new_ticket['project_id']);
-                $message = "enrolled you in the project '{$new_ticket['project_name']}'";
-                $contr->create_notification(4, $new_ticket['developer_assigned'], $message, $this->user_id);
+                echo "Error: The chosen developer is not enrolled in project";
+                exit();
+                //$contr->assign_to_project($new_ticket['developer_assigned'], $new_ticket['project_id']);
+                //$message = "enrolled you in the project '{$new_ticket['project_name']}'";
+                //$contr->create_notification(4, $new_ticket['developer_assigned'], $message, $this->user_id);
             }
-            $contr->add_to_ticket_events($ticket_id, "AssignedTo", $old_ticket['developer_name'], $new_ticket['developer_name']);
+            $contr->add_to_ticket_events($ticket_id, 6, $old_ticket['developer_name'], $new_ticket['developer_name']);
             $message = "assigned you to the ticket '{$new_ticket['title']}'";
             $contr->create_notification(2, $new_ticket['developer_assigned'], $message, $this->user_id);
             $message = "unassigned you from the ticket '{$old_ticket['title']}'";

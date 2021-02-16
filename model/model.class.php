@@ -213,7 +213,7 @@ class Model extends Dbh
                 JOIN notification_types ON notifications.notification_type = notification_types.notification_type_id
                 LEFT JOIN users ON notifications.created_by = users.user_id
                 WHERE notifications.user_id = ?
-                ORDER BY notification_id DESC";
+                ORDER BY notifications.id DESC";
 
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute([$user_id]);
@@ -393,11 +393,11 @@ class Model extends Dbh
         $stmt->execute([$notification_type, $user_id, $message, 1, $created_by]);
     }
 
-    protected function db_add_to_ticket_events($ticket_id, $event_type, $old_value, $new_value)
+    protected function db_add_to_ticket_events($ticket_id, $event_type_id, $old_value, $new_value)
     {
-        $sql = "INSERT INTO ticket_events(ticket_id, event_type, old_value, new_value) VALUES (?,?,?,?)";
+        $sql = "INSERT INTO ticket_events(ticket_id, type_id, old_value, new_value) VALUES (?,?,?,?)";
         $stmt = $this->connect()->prepare($sql);
-        $stmt->execute([$ticket_id, $event_type, $old_value, $new_value]);
+        $stmt->execute([$ticket_id, $event_type_id, $old_value, $new_value]);
     }
 
     protected function db_get_projects()
@@ -493,8 +493,12 @@ class Model extends Dbh
 
     protected function db_get_ticket_events($ticket_id)
     {
-        $sql = "SELECT * 
-                FROM ticket_events 
+        $sql = "SELECT 
+                    ticket_events.old_value, 
+                    ticket_events.new_value, 
+                    ticket_events.created_at,
+                    ticket_event_types.ticket_event_type 
+                FROM ticket_events LEFT JOIN ticket_event_types ON ticket_events.type_id = ticket_event_types.id
                 WHERE ticket_id = ?
                 ORDER BY created_at DESC";
         $stmt = $this->connect()->prepare($sql);

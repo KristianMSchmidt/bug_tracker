@@ -108,9 +108,12 @@ document.getElementById("search_field_project").addEventListener("input", functi
 const urlParams = new URLSearchParams(window.location.search);
 search = urlParams.get('search');
 project_id = urlParams.get('project_id')
+console.log("project_id :" + project_id)
+
 if (search !== null) {
     thin_out_projects(search);
 }
-if (project_id !== null) {
+
+if (project_id !== "none") {
     document.getElementById('project_' + project_id).classList.add("active");
 }

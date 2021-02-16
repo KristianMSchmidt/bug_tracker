@@ -5,7 +5,7 @@ require_once('../../control/controller.class.php');
 $contr = new Controller;
 $projects = $contr->get_projects_by_user($_SESSION['user_id'], $_SESSION['role_name']);
 
-if (isset($_GET['project_id'])) {
+if ($_GET['project_id'] !== "none") {
     $project_id = $_GET['project_id'];
     $project_users = $contr->get_project_users($project_id, "all_roles");
     $non_project_users = $contr->get_users_not_enrolled_in_project($project_id);
