@@ -1,8 +1,6 @@
 <?php
-require('shared/post_check.inc.php');
 require_once('form_handlers/CreateProjectHandler.class.php');
 require_once('controller.class.php');
-
 session_start();
 
 $create_project_handler = new CreateProjectHandler($_POST);

@@ -1,5 +1,5 @@
 <?php
-require('shared/post_check.inc.php');
+session_start();
 require_once('controller.class.php');
 
 $selected_user_ids = json_decode($_POST['user_ids']);
@@ -8,7 +8,6 @@ $demo_users = array("Demo Admin", "Demo PM", "Demo Dev", "Demo Sub");
 $contr = new Controller();
 $chosen_role_name = $contr->get_role_name_by_role_id($_POST['new_role']);
 
-session_start();
 $_SESSION['feedback_users'] = [];
 
 foreach ($selected_user_ids as $user_id) {

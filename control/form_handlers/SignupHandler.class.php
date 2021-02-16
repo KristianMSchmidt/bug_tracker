@@ -13,8 +13,6 @@ class SignupHandler
     }
     public function sign_up()
     {
-        session_start();
-
         $this->validate_full_name();
 
         $this->validate_email();

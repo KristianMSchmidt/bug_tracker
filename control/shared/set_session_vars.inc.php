@@ -3,9 +3,6 @@
 
 function set_session_vars($user, $contr)
 {
-    if (!isset($_SESSION)) {
-        session_start();
-    }
     session_regenerate_id(TRUE);
     $_SESSION['full_name'] = $user['full_name'];
     $_SESSION['user_email'] = $user['email'];

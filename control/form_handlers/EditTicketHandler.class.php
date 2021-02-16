@@ -4,19 +4,19 @@ require_once('form_handlers/TicketValidator.class.php');
 class EditTicketHandler extends TicketValidator
 {
     protected $ticket_id;
+    protected $user_id;
 
-    public function __construct($new_ticket, $contr)
+    public function __construct($new_ticket, $contr, $user_id)
     {
         $this->new_ticket = $new_ticket;
         $this->ticket_id = $new_ticket['ticket_id'];
         $this->contr = $contr;
         $this->old_ticket = $this->contr->get_ticket_by_id($this->ticket_id);
+        $this->user_id = $user_id;
     }
 
     public function edit_ticket()
     {
-        session_start();
-
         $this->validate_title_and_description();
 
         if (!$this->errors) {
@@ -65,13 +65,13 @@ class EditTicketHandler extends TicketValidator
             if (!$developer_is_enrolled_in_project) {
                 $contr->assign_to_project($new_ticket['developer_assigned'], $new_ticket['project_id']);
                 $message = "enrolled you in the project '{$new_ticket['project_name']}'";
-                $contr->create_notification(4, $new_ticket['developer_assigned'], $message, $_SESSION['user_id']);
+                $contr->create_notification(4, $new_ticket['developer_assigned'], $message, $this->user_id);
             }
             $contr->add_to_ticket_events($ticket_id, "AssignedTo", $old_ticket['developer_name'], $new_ticket['developer_name']);
             $message = "assigned you to the ticket '{$new_ticket['title']}'";
-            $contr->create_notification(2, $new_ticket['developer_assigned'], $message, $_SESSION['user_id']);
+            $contr->create_notification(2, $new_ticket['developer_assigned'], $message, $this->user_id);
             $message = "unassigned you from the ticket '{$old_ticket['title']}'";
-            $contr->create_notification(3, $old_ticket['developer_assigned'], $message, $_SESSION['user_id']);
+            $contr->create_notification(3, $old_ticket['developer_assigned'], $message, $this->user_id);
             $changes = True;
         }
 

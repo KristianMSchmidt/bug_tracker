@@ -1,5 +1,4 @@
 <?php
-require('shared/post_check.inc.php');
 require_once('form_handlers/CreateTicketHandler.class.php');
 session_start();
 

@@ -4,11 +4,13 @@ class AddCommentHandler
 {
     private $comment;
     private $errors = [];
+    private $user_id;
 
-    public function __construct($post_data)
+    public function __construct($post_data, $user_id)
     {
         $this->comment = trim($post_data['new_comment']);
         $this->ticket_id = $post_data['ticket_id'];
+        $this->user_id = $user_id;
     }
 
     public function add_comment()
@@ -38,7 +40,7 @@ class AddCommentHandler
     {
         require_once('controller.class.php');
         $contr = new Controller();
-        $contr->add_ticket_comment($_SESSION['user_id'], $this->ticket_id, $this->comment);
+        $contr->add_ticket_comment($this->user_id, $this->ticket_id, $this->comment);
     }
 
     private function add_error($key, $val)

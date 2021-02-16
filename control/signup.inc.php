@@ -1,10 +1,9 @@
 <?php
-require('shared/post_check.inc.php');
 require_once('form_handlers/SignupHandler.class.php');
+session_start();
 
 $signup_handler = new SignUpHandler($_POST);
 $errors = $signup_handler->sign_up();
-session_start();
 
 if (!$errors) {
     header('location: ../view/dashboard.php');
