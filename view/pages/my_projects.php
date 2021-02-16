@@ -1,5 +1,5 @@
 <?php
-require('../control/shared/login_check.inc.php');
+require('../../control/shared/login_check.inc.php');
 require('page_frame/ui_frame.php');
 
 $contr = new controller;
@@ -27,7 +27,7 @@ $projects = $contr->get_projects_by_user($_SESSION['user_id'], $_SESSION['role_n
                         <?php endif ?>
                     </p>
                 </div>
-                <div class="w3-container w3-responsive card-content">
+                <div class="w3-container w3-responsive">
                     <table class="table w3-small striped bordered">
                         <tr>
                             <th>Project Name</th>
@@ -101,5 +101,5 @@ $projects = $contr->get_projects_by_user($_SESSION['user_id'], $_SESSION['role_n
 </script>
 
 <?php
-require('../control/shared/clean_session.inc.php');
+require('../../control/shared/clean_session.inc.php');
 ?>

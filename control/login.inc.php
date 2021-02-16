@@ -9,11 +9,11 @@ if (isset($_POST['login_submit'])) {
 }
 
 if (!$errors) {
-    header('location: ../view/dashboard.php');
+    header('location: ../view/pages/dashboard.php');
     exit();
 } else {
     $_SESSION['errors'] = $errors;
     $_SESSION['post_data'] = $_POST;
-    header('location: ../view/login.php');
+    header('location: ../view/pages/login.php');
     exit();
 }

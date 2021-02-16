@@ -1,6 +1,6 @@
 <?php
-require('../control/shared/login_check.inc.php');
-require_once('../control/controller.class.php');
+require('../../control/shared/login_check.inc.php');
+require_once('../../control/controller.class.php');
 
 $contr = new Controller;
 $users = $contr->get_users("all_users");
@@ -16,7 +16,7 @@ require('page_frame/ui_frame.php');
                     <h4>Select users </h4>
                     <div class="w3-container">
                         <input type="text" id="search_field" placeholder="Search name or role">
-                        <p>All users in your database</p>
+                        <p class="small-label">All users in your database</p>
                         <div class="scroll">
                             <?php foreach ($users as $user) : ?>
                                 <p id="<?php echo $user['user_id'] ?>" class="searchable" onclick="toggle_user(<?php echo $user['user_id'] ?>)"><?php echo $user['full_name'] . ' | ' . $user['role_name'] ?></p>
@@ -78,7 +78,7 @@ require('page_frame/ui_frame.php');
                     <h4>Select role to assign</h4>
                     <div class="w3-container">
 
-                        <form action="../control/manage_user_roles.inc.php" method="post" id="assign_role_form">
+                        <form action="../../control/manage_user_roles.inc.php" method="post" id="assign_role_form">
                             <input type="hidden" name="user_ids" value="" id="input_user_ids">
                             <input type="hidden" name="new_role" value="">
                             <input type="hidden" name="assign_role_submit" value="" id="assign_role_submit">
@@ -145,74 +145,11 @@ require('page_frame/ui_frame.php');
     </script>
 <?php endif ?>
 
-<script>
-    selected_users = [];
-
-    function toggle_user(user_id) {
-        if (!document.getElementById(user_id).classList.contains("active")) {
-            document.getElementById(user_id).classList.add("active");
-            selected_users.push(user_id);
-            document.getElementById('row_' + user_id).style.display = "table-row";
-            document.getElementById("no_selected_users_info").style.display = "none";
-        } else {
-            document.getElementById(user_id).classList.remove("active");
-            selected_users = selected_users.filter(function(value, index, arr) {
-                return value != user_id;
-            })
-            document.getElementById('row_' + user_id).style.display = "none";
-            if (selected_users.length == 0) {
-                document.getElementById("no_selected_users_info").style.display = "block";
-            }
-
-        }
-    }
-    const queryString = window.location.search;
-    const urlParams = new URLSearchParams(queryString);
-    const user_id = urlParams.get('user_id');
-    if (user_id) {
-        console.log(user_id);
-        toggle_user(user_id);
-    }
-
-
-    function submit_form() {
-        var errors = false;
-        if (selected_users.length == 0) {
-            document.getElementById("no_selected_users").innerHTML = "Select one or more Users";
-            errors = true;
-        } else {
-            document.getElementById("no_selected_users").innerHTML = "";
-        }
-        if (document.getElementById("selected_role").value == "") {
-            document.getElementById("no_selected_role").innerHTML = "Select new Role";
-            errors = true;
-        } else {
-            document.getElementById("no_selected_role").innerHTML = "";
-        };
-        if (!errors) {
-            document.getElementById("input_user_ids").value = JSON.stringify(selected_users);
-            document.getElementById("assign_role_submit").value = "submited";
-            document.getElementById("assign_role_form").submit();
-        }
-    }
-
-    var search_items = document.getElementsByClassName("searchable");
-    document.getElementById("search_field").addEventListener("input", function() {
-        search_input = document.getElementById("search_field").value;
-        for (let item of search_items) {
-            var name = item.innerHTML;
-            if (!name.toLowerCase().includes(search_input.toLowerCase())) {
-                document.getElementById(item.id).style.display = "none";
-            } else {
-                document.getElementById(item.id).style.display = "block";
-            }
-        }
-    });
-</script>
+<script src="../js/manage_user_roles.js"></script>
 
 <?php
 require('page_frame/closing_tags.php');
-require('../control/shared/clean_session.inc.php');
+require('../../control/shared/clean_session.inc.php');
 ?>
 
 <script>

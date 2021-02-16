@@ -15,10 +15,10 @@ $errors = $edit_ticket_handler->edit_ticket();
 
 if (!$errors) {
     $_SESSION['edit_ticket_succes'] = true;
-    header("location:../view/ticket_details.php?ticket_id={$_POST['ticket_id']}");
+    header("location:../view/pages/ticket_details.php?ticket_id={$_POST['ticket_id']}");
     exit();
 } else {
     $_SESSION['errors'] = $errors;
     $_SESSION['data'] = $new_ticket;
-    header('location:../view/edit_ticket.php');
+    header('location:../view/pages/edit_ticket.php');
 }

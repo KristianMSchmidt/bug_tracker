@@ -1,5 +1,5 @@
 <?php
-require('../control/shared/login_check.inc.php');
+require('../../control/shared/login_check.inc.php');
 require('page_frame/ui_frame.php');
 
 $contr = new controller;
@@ -8,7 +8,7 @@ $users = $contr->get_users("all_users");
 
 <div class="main">
     <?php if (in_array($_SESSION['role_name'], ['Admin', 'Project Manager'])) : ?>
-        <div class="users">
+        <div class="users_overview">
             <div class="wrapper">
                 <div class="card w3-responsive">
                     <div class="w3-container card-head">
@@ -17,7 +17,7 @@ $users = $contr->get_users("all_users");
                     <div class="w3-container">
                         <p>All users in the database</p>
                     </div>
-                    <div class="w3-container w3-responsive card-content">
+                    <div class="w3-container w3-responsive">
                         <table class="table w3-small striped bordered">
                             <tr>
                                 <th>Name</th>
@@ -67,5 +67,5 @@ $users = $contr->get_users("all_users");
 </script>
 
 <?php
-require('../control/shared/clean_session.inc.php');
+require('../../control/shared/clean_session.inc.php');
 ?>

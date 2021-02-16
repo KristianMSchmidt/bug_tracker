@@ -1,8 +1,8 @@
 <?php
 require_once('controller.class.php');
 session_start();
-$contr = new Controller();
 
+$contr = new Controller();
 $selected_users = json_decode($_POST['user_ids']);
 $project_name = $contr->get_project_name_by_id($_POST['project_id']);
 $_SESSION['selected_users'] = $selected_users;
@@ -25,5 +25,5 @@ if (isset($_POST['disenroll_users_submit'])) {
     $_SESSION['disenroll_users_succes'] = true;
 }
 
-header("location: ../view/manage_project_users.php?project_id={$_POST['project_id']}");
+header("location: ../view/pages/manage_project_users.php?project_id={$_POST['project_id']}");
 exit();

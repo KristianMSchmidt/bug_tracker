@@ -18,7 +18,7 @@ if (isset($_SESSION['user_id'])) {
                 <p class="error"><?php echo $_SESSION['errors']['login_error'] ?? '' ?>
                 </p>
             </div>
-            <form action="../control/login.inc.php" method="POST" class="w3-container">
+            <form action="../../control/login.inc.php" method="POST" class="w3-container">
                 <p>
                     <input type="text" name="email" class="w3-input" value="<?php echo $_SESSION['post_data']['email'] ?? '' ?>">
                     <label>Email</label>
@@ -48,5 +48,5 @@ if (isset($_SESSION['user_id'])) {
 
 <?php
 require('page_frame/closing_tags.php');
-require('../control/shared/clean_session.inc.php');
+require('../../control/shared/clean_session.inc.php');
 ?>

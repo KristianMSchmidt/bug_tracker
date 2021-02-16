@@ -16,6 +16,7 @@
     }
     &.below-card {
         margin-top: 1em;
+        margin-bottom: 1em;
     }
 }
 
@@ -24,6 +25,43 @@
     background-color: white;
     .card-head {
         background-color: #ffc107; //#ffeb3b; 
+    }
+    label {
+        margin-bottom: 1em;
+    }
+    .card-content {
+        padding-bottom: 0.8em;
+        .text-input {
+            display: flex;
+            flex-direction: row;
+        }
+        .other-input {
+            margin-top: 0em;
+            display: flex;
+            flex-direction: row;
+        }
+        .left {
+            display: flex;
+            flex-direction: column;
+            flex: 2;
+            padding-right: 1em;
+            padding-left: 1em;
+        }
+        .right {
+            display: flex;
+            flex-direction: column;
+            flex: 3;
+            padding-right: 1em;
+            padding-left: 1em;
+        }
+        @media only screen and (max-width: 1050px) {
+            .text-input {
+                flex-direction: column;
+            }
+            .other-input {
+                flex-direction: column;
+            }
+        }
     }
 }
 

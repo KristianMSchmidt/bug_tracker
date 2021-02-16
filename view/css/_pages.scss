@@ -1,6 +1,6 @@
 /* Style of individual pages, i.e. the content of the 'main' div */
 
-.users,
+.users_overview,
 .my_projects,
 .my_tickets {
     .wrapper {
@@ -92,17 +92,15 @@
 
 .edit_ticket,
 .edit_project,
-.create_project,
-.create_ticket {
+.create_project {
     .top {
         width: 70%;
         margin-bottom: 1em;
+        .card {
+            padding-bottom: 1em;
+        }
     }
     .card {
-        padding-bottom: 1em;
-        label {
-            margin-bottom: 1em;
-        }
         .card-head {
             display: flex;
             align-items: center;
@@ -113,43 +111,6 @@
             }
             margin-bottom: 1em;
         }
-        .card-content {
-            .text-input {
-                display: flex;
-                flex-direction: row;
-            }
-            .other-input {
-                margin-top: 1.5em;
-                display: flex;
-                flex-direction: row;
-            }
-            .left {
-                display: flex;
-                flex-direction: column;
-                flex: 2;
-                padding-right: 1em;
-                padding-left: 1em;
-            }
-            .right {
-                display: flex;
-                flex-direction: column;
-                flex: 3;
-                padding-right: 1em;
-                padding-left: 1em;
-            }
-        }
-    }
-    @media only screen and (max-width: 1050px) {
-        .card {
-            .card-content {
-                .text-input {
-                    flex-direction: column;
-                }
-                .other-input {
-                    flex-direction: column;
-                }
-            }
-        }
     }
     @media only screen and (max-width: 700px) {
         .top {
@@ -158,27 +119,26 @@
     }
 }
 
-.create_ticket_no_parent_project,
+.create_ticket,
 .manage_project_users,
 .manage_user_roles {
     .wrapper {
         display: flex;
         padding-bottom: 1em;
-        // align-items: stretch;
     }
     .orto-wrapper {
         display: flex;
         flex-direction: column;
         padding-bottom: 2em;
         &.left {
-            margin-right: 0.5em;
+            margin-right: 1em;
             flex: 1;
             &.bottom {
                 flex: 1;
             }
         }
         &.right {
-            margin-left: 0.5em;
+            margin-left: 0;
             flex: 2;
             &.bottom {
                 flex: 1;
@@ -187,16 +147,19 @@
         &.right.bottom {
             flex: 1;
         }
+        input {
+            width: 300px;
+            margin-bottom: 5px;
+        }
     }
     p {
-        margin-top: 0;
+        &.small-label {
+            margin-top: 0em;
+            margin-bottom: 0.2em;
+        }
     }
     form {
         margin-bottom: 0;
-    }
-    input {
-        width: 300px;
-        margin-bottom: 5px;
     }
     .search_field {
         width: 300px;
@@ -212,9 +175,6 @@
     }
     .scroll {
         background-color: #f9f9f9;
-    }
-    p {
-        margin-bottom: 0;
     }
     @media only screen and (max-width: 820px) {
         .wrapper {
@@ -298,7 +258,7 @@
             height: auto !important;
         }
     }
-    @media only screen and (min-width: 1300px) {
+    @media only screen and (min-width: 1500px) {
         .card {
             padding-left: 8em;
             padding-right: 8em;

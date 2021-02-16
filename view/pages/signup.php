@@ -12,7 +12,7 @@
                 </p>
             </div>
 
-            <form action="../control/signup.inc.php" method="POST" class="w3-container" id="signup_form">
+            <form action="../../control/signup.inc.php" method="POST" class="w3-container" id="signup_form">
                 <p>
                     <input type="text" name="full_name" class="w3-input" value="<?php echo $_SESSION['post_data']['full_name'] ?? '' ?>">
                     <label>Full name</label>
@@ -58,5 +58,5 @@
 </div>
 <?php
 require('page_frame/closing_tags.php');
-require('../control/shared/clean_session.inc.php');
+require('../../control/shared/clean_session.inc.php');
 ?>

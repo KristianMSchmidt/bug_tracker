@@ -9,4 +9,4 @@ session_unset();
 session_destroy();
 
 // redirect to login page
-header('location: ../view/demo_login.php');
+header('location: ../view/pages/demo_login.php');

@@ -5,7 +5,7 @@ if (!isset($_SESSION)) {
 
 if (isset($_SESSION['user_id'])) {
     // only load js-scripts if user is logged in
-    echo "<script src='js/main.js'></script>";
+    echo "<script src='../js/main.js'></script>";
 }
 ?>
 

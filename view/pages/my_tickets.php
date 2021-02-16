@@ -6,7 +6,7 @@ Developers should seea ll tickets that they are assigned to as 'assigned develop
 Submitters should see all tickets they have submitted (os are dev assigned)
 */
 
-require('../control/shared/login_check.inc.php');
+require('../../control/shared/login_check.inc.php');
 require('page_frame/ui_frame.php');
 
 $contr = new Controller;
@@ -17,8 +17,10 @@ $tickets = $contr->get_tickets_by_user_and_role($_SESSION['user_id'], $_SESSION[
     <div class="my_tickets">
         <div class="wrapper">
             <?php if (in_array($_SESSION['role_name'], ['Admin', 'Project Manager', 'Submitter'])) : ?>
-                <form action="create_ticket.php" method="get">
-                    <input type="hidden" name="add_to_project" value="0">
+                <form action="create_ticket.php?project_options=false" method="get">
+                    <input type="hidden" name="project_options" value="true">
+                    <input type="hidden" name="project_id" value="none">
+                    <input type="hidden" name="search">
                     <input type="submit" value="CREATE NEW TICKET" class="btn-primary">
                 </form>
             <?php endif ?>
@@ -35,7 +37,7 @@ $tickets = $contr->get_tickets_by_user_and_role($_SESSION['user_id'], $_SESSION[
                         <?php endif ?>
                     </p>
                 </div>
-                <div class="w3-container w3-responsive card-content">
+                <div class="w3-container w3-responsive">
                     <table class="table w3-small striped bordered">
                         <tr>
                             <th>Title</th>

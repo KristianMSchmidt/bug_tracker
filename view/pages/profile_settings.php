@@ -1,5 +1,5 @@
 <?php
-require('../control/shared/login_check.inc.php');
+require('../../control/shared/login_check.inc.php');
 require('page_frame/ui_frame.php');
 ?>
 

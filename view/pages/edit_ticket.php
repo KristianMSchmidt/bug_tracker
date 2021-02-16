@@ -1,7 +1,7 @@
 <?php
-require('../control/shared/login_check.inc.php');
-require('../control/shared/check_ticket_permission.inc.php');
-require_once('../control/controller.class.php');
+require('../../control/shared/login_check.inc.php');
+require('../../control/shared/check_ticket_permission.inc.php');
+require_once('../../control/controller.class.php');
 
 $contr = new Controller();
 
@@ -37,7 +37,7 @@ require('page_frame/ui_frame.php');
                     <div class="w3-container card-head">
                         <h3>Parent Project</h4>
                     </div>
-                    <div class="w3-container">
+                    <div style="padding-left:2em;">
                         <table class="table bordered table-no-description">
                             <tr>
                                 <th>Project Name</th>
@@ -61,7 +61,7 @@ require('page_frame/ui_frame.php');
                     <a href="ticket_details.php?ticket_id=<?php echo $_SESSION['data']['ticket_id'] ?>">Ticket Details</a>
                 </div>
                 <div class="card-content">
-                    <form action="../control/edit_ticket.inc.php" method="post" class="w3-container" id="edit_ticket_form">
+                    <form action="../../control/edit_ticket.inc.php" method="post" class="w3-container" id="edit_ticket_form">
                         <div class="text-input">
                             <div class="left">
                                 <!-- Title -->
@@ -143,16 +143,15 @@ require('page_frame/ui_frame.php');
 
                                 <!-- Project Id -->
                                 <input type="hidden" name="project_id" value="<?php echo $_SESSION['data']['project_id'] ?>">
-
-                                <!-- Error Message -->
-                                <p class=" error w3-center">
-                                    <?php echo $_SESSION['errors']['no_changes_error'] ?? '' ?>
-                                </p>
-
                             </div>
                         </div>
                     </form>
+                    <!-- Error Message -->
+                    <p class=" error w3-center">
+                        <?php echo $_SESSION['errors']['no_changes_error'] ?? '' ?>
+                    </p>
                 </div>
+
             </div>
             <!-- Submit button -->
             <div class="w3-container w3-center">
@@ -170,7 +169,7 @@ require('page_frame/ui_frame.php');
 
 <?php
 require('page_frame/closing_tags.php');
-require('../control/shared/clean_session.inc.php');
+require('../../control/shared/clean_session.inc.php');
 ?>
 
 

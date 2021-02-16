@@ -1,6 +1,6 @@
 <?php
-require('../control/shared/login_check.inc.php');
-require('../control/shared/check_project_permission.inc.php');
+require('../../control/shared/login_check.inc.php');
+require('../../control/shared/check_project_permission.inc.php');
 require('page_frame/ui_frame.php');
 
 if (isset($_GET['project_id'])) {
@@ -101,8 +101,9 @@ $tickets = $contr->get_tickets_by_project($project_id);
                 </div>
                 <div class="right" style="flex:5">
                     <form action="create_ticket.php" method="get">
-                        <input type="hidden" name="add_to_project" value=1>
+                        <input type="hidden" name="project_options" value="false">
                         <input type="hidden" name="project_id" value="<?php echo $project_id; ?>">
+                        <input type="hidden" name="search" value="">
                         <input type="submit" value="ADD TICKET TO PROJECT" class="btn-primary">
                     </form>
                     <div class="card">
@@ -203,7 +204,7 @@ $tickets = $contr->get_tickets_by_project($project_id);
 <?php endif ?>
 
 <?php
-require('../control/shared/clean_session.inc.php');
+require('../../control/shared/clean_session.inc.php');
 require('page_frame/closing_tags.php')
 
 ?>

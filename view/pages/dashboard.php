@@ -1,6 +1,6 @@
 <?php
-require_once('../control/shared/login_check.inc.php');
-require_once('../control/controller.class.php');
+require_once('../../control/shared/login_check.inc.php');
+require_once('../../control/controller.class.php');
 
 $contr = new Controller();
 $priorities = $contr->get_ticket_priority_count();
@@ -36,53 +36,7 @@ $users = $contr->get_most_busy_users();
 </div>
 
 <script>
-    var ctx = document.getElementById('type_chart').getContext('2d');
-    var typeChart = new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: [<?php foreach ($types as $type) {
-                            echo "'{$type['ticket_type_name']}',";
-                        } ?>],
-
-            datasets: [{
-                label: '# of Tickets',
-
-                data: [<?php foreach ($types as $type) {
-                            echo "'{$type['COUNT(tickets.ticket_id)']}',";
-                        } ?>],
-
-                backgroundColor: [
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(37, 116, 169, 1)',
-                    'rgba(31, 58, 147, 1)',
-                    'rgba(1, 50, 67, 1)'
-                ],
-                borderColor: [
-                    '', '', '', '',
-                ],
-                borderWidth: 1
-            }]
-        },
-        options: {
-            title: {
-                display: true,
-                text: 'Tickets by Type'
-            },
-            legend: {
-                display: false
-            },
-            scales: {
-                yAxes: [{
-                    ticks: {
-                        beginAtZero: true
-                    }
-                }]
-            },
-        }
-    });
-</script>
-
-<script>
+    /* Ticket Status Chart */
     var ctx = document.getElementById('status_chart').getContext('2d');
     var statusChart = new Chart(ctx, {
         type: 'bar',
@@ -131,10 +85,8 @@ $users = $contr->get_most_busy_users();
             }
         }
     });
-</script>
 
-
-<script>
+    /* Ticket Priority Chart */
     var ctx = document.getElementById('priority_chart').getContext('2d');
 
     var priorityChart = new Chart(ctx, {
@@ -185,9 +137,54 @@ $users = $contr->get_most_busy_users();
             }
         }
     });
-</script>
 
-<script>
+    /* Ticket Type Chart */
+    var ctx = document.getElementById('type_chart').getContext('2d');
+    var typeChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: [<?php foreach ($types as $type) {
+                            echo "'{$type['ticket_type_name']}',";
+                        } ?>],
+
+            datasets: [{
+                label: '# of Tickets',
+
+                data: [<?php foreach ($types as $type) {
+                            echo "'{$type['COUNT(tickets.ticket_id)']}',";
+                        } ?>],
+
+                backgroundColor: [
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(37, 116, 169, 1)',
+                    'rgba(31, 58, 147, 1)',
+                    'rgba(1, 50, 67, 1)'
+                ],
+                borderColor: [
+                    '', '', '', '',
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            title: {
+                display: true,
+                text: 'Tickets by Type'
+            },
+            legend: {
+                display: false
+            },
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            },
+        }
+    });
+
+    /*Busy Users Chart */
     var ctx = document.getElementById('top_busy_users_chart').getContext('2d');
     var Chart = new Chart(ctx, {
         type: 'doughnut',
@@ -238,8 +235,8 @@ $users = $contr->get_most_busy_users();
     });
 </script>
 
-<?php require('page_frame/closing_tags.php')
-?>
+
+<?php require('page_frame/closing_tags.php') ?>
 
 <script>
     set_active_link("dashboard");

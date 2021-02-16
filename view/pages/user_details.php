@@ -1,5 +1,5 @@
 <?php
-require('../control/shared/login_check.inc.php');
+require('../../control/shared/login_check.inc.php');
 require('page_frame/ui_frame.php');
 if (isset($_GET['user_id'])) {
     $user_id = $_GET['user_id'];
@@ -131,7 +131,7 @@ $tickets = $contr->get_tickets_by_user_and_role($user_id, 'Developer');
 </div>
 
 <?php
-require('../control/shared/clean_session.inc.php');
+require('../../control/shared/clean_session.inc.php');
 require('page_frame/closing_tags.php')
 
 ?>

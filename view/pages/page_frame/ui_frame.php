@@ -3,8 +3,8 @@ if (!isset($_SESSION)) {
     session_start();
 }
 if (isset($_SESSION['user_id'])) {
-    require_once('../control/controller.class.php');
-    require('../control/shared/human_timing.inc.php');
+    require_once('../../control/controller.class.php');
+    require('../../control/shared/human_timing.inc.php');
     $contr = new Controller;
     if (isset($_GET['seen'])) {
         $contr->make_notifications_seen($_SESSION['user_id']);
@@ -20,23 +20,19 @@ if (isset($_SESSION['user_id'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bug_Tracker</title>
+
     <!-- font awesome icon library -->
-    <link href="css/font-awesome/css/all.css" rel="stylesheet">
+    <link href="../css/font-awesome/css/all.css" rel="stylesheet">
 
     <!-- w3-css style sheet -->
-    <link rel="stylesheet" href="css/w3.css">
+    <link rel="stylesheet" href="../css/w3.css">
 
     <!-- My custom css -->
-    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="../css/main.css">
 
     <!-- JS chart library -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.bundle.min.js"></script>
 </head>
-
-<style>
-
-
-</style>
 
 <body>
     <div class="my_navbar">
@@ -113,7 +109,7 @@ if (isset($_SESSION['user_id'])) {
                     <!-- user actions dropdown content -->
                     <div id="user_actions" class="dropdown-content user_actions">
                         <a href="profile_settings.php">Profile settings</a>
-                        <a href="../control/logout.inc.php">Log out</a>
+                        <a href="../../control/logout.inc.php">Log out</a>
                     </div>
                 </div>
             <?php endif ?>

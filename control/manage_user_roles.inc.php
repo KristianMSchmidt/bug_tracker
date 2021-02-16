@@ -43,5 +43,5 @@ foreach ($selected_user_ids as $user_id) {
     }
     array_push($_SESSION['feedback_users'], $feedback_user);
 }
-header("location: ../view/manage_user_roles.php");
+header("location: ../view/pages/manage_user_roles.php");
 exit();

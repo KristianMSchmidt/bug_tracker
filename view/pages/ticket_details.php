@@ -1,6 +1,6 @@
 <?php
-require('../control/shared/login_check.inc.php');
-require('../control/shared/check_ticket_permission.inc.php');
+require('../../control/shared/login_check.inc.php');
+require('../../control/shared/check_ticket_permission.inc.php');
 require('page_frame/ui_frame.php');
 
 $contr = new Controller();
@@ -83,7 +83,7 @@ $comments = $contr->get_ticket_comments($ticket_id);
                         <div class="w3-container">
                             <h5>Add a comment?</h5>
                             <div class="w3-container">
-                                <form action="../control/ticket_details.inc.php" method="post">
+                                <form action="../../control/ticket_details.inc.php" method="post">
                                     <input style="width:80%" type="text" name="new_comment" maxlength="200" placeholder="Write a comment on the ticket">
                                     <input type="hidden" name="ticket_id" value="<?php echo $ticket_id ?>">
                                     <input type="submit" class="btn-primary" style="width:5em;" value="ADD">
@@ -183,7 +183,7 @@ $comments = $contr->get_ticket_comments($ticket_id);
 
 <?php
 require('page_frame/closing_tags.php');
-require('../control/shared/clean_session.inc.php');
+require('../../control/shared/clean_session.inc.php');
 ?>
 
 <script>

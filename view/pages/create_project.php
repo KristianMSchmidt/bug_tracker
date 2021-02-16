@@ -1,5 +1,5 @@
 <?php
-require('../control/shared/login_check.inc.php');
+require('../../control/shared/login_check.inc.php');
 require('page_frame/ui_frame.php');
 ?>
 
@@ -11,7 +11,7 @@ require('page_frame/ui_frame.php');
                     <h3>Create Project</h3>
                 </div>
                 <div class="w3-container">
-                    <form action="../control/create_project.inc.php" method="POST" id="create_project_form">
+                    <form action="../../control/create_project.inc.php" method="POST" id="create_project_form">
                         <!-- Title -->
                         <p>
                             <input type="text" name="project_name" maxlength="30" class="w3-input title" value="<?php echo $_SESSION['data']['project_name'] ?? '' ?>">
@@ -28,7 +28,7 @@ require('page_frame/ui_frame.php');
                             <span class=" error">
                                 <?php echo $_SESSION['errors']['description'] ?? '' ?>
                             </span>
-                        </p>
+                        </p><br>
 
                         <!-- Submitter -->
                         <input type="hidden" name="created_by" value="<?php echo $_SESSION['user_id'] ?>">
@@ -46,7 +46,7 @@ require('page_frame/ui_frame.php');
 </div>
 
 <?php
-require('../control/shared/clean_session.inc.php');
+require('../../control/shared/clean_session.inc.php');
 require('page_frame/closing_tags.php');
 ?>
 <script>

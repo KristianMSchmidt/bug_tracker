@@ -1,7 +1,7 @@
 <?php
-require('../control/shared/login_check.inc.php');
-require('../control/shared/check_project_permission.inc.php');
-require_once('../control/controller.class.php');
+require('../../control/shared/login_check.inc.php');
+require('../../control/shared/check_project_permission.inc.php');
+require_once('../../control/controller.class.php');
 $contr = new Controller();
 
 if (isset($_GET['show_original'])) {
@@ -27,7 +27,7 @@ require('page_frame/ui_frame.php');
                 </div>
 
                 <div class="card-content">
-                    <form action="../control/edit_project.inc.php" method="POST" class="w3-container" id="edit_project_form">
+                    <form action="../../control/edit_project.inc.php" method="POST" class="w3-container" id="edit_project_form">
 
                         <!-- Title -->
                         <div class="left">
@@ -54,12 +54,11 @@ require('page_frame/ui_frame.php');
                         <!-- Hidden input -->
                         <input type="hidden" name="project_id" value="<?php echo $_SESSION['data']['project_id'] ?>">
                     </form>
+                    <p class="error w3-center">
+                        <?php echo $_SESSION['errors']['no_changes_error'] ?? '' ?>
+                    </p>
                 </div>
             </div>
-            <br>
-            <p class="error w3-center">
-                <?php echo $_SESSION['errors']['no_changes_error'] ?? '' ?>
-            </p>
             <!-- Submit button -->
             <div class="w3-container w3-center">
                 <input type="submit" name="submit" class="btn-primary below-card" value="Make Changes" form="edit_project_form">
@@ -72,7 +71,7 @@ require('page_frame/ui_frame.php');
 
 
 <?php
-require('../control/shared/clean_session.inc.php');
+require('../../control/shared/clean_session.inc.php');
 require('page_frame/closing_tags.php');
 ?>
 <script>
