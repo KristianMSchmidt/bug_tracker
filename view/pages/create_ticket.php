@@ -126,7 +126,7 @@ require('page_frame/ui_frame.php');
                             <select class="w3-select" name="priority_id">
                                 <option value="" disabled selected>Choose Priority</option>
                                 <?php foreach ($priorities as $priority) : ?>
-                                    <option value="<?php echo $priority['ticket_priority_id'] ?>" <?php if (isset($_SESSION['data']['priority_id'])) : ?> <?php if ($_SESSION['data']['priority_id'] == $priority['ticket_priority_id']) : ?> selected <?php endif ?> <?php endif ?>>
+                                    <option value="<?php echo $priority['id'] ?>" <?php if (isset($_SESSION['data']['priority_id'])) : ?> <?php if ($_SESSION['data']['priority_id'] == $priority['id']) : ?> selected <?php endif ?> <?php endif ?>>
                                         <?php echo $priority['ticket_priority_name']; ?>
                                     </option>
                                 <?php endforeach ?>

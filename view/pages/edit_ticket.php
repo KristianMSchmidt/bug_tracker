@@ -5,7 +5,9 @@ require_once('../../control/controller.class.php');
 
 $contr = new Controller();
 
-if (!(isset($_GET['show_original']) || isset($_SESSION['ticket']['id']))) {
+if (!(isset($_GET['show_original']) || isset($_SESSION['ticket']['ticket_id']))) {
+    print_r($_GET);
+
     header('location: dashboard.php');
 }
 
@@ -14,11 +16,10 @@ if (isset($_GET['show_original'])) {
     $_SESSION['ticket'] = $contr->get_ticket_by_id($ticket_id);
 }
 
-$ticket_permission = check_ticket_permission($contr, $_SESSION['user_id'], $_SESSION['ticket']['id']);
+$ticket_permission = check_ticket_permission($contr, $_SESSION['user_id'], $_SESSION['ticket']['ticket_id']);
 
 $projects = $contr->get_projects_by_user($_SESSION['user_id'], $_SESSION['role_name']);
 $selected_project = $contr->get_project_by_id($_SESSION['ticket']['project_id']);
-
 $priorities = $contr->get_priorities();
 $types = $contr->get_ticket_types();
 $status_types = $contr->get_ticket_status_types();
@@ -58,7 +59,7 @@ require('page_frame/ui_frame.php');
             <div class="card">
                 <div class="w3-container card-head">
                     <h3>Edit Ticket</h3>
-                    <a href="ticket_details.php?ticket_id=<?php echo $_SESSION['ticket']['id'] ?>">Ticket Details</a>
+                    <a href="ticket_details.php?ticket_id=<?php echo $_SESSION['ticket']['ticket_id'] ?>">Ticket Details</a>
                 </div>
                 <div class="card-content">
                     <form action="../../control/edit_ticket.inc.php" method="post" class="w3-container" id="edit_ticket_form">
@@ -96,8 +97,8 @@ require('page_frame/ui_frame.php');
                                 <select class="w3-select" name="priority_id">
                                     <option value="<?php echo $_SESSION['ticket']['priority_id'] ?>" selected><?php echo $_SESSION['ticket']['ticket_priority_name']; ?></option>
                                     <?php foreach ($priorities as $priority) : ?>
-                                        <?php if ($priority['ticket_priority_id'] !== $_SESSION['ticket']['priority_id']) : ?>
-                                            <option value="<?php echo $priority['ticket_priority_id'] ?>"><?php echo $priority['ticket_priority_name'] ?></option>
+                                        <?php if ($priority['id'] !== $_SESSION['ticket']['priority_id']) : ?>
+                                            <option value="<?php echo $priority['id'] ?>"><?php echo $priority['ticket_priority_name'] ?></option>
                                         <?php endif ?>
                                     <?php endforeach; ?>
                                 </select>
@@ -139,7 +140,7 @@ require('page_frame/ui_frame.php');
                                 <label>Ticket Status</label>
 
                                 <!-- Ticket Id -->
-                                <input type="hidden" name="ticket_id" value="<?php echo $_SESSION['ticket']['id']; ?>">
+                                <input type="hidden" name="ticket_id" value="<?php echo $_SESSION['ticket']['ticket_id']; ?>">
 
                                 <!-- Project Id -->
                                 <input type="hidden" name="project_id" value="<?php echo $_SESSION['ticket']['project_id'] ?>">
@@ -159,7 +160,7 @@ require('page_frame/ui_frame.php');
             </div>
         </div>
         <form action="ticket_details.php" method="get" id="details_form">
-            <input type="hidden" name="ticket_id" value="<?php echo $_SESSION['ticket']['id'] ?>">
+            <input type="hidden" name="ticket_id" value="<?php echo $_SESSION['ticket']['ticket_id'] ?>">
         </form>
     <?php else : ?>
         <div class="main">You don't have permission to edit this ticket. Please contact your local admin or project manager.</div>

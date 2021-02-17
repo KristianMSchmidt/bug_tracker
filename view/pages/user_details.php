@@ -110,7 +110,6 @@ $tickets = $contr->get_tickets_by_user_and_role($user_id, 'Developer');
                                     <td><?php echo $ticket['submitter_name'] ?></td>
                                     <td><?php echo $ticket['developer_name'] ?></td>
                                     <td><?php echo $ticket['project_name'] ?></td>
-
                                     <td><a href="ticket_details.php?ticket_id=<?php echo $ticket['ticket_id'] ?>">Ticket Details</a></td>
                                 </tr>
                             <?php endforeach; ?>
@@ -131,9 +130,9 @@ $tickets = $contr->get_tickets_by_user_and_role($user_id, 'Developer');
 </div>
 
 <?php
-require('page_frame/closing_tags.php')
+require('page_frame/closing_tags.php');
 ?>
 
 <script>
-    set_active_link("my_users")
+    set_active_link("users_overview");
 </script>

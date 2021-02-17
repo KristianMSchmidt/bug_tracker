@@ -61,7 +61,7 @@ $tickets = $contr->get_tickets_by_user_and_role($_SESSION['user_id'], $_SESSION[
                                 <td class="hide_if_needed"><?php echo $ticket['developer_name'] ?></td>
                                 <td class="hide_if_needed"><?php echo $ticket['submitter_name'] ?></td>
                                 <td class="hide_last"><?php echo $ticket['created_at'] ?></td>
-                                <td><a href="ticket_details.php?ticket_id=<?php echo $ticket['id'] ?>">Details</a></td>
+                                <td><a href="ticket_details.php?ticket_id=<?php echo $ticket['ticket_id'] ?>">Details</a></td>
                             </tr>
                         <?php endforeach ?>
                     </table>

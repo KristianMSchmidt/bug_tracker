@@ -9,22 +9,10 @@ class DbCreator extends Dbh
         This class is not used by the live web app.  
     */
 
-    public function show_tables()
-    {
-        $sql = "SHOW TABLES";
-        $stmt = $this->connect()->prepare($sql);
-        $stmt->execute();
-        $results = $stmt->fetchAll();
-        foreach ($results as $result) {
-            print_r($result);
-            echo "<br>";
-        }
-    }
-
     public function create_user_roles()
     {
         $sql = "CREATE TABLE user_roles(
-                    role_id INT AUTO_INCREMENT PRIMARY KEY,
+                    id INT AUTO_INCREMENT PRIMARY KEY,
                     role_name TINYTEXT NOT NULL
                 )";
         $stmt = $this->connect()->prepare($sql);
@@ -34,7 +22,6 @@ class DbCreator extends Dbh
 
     public function insert_user_roles()
     {
-
         $sql = "INSERT INTO user_roles(role_name) 
                 VALUES
                     ('Admin'),
@@ -50,7 +37,7 @@ class DbCreator extends Dbh
     public function create_users()
     {
         $sql = " CREATE TABLE users(
-            user_id INT AUTO_INCREMENT PRIMARY KEY, 
+            id INT AUTO_INCREMENT PRIMARY KEY, 
             full_name VARCHAR(50) NOT NULL,
             password TEXT NOT NULL,
             email VARCHAR(30) NOT NULL UNIQUE,
@@ -58,8 +45,8 @@ class DbCreator extends Dbh
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, 
             updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
             updated_by INT NULL,
-            FOREIGN KEY (role_id) REFERENCES user_roles(role_id) ON DELETE SET NULL ON UPDATE CASCADE,
-            FOREIGN KEY (updated_by) REFERENCES users(user_id) ON DELETE SET NULL ON UPDATE CASCADE
+            FOREIGN KEY (role_id) REFERENCES user_roles(id) ON DELETE SET NULL ON UPDATE CASCADE,
+            FOREIGN KEY (updated_by) REFERENCES users(id) ON DELETE SET NULL ON UPDATE CASCADE
             )";
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute();
@@ -100,13 +87,13 @@ class DbCreator extends Dbh
     public function create_projects()
     {
         $sql = "CREATE TABLE projects(
-                    project_id INT AUTO_INCREMENT PRIMARY KEY, 
-                    project_name TINYTEXT NOT NULL,
+                    id INT AUTO_INCREMENT PRIMARY KEY, 
+                    project_name VARCHAR(250) NOT NULL,
                     project_description TINYTEXT, 
                     created_by INT,
                     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, 
                     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-                    FOREIGN KEY (created_by) REFERENCES users(user_id) ON DELETE SET NULL ON UPDATE CASCADE
+                    FOREIGN KEY (created_by) REFERENCES users(id) ON DELETE SET NULL ON UPDATE CASCADE
                 )";
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute();
@@ -135,8 +122,8 @@ class DbCreator extends Dbh
                     project_id INT, 
                     enrollment_start DATE DEFAULT CURRENT_TIMESTAMP, 
                     PRIMARY KEY (user_id, project_id),
-                    FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE ON UPDATE CASCADE,
-                    FOREIGN KEY (project_id) REFERENCES projects(project_id) ON DELETE CASCADE ON UPDATE CASCADE)";
+                    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE ON UPDATE CASCADE,
+                    FOREIGN KEY (project_id) REFERENCES projects(id) ON DELETE CASCADE ON UPDATE CASCADE)";
 
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute();
@@ -146,8 +133,8 @@ class DbCreator extends Dbh
     public function create_ticket_types()
     {
         $sql = "CREATE TABLE ticket_types(
-                    ticket_type_id INT AUTO_INCREMENT PRIMARY KEY,
-                    ticket_type_name TINYTEXT NOT NULL)";
+                    id INT AUTO_INCREMENT PRIMARY KEY,
+                    type_name VARCHAR(50) NOT NULL)";
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute();
         echo "Created ticket_types<br>";
@@ -155,7 +142,7 @@ class DbCreator extends Dbh
 
     public function insert_ticket_types()
     {
-        $sql = "INSERT INTO ticket_types(ticket_type_name) 
+        $sql = "INSERT INTO ticket_types(type_name) 
                 VALUES('Feature Request'),('Bug/Error'),('Other');";
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute();
@@ -165,8 +152,8 @@ class DbCreator extends Dbh
     public function create_ticket_status_types()
     {
         $sql =  "CREATE TABLE ticket_status_types(
-                    ticket_status_id INT AUTO_INCREMENT PRIMARY KEY,
-                    ticket_status_name TINYTEXT NOT NULL)";
+                    id INT AUTO_INCREMENT PRIMARY KEY,
+                    status_name VARCHAR(50) NOT NULL)";
 
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute();
@@ -175,7 +162,7 @@ class DbCreator extends Dbh
 
     public function insert_ticket_status_types()
     {
-        $sql = "INSERT INTO ticket_status_types(ticket_status_name) 
+        $sql = "INSERT INTO ticket_status_types(status_name) 
                 VALUES('Open'), ('Closed'), ('In Progress'), ('More Info Required');";
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute();
@@ -185,8 +172,8 @@ class DbCreator extends Dbh
     public function create_ticket_priorities()
     {
         $sql = "CREATE TABLE ticket_priorities(
-                ticket_priority_id INT AUTO_INCREMENT PRIMARY KEY,
-                ticket_priority_name TINYTEXT NOT NULL)";
+                id INT AUTO_INCREMENT PRIMARY KEY,
+                priority_name VARCHAR(50) NOT NULL)";
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute();
         echo "Created ticket_priorities<br>";
@@ -194,7 +181,7 @@ class DbCreator extends Dbh
 
     public function insert_ticket_priorities()
     {
-        $sql = "INSERT INTO ticket_priorities(ticket_priority_name) 
+        $sql = "INSERT INTO ticket_priorities(priority_name) 
                 VALUES('Low'),('Medium'),('High'),('Urgent');";
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute();
@@ -206,21 +193,21 @@ class DbCreator extends Dbh
         $sql = "CREATE TABLE tickets(
             id INT AUTO_INCREMENT PRIMARY KEY,
             title TINYTEXT,
-            project INT, /*can not be named project_id here as that's the name of the foreign key */
+            project_id INT, /*can not be named project_id here as that's the name of the foreign key */
             developer_assigned_id INT, 
-            priority INT,
-            status INT,
-            type INT,
+            priority_id INT,
+            status_id INT,
+            type_id INT,
             description TEXT,
             submitter_id INT, /* the user creating the ticket*/
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
             updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-            FOREIGN KEY (project) REFERENCES projects(project_id) ON DELETE CASCADE ON UPDATE CASCADE, /* if project gets deleted, all tickets will as well */
-            FOREIGN KEY (developer_assigned_id) REFERENCES users(user_id) ON DELETE SET NULL ON UPDATE CASCADE, /*developer can't be deleted, if he is assigned to a ticcket */
-            FOREIGN KEY (submitter_id) REFERENCES users(user_id) ON DELETE SET NULL ON UPDATE CASCADE,
-            FOREIGN KEY (priority) REFERENCES ticket_priorities(ticket_priority_id) ON DELETE SET NULL ON UPDATE CASCADE,
-            FOREIGN KEY (status) REFERENCES ticket_status_types (ticket_status_id) ON DELETE SET NULL ON UPDATE CASCADE,
-            FOREIGN KEY (type) REFERENCES ticket_types(ticket_type_id) ON DELETE SET NULL ON UPDATE CASCADE
+            FOREIGN KEY (project_id) REFERENCES projects(id) ON DELETE CASCADE ON UPDATE CASCADE, /* if project gets deleted, all tickets will as well */
+            FOREIGN KEY (developer_assigned_id) REFERENCES users(id) ON DELETE SET NULL ON UPDATE CASCADE, /*developer can't be deleted, if he is assigned to a ticcket */
+            FOREIGN KEY (submitter_id) REFERENCES users(id) ON DELETE SET NULL ON UPDATE CASCADE,
+            FOREIGN KEY (priority_id) REFERENCES ticket_priorities(id) ON DELETE SET NULL ON UPDATE CASCADE,
+            FOREIGN KEY (status_id) REFERENCES ticket_status_types (id) ON DELETE SET NULL ON UPDATE CASCADE,
+            FOREIGN KEY (type_id) REFERENCES ticket_types(id) ON DELETE SET NULL ON UPDATE CASCADE
         )";
 
         $stmt = $this->connect()->prepare($sql);
@@ -231,7 +218,7 @@ class DbCreator extends Dbh
     public function insert_tickets()
     {
         $sql = "INSERT INTO tickets
-        (title, project, developer_assigned_id, priority, status, type, description, submitter_id) VALUES 
+        (title, project_id, developer_assigned_id, priority_id, status_id, type_id, description, submitter_id) VALUES 
         ('Add links and documentation', 1, 7, 2, 3, 1, 'Add link to resume as PDF, add link to exam results and degrees',19),
         ('Clean up CSS',1,3,2,3,3,'Clean up CSS: Remove outdated classes',4), 
         ('Add info to empty data table representations', 2, 3,2,3,2,'Write No data available... ',4),
@@ -299,8 +286,8 @@ class DbCreator extends Dbh
                     unseen BOOLEAN, 
                     created_by INT, 
                     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                    FOREIGN KEY (created_by) REFERENCES users(user_id) ON DELETE CASCADE ON UPDATE CASCADE,
-                    FOREIGN KEY (user_id) REFERENCES users (user_id) ON DELETE CASCADE ON UPDATE CASCADE,
+                    FOREIGN KEY (created_by) REFERENCES users(id) ON DELETE CASCADE ON UPDATE CASCADE,
+                    FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE ON UPDATE CASCADE,
                     FOREIGN KEY (notification_type_id) REFERENCES notification_types (id) ON DELETE SET NULL ON UPDATE CASCADE
                 )";
         $stmt = $this->connect()->prepare($sql);
@@ -315,7 +302,7 @@ class DbCreator extends Dbh
                     user_id INT,
                     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                     session_id_php VARCHAR(50),
-                    FOREIGN KEY (user_id) REFERENCES users (user_id) ON DELETE SET NULL ON UPDATE CASCADE
+                    FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE SET NULL ON UPDATE CASCADE
                  )";
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute();
@@ -330,7 +317,7 @@ class DbCreator extends Dbh
                     ticket_id INT,
                     comment TEXT, 
                     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                    FOREIGN KEY (commenter_user_id) REFERENCES users (user_id) ON DELETE SET NULL ON UPDATE CASCADE,
+                    FOREIGN KEY (commenter_user_id) REFERENCES users (id) ON DELETE SET NULL ON UPDATE CASCADE,
                     FOREIGN KEY (ticket_id) REFERENCES tickets (id) ON DELETE CASCADE ON UPDATE CASCADE
                 )";
         $stmt = $this->connect()->prepare($sql);

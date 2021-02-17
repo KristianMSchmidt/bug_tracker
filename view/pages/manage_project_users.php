@@ -160,7 +160,8 @@ require('page_frame/ui_frame.php');
                                 <th>Role</th>
                             </tr>
                             <?php foreach ($_SESSION['selected_users'] as $user_id) : ?>
-                                <?php $user = $contr->get_users($user_id)[0];
+                                <?php
+                                $user = $contr->get_users($user_id)[0];
                                 $num_changed += 1 ?>
                                 <tr>
                                     <td><?php echo $user['full_name'] ?></td>
