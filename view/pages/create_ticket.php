@@ -158,7 +158,7 @@ require('page_frame/ui_frame.php');
                                 <?php endforeach ?>
                             </select>
                             <p class="error"><?php echo $_SESSION['errors']['developer'] ?? '' ?></p>
-                            <?php if (isset($project_id)) : ?>
+                            <?php if ($_GET['project_id'] !== "none") : ?>
                                 <label>Developer Assigned</label>
                             <?php else : ?>
                                 <label>Developer Assigned (select a project to see options)</label>
@@ -188,6 +188,9 @@ require('page_frame/ui_frame.php');
 
                         <!-- Submitter -->
                         <input type="hidden" name="submitter_id" value="<?php echo $_SESSION['user_id'] ?>">
+
+                        <!-- Show Errors -->
+                        <input type="hidden" name="check_errors" value="true" id="check_errors">
                     </div>
                 </form>
             </div>

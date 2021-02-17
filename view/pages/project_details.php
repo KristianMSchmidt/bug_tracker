@@ -130,7 +130,7 @@ $tickets = $contr->get_tickets_by_project($project_id);
                                         <td><?php echo $ticket['developer_name'] ?></td>
                                         <td><?php echo $ticket['ticket_status_name'] ?></td>
                                         <td><?php echo explode(" ", $ticket['created_at'])[0] ?></td>
-                                        <td><a href="ticket_details.php?ticket_id=<?php echo $ticket['ticket_id'] ?>">Details</a></td>
+                                        <td><a href="ticket_details.php?ticket_id=<?php echo $ticket['id'] ?>">Details</a></td>
                                     </tr>
                                 <?php endforeach; ?>
                             </table>

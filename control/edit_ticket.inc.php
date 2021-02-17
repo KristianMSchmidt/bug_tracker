@@ -19,6 +19,6 @@ if (!$errors) {
     exit();
 } else {
     $_SESSION['errors'] = $errors;
-    $_SESSION['data'] = $new_ticket;
+    $_SESSION['ticket'] = $new_ticket;
     header('location:../view/pages/edit_ticket.php');
 }

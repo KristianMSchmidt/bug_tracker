@@ -204,7 +204,7 @@ class DbCreator extends Dbh
     public function create_tickets()
     {
         $sql = "CREATE TABLE tickets(
-            ticket_id INT AUTO_INCREMENT PRIMARY KEY,
+            id INT AUTO_INCREMENT PRIMARY KEY,
             title TINYTEXT,
             project INT, /*can not be named project_id here as that's the name of the foreign key */
             developer_assigned_id INT, 
@@ -331,7 +331,7 @@ class DbCreator extends Dbh
                     comment TEXT, 
                     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                     FOREIGN KEY (commenter_user_id) REFERENCES users (user_id) ON DELETE SET NULL ON UPDATE CASCADE,
-                    FOREIGN KEY (ticket_id) REFERENCES tickets (ticket_id) ON DELETE CASCADE ON UPDATE CASCADE
+                    FOREIGN KEY (ticket_id) REFERENCES tickets (id) ON DELETE CASCADE ON UPDATE CASCADE
                 )";
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute();
@@ -372,7 +372,7 @@ class DbCreator extends Dbh
                 old_value VARCHAR(50),   
                 new_value VARCHAR(50),   
                 created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                FOREIGN KEY (ticket_id) REFERENCES tickets (ticket_id) ON DELETE CASCADE ON UPDATE CASCADE,
+                FOREIGN KEY (ticket_id) REFERENCES tickets (id) ON DELETE CASCADE ON UPDATE CASCADE,
                 FOREIGN KEY (type_id) REFERENCES ticket_event_types (id) ON DELETE CASCADE ON UPDATE CASCADE
                 )";
         $stmt = $this->connect()->prepare($sql);

@@ -8,6 +8,7 @@ function choose_project(project_id) {
     search_input = document.getElementById("search_field_project").value;
     document.getElementById('project_id_input').value = project_id;
     document.getElementById('search_input_to_post').value = search_input;
+    document.getElementById('check_errors').value = "false";
     document.getElementById("create_ticket_form").submit();
 }
 

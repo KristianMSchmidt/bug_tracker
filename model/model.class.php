@@ -64,12 +64,12 @@ class Model extends Dbh
 
     protected function db_get_most_busy_users()
     {
-        $sql = "SELECT COUNT(tickets.ticket_id) as count, users.full_name
+        $sql = "SELECT COUNT(tickets.id) as count, users.full_name
         FROM tickets 
         LEFT JOIN users ON tickets.developer_assigned_id = users.user_id    
         WHERE tickets.status = 3 
         GROUP BY tickets.developer_assigned_id
-        ORDER BY count(tickets.ticket_id) ASC LIMIT 5";
+        ORDER BY count(tickets.id) ASC LIMIT 5";
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute();
         $results = $stmt->fetchAll();
@@ -116,7 +116,7 @@ class Model extends Dbh
         $sql =
             "SELECT 
            tickets.title,
-           tickets.ticket_id,
+           tickets.id,
            tickets.created_at,
            projects.project_name,
            ticket_priorities.ticket_priority_name,
@@ -158,7 +158,7 @@ class Model extends Dbh
 
     protected function db_get_ticket_priority_count()
     {
-        $sql = "SELECT COUNT(tickets.ticket_id) AS count, 
+        $sql = "SELECT COUNT(tickets.id) AS count, 
                 ticket_priorities.ticket_priority_name 
                 FROM tickets RIGHT JOIN ticket_priorities ON tickets.priority = ticket_priorities.ticket_priority_id 
                 GROUP BY ticket_priorities.ticket_priority_id 
@@ -173,7 +173,7 @@ class Model extends Dbh
     protected function db_get_ticket_status_count()
     {
 
-        $sql = "SELECT COUNT(tickets.ticket_id) 
+        $sql = "SELECT COUNT(tickets.id) 
                 AS count, ticket_status_types.ticket_status_name 
                 FROM tickets RIGHT JOIN ticket_status_types 
                 ON tickets.status = ticket_status_types.ticket_status_id
@@ -189,7 +189,7 @@ class Model extends Dbh
     protected function db_get_tickets_type_count()
     {
         $sql = "SELECT 
-                COUNT(tickets.ticket_id),
+                COUNT(tickets.id),
                 ticket_types.ticket_type_name 
                 FROM tickets RIGHT JOIN ticket_types ON tickets.type = ticket_types.ticket_type_id
                 GROUP BY ticket_types.ticket_type_id ORDER BY ticket_types.ticket_type_id";
@@ -273,9 +273,9 @@ class Model extends Dbh
 
     protected function db_check_ticket_title_unique($ticket_title, $ticket_id, $project_id)
     {
-        $sql = "SELECT ticket_id 
+        $sql = "SELECT id 
                 FROM tickets 
-                WHERE tickets.title = ? AND tickets.ticket_id <> ? AND tickets.project = ?";
+                WHERE tickets.title = ? AND tickets.id <> ? AND tickets.project = ?";
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute([$ticket_title, $ticket_id, $project_id]);
         $project = $stmt->fetch();
@@ -325,7 +325,7 @@ class Model extends Dbh
     // TODO: merge this function with db_get_tickets_by_id
     {
         $sql = "SELECT
-        tickets.ticket_id,
+        tickets.id,
         tickets.title,
         tickets.created_at,
         ticket_priorities.ticket_priority_name,
@@ -351,7 +351,7 @@ class Model extends Dbh
     protected function db_get_ticket_by_id($ticket_id)
     {
         $sql = "SELECT
-        tickets.ticket_id,
+        tickets.id,
         tickets.type as type_id,
         tickets.status as status_id,
         tickets.priority as priority_id,
@@ -378,7 +378,7 @@ class Model extends Dbh
         JOIN ticket_status_types ON tickets.status = ticket_status_types.ticket_status_id
         JOIN ticket_priorities ON tickets.priority = ticket_priorities.ticket_priority_id
         JOIN ticket_types ON tickets.type =ticket_types.ticket_type_id
-        WHERE tickets.ticket_id = ?";
+        WHERE tickets.id = ?";
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute([$ticket_id]);
         $tickets = $stmt->fetch();
@@ -453,7 +453,7 @@ class Model extends Dbh
                     type=?,
                     description=?,
                     updated_at = CURRENT_TIMESTAMP
-                WHERE ticket_id = ?";
+                WHERE tickets.id = ?";
 
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute([
@@ -500,7 +500,7 @@ class Model extends Dbh
                     ticket_events.created_at,
                     ticket_event_types.ticket_event_type 
                 FROM ticket_events LEFT JOIN ticket_event_types ON ticket_events.type_id = ticket_event_types.id
-                WHERE ticket_id = ?
+                WHERE ticket_events.ticket_id = ?
                 ORDER BY created_at DESC";
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute([$ticket_id]);
@@ -516,7 +516,7 @@ class Model extends Dbh
                     users.full_name as commenter
                 FROM ticket_comments
                 LEFT JOIN users on ticket_comments.commenter_user_id = users.user_id
-                WHERE ticket_id = ?
+                WHERE ticket_comments.ticket_id = ?
                 ORDER BY created_at DESC";
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute([$ticket_id]);
@@ -642,7 +642,7 @@ class Model extends Dbh
     protected function db_get_ticket_id_by_title_and_project($ticket_title, $project_id)
     {
 
-        $sql = "SELECT ticket_id FROM tickets WHERE tickets.title = ? AND tickets.project = ?";
+        $sql = "SELECT tickets.id FROM tickets WHERE tickets.title = ? AND tickets.project = ?";
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute([$ticket_title, $project_id]);
         $result = $stmt->fetchAll();

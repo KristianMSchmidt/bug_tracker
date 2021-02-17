@@ -257,9 +257,9 @@ class Controller extends Model
     {
         $result = $this->db_get_ticket_id_by_title_and_project($ticket_title, $project_id);
         if (count($result) == 1) {
-            return $result[0]['ticket_id'];
+            return $result[0]['id'];
         } else {
-            echo "Error: ticket title non unique or non-exting";
+            echo "Error: ticket title non-unique or non-existing";
             exit();
         }
     }

@@ -151,7 +151,7 @@ $users = $contr->get_most_busy_users();
                 label: '# of Tickets',
 
                 data: [<?php foreach ($types as $type) {
-                            echo "'{$type['COUNT(tickets.ticket_id)']}',";
+                            echo "'{$type['COUNT(tickets.id)']}',";
                         } ?>],
 
                 backgroundColor: [
