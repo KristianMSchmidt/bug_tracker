@@ -150,10 +150,10 @@ require('page_frame/ui_frame.php');
                         <div class="right">
 
                             <!-- Developer Assigned -->
-                            <select class="w3-select" name="developer_assigned">
+                            <select class="w3-select" name="developer_assigned_id">
                                 <option value="" disabled selected>Choose Developer</option>
                                 <?php foreach ($enrolled_developers as $enrolled_developer) : ?>
-                                    <option value="<?php echo $enrolled_developer['user_id'] ?>" <?php if (isset($_SESSION['data']['developer_assigned']) && ($_SESSION['data']['developer_assigned'] == $enrolled_developer['user_id'])) : ?> selected<?php endif ?>>
+                                    <option value="<?php echo $enrolled_developer['user_id'] ?>" <?php if (isset($_SESSION['data']['developer_assigned_id']) && ($_SESSION['data']['developer_assigned_id'] == $enrolled_developer['user_id'])) : ?> selected<?php endif ?>>
                                         <?php echo $enrolled_developer['full_name'] . " | " . $enrolled_developer['role_name']; ?> </option>
                                 <?php endforeach ?>
                             </select>
@@ -187,7 +187,7 @@ require('page_frame/ui_frame.php');
                         <input type="hidden" name="project_options" value="<?php echo $_GET['project_options'] ?>">
 
                         <!-- Submitter -->
-                        <input type="hidden" name="submitter" value="<?php echo $_SESSION['user_id'] ?>">
+                        <input type="hidden" name="submitter_id" value="<?php echo $_SESSION['user_id'] ?>">
                     </div>
                 </form>
             </div>

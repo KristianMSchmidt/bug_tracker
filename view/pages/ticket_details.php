@@ -86,7 +86,7 @@ $comments = $contr->get_ticket_comments($ticket_id);
                                 <form action="../../control/ticket_details.inc.php" method="post">
                                     <input style="width:80%" type="text" name="new_comment" maxlength="200" placeholder="Write a comment on the ticket">
                                     <input type="hidden" name="ticket_id" value="<?php echo $ticket_id ?>">
-                                    <input type="hidden" name="developer_assigned" value=<?php echo $ticket['developer_assigned']; ?>>
+                                    <input type="hidden" name="developer_assigned_id" value=<?php echo $ticket['developer_assigned_id']; ?>>
                                     <input type="submit" class="btn-primary" style="width:5em;" value="ADD">
                                 </form>
                                 <p class="error"><?php echo $_SESSION['errors']['comment'] ?? '' ?></p>
@@ -103,7 +103,7 @@ $comments = $contr->get_ticket_comments($ticket_id);
                                 <?php foreach ($comments as $comment) : ?>
                                     <tr>
                                         <td><?php echo $comment['commenter'] ?></td>
-                                        <td><?php echo $comment['message'] ?></td>
+                                        <td><?php echo $comment['comment'] ?></td>
                                         <td><?php echo $comment['created_at'] ?></td>
                                     </tr>
                                 <?php endforeach ?>

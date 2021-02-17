@@ -37,7 +37,7 @@ class CreateTicketHandler extends TicketValidator
         if (!isset($this->new_ticket['status_id'])) {
             $this->add_error('status', 'Choose status');
         }
-        if (!isset($this->new_ticket['developer_assigned'])) {
+        if (!isset($this->new_ticket['developer_assigned_id'])) {
             $this->add_error('developer', 'Choose developer');
         }
     }
@@ -45,7 +45,8 @@ class CreateTicketHandler extends TicketValidator
     private function create()
     {
         $this->contr->create_ticket($this->new_ticket);
-        $notification_type_id = 2; // assigned to ticket
-        $this->contr->create_notification($notification_type_id, $this->new_ticket['developer_assigned'], $this->new_ticket['submitter']);
+        $notification_type_id = 2; // you got assigned to ticket
+        $ticket_id = $this->contr->get_ticket_id_by_title_and_project($this->new_ticket['title'], $this->new_ticket['project_id']);
+        $this->contr->create_notification($notification_type_id, $ticket_id, $this->new_ticket['developer_assigned_id'], $this->new_ticket['submitter_id']);
     }
 }

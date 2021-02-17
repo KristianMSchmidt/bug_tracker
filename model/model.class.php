@@ -66,9 +66,9 @@ class Model extends Dbh
     {
         $sql = "SELECT COUNT(tickets.ticket_id) as count, users.full_name
         FROM tickets 
-        LEFT JOIN users ON tickets.developer_assigned = users.user_id    
+        LEFT JOIN users ON tickets.developer_assigned_id = users.user_id    
         WHERE tickets.status = 3 
-        GROUP BY tickets.developer_assigned
+        GROUP BY tickets.developer_assigned_id
         ORDER BY count(tickets.ticket_id) ASC LIMIT 5";
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute();
@@ -125,8 +125,8 @@ class Model extends Dbh
            s.full_name AS submitter_name,  /* alias necessary */
            d.full_name AS developer_name  /* alias necessary */
            FROM tickets 
-           LEFT JOIN users s ON tickets.submitter = s.user_id
-           LEFT JOIN users d ON tickets.developer_assigned = d.user_id
+           LEFT JOIN users s ON tickets.submitter_id = s.user_id
+           LEFT JOIN users d ON tickets.developer_assigned_id = d.user_id
            JOIN projects ON tickets.project = projects.project_id
            JOIN ticket_status_types ON tickets.status = ticket_status_types.ticket_status_id
            JOIN ticket_priorities ON tickets.priority = ticket_priorities.ticket_priority_id
@@ -137,7 +137,7 @@ class Model extends Dbh
         // Project Managers should in addition see all ticket to all the projects are part of. 
 
         if ($role_name !== 'Admin') :
-            $sql .= " WHERE tickets.submitter = {$user_id} OR tickets.developer_assigned = {$user_id}";
+            $sql .= " WHERE tickets.submitter_id = {$user_id} OR tickets.developer_assigned_id = {$user_id}";
         endif;
 
         if ($role_name == 'Project Manager') :
@@ -334,8 +334,8 @@ class Model extends Dbh
         s.full_name AS submitter_name,  /* alias necessary */
         d.full_name AS developer_name   /* alias necessary */
         FROM tickets 
-        LEFT JOIN users s ON tickets.submitter = s.user_id
-        LEFT JOIN users d ON tickets.developer_assigned = d.user_id
+        LEFT JOIN users s ON tickets.submitter_id = s.user_id
+        LEFT JOIN users d ON tickets.developer_assigned_id = d.user_id
         JOIN projects ON tickets.project = projects.project_id
         JOIN ticket_status_types ON tickets.status = ticket_status_types.ticket_status_id
         JOIN ticket_priorities ON tickets.priority = ticket_priorities.ticket_priority_id
@@ -355,8 +355,8 @@ class Model extends Dbh
         tickets.type as type_id,
         tickets.status as status_id,
         tickets.priority as priority_id,
-        tickets.developer_assigned,
-        tickets.submitter,
+        tickets.developer_assigned_id,
+        tickets.submitter_id,
         tickets.project as project_id,
         tickets.title,
         tickets.description,
@@ -372,8 +372,8 @@ class Model extends Dbh
         /* left join er vigtig her, da der stadig skal findes resultater frem fra tickets,
          selvom f.eks. submitteren i mellemtiden er blevet slettet        
         */
-        LEFT JOIN users s ON tickets.submitter = s.user_id
-        LEFT JOIN users d ON tickets.developer_assigned = d.user_id
+        LEFT JOIN users s ON tickets.submitter_id = s.user_id
+        LEFT JOIN users d ON tickets.developer_assigned_id = d.user_id
         JOIN projects ON tickets.project = projects.project_id
         JOIN ticket_status_types ON tickets.status = ticket_status_types.ticket_status_id
         JOIN ticket_priorities ON tickets.priority = ticket_priorities.ticket_priority_id
@@ -447,7 +447,7 @@ class Model extends Dbh
         $sql = "UPDATE tickets 
                 SET 
                     title = ?,
-                    developer_assigned = ?,
+                    developer_assigned_id = ?,
                     priority=?,
                     status = ?,
                     type=?,
@@ -458,7 +458,7 @@ class Model extends Dbh
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute([
             $data['title'],
-            $data['developer_assigned'],
+            $data['developer_assigned_id'],
             $data['priority_id'],
             $data['status_id'],
             $data['type_id'],
@@ -511,12 +511,13 @@ class Model extends Dbh
     protected function db_get_ticket_comments($ticket_id)
     {
         $sql = "SELECT 
-                    ticket_comments.message, 
+                    ticket_comments.comment, 
                     ticket_comments.created_at,
                     users.full_name as commenter
                 FROM ticket_comments
                 LEFT JOIN users on ticket_comments.commenter_user_id = users.user_id
-                WHERE ticket_id = ?";
+                WHERE ticket_id = ?
+                ORDER BY created_at DESC";
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute([$ticket_id]);
         $comments = $stmt->fetchAll();
@@ -569,30 +570,30 @@ class Model extends Dbh
         return $result;
     }
 
-    protected function db_add_ticket_comment($user_id, $ticket_id, $message)
+    protected function db_add_ticket_comment($user_id, $ticket_id, $comment)
     {
         $sql = "INSERT 
-                INTO ticket_comments (commenter_user_id, ticket_id, message)
+                INTO ticket_comments (commenter_user_id, ticket_id, comment)
                 VALUES (?,?,?)";
         $stmt = $this->connect()->prepare($sql);
-        $stmt->execute([$user_id, $ticket_id, $message]);
+        $stmt->execute([$user_id, $ticket_id, $comment]);
     }
 
     protected function db_create_ticket($data)
     {
         $sql = "INSERT 
-                INTO tickets (title, project, developer_assigned, priority, status, type, description, submitter)
+                INTO tickets (title, project, developer_assigned_id, priority, status, type, description, submitter_id)
                 VALUES (?,?,?,?,?,?,?,?)";
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute([
             trim($data['title']),
             trim($data['project_id']),
-            trim($data['developer_assigned']),
+            trim($data['developer_assigned_id']),
             trim($data['priority_id']),
             trim($data['status_id']),
             trim($data['type_id']),
             trim($data['description']),
-            trim($data['submitter'])
+            trim($data['submitter_id'])
         ]);
     }
 
@@ -634,6 +635,16 @@ class Model extends Dbh
                 WHERE project_id = ? AND user_id = ?";
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute([$project_id, $user_id]);
+        $result = $stmt->fetchAll();
+        return $result;
+    }
+
+    protected function db_get_ticket_id_by_title_and_project($ticket_title, $project_id)
+    {
+
+        $sql = "SELECT ticket_id FROM tickets WHERE tickets.title = ? AND tickets.project = ?";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute([$ticket_title, $project_id]);
         $result = $stmt->fetchAll();
         return $result;
     }

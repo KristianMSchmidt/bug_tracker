@@ -3,14 +3,14 @@
 class AddCommentHandler
 {
     private $comment;
-    private $developer_assigned;
+    private $developer_assigned_id;
     private $errors = [];
     private $user_id;
 
     public function __construct($post_data, $user_id)
     {
         $this->comment = trim($post_data['new_comment']);
-        $this->developer_assigned = $post_data['developer_assigned'];
+        $this->developer_assigned_id = $post_data['developer_assigned_id'];
         $this->ticket_id = $post_data['ticket_id'];
         $this->user_id = $user_id;
     }
@@ -45,7 +45,7 @@ class AddCommentHandler
         $contr->add_ticket_comment($this->user_id, $this->ticket_id, $this->comment);
         //notify developer: 
         $notification_type_id = 6; // new comment to your ticket
-        $contr->create_notification($notification_type_id, $this->ticket_id, $this->developer_assigned, $this->user_id);
+        $contr->create_notification($notification_type_id, $this->ticket_id, $this->developer_assigned_id, $this->user_id);
     }
 
     private function add_error($key, $val)

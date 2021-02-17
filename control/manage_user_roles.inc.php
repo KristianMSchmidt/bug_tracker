@@ -12,9 +12,6 @@ $_SESSION['feedback_users'] = [];
 
 foreach ($selected_user_ids as $user_id) {
     $user = $contr->get_users($user_id)[0];
-    $feedback_user = [];
-    $feedback_user['full_name'] = $user['full_name'];
-    $feedback_user['old_role_name'] = $user['role_name'];
 
     // only update role, if new role is different than the old:
     if ($user['role_name'] !== $chosen_role_name) {
@@ -23,24 +20,30 @@ foreach ($selected_user_ids as $user_id) {
         if (!in_array($user['full_name'], $demo_users)) {
             // update role
             $contr->update_role($_POST['new_role'], $_SESSION['user_id'], $user_id);
-
-            $feedback_user['new_role_name'] = $chosen_role_name;
-            $feedback_user['message'] = "Yes";
-            $feedback_user['color'] = "green";
+            $new_role_name = $chosen_role_name;
+            $message = "Yes";
+            $color = "green";
 
             // create notification
             $notification_type_id = 1; // role update
             $contr->create_notification($notification_type_id, $_POST['new_role'], $user_id, $_SESSION['user_id']);
         } else {
-            $feedback_user['new_role_name'] = $feedback_user['old_role_name'];
-            $feedback_user['message'] = "No (immutable role)";
-            $feedback_user['color'] = "red";
+            $new_role_name = $user['role_name'];
+            $message = "No (immutable role)";
+            $color = "red";
         }
     } else {
-        $feedback_user['new_role_name'] =   $feedback_user['old_role_name'];
-        $feedback_user['message'] = "No";
-        $feedback_user['color'] = "red";
+        $new_role_name = $user['role_name'];
+        $message = "No";
+        $color = "red";
     }
+    $feedback_user = array(
+        'full_name' => $user['full_name'],
+        'old_role_name' => $user['role_name'],
+        'new_role_name' => $new_role_name,
+        'message' => $message,
+        'color' => $color
+    );
     array_push($_SESSION['feedback_users'], $feedback_user);
 }
 header("location: ../view/pages/manage_user_roles.php");

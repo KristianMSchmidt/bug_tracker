@@ -117,10 +117,10 @@ require('page_frame/ui_frame.php');
                             <div class="right">
 
                                 <!-- Developer Assigned -->
-                                <select class="w3-select" name="developer_assigned">
-                                    <option value="<?php echo $_SESSION['data']['developer_assigned'] ?>" selected><?php echo $_SESSION['data']['developer_name'] ?></option>
+                                <select class="w3-select" name="developer_assigned_id">
+                                    <option value="<?php echo $_SESSION['data']['developer_assigned_id'] ?>" selected><?php echo $_SESSION['data']['developer_name'] ?></option>
                                     <?php foreach ($enrolled_developers as $enrolled_developer) : ?>
-                                        <?php if ($enrolled_developer['user_id'] !== $_SESSION['data']['developer_assigned']) : ?>
+                                        <?php if ($enrolled_developer['user_id'] !== $_SESSION['data']['developer_assigned_id']) : ?>
                                             <option value="<?php echo $enrolled_developer['user_id'] ?>"><?php echo $enrolled_developer['full_name'] ?></option>
                                         <?php endif ?>
                                     <?php endforeach; ?>

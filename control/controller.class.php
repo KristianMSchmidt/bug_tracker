@@ -211,10 +211,10 @@ class Controller extends Model
     }
 
 
-    public function add_ticket_comment($user_id, $ticket_id, $message)
+    public function add_ticket_comment($user_id, $ticket_id, $comment)
     {
 
-        $this->db_add_ticket_comment($user_id, $ticket_id, $message);
+        $this->db_add_ticket_comment($user_id, $ticket_id, $comment);
     }
 
     public function create_ticket($data)
@@ -250,6 +250,17 @@ class Controller extends Model
             return $result[0]['enrollment_start'];
         } else if (count($result) == 0) {
             return "Not personally enrolled";
+        }
+    }
+
+    public function get_ticket_id_by_title_and_project($ticket_title, $project_id)
+    {
+        $result = $this->db_get_ticket_id_by_title_and_project($ticket_title, $project_id);
+        if (count($result) == 1) {
+            return $result[0]['ticket_id'];
+        } else {
+            echo "Error: ticket title non unique or non-exting";
+            exit();
         }
     }
 }

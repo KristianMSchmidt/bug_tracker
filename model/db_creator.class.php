@@ -207,17 +207,17 @@ class DbCreator extends Dbh
             ticket_id INT AUTO_INCREMENT PRIMARY KEY,
             title TINYTEXT,
             project INT, /*can not be named project_id here as that's the name of the foreign key */
-            developer_assigned INT, 
+            developer_assigned_id INT, 
             priority INT,
             status INT,
             type INT,
             description TEXT,
-            submitter INT, /* the person creating the ticket*/
+            submitter_id INT, /* the user creating the ticket*/
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
             updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
             FOREIGN KEY (project) REFERENCES projects(project_id) ON DELETE CASCADE ON UPDATE CASCADE, /* if project gets deleted, all tickets will as well */
-            FOREIGN KEY (developer_assigned) REFERENCES users(user_id) ON DELETE SET NULL ON UPDATE CASCADE, /*developer can't be deleted, if he is assigned to a ticcket */
-            FOREIGN KEY (submitter) REFERENCES users(user_id) ON DELETE SET NULL ON UPDATE CASCADE,
+            FOREIGN KEY (developer_assigned_id) REFERENCES users(user_id) ON DELETE SET NULL ON UPDATE CASCADE, /*developer can't be deleted, if he is assigned to a ticcket */
+            FOREIGN KEY (submitter_id) REFERENCES users(user_id) ON DELETE SET NULL ON UPDATE CASCADE,
             FOREIGN KEY (priority) REFERENCES ticket_priorities(ticket_priority_id) ON DELETE SET NULL ON UPDATE CASCADE,
             FOREIGN KEY (status) REFERENCES ticket_status_types (ticket_status_id) ON DELETE SET NULL ON UPDATE CASCADE,
             FOREIGN KEY (type) REFERENCES ticket_types(ticket_type_id) ON DELETE SET NULL ON UPDATE CASCADE
@@ -231,7 +231,7 @@ class DbCreator extends Dbh
     public function insert_tickets()
     {
         $sql = "INSERT INTO tickets
-        (title, project, developer_assigned, priority, status, type, description, submitter) VALUES 
+        (title, project, developer_assigned_id, priority, status, type, description, submitter_id) VALUES 
         ('Add links and documentation', 1, 7, 2, 3, 1, 'Add link to resume as PDF, add link to exam results and degrees',19),
         ('Clean up CSS',1,3,2,3,3,'Clean up CSS: Remove outdated classes',4), 
         ('Add info to empty data table representations', 2, 3,2,3,2,'Write No data available... ',4),
@@ -328,7 +328,7 @@ class DbCreator extends Dbh
                     id INT AUTO_INCREMENT PRIMARY KEY,
                     commenter_user_id INT,
                     ticket_id INT,
-                    message TEXT, /*change this to comment */
+                    comment TEXT, 
                     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                     FOREIGN KEY (commenter_user_id) REFERENCES users (user_id) ON DELETE SET NULL ON UPDATE CASCADE,
                     FOREIGN KEY (ticket_id) REFERENCES tickets (ticket_id) ON DELETE CASCADE ON UPDATE CASCADE
@@ -369,8 +369,8 @@ class DbCreator extends Dbh
                 id INT AUTO_INCREMENT PRIMARY KEY,
                 ticket_id INT,
                 type_id INT,  
-                old_value VARCHAR(50),   /* This could be many things - an old comment, a user  etc - so I wont use foreign key here. */
-                new_value VARCHAR(50),
+                old_value VARCHAR(50),   
+                new_value VARCHAR(50),   
                 created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                 FOREIGN KEY (ticket_id) REFERENCES tickets (ticket_id) ON DELETE CASCADE ON UPDATE CASCADE,
                 FOREIGN KEY (type_id) REFERENCES ticket_event_types (id) ON DELETE CASCADE ON UPDATE CASCADE
