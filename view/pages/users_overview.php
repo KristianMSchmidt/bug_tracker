@@ -65,7 +65,3 @@ $users = $contr->get_users("all_users");
 <script>
     set_active_link("users_overview")
 </script>
-
-<?php
-require('../../control/shared/clean_session.inc.php');
-?>

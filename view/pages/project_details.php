@@ -204,7 +204,6 @@ $tickets = $contr->get_tickets_by_project($project_id);
 <?php endif ?>
 
 <?php
-require('../../control/shared/clean_session.inc.php');
 require('page_frame/closing_tags.php')
 
 ?>

@@ -131,9 +131,7 @@ $tickets = $contr->get_tickets_by_user_and_role($user_id, 'Developer');
 </div>
 
 <?php
-require('../../control/shared/clean_session.inc.php');
 require('page_frame/closing_tags.php')
-
 ?>
 
 <script>

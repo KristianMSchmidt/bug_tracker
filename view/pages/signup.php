@@ -58,5 +58,4 @@
 </div>
 <?php
 require('page_frame/closing_tags.php');
-require('../../control/shared/clean_session.inc.php');
 ?>

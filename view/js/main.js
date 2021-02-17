@@ -39,3 +39,10 @@ const currentUrlParams = new URLSearchParams(window.location.search);
 if (currentUrlParams.get('seen') == "true") {
     document.getElementById("notifications").classList.toggle("show");
 }
+
+
+function seen_redirect() {
+    var url = new URL(window.location.href);
+    url.searchParams.set('seen', 'true');
+    window.location.href = url;
+}

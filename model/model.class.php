@@ -203,14 +203,15 @@ class Model extends Dbh
     protected function db_get_notifications_by_user_id($user_id)
     {
         $sql = "SELECT 
-                    notifications.unseen, 
-                    notifications.message,
+                    notifications.unseen,
                     notifications.created_at, 
                     notifications.user_id, 
-                    notification_types.notification_type_id as type, 
+                    notifications.info_id,
+                    notification_types.id as type,
+                    notification_types.submitter_action as submitter_action, 
                     users.full_name as created_by
                 FROM notifications
-                JOIN notification_types ON notifications.notification_type = notification_types.notification_type_id
+                JOIN notification_types ON notifications.notification_type_id = notification_types.id
                 LEFT JOIN users ON notifications.created_by = users.user_id
                 WHERE notifications.user_id = ?
                 ORDER BY notifications.id DESC";
@@ -261,22 +262,22 @@ class Model extends Dbh
         return $project;
     }
 
-    protected function db_get_project_by_title($project_name)
+    protected function db_check_project_name_unique($project_name, $project_id)
     {
-        $sql = "SELECT project_name, project_id FROM projects WHERE project_name = ?";
+        $sql = "SELECT project_id FROM projects WHERE project_name = ? AND project_id <> ?";
         $stmt = $this->connect()->prepare($sql);
-        $stmt->execute([trim($project_name)]);
+        $stmt->execute([$project_name, $project_id]);
         $result = $stmt->fetch();
         return $result;
     }
 
-    protected function db_get_ticket_by_title($ticket_title)
+    protected function db_check_ticket_title_unique($ticket_title, $ticket_id, $project_id)
     {
-        $sql = "SELECT ticket_id, project 
+        $sql = "SELECT ticket_id 
                 FROM tickets 
-                WHERE title = ?";
+                WHERE tickets.title = ? AND tickets.ticket_id <> ? AND tickets.project = ?";
         $stmt = $this->connect()->prepare($sql);
-        $stmt->execute([$ticket_title]);
+        $stmt->execute([$ticket_title, $ticket_id, $project_id]);
         $project = $stmt->fetch();
         return $project;
     }
@@ -385,12 +386,12 @@ class Model extends Dbh
     }
 
 
-    protected function db_create_notification($notification_type, $user_id, $message, $created_by)
+    protected function db_create_notification($notification_type_id, $info_id, $user_id, $created_by)
     {
-        $sql = "INSERT INTO notifications(notification_type, user_id, message, unseen, created_by)
-                 VALUES(?, ?, ?, ?,?)";
+        $sql = "INSERT INTO notifications(notification_type_id, info_id, user_id, unseen, created_by)
+                 VALUES(?, ?, ?, ?, ?)";
         $stmt = $this->connect()->prepare($sql);
-        $stmt->execute([$notification_type, $user_id, $message, 1, $created_by]);
+        $stmt->execute([$notification_type_id, $info_id, $user_id, 1, $created_by]);
     }
 
     protected function db_add_to_ticket_events($ticket_id, $event_type_id, $old_value, $new_value)
@@ -584,14 +585,14 @@ class Model extends Dbh
                 VALUES (?,?,?,?,?,?,?,?)";
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute([
-            $data['title'],
-            $data['project_id'],
-            $data['developer_assigned'],
-            $data['priority_id'],
-            $data['status_id'],
-            $data['type_id'],
-            $data['description'],
-            $data['submitter']
+            trim($data['title']),
+            trim($data['project_id']),
+            trim($data['developer_assigned']),
+            trim($data['priority_id']),
+            trim($data['status_id']),
+            trim($data['type_id']),
+            trim($data['description']),
+            trim($data['submitter'])
         ]);
     }
 
@@ -637,6 +638,9 @@ class Model extends Dbh
         return $result;
     }
 }
+
+
+
 
 
 /* Notes to self: 

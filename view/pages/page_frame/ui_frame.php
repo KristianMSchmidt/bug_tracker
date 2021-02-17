@@ -1,4 +1,5 @@
 <?php
+
 if (!isset($_SESSION)) {
     session_start();
 }
@@ -51,14 +52,6 @@ if (isset($_SESSION['user_id'])) {
                 <div class="dropdown">
                     <!-- notifications dropdown btn -->
                     <?php if ($data['num_unseen'] > 0) : ?>
-                        <script>
-                            function seen_redirect() {
-                                var url = new URL(window.location.href);
-                                url.searchParams.append('seen', 'true');
-                                //url.searchParams.set('seen', 'true');
-                                window.location.href = url;
-                            }
-                        </script>
 
                         <button class='dropbtn notifications' onclick="seen_redirect()">
                             <span id='bell' class='notifications dropbtn fa-stack'>
@@ -78,30 +71,35 @@ if (isset($_SESSION['user_id'])) {
                         <?php if (count($data['notifications']) == 0) : ?>
                             <a href="#">You don't have any notifications yet</a>
                         <?php else : ?>
-                            <?php foreach ($data['notifications'] as $notification) : ?>
-                                <?php
+                            <?php foreach ($data['notifications'] as $notification) :
                                 if ($notification['type'] == 1) {
-                                    /*role update*/
-                                    echo '<a href="profile_settings.php">';
+                                    /* role update */
+                                    $href = "profile_settings.php";
+                                    $news_item = $contr->get_role_name_by_role_id($notification['info_id']);
                                 } elseif ($notification['type'] == 2) {
                                     /* assigned to ticket */
-                                    echo '<a href="my_tickets.php">';
+                                    $href = "ticket_details.php?ticket_id={$notification['info_id']}";
+                                    $news_item = $contr->get_ticket_by_id($notification['info_id'])['title'];
                                 } elseif ($notification['type'] == 3) {
                                     /* un-assigned from ticket */
-                                    echo '<a href="my_tickets.php">';
+                                    $href = "my_tickets.php";
+                                    $news_item = $contr->get_ticket_by_id($notification['info_id'])['title'];
                                 } elseif ($notification['type'] == 4) {
                                     /* enrolled in project */
-                                    echo '<a href="my_projects.php">';
+                                    $href = "project_details.php?project_id={$notification['info_id']}";
+                                    $news_item = $contr->get_project_name_by_id($notification['info_id']);
                                 } elseif ($notification['type'] == 5) {
                                     /* dis-enrolled from project */
-                                    echo '<a href="my_projects.php">';
+                                    $href = "my_projects.php";
+                                    $news_item = $contr->get_project_name_by_id($notification['info_id']);
+                                } elseif ($notification['type'] == 6) {
+                                    /* new comment to your ticket */
+                                    $href = "ticket_details.php?ticket_id={$notification['info_id']}";
+                                    $news_item = $contr->get_ticket_by_id($notification['info_id'])['title'];
                                 }
-                                ?>
-                                <?php echo '<b>' . $notification["created_by"] . '</b>'; ?>
-                                <?php echo $notification["message"]; ?>
-                                <?php $elapsed_time = human_timing(strtotime($notification["created_at"])); ?>
-                                <?php echo '<br>' . $elapsed_time . ' ago'; ?>
-                                </a>
+                                $elapsed_time = human_timing(strtotime($notification["created_at"]));
+                                $notification_str = "<b>{$notification['created_by']}</b> {$notification['submitter_action']} '{$news_item}'</i><br>{$elapsed_time} ago";
+                                echo "<a href='{$href}'>{$notification_str}</a>"; ?>
                             <?php endforeach; ?>
                         <?php endif ?>
                     </div>

@@ -98,15 +98,15 @@ class Controller extends Model
         $results = $this->db_get_project_users($project_id, $role_id);
         return $results;
     }
-    public function get_project_by_title($project_name)
+    public function check_project_name_unique($project_name, $project_id)
     {
-        $results = $this->db_get_project_by_title($project_name);
+        $results = $this->db_check_project_name_unique($project_name, $project_id);
         return $results;
     }
 
-    public function get_ticket_by_title($title)
+    public function check_ticket_title_unique($title, $ticket_id, $project_id)
     {
-        $results = $this->db_get_ticket_by_title($title);
+        $results = $this->db_check_ticket_title_unique($title, $ticket_id, $project_id);
         return $results;
     }
 
@@ -120,9 +120,9 @@ class Controller extends Model
         $results = $this->db_get_tickets_by_project($project_id);
         return $results;
     }
-    public function create_notification($notification_type, $user_id, $message, $created_by)
+    public function create_notification($notification_type_id, $info_id, $user_id, $created_by)
     {
-        $this->db_create_notification($notification_type, $user_id, $message, $created_by);
+        $this->db_create_notification($notification_type_id, $info_id, $user_id, $created_by);
     }
 
     public function get_ticket_by_id($ticket_id)
@@ -160,7 +160,7 @@ class Controller extends Model
         $this->db_update_ticket($data);
     }
 
-    public function set_update($project_name, $project_description, $project_id)
+    public function update_project($project_name, $project_description, $project_id)
     {
         $this->db_update_project($project_name, $project_description, $project_id);
     }

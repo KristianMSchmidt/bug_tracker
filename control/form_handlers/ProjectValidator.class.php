@@ -11,12 +11,13 @@ class ProjectValidator extends TicketAndProjectValidator
 
     protected function validate_title_unique()
     {
-        //check if there already is another project with the chosen new name
-        $potential_other_project = $this->contr->get_project_by_title(trim($this->new_project['project_name']));
-        if ($potential_other_project && ($potential_other_project['project_id'] !== $this->project_id)) {
+        //check if there already is already another project with the chosen new name
+        $other_project_same_title = $this->contr->check_project_name_unique(trim($this->new_project['project_name']), $this->project_id);
+        if ($other_project_same_title) {
             $this->add_error('title', 'There is already a project by that name in the database');
         }
     }
+
 
     protected function validate_title_and_description()
     {

@@ -17,14 +17,9 @@ class TicketValidator extends TicketAndProjectValidator
     protected function validate_title_unique()
     {
         //check if the selected project already has a ticket with this title
-        $potential_other_ticket = $this->contr->get_ticket_by_title(trim($this->new_ticket['title']));
-
-        if ($potential_other_ticket) {
-        }
-        if ($potential_other_ticket) {
-            if (($potential_other_ticket['ticket_id'] !== $this->ticket_id) && ($potential_other_ticket['project'] == $this->new_ticket['project_id'])) {
-                $this->add_error('title', 'The selected project already has a ticket by that name');
-            }
+        $other_ticket_same_title_and_same_project = $this->contr->check_ticket_title_unique(trim($this->new_ticket['title']), $this->ticket_id, $this->new_ticket['project_id']);
+        if ($other_ticket_same_title_and_same_project) {
+            $this->add_error('title', 'The selected project already has a ticket by that name');
         }
     }
 }

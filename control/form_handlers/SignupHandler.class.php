@@ -1,8 +1,8 @@
 <?php
-require('shared/set_session_vars.inc.php');
+require_once('LogIn.class.php');
 require_once('controller.class.php');
 
-class SignupHandler
+class SignupHandler extends Login
 {
     private $data;
     private $errors;
@@ -95,7 +95,7 @@ class SignupHandler
             $pwd_hashed = password_hash(trim($this->data['pwd']), PASSWORD_DEFAULT);
             $contr->create_user(trim($this->data['full_name']), $pwd_hashed, trim($this->data['email']), $this->data['role_id']);
             $new_user = $contr->get_user_by_email($this->data['email']);
-            set_session_vars($new_user, $contr);
+            $this->set_session_vars($new_user, $contr);
         }
     }
 

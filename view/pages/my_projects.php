@@ -94,12 +94,8 @@ $projects = $contr->get_projects_by_user($_SESSION['user_id'], $_SESSION['role_n
         document.getElementById('id01').style.display = 'block';
     </script>
 <?php endif ?>
-<?php require_once('page_frame/closing_tags.php') ?>
+<?php require('page_frame/closing_tags.php') ?>
 
 <script>
     set_active_link("my_projects")
 </script>
-
-<?php
-require('../../control/shared/clean_session.inc.php');
-?>

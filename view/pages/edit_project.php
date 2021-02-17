@@ -71,7 +71,6 @@ require('page_frame/ui_frame.php');
 
 
 <?php
-require('../../control/shared/clean_session.inc.php');
 require('page_frame/closing_tags.php');
 ?>
 <script>

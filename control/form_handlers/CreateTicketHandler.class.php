@@ -45,7 +45,7 @@ class CreateTicketHandler extends TicketValidator
     private function create()
     {
         $this->contr->create_ticket($this->new_ticket);
-        $message = "assigned you to the ticket '{$this->new_ticket['title']}'";
-        $this->contr->create_notification(2, $this->new_ticket['developer_assigned'], $message, $this->new_ticket['submitter']);
+        $notification_type_id = 2; // assigned to ticket
+        $this->contr->create_notification($notification_type_id, $this->new_ticket['developer_assigned'], $this->new_ticket['submitter']);
     }
 }

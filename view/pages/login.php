@@ -48,5 +48,4 @@ if (isset($_SESSION['user_id'])) {
 
 <?php
 require('page_frame/closing_tags.php');
-require('../../control/shared/clean_session.inc.php');
 ?>

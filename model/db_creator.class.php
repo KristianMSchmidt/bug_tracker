@@ -264,12 +264,11 @@ class DbCreator extends Dbh
         echo "Inserted values into project_enrollments<br>";
     }
 
-
     public function create_notification_types()
     {
         $sql = "CREATE TABLE notification_types(
-                    notification_type_id INT AUTO_INCREMENT PRIMARY KEY,
-                    notification_type tinytext
+                    id INT AUTO_INCREMENT PRIMARY KEY,
+                    submitter_action VARCHAR(100)
                 )";
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute();
@@ -278,13 +277,13 @@ class DbCreator extends Dbh
 
     public function insert_notification_types()
     {
-        $sql = "INSERT INTO notification_types(notification_type) VALUES
-                ('role updated'),
-                ('assigned to ticket'),
-                ('unassigned from ticket'),
-                ('enrolled to project'),
-                ('disenrolled from project'),
-                ('account created')";
+        $sql = "INSERT INTO notification_types(submitter_action) VALUES
+                ('updated your role to'),
+                ('assigned you to the ticket'),
+                ('unassigned you from the ticket'),
+                ('enrolled you in the project'),
+                ('disenrolled your from the project'),
+                ('added a comment to your ticket')";
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute();
         echo "Inserted values into notification_types<br>";
@@ -295,14 +294,14 @@ class DbCreator extends Dbh
         $sql = "CREATE TABLE notifications(
                     id INT AUTO_INCREMENT PRIMARY KEY,
                     user_id INT,
-                    notification_type INT,
-                    message TEXT,
-                    unseen BOOLEAN, /* 0 is false (notification not seen) 1 is true (seen) */
-                    created_by INT, /* the person submitting the ticket*/
+                    notification_type_id INT,
+                    info_id INT, /*id to new ticket, project, role or comment in question */
+                    unseen BOOLEAN, 
+                    created_by INT, 
                     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                     FOREIGN KEY (created_by) REFERENCES users(user_id) ON DELETE CASCADE ON UPDATE CASCADE,
                     FOREIGN KEY (user_id) REFERENCES users (user_id) ON DELETE CASCADE ON UPDATE CASCADE,
-                    FOREIGN KEY (notification_type) REFERENCES notification_types (notification_type_id) ON DELETE SET NULL ON UPDATE CASCADE
+                    FOREIGN KEY (notification_type_id) REFERENCES notification_types (id) ON DELETE SET NULL ON UPDATE CASCADE
                 )";
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute();
@@ -329,7 +328,7 @@ class DbCreator extends Dbh
                     id INT AUTO_INCREMENT PRIMARY KEY,
                     commenter_user_id INT,
                     ticket_id INT,
-                    message text,
+                    message TEXT, /*change this to comment */
                     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                     FOREIGN KEY (commenter_user_id) REFERENCES users (user_id) ON DELETE SET NULL ON UPDATE CASCADE,
                     FOREIGN KEY (ticket_id) REFERENCES tickets (ticket_id) ON DELETE CASCADE ON UPDATE CASCADE
@@ -343,7 +342,7 @@ class DbCreator extends Dbh
     {
         $sql = "CREATE TABLE ticket_event_types(
                     id INT AUTO_INCREMENT PRIMARY KEY,
-                    ticket_event_type TEXT 
+                    ticket_event_type VARCHAR(50) 
                 )";
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute();
@@ -369,9 +368,9 @@ class DbCreator extends Dbh
         $sql = "CREATE TABLE ticket_events(
                 id INT AUTO_INCREMENT PRIMARY KEY,
                 ticket_id INT,
-                type_id INT,  /* Perhaps I should make a table of event_types and turn this into a foreign key */
-                old_value TEXT,   /* This could be many things - an old comment, a user  etc - so I wont use foreign key here. */
-                new_value TEXT,
+                type_id INT,  
+                old_value VARCHAR(50),   /* This could be many things - an old comment, a user  etc - so I wont use foreign key here. */
+                new_value VARCHAR(50),
                 created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                 FOREIGN KEY (ticket_id) REFERENCES tickets (ticket_id) ON DELETE CASCADE ON UPDATE CASCADE,
                 FOREIGN KEY (type_id) REFERENCES ticket_event_types (id) ON DELETE CASCADE ON UPDATE CASCADE

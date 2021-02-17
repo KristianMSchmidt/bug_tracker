@@ -223,7 +223,6 @@ require('page_frame/ui_frame.php');
 
 <?php
 require('page_frame/closing_tags.php');
-require('../../control/shared/clean_session.inc.php');
 ?>
 
 <script>

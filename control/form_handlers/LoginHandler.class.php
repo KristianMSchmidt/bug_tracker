@@ -1,8 +1,8 @@
 <?php
-require('shared/set_session_vars.inc.php');
+require_once('LogIn.class.php');
 require_once('controller.class.php');
 
-class LoginHandler
+class LoginHandler extends LogIn
 {
   private $data;
   private $errors = [];
@@ -53,7 +53,7 @@ class LoginHandler
       $pwd_db = $user['password'];
       $psw_check = password_verify($pwd, $pwd_db);
       if ($psw_check) {
-        set_session_vars($user, $contr);
+        $this->set_session_vars($user, $contr);
       } else {
         $this->add_error('login_error', 'Wrong email or password');
       }

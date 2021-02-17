@@ -86,6 +86,7 @@ $comments = $contr->get_ticket_comments($ticket_id);
                                 <form action="../../control/ticket_details.inc.php" method="post">
                                     <input style="width:80%" type="text" name="new_comment" maxlength="200" placeholder="Write a comment on the ticket">
                                     <input type="hidden" name="ticket_id" value="<?php echo $ticket_id ?>">
+                                    <input type="hidden" name="developer_assigned" value=<?php echo $ticket['developer_assigned']; ?>>
                                     <input type="submit" class="btn-primary" style="width:5em;" value="ADD">
                                 </form>
                                 <p class="error"><?php echo $_SESSION['errors']['comment'] ?? '' ?></p>
@@ -183,7 +184,6 @@ $comments = $contr->get_ticket_comments($ticket_id);
 
 <?php
 require('page_frame/closing_tags.php');
-require('../../control/shared/clean_session.inc.php');
 ?>
 
 <script>
