@@ -1,6 +1,7 @@
 <?php
 require('../../control/shared/login_check.inc.php');
-require('../../control/shared/check_ticket_permission.inc.php');
+require('../../control/shared/check_permission.inc.php');
+
 require('page_frame/ui_frame.php');
 
 $contr = new Controller();
@@ -9,11 +10,14 @@ if (isset($_GET['ticket_id'])) {
 } else {
     header('location: dashboard.php');
 }
-$ticket_permission = check_ticket_permission($contr, $_SESSION['user_id'], $ticket_id);
+
 $ticket = $contr->get_ticket_by_id($ticket_id);
 $ticket_events = $contr->get_ticket_events($ticket_id);
 $files = array();
 $comments = $contr->get_ticket_comments($ticket_id);
+
+$ticket_permission = check_ticket_permission($contr, $_SESSION['user_id'], $ticket_id);
+$project_permission = check_project_permission($contr, $_SESSION['user_id'], $ticket['project_id']);
 ?>
 
 <div class="main">
@@ -28,14 +32,18 @@ $comments = $contr->get_ticket_comments($ticket_id);
                     <?php endif ?>
                 </div>
                 <div class="w3-container wrapper">
-                    <table class="table bordered">
+                    <table class="w3-table w3-bordered">
                         <tr>
                             <td class="td-details">Ticket name:</td>
                             <td><?php echo $ticket['title'] ?></td>
                         </tr>
                         <tr>
                             <td class="td-details">Project:</td>
-                            <td><a href="project_details.php?project_id=<?php echo $ticket['project_id'] ?>"><?php echo $ticket['project_name'] ?> </a></td>
+                            <?php if ($project_permission) : ?>
+                                <td><a href="project_details.php?project_id=<?php echo $ticket['project_id'] ?>"><?php echo $ticket['project_name'] ?> </a></td>
+                            <?php else : ?>
+                                <td><?php echo $ticket['project_name'] ?><i> (you are not enrolled)</i></td>
+                            <?php endif ?>
                         </tr>
                         <tr>
                             <td class="td-details">Developer:</td>
@@ -50,7 +58,7 @@ $comments = $contr->get_ticket_comments($ticket_id);
                             <td><?php echo $ticket['description'] ?></td>
                         </tr>
                     </table>
-                    <table class="table bordered">
+                    <table class="w3-table w3-bordered">
                         <tr>
                             <td class="td-details">Priority:</td>
                             <td><?php echo $ticket['ticket_priority_name'] ?></td>
@@ -94,7 +102,7 @@ $comments = $contr->get_ticket_comments($ticket_id);
                         </div>
                         <h5 class="w3-container">All comments for this project</h5>
                         <div class="w3-container w3-responsive">
-                            <table class="table w3-small striped bordered">
+                            <table class="w3-table w3-small w3-striped w3-bordered">
                                 <tr>
                                     <th>Commenter</th>
                                     <th>Message</th>
@@ -127,7 +135,7 @@ $comments = $contr->get_ticket_comments($ticket_id);
                         <h5 class="w3-container">All history information for this ticket</h5>
 
                         <div class="w3-container">
-                            <table class="table w3-small striped bordered">
+                            <table class="w3-table w3-small w3-striped w3-bordered">
                                 <tr>
                                     <th>Property</th>
                                     <th>Old Value</th>
@@ -158,8 +166,7 @@ $comments = $contr->get_ticket_comments($ticket_id);
             </div>
         </div>
     <?php else : ?>
-        <p>You don't have permission to this ticket. Please contact your local admin or project manager.</p>
-        </p>
+        <p>You don't have permission to see the details of this ticket. Please contact your local admin or project manager.</p>
     <?php endif ?>
 </div>
 

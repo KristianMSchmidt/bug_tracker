@@ -62,10 +62,10 @@ class SignupHandler extends Login
         $val = trim($this->data['pwd']);
 
         if (empty($val)) {
-            $this->add_error('pwd', 'Please fill in password');
+            $this->add_error('pwd', 'please fill in password');
         } else {
             if (!preg_match('/^\w{5,}$/', $val)) {
-                $this->add_error('pwd', 'password must be alphanumeric & longer than or equals to 5 chars');
+                $this->add_error('pwd', 'password must longer than 4 chars & alphanumeric');
             }
         }
     }
@@ -76,7 +76,7 @@ class SignupHandler extends Login
         $pwd = trim($this->data['pwd']);
 
         if (empty($val)) {
-            $this->add_error('pwd_repeat', 'Please fill in repeated password');
+            $this->add_error('pwd_repeat', 'please fill in repeated password');
         } else {
             if ($val !== $pwd) {
                 $this->add_error('pwd_repeat', 'the two entered passwords did not match');
@@ -87,9 +87,14 @@ class SignupHandler extends Login
     private function signup_attempt()
     {
         $contr = new Controller();
-        $email_occupied = $contr->get_user_by_email($this->data['email']);
-        if ($email_occupied) {
-            $this->add_error('signup_error', 'There is already a user with this email');
+        $email_occupied = $contr->get_user_by_email(trim($this->data['email']));
+        $name_occupied = $contr->get_user_by_name(trim($this->data['full_name']));
+        if ($email_occupied || $name_occupied) {
+            if ($email_occupied) {
+                $this->add_error('signup_error', 'there is already a user with this email');
+            } else if ($name_occupied) {
+                $this->add_error('signup_error', 'there is already a user with this name');
+            }
         } else {
             $this->data['role_id'] = 3; // New users start out as developers.
             $pwd_hashed = password_hash(trim($this->data['pwd']), PASSWORD_DEFAULT);

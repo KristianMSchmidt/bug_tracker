@@ -1,3 +1,5 @@
+/* Scripts used only by 'manage project users' page */
+
 var selected_users_to_enroll = [];
 var selected_users_to_disenroll = [];
 
@@ -6,7 +8,6 @@ function choose_project(project_id) {
     url = 'manage_project_users.php?project_id=' + project_id + '&search=' + search_input;
     window.location = url;
 }
-
 
 function toggle_users_to_enroll(user_id) {
     if (!document.getElementById('available_user_' + user_id).classList.contains("active")) {
@@ -108,7 +109,6 @@ document.getElementById("search_field_project").addEventListener("input", functi
 const urlParams = new URLSearchParams(window.location.search);
 search = urlParams.get('search');
 project_id = urlParams.get('project_id')
-console.log("project_id :" + project_id)
 
 if (search !== null) {
     thin_out_projects(search);

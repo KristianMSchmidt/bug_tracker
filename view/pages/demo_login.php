@@ -36,7 +36,7 @@ if (isset($_SESSION['user_id'])) {
                     <!-- Developer -->
                     <a href=" #" class="fa fa-fw fa-user fa-3x w3-tooltip" style="color:red" onclick="document.getElementById('dev_login').submit()">
                         <span class="w3-text w3-tag dev">
-                            Developers can update their tickets</span>
+                            Developers can see and comment on their tickets</span>
                     </a>
                     <p>Developer</p>
 

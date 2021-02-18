@@ -38,9 +38,9 @@ class DbCreator extends Dbh
     {
         $sql = " CREATE TABLE users(
             id INT AUTO_INCREMENT PRIMARY KEY, 
-            full_name VARCHAR(50) NOT NULL,
+            full_name VARCHAR(255) NOT NULL,
             password TEXT NOT NULL,
-            email VARCHAR(30) NOT NULL UNIQUE,
+            email VARCHAR(255) NOT NULL UNIQUE,
             role_id INT,
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, 
             updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -88,7 +88,7 @@ class DbCreator extends Dbh
     {
         $sql = "CREATE TABLE projects(
                     id INT AUTO_INCREMENT PRIMARY KEY, 
-                    project_name VARCHAR(250) NOT NULL,
+                    project_name VARCHAR(255) NOT NULL,
                     project_description TINYTEXT, 
                     created_by INT,
                     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, 
@@ -134,7 +134,7 @@ class DbCreator extends Dbh
     {
         $sql = "CREATE TABLE ticket_types(
                     id INT AUTO_INCREMENT PRIMARY KEY,
-                    type_name VARCHAR(50) NOT NULL)";
+                    type_name VARCHAR(255) NOT NULL)";
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute();
         echo "Created ticket_types<br>";
@@ -153,7 +153,7 @@ class DbCreator extends Dbh
     {
         $sql =  "CREATE TABLE ticket_status_types(
                     id INT AUTO_INCREMENT PRIMARY KEY,
-                    status_name VARCHAR(50) NOT NULL)";
+                    status_name VARCHAR(255) NOT NULL)";
 
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute();
@@ -173,7 +173,7 @@ class DbCreator extends Dbh
     {
         $sql = "CREATE TABLE ticket_priorities(
                 id INT AUTO_INCREMENT PRIMARY KEY,
-                priority_name VARCHAR(50) NOT NULL)";
+                priority_name VARCHAR(255) NOT NULL)";
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute();
         echo "Created ticket_priorities<br>";
@@ -221,7 +221,7 @@ class DbCreator extends Dbh
         (title, project_id, developer_assigned_id, priority_id, status_id, type_id, description, submitter_id) VALUES 
         ('Add links and documentation', 1, 7, 2, 3, 1, 'Add link to resume as PDF, add link to exam results and degrees',19),
         ('Clean up CSS',1,3,2,3,3,'Clean up CSS: Remove outdated classes',4), 
-        ('Add info to empty data table representations', 2, 3,2,3,2,'Write No data available... ',4),
+        ('Add info to empty tableas', 2, 3,2,3,2,'Write No data available... ',4),
         ('Fix notifications button', 2,3, 2, 3,2,'Notications button not working. Fix this.',4 ), 
         ('Test database',2,3,2, 3,3,'Write code to test if relational database works as expected - including various constraints and update rules',4),
         ('Make alternative frontend designs',2,3,2,3,3, 'Make 3 design proposals for layout of website - consider Bootstrap',19),
@@ -232,7 +232,7 @@ class DbCreator extends Dbh
         ('Add Running Time Info',4,14,1,2,1,'Make backend running time visible on website',12),
         ('Warn users about illegal input', 4,11,1,2,1,'Warn users when they input values other than digits 0-9',3),
         ('About info',5, 9,2, 2, 1, 'Add link to about page on the different algorithms', 3),
-        ('Add unit testing of algorithsm', 5,3,2,2,1,'Add tests that confirm that search algorithms work exactly as expected',3),
+        ('Add unit tests of algorithms', 5,3,2,2,1,'Add tests that confirm that search algorithms work exactly as expected',3),
         ('Python -> JS', 6,18,1,1,3,'Rewrite Python code base for the web app: Python->Javascript. The app would work better, if there was no Python backend, i.e. if the entire program just ran in the browser (JavaScript). At the moment, the entire website is downloaded for
         every move taken in the game, which is sub-optimal',13),  
         ('Improve heuristics',6,12,1,2,3,'Open-ended task: Try to improve performance of ai player by changing weights in monotonicity heuristic function.',13),
@@ -244,8 +244,10 @@ class DbCreator extends Dbh
     }
 
     public function insert_project_enrollments()
-    {   /* These values should correspond to the ones above, as users should be enrolled in the projects they have ticket in */
-        $sql = "INSERT INTO project_enrollments (project_id, user_id) VALUES(1,3),(2,3),(2,7),(2,6),(2,5),(2,9),(3,14),(4,14),(4,10), (5,14),(5,11),(6,14),(6,12),(7,14),(2,8);";
+    {   /* These values should correspond to the ones above, as users should be enrolled in the projects they are assigned to as devs or submitters */
+        $sql = "INSERT INTO project_enrollments (project_id, user_id) VALUES
+                (1,3),(2,3),(2,7),(2,6),(2,5),(2,9),(3,14),(4,14),(4,10),(5,14),(5,11),(6,14),(6,12),(7,14),(2,8),
+                (1,4),(2,4),(3,4),(4,4),(5,4),(6,4),(7,4);"; /*demo sub (id=4) is enrolled in project 1-7 */
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute();
         echo "Inserted values into project_enrollments<br>";
@@ -255,7 +257,7 @@ class DbCreator extends Dbh
     {
         $sql = "CREATE TABLE notification_types(
                     id INT AUTO_INCREMENT PRIMARY KEY,
-                    submitter_action VARCHAR(100)
+                    submitter_action VARCHAR(255)
                 )";
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute();
@@ -301,7 +303,7 @@ class DbCreator extends Dbh
                     id INT AUTO_INCREMENT PRIMARY KEY,
                     user_id INT,
                     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                    session_id_php VARCHAR(50),
+                    session_id_php VARCHAR(255),
                     FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE SET NULL ON UPDATE CASCADE
                  )";
         $stmt = $this->connect()->prepare($sql);
@@ -329,7 +331,7 @@ class DbCreator extends Dbh
     {
         $sql = "CREATE TABLE ticket_event_types(
                     id INT AUTO_INCREMENT PRIMARY KEY,
-                    ticket_event_type VARCHAR(50) 
+                    ticket_event_type VARCHAR(255) 
                 )";
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute();
@@ -356,8 +358,8 @@ class DbCreator extends Dbh
                 id INT AUTO_INCREMENT PRIMARY KEY,
                 ticket_id INT,
                 type_id INT,  
-                old_value VARCHAR(50),   
-                new_value VARCHAR(50),   
+                old_value VARCHAR(255),   
+                new_value VARCHAR(255),   
                 created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                 FOREIGN KEY (ticket_id) REFERENCES tickets (id) ON DELETE CASCADE ON UPDATE CASCADE,
                 FOREIGN KEY (type_id) REFERENCES ticket_event_types (id) ON DELETE CASCADE ON UPDATE CASCADE

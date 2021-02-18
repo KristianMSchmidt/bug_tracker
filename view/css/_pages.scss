@@ -1,4 +1,8 @@
-/* Style of individual pages, i.e. the content of the 'main' div */
+/* 
+    
+    Style of content of the 'main' area  for individual pages 
+
+*/
 
 .users_overview,
 .my_projects,
@@ -52,6 +56,7 @@
     .wrapper {
         display: flex;
         margin-top: 1em;
+        padding-bottom: 0.3em;
         justify-content: stretch;
         align-items: stretch;
         form {
@@ -208,7 +213,9 @@
         padding-bottom: 1em;
         margin-top: 1em;
         margin-bottom: 1em;
-        margin-bottom: 1em;
+        &.narrow {
+            width: 400px;
+        }
     }
     table {
         padding-top: 1em;
@@ -343,9 +350,6 @@
             &.sub {
                 left: 60px;
             }
-        }
-        @media only screen and (max-width: 445px) {
-            font-size: 0;
         }
     }
 }

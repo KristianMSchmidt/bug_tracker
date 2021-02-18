@@ -1,6 +1,8 @@
 <?php
 require('../../control/shared/login_check.inc.php');
 require('../../control/shared/check_project_permission.inc.php');
+require('../../control/shared/check_ticket_permission.inc.php');
+
 require('page_frame/ui_frame.php');
 
 if (isset($_GET['project_id'])) {
@@ -11,6 +13,7 @@ if (isset($_GET['project_id'])) {
 
 $contr = new controller;
 $project_permission = check_project_permission($contr, $_SESSION['user_id'], $project_id);
+
 $project = $contr->get_project_by_id($project_id);
 $users = $contr->get_project_users($project_id, "all_roles");
 $tickets = $contr->get_tickets_by_project($project_id);
@@ -28,7 +31,7 @@ $tickets = $contr->get_tickets_by_project($project_id);
                     <?php endif ?>
                 </div>
                 <div class="w3-container wrapper">
-                    <table class="table bordered">
+                    <table class="w3-table w3-bordered">
                         <tr>
                             <td class="td-details">Project Name:</td>
                             <td><?php echo $project['project_name'] ?></td>
@@ -39,19 +42,19 @@ $tickets = $contr->get_tickets_by_project($project_id);
                             <td><?php echo $project['project_description'] ?></td>
                         </tr>
                         <tr>
-                            <td class="td-details">Created By</td>
+                            <td class="td-details">Created By:</td>
                             <td><?php echo $project['created_by'] ?></td>
                         </tr>
                     </table>
-                    <table class="table bordered">
+                    <table class="w3-table w3-bordered">
 
                         <tr>
-                            <td class="td-details">Created</td>
+                            <td class="td-details">Created:</td>
                             <td><?php echo $project['created_at'] ?></td>
 
                         </tr>
                         <tr>
-                            <td class="td-details">Last Update</td>
+                            <td class="td-details">Last Update:</td>
                             <td><?php echo $project['updated_at'] ?></td>
                         </tr>
                     </table>
@@ -60,10 +63,14 @@ $tickets = $contr->get_tickets_by_project($project_id);
 
             <div class="wrapper bottom project">
                 <div class="left" style="flex:4;">
-                    <form action="manage_project_users.php" method="get">
-                        <input type="hidden" name="project_id" value="<?php echo $project_id; ?>">
-                        <input type="submit" name="got_to_manage_project_users" value="MANAGE PROJECT USERS" class="btn-primary">
-                    </form>
+
+                    <!-- Only Admin and Project Managers should see this button -->
+                    <?php if ($_SESSION['role_name'] == 'Admin' || $_SESSION['role_name'] == 'Project Manager') : ?>
+                        <form action="manage_project_users.php" method="get">
+                            <input type="hidden" name="project_id" value="<?php echo $project_id; ?>">
+                            <input type="submit" name="got_to_manage_project_users" value="MANAGE PROJECT USERS" class="btn-primary">
+                        </form>
+                    <?php endif ?>
                     <div class="card">
                         <div class="w3-container card-head">
                             <h4>Enrolled Personel</h4>
@@ -72,7 +79,7 @@ $tickets = $contr->get_tickets_by_project($project_id);
                             <h5>All users currently enrolled in this project</h5>
                         </div>
                         <div class="w3-container w3-small w3-responsive">
-                            <table class="table striped bordered">
+                            <table class="w3-table w3-striped w3-bordered">
                                 <tr>
                                     <th>Name</th>
                                     <th>Email</th>
@@ -100,12 +107,16 @@ $tickets = $contr->get_tickets_by_project($project_id);
                     </div>
                 </div>
                 <div class="right" style="flex:5">
-                    <form action="create_ticket.php" method="get">
-                        <input type="hidden" name="project_options" value="false">
-                        <input type="hidden" name="project_id" value="<?php echo $project_id; ?>">
-                        <input type="hidden" name="search" value="">
-                        <input type="submit" value="ADD TICKET TO PROJECT" class="btn-primary">
-                    </form>
+                    <!-- Only Admin and Project Managers should see this button -->
+                    <?php if ($_SESSION['role_name'] == 'Admin' || $_SESSION['role_name'] == 'Project Manager') : ?>
+                        <form action="create_ticket.php" method="get">
+                            <input type="hidden" name="project_options" value="false">
+                            <input type="hidden" name="project_id" value="<?php echo $project_id; ?>">
+                            <input type="hidden" name="search" value="">
+                            <input type="submit" value="ADD TICKET TO PROJECT" class="btn-primary">
+                        </form>
+                    <?php endif; ?>
+
                     <div class="card">
                         <div class="w3-container card-head">
                             <h4>Project Tickets</h4>
@@ -114,23 +125,29 @@ $tickets = $contr->get_tickets_by_project($project_id);
                             <h5>All tickets on this project</h5>
                         </div>
                         <div class="w3-container w3-responsive">
-                            <table class="table striped w3-small bordered">
+                            <table class="w3-table w3-striped w3-small w3-bordered">
                                 <tr>
                                     <th>Title</th>
                                     <th>Submitter</th>
                                     <th>Developer</th>
                                     <th>Status</th>
                                     <th>Created</th>
+                                    <th>Ticket Details</th>
                                 </tr>
 
                                 <?php foreach ($tickets as $ticket) : ?>
+                                    <?php $ticket_permission = check_ticket_permission($contr, $_SESSION['user_id'], $ticket['id']); ?>
                                     <tr>
                                         <td><?php echo $ticket['title'] ?></td>
                                         <td><?php echo $ticket['submitter_name'] ?></td>
                                         <td><?php echo $ticket['developer_name'] ?></td>
                                         <td><?php echo $ticket['ticket_status_name'] ?></td>
                                         <td><?php echo explode(" ", $ticket['created_at'])[0] ?></td>
-                                        <td><a href="ticket_details.php?ticket_id=<?php echo $ticket['id'] ?>">Details</a></td>
+                                        <?php if ($ticket_permission) : ?>
+                                            <td><a href="ticket_details.php?ticket_id=<?php echo $ticket['id'] ?>">Details</a></td>
+                                        <?php else : ?>
+                                            <td>No permit</td>
+                                        <?php endif; ?>
                                     </tr>
                                 <?php endforeach; ?>
                             </table>
@@ -148,7 +165,7 @@ $tickets = $contr->get_tickets_by_project($project_id);
             </div>
         </div>
     <?php else : ?>
-        <p>You don't have permission to this project. Please contact your local admin or project manager.</p>
+        <p>You don't have permission to see the details of this project. Please contact your local administrator or project manager.</p>
     <?php endif ?>
 </div>
 
@@ -163,7 +180,7 @@ $tickets = $contr->get_tickets_by_project($project_id);
                         You succesfully created a new ticket for this project:
                     </h5>
                     <div class="w3-container w3-responsive">
-                        <table class="table striped bordered">
+                        <table class="w3-table w3-striped w3-bordered">
                             <tr>
                                 <th>Ticket Title</th>
                                 <th>Ticket Description</th>

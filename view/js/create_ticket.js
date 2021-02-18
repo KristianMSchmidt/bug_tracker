@@ -1,8 +1,4 @@
-var search_items_project = document.getElementsByClassName("searchable_project");
-const urlParams = new URLSearchParams(window.location.search);
-project_options = urlParams.get('project_options');
-search = urlParams.get('search');
-project_id = urlParams.get('project_id');
+/* Scripts used only by the 'create ticket' page */
 
 function choose_project(project_id) {
     search_input = document.getElementById("search_field_project").value;
@@ -26,6 +22,12 @@ document.getElementById("search_field_project").addEventListener("input", functi
     thin_out_projects(document.getElementById("search_field_project").value);
     document.getElementById('search_input_to_post').value = document.getElementById("search_field_project");
 });
+
+var search_items_project = document.getElementsByClassName("searchable_project");
+const urlParams = new URLSearchParams(window.location.search);
+project_options = urlParams.get('project_options');
+search = urlParams.get('search');
+project_id = urlParams.get('project_id');
 
 if (search !== '') {
     thin_out_projects(search);

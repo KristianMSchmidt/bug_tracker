@@ -16,7 +16,7 @@ $projects = $contr->get_projects_by_user($_SESSION['user_id'], $_SESSION['role_n
             <?php endif ?>
             <div class="card w3-responsive">
                 <div class="w3-container card-head">
-                    <h3>My projects</h3>
+                    <h3>My Projects</h3>
                 </div>
                 <div class="w3-container">
                     <p>
@@ -28,7 +28,7 @@ $projects = $contr->get_projects_by_user($_SESSION['user_id'], $_SESSION['role_n
                     </p>
                 </div>
                 <div class="w3-container w3-responsive">
-                    <table class="table w3-small striped bordered">
+                    <table class="w3-table w3-small w3-striped w3-bordered">
                         <tr>
                             <th>Project Name</th>
                             <th class="hide_if_needed">Created By</th>
@@ -76,7 +76,7 @@ $projects = $contr->get_projects_by_user($_SESSION['user_id'], $_SESSION['role_n
                         You succesfully created the following project:
                     </h5>
                     <div class="w3-container w3-responsive">
-                        <table class="table striped bordered">
+                        <table class="w3-table w3-striped w3-bordered">
                             <tr>
                                 <th>Project</th>
                                 <th>Description</th>

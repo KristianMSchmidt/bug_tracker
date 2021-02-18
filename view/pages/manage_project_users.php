@@ -46,7 +46,7 @@ require('page_frame/ui_frame.php');
                         <h4>Selected Project</h4>
                     </div>
                     <div class="w3-container">
-                        <table class="table bordered table-no-description">
+                        <table class="w3-table w3-bordered table-no-description">
                             <tr>
                                 <th>Project Name</th>
                                 <th class="hide_if_needed"> Created</th>
@@ -91,7 +91,7 @@ require('page_frame/ui_frame.php');
                             <?php endif ?>
                         </div>
                         <p id="enroll_error" class="error"></p>
-                        <input type="button" value="Enroll" class="btn-primary" onclick="submit_enroll_form()">
+                        <input type="button" value="ENROLL" class="btn-primary" onclick="submit_enroll_form()">
                     </div>
                     <?php if (isset($project_id)) : ?>
                         <!-- Enroll form -->
@@ -117,12 +117,12 @@ require('page_frame/ui_frame.php');
                                     <p>There are currently no users enrolled in this project</p>
                                 <?php endif ?>
                             <?php else : ?>
-                                <p style="color:grey;"><i>Select project to see options</p>
+                                <p style="color:grey;"><i>Select project to see options</i></p>
                             <?php endif ?>
 
                         </div>
                         <p id="disenroll_error" class="error"></p>
-                        <input type="button" value="Disenroll" class="btn-primary" onclick="submit_disenroll_form()">
+                        <input type="button" value="DIS-ENROLL" class="btn-primary" onclick="submit_disenroll_form()">
                     </div>
                     <?php if (isset($project_id)) : ?>
                         <!-- Disenroll form -->
@@ -137,7 +137,7 @@ require('page_frame/ui_frame.php');
         </div>
 
     <?php else : ?>
-        <p>You dont' have permission to this page. Please contact your local administrator or project.</p>
+        <p>You dont' have permission manage user roles. Please contact your local administrator or project manager.</p>
     <?php endif ?>
 </div>
 
@@ -153,7 +153,7 @@ require('page_frame/ui_frame.php');
                         You succesfully enrolled the following users to the selected project:
                     </h5>
                     <div class="w3-container">
-                        <table class="table striped bordered">
+                        <table class="w3-table w3-striped w3-bordered">
                             <tr>
                                 <th>Name</th>
                                 <th>Email</th>
@@ -193,7 +193,7 @@ require('page_frame/ui_frame.php');
                         You succesfully dis-enrolled the following users from the selected project:
                     </h5>
                     <div class="w3-container">
-                        <table class="table striped bordered">
+                        <table class="w3-table w3-striped w3-bordered">
                             <tr>
                                 <th>Name</th>
                                 <th>Email</th>

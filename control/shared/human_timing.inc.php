@@ -2,7 +2,7 @@
 
 function human_timing($time)
 {
-    $time = time() - $time; // to get the time since that moment
+    $time = time() - $time;
     $time = ($time < 1) ? 1 : $time;
     $tokens = array(
         31536000 => 'year',

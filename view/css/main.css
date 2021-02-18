@@ -1,5 +1,7 @@
 /* 
-    Style for the ui-frame (top navbar, sidebar, main-area)
+
+Style for the navbars and overall page structure
+
 */
 * {
   -webkit-box-sizing: border-box;
@@ -28,7 +30,6 @@ html {
   -webkit-box-direction: normal;
       -ms-flex-direction: row;
           flex-direction: row;
-  /*height: 70px; */
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
@@ -38,7 +39,6 @@ html {
 
 .my_navbar .nav_list {
   list-style: none;
-  /*Don't show 'list-dots' of any type! */
 }
 
 .my_navbar .nav_list li a {
@@ -121,12 +121,10 @@ html {
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
-  /* how much of the flexbox space should the sidebar take, relative to main area*/
   -webkit-box-flex: 5;
       -ms-flex: 5;
           flex: 5;
   padding-top: 2em;
-  /*align-items: center;*/
   background-color: lightsteelblue;
   line-height: 1rem;
   max-width: 200px;
@@ -135,7 +133,6 @@ html {
 
 .sidebar_and_main_container .sidebar a {
   padding: 1em 0.7em 1rem 0.7rem;
-  /*top, right, bottom, left */
   text-decoration: none;
   font-size: 0.88em;
   color: black;
@@ -155,7 +152,6 @@ html {
   -webkit-box-flex: 30;
       -ms-flex: 30;
           flex: 30;
-  /* how much of the flexbox space should the main area take, relative to sidebar */
   background-color: #f9f9f9;
   padding-left: 1.5em;
   padding-right: 1.5em;
@@ -230,7 +226,11 @@ html {
   }
 }
 
-/* Style of individual pages, i.e. the content of the 'main' div */
+/* 
+    
+    Style of content of the 'main' area  for individual pages 
+
+*/
 .users_overview .wrapper,
 .my_projects .wrapper,
 .my_tickets .wrapper {
@@ -315,6 +315,7 @@ html {
   display: -ms-flexbox;
   display: flex;
   margin-top: 1em;
+  padding-bottom: 0.3em;
   -webkit-box-pack: stretch;
       -ms-flex-pack: stretch;
           justify-content: stretch;
@@ -602,7 +603,12 @@ html {
   padding-bottom: 1em;
   margin-top: 1em;
   margin-bottom: 1em;
-  margin-bottom: 1em;
+}
+
+.profile_settings .card.narrow,
+.login .card.narrow,
+.signup .card.narrow {
+  width: 400px;
 }
 
 .profile_settings table,
@@ -802,12 +808,6 @@ html {
   }
 }
 
-@media only screen and (max-width: 445px) {
-  .demo_login span {
-    font-size: 0;
-  }
-}
-
 .btn-primary {
   color: white;
   background-color: #4285f4;
@@ -847,7 +847,7 @@ html {
 }
 
 .card .card-content {
-  padding-bottom: 0.8em;
+  padding-bottom: 1em;
 }
 
 .card .card-content .text-input {
@@ -935,7 +935,6 @@ html {
 
 .dropdown .dropbtn:hover,
 .dropdown .dropbtn :focus {
-  /*color: white;*/
   border: 0;
   outline: none;
 }
@@ -1037,62 +1036,6 @@ form label {
   background-color: #ccc;
 }
 
-.table,
-.table-all {
-  border-collapse: collapse;
-  border-spacing: 0;
-  width: 100%;
-  display: table;
-}
-
-.table-all {
-  border: 1px solid #ccc;
-}
-
-.bordered tr,
-.table-all tr {
-  border-bottom: 1px solid #ddd;
-}
-
-.striped tbody tr:nth-child(even) {
-  background-color: #f1f1f1;
-}
-
-.table-all tr:nth-child(odd) {
-  background-color: #fff;
-}
-
-.table-all tr:nth-child(even) {
-  background-color: #f1f1f1;
-}
-
-.hoverable tbody tr:hover,
-.w3-hoverable li:hover {
-  background-color: #ccc;
-}
-
-.centered tr th,
-.centered tr td {
-  text-align: center;
-}
-
-.table td,
-.table th,
-.table-all td,
-.table-all th {
-  padding: 8px 8px;
-  display: table-cell;
-  text-align: left;
-  vertical-align: top;
-}
-
-.table th:first-child,
-.table td:first-child,
-.table-all th:first-child,
-.table-all td:first-child {
-  padding-left: 16px;
-}
-
 .empty-table-row {
   background-color: #f1f1f1;
   border-bottom: 1px solid #ddd;
@@ -1124,6 +1067,7 @@ a {
   font-size: 12px;
 }
 
+/* Hide arrows from number input */
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
   -webkit-appearance: none;
@@ -1135,7 +1079,11 @@ input[type="number"] {
   -moz-appearance: textfield;
 }
 
-/* w3-css overrides */
+/* 
+        
+        Overrides of some components of the w3-css library
+
+    */
 .w3-modal {
   padding-left: 100px;
 }

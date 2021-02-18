@@ -45,7 +45,7 @@ require('page_frame/ui_frame.php');
                                     <p id="project_<?php echo $project['project_id'] ?>" class="searchable_project" onclick="choose_project(<?php echo $project['project_id'] ?>)"><?php echo $project['project_name'] ?></p>
                                 <?php endforeach ?>
                                 <?php if (count($projects) == 0) : ?>
-                                    <p>There are no projects in the database</p>
+                                    <p><i>You have no projects in the database</i></p>
                                 <?php endif ?>
                             </div>
                         </div>
@@ -63,7 +63,7 @@ require('page_frame/ui_frame.php');
                         </h3>
                     </div>
                     <div class="w3-container">
-                        <table class="table bordered table-no-description">
+                        <table class="w3-table w3-bordered table-no-description">
                             <tr>
                                 <th>Project Name</th>
                                 <th>Created</th>
@@ -75,7 +75,7 @@ require('page_frame/ui_frame.php');
                                     <td><?php echo $selected_project['project_name']; ?></td>
                                     <td><?php echo $selected_project['created_at']; ?></td>
                                     <td><?php echo $selected_project['updated_at']; ?></td>
-                                    <td> <a href="project_details.php?project_id=<?php echo $_GET['project_id'] ?>" class="right"> Project Details</a></td>
+                                    <td> <a href="project_details.php?project_id=<?php echo $_GET['project_id'] ?>" class="right">Project Details</a></td>
                                 <?php endif ?>
                             </tr>
                         </table>
@@ -201,7 +201,7 @@ require('page_frame/ui_frame.php');
         </div>
 </div>
 <?php else : ?>
-    <p>You dont' have permission to this page. Please contact your local administrator or project.</p>
+    <p>You dont' have permission to create tickets. Please contact your local administrator or project manager.</p>
 <?php endif ?>
 
 <?php if ($_GET['project_options'] == "true") {

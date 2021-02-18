@@ -16,10 +16,12 @@ require('page_frame/ui_frame.php');
                     <h4>Select users </h4>
                     <div class="w3-container">
                         <input type="text" id="search_field" placeholder="Search name or role">
-                        <p class="small-label">All users in your database</p>
+                        <p class="small-label">All non-demo users in your database</p>
                         <div class="scroll">
                             <?php foreach ($users as $user) : ?>
-                                <p id="<?php echo $user['user_id'] ?>" class="searchable" onclick="toggle_user(<?php echo $user['user_id'] ?>)"><?php echo $user['full_name'] . ' | ' . $user['role_name'] ?></p>
+                                <?php if (!in_array($user['full_name'], ["Demo Admin", "Demo Dev", "Demo Sub", "Demo PM"])) : ?>
+                                    <p id="<?php echo $user['user_id'] ?>" class="searchable" onclick="toggle_user(<?php echo $user['user_id'] ?>)"><?php echo $user['full_name'] . ' | ' . $user['role_name'] ?></p>
+                                <?php endif; ?>
                             <?php endforeach ?>
                         </div>
                         <p id="no_selected_users" class="error"></p>
@@ -32,7 +34,7 @@ require('page_frame/ui_frame.php');
                     </div>
                     <div class="w3-container">
                         <div class="w3-container">
-                            <table class="table  w3-small bordered table-no-description">
+                            <table class="w3-table  w3-small w3-bordered table-no-description">
                                 <thead>
                                     <tr>
                                         <th>Name</th>
@@ -99,7 +101,7 @@ require('page_frame/ui_frame.php');
                 <div class="orto-wrapper bottom right w3-container card non-table-card">
                     <h4>Submit changes</h4>
                     <div class="w3-container">
-                        <input type="submit" value="Submit" class="btn-primary" onclick="submit_form()">
+                        <input type="submit" value="SUBMIT" class="btn-primary" onclick="submit_form()">
                     </div>
                 </div>
             </div>
@@ -117,7 +119,7 @@ require('page_frame/ui_frame.php');
                 <span onclick="document.getElementById('id01').style.display='none'" class="w3-button w3-display-topright">&times;</span>
                 <div class="w3-container">
                     <div class="w3-container w3-responsive">
-                        <table class="table striped bordered">
+                        <table class="w3-table w3-striped w3-bordered">
                             <tr>
                                 <th>Name</th>
                                 <th>Old Role</th>

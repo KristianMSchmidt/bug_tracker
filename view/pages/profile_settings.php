@@ -5,12 +5,12 @@ require('page_frame/ui_frame.php');
 
 <div class="main">
     <div class="profile_settings">
-        <div class="card">
+        <div class="card narrow">
             <div class="w3-container card-head">
                 <h4>Profile Settings</h4>
             </div>
             <div class="w3-container">
-                <table class="table striped bordered">
+                <table class="w3-table w3-striped w3-bordered">
                     <tr>
                         <td>Full name:</td>
                         <td><?php echo $_SESSION['full_name'] ?></td>

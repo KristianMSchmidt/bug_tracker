@@ -1,3 +1,5 @@
+/* Scripts used only by 'manage user roles' page */
+
 function toggle_user(user_id) {
     if (!document.getElementById(user_id).classList.contains("active")) {
         document.getElementById(user_id).classList.add("active");

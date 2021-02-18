@@ -98,7 +98,7 @@ if (isset($_SESSION['user_id'])) {
                                     $news_item = $contr->get_ticket_by_id($notification['info_id'])['title'];
                                 }
                                 $elapsed_time = human_timing(strtotime($notification["created_at"]));
-                                $notification_str = "<b>{$notification['created_by']}</b> {$notification['submitter_action']} '{$news_item}'</i><br>{$elapsed_time} ago";
+                                $notification_str = "<b>{$notification["creator_name"]}</b> {$notification['submitter_action']} '{$news_item}'</i><br>{$elapsed_time} ago";
                                 echo "<a href='{$href}'>{$notification_str}</a>"; ?>
                             <?php endforeach; ?>
                         <?php endif ?>

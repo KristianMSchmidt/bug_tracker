@@ -1,3 +1,6 @@
+/* Scripts used by all pages after login*/
+
+
 function set_active_link(new_active_item) {
     // Function used to higlight active sidebar menu links
 
@@ -19,7 +22,9 @@ function set_active_link(new_active_item) {
 }
 
 window.onclick = function(event) {
-    // Eventlistener used to close down dropdown menus if they are open. 
+
+    //Eventlistener used to close down dropdown menus
+
     var e = event.target;
     if (!event.target.classList.contains("notifications")) {
         document.getElementById("notifications").classList.remove("show");
@@ -33,16 +38,16 @@ window.onclick = function(event) {
     }
 }
 
-// Force display notifications
-url = window.location.href
-const currentUrlParams = new URLSearchParams(window.location.search);
-if (currentUrlParams.get('seen') == "true") {
-    document.getElementById("notifications").classList.toggle("show");
-}
-
-
+//When the user clicks on new notifications, set 'seen' to true and reload page
 function seen_redirect() {
     var url = new URL(window.location.href);
     url.searchParams.set('seen', 'true');
     window.location.href = url;
+}
+
+// Display notifications after page reload, when user has clicked on a new notification 
+url = window.location.href
+const currentUrlParams = new URLSearchParams(window.location.search);
+if (currentUrlParams.get('seen') == "true") {
+    document.getElementById("notifications").classList.toggle("show");
 }

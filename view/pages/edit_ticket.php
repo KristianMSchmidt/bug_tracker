@@ -1,13 +1,13 @@
 <?php
 require('../../control/shared/login_check.inc.php');
 require('../../control/shared/check_ticket_permission.inc.php');
+require('../../control/shared/check_project_permission.inc.php');
+
 require_once('../../control/controller.class.php');
 
 $contr = new Controller();
 
 if (!(isset($_GET['show_original']) || isset($_SESSION['ticket']['ticket_id']))) {
-    print_r($_GET);
-
     header('location: dashboard.php');
 }
 
@@ -15,22 +15,27 @@ if (isset($_GET['show_original'])) {
     $ticket_id = $_GET['ticket_id'];
     $_SESSION['ticket'] = $contr->get_ticket_by_id($ticket_id);
 }
-
-$ticket_permission = check_ticket_permission($contr, $_SESSION['user_id'], $_SESSION['ticket']['ticket_id']);
-
+$project_id = $_SESSION['ticket']['project_id'];
+$ticket_id = $_SESSION['ticket']['ticket_id'];
+$ticket_permission = check_ticket_permission($contr, $_SESSION['user_id'], $ticket_id);
+$project_permission = check_project_permission($contr, $_SESSION['user_id'], $project_id);
 $projects = $contr->get_projects_by_user($_SESSION['user_id'], $_SESSION['role_name']);
-$selected_project = $contr->get_project_by_id($_SESSION['ticket']['project_id']);
+$selected_project = $contr->get_project_by_id($project_id);
 $priorities = $contr->get_priorities();
 $types = $contr->get_ticket_types();
 $status_types = $contr->get_ticket_status_types();
-$enrolled_developers = $contr->get_project_users($_SESSION['ticket']['project_id'], 3);
+$enrolled_developers = $contr->get_project_users($project_id, 3);
 require('page_frame/ui_frame.php');
 
 ?>
 
 <div class="main">
-    <!-- Current all admins have access to edit ticket. Project Managers who are enrolled in ticket's parent project also have acces. -->
-    <?php if ($_SESSION['role_name'] == 'Admin' || (($_SESSION['role_name'] == 'Project Manager') && $ticket_permission)) : ?>
+    <!-- Only certain users are allowed edit ticket: -->
+    <?php if (
+        $_SESSION['role_name'] == 'Admin' ||
+        (($_SESSION['role_name'] == 'Project Manager') && $ticket_permission) ||
+        (($_SESSION['role_name'] == 'Submitter') && $ticket_permission)
+    ) : ?>
         <div class="edit_ticket">
             <div class="top">
                 <!-- Parent Project -->
@@ -39,18 +44,23 @@ require('page_frame/ui_frame.php');
                         <h3>Parent Project</h4>
                     </div>
                     <div style="padding-left:2em;">
-                        <table class="table bordered table-no-description">
+                        <table class="w3-table w3-bordered table-no-description">
                             <tr>
                                 <th>Project Name</th>
                                 <th>Created</th>
                                 <th>Last Update</th>
-                                <th>Details</th>
+                                <th>Project Details</th>
                             </tr>
                             <tr>
                                 <td><?php echo $selected_project['project_name']; ?></td>
                                 <td><?php echo $selected_project['created_at']; ?></td>
                                 <td><?php echo $selected_project['updated_at']; ?></td>
-                                <td> <a href="project_details.php?project_id=<?php echo $_SESSION['ticket']['project_id'] ?>" class="right">Project Details</a></td>
+                                <?php if ($project_permission) : ?>
+                                    <td> <a href="project_details.php?project_id=<?php echo $project_id ?>" class="right">Project Details</a></td>
+                                <?php else : ?>
+                                    <td>No permit <i>(you are not enrolled)</i>)</td>
+                                <?php endif ?>
+
                             </tr>
                         </table>
                     </div>
@@ -59,7 +69,7 @@ require('page_frame/ui_frame.php');
             <div class="card">
                 <div class="w3-container card-head">
                     <h3>Edit Ticket</h3>
-                    <a href="ticket_details.php?ticket_id=<?php echo $_SESSION['ticket']['ticket_id'] ?>">Ticket Details</a>
+                    <a href="ticket_details.php?ticket_id=<?php echo $ticket_id ?>">Ticket Details</a>
                 </div>
                 <div class="card-content">
                     <form action="../../control/edit_ticket.inc.php" method="post" class="w3-container" id="edit_ticket_form">
@@ -140,10 +150,10 @@ require('page_frame/ui_frame.php');
                                 <label>Ticket Status</label>
 
                                 <!-- Ticket Id -->
-                                <input type="hidden" name="ticket_id" value="<?php echo $_SESSION['ticket']['ticket_id']; ?>">
+                                <input type="hidden" name="ticket_id" value="<?php echo $ticket_id; ?>">
 
                                 <!-- Project Id -->
-                                <input type="hidden" name="project_id" value="<?php echo $_SESSION['ticket']['project_id'] ?>">
+                                <input type="hidden" name="project_id" value="<?php echo $project_id ?>">
                             </div>
                         </div>
                     </form>
@@ -160,10 +170,12 @@ require('page_frame/ui_frame.php');
             </div>
         </div>
         <form action="ticket_details.php" method="get" id="details_form">
-            <input type="hidden" name="ticket_id" value="<?php echo $_SESSION['ticket']['ticket_id'] ?>">
+            <input type="hidden" name="ticket_id" value="<?php echo $ticket_id ?>">
         </form>
     <?php else : ?>
-        <div class="main">You don't have permission to edit this ticket. Please contact your local admin or project manager.</div>
+        <div class="main">
+            <p>You don't have permission to edit this ticket. Please contact your local administrator or project manager</p>
+        </div>
     <?php endif ?>
 </div>
 

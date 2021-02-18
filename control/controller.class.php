@@ -21,6 +21,12 @@ class Controller extends Model
         return $results;
     }
 
+    public function get_user_by_name($full_name)
+    {
+        $results = $this->db_get_user_by_name($full_name);
+        return $results;
+    }
+
     public function get_most_busy_users()
     {
         $results = $this->db_get_most_busy_users();

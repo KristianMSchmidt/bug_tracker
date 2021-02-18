@@ -26,7 +26,7 @@ $tickets = $contr->get_tickets_by_user_and_role($_SESSION['user_id'], $_SESSION[
             <?php endif ?>
             <div class="card w3-responsive">
                 <div class="w3-container card-head">
-                    <h3>My tickets</h3>
+                    <h3>My Tickets</h3>
                 </div>
                 <div class="w3-container">
                     <p>
@@ -38,7 +38,7 @@ $tickets = $contr->get_tickets_by_user_and_role($_SESSION['user_id'], $_SESSION[
                     </p>
                 </div>
                 <div class="w3-container w3-responsive">
-                    <table class="table w3-small striped bordered">
+                    <table class="w3-table w3-small w3-striped w3-bordered">
                         <tr>
                             <th>Title</th>
                             <th> Project Name</th>

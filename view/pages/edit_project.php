@@ -1,6 +1,6 @@
 <?php
 require('../../control/shared/login_check.inc.php');
-require('../../control/shared/check_project_permission.inc.php');
+require('../../control/shared/check_permission.inc.php');
 require_once('../../control/controller.class.php');
 $contr = new Controller();
 
@@ -18,7 +18,7 @@ require('page_frame/ui_frame.php');
 
 <div class="main">
     <!-- All admins have acces. PM's enrolled in this project also have acces -->
-    <?php if ($_SESSION['role_name'] == 'Admin' || (($_SESSION['role_name'] == 'Project Manager') && $ticket_permission)) : ?>
+    <?php if ($_SESSION['role_name'] == 'Admin' || (($_SESSION['role_name'] == 'Project Manager') && $project_permission)) : ?>
         <div class="edit_project">
             <div class="card">
                 <div class="w3-container card-head">

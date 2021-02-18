@@ -43,9 +43,12 @@ class AddCommentHandler
         require_once('controller.class.php');
         $contr = new Controller();
         $contr->add_ticket_comment($this->user_id, $this->ticket_id, $this->comment);
-        //notify developer: 
-        $notification_type_id = 6; // new comment to your ticket
-        $contr->create_notification($notification_type_id, $this->ticket_id, $this->developer_assigned_id, $this->user_id);
+
+        //Nofity the assigned developer, is it is not the develop himself writing this comment
+        if ($this->developer_assigned_id !== $this->user_id) {
+            $notification_type_id = 6;
+            $contr->create_notification($notification_type_id, $this->ticket_id, $this->developer_assigned_id, $this->user_id);
+        }
     }
 
     private function add_error($key, $val)

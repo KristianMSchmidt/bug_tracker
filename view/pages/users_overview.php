@@ -7,7 +7,8 @@ $users = $contr->get_users("all_users");
 ?>
 
 <div class="main">
-    <?php if (in_array($_SESSION['role_name'], ['Admin', 'Project Manager'])) : ?>
+    <!-- Currently all users can see this page -->
+    <?php if (in_array($_SESSION['role_name'], ['Admin', 'Project Manager', 'Submitter', 'Developer'])) : ?>
         <div class="users_overview">
             <div class="wrapper">
                 <div class="card w3-responsive">
@@ -18,18 +19,15 @@ $users = $contr->get_users("all_users");
                         <p>All users in the database</p>
                     </div>
                     <div class="w3-container w3-responsive">
-                        <table class="table w3-small striped bordered">
+                        <table class="w3-table w3-small w3-striped w3-bordered">
                             <tr>
                                 <th>Name</th>
                                 <th>Email</th>
                                 <th>Role</th>
-                                <th>Created</th>
+                                <th class="hide_last">Created</th>
                                 <th class="hide_if_needed">Last Update</th>
                                 <th>User Details</th>
                             </tr>
-                            <?php
-                            //$users = array();
-                            ?>
                             <?php foreach ($users as $user) : ?>
                                 <tr>
                                     <td><?php echo $user['full_name'] ?></td>
@@ -37,9 +35,7 @@ $users = $contr->get_users("all_users");
                                     <td><?php echo $user['role_name'] ?></td>
                                     <td class="hide_last"><?php echo $user['created_at'] ?></th>
                                     <td class="hide_if_needed"><?php echo $user['updated_at'] ?></td>
-                                    <td>
-                                        <a href="user_details.php?user_id=<?php echo $user['user_id'] ?>">Details</a>
-                                    </td>
+                                    <td><a href="user_details.php?user_id=<?php echo $user['user_id'] ?>">Details</a></td>
                                 </tr>
                             <?php endforeach ?>
                         </table>

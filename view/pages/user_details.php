@@ -25,8 +25,8 @@ $tickets = $contr->get_tickets_by_user_and_role($user_id, 'Developer');
                     <a href="manage_user_roles.php?user_id=<?php echo $user_id ?>">Update Role</a>
                 <?php endif ?>
             </div>
-            <div class=" w3-container wrapper">
-                <table class="table bordered">
+            <div class="w3-container wrapper">
+                <table class="w3-table w3-bordered">
                     <tr>
                         <td class="td-details">Full Name:</td>
                         <td><?php echo $user['full_name'] ?></td>
@@ -40,13 +40,14 @@ $tickets = $contr->get_tickets_by_user_and_role($user_id, 'Developer');
                         <td><?php echo $user['role_name'] ?></td>
                     </tr>
                 </table>
-                <table class=" table bordered">
+                <table class="w3-table w3-bordered">
                     <tr>
                         <td class="td-details">Created:</td>
                         <td><?php echo $user['created_at'] ?></th>
-                    <tr>
-                        <td class="td-details">Last Update:</td>
-                        <td><?php echo $user['updated_at'] ?></td>
+                    </tr>
+                    <td class="td-details">Last Update:</td>
+                    <td><?php echo $user['updated_at'] ?></td>
+                    </tr>
                 </table>
             </div>
         </div>
@@ -60,7 +61,7 @@ $tickets = $contr->get_tickets_by_user_and_role($user_id, 'Developer');
                         <h6>The selected user is enrolled in these projects</h6>
                     </div>
                     <div class="w3-container">
-                        <table class="table striped bordered">
+                        <table class="w3-table w3-striped w3-bordered">
                             <tr>
                                 <th>Project Name</th>
                                 <th>Enrollment started</th>
@@ -95,7 +96,7 @@ $tickets = $contr->get_tickets_by_user_and_role($user_id, 'Developer');
                         <h6>The selected user is developer assigned or submitter on these tickets</h6>
                     </div>
                     <div class="w3-container w3-responsive">
-                        <table class="table striped bordered">
+                        <table class="w3-table w3-striped w3-bordered">
                             <tr>
                                 <th>Title</th>
                                 <th>Submitter</th>

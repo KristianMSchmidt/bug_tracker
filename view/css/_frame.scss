@@ -1,5 +1,7 @@
 /* 
-    Style for the ui-frame (top navbar, sidebar, main-area)
+
+Style for the navbars and overall page structure
+
 */
 
 * {
@@ -20,13 +22,11 @@ html {
 .my_navbar {
     display: flex;
     flex-direction: row;
-    /*height: 70px; */
     align-items: center; // vertically centers items in the navbar
     background-color: #343a40;
     color: #6c757d;
     .nav_list {
-        list-style: none;
-        /*Don't show 'list-dots' of any type! */
+        list-style: none; //Don't show 'list-dots' of any type! */
         li {
             a {
                 transition: all 0.3s ease 0s;
@@ -76,17 +76,14 @@ html {
     .sidebar {
         display: flex;
         flex-direction: column;
-        /* how much of the flexbox space should the sidebar take, relative to main area*/
-        flex: 5;
+        flex: 5; //how much of the flexbox space should the sidebar take, relative to main area
         padding-top: 2em;
-        /*align-items: center;*/
         background-color: lightsteelblue;
         line-height: 1rem;
         max-width: 200px;
         min-width: 180px;
         a {
-            padding: 1em 0.7em 1rem 0.7rem;
-            /*top, right, bottom, left */
+            padding: 1em 0.7em 1rem 0.7rem; //top, right, bottom, left
             text-decoration: none;
             font-size: 0.88em;
             color: black;
@@ -101,8 +98,7 @@ html {
         }
     }
     .main {
-        flex: 30;
-        /* how much of the flexbox space should the main area take, relative to sidebar */
+        flex: 30; //How much of the flexbox space should the main area take, relative to sidebar
         background-color: #f9f9f9;
         padding-left: 1.5em;
         padding-right: 1.5em;
