@@ -9,7 +9,9 @@ if (isset($_GET['user_id'])) {
 
 $contr = new controller;
 $user = $contr->get_users($user_id)[0];
-$projects = $contr->get_project_enrollments_by_user_id($user_id);
+$project_ids = $contr->get_project_enrollments_by_user_id($user_id);
+$projects = $contr->get_project_details($project_ids);
+
 //Dirty fix to get the right tickets for Admin & PM using existing code. I'll clean this code later. 
 //Here I only want to show ticket where the user in questing is either developer assigned or submitter
 $tickets = $contr->get_user_tickets_details($user_id, 'Developer');
@@ -64,15 +66,22 @@ $tickets = $contr->get_user_tickets_details($user_id, 'Developer');
                         <table class="w3-table w3-striped w3-bordered">
                             <tr>
                                 <th>Project Name</th>
-                                <th>Enrollment started</th>
-                                <th></th>
+                                <th>Enrolled Since</th>
+                                <th>Project Details</th>
                             </tr>
                             <?php foreach ($projects as $project) : ?>
-                                <?php $project_name = $contr->get_project_name_by_id(($project['project_id'])) ?>
+                                <?php $project_details_permission = $contr->check_project_details_permission($_SESSION['user_id'], $_SESSION['role_name'], $project['project_id']); ?>
+                                <?php $enrolled_since = $contr->get_enrollment_start_by_user_and_project($project['project_id'], $user_id) ?>
                                 <tr>
-                                    <td><?php echo $project_name ?></td>
-                                    <td><?php echo $project['enrollment_start'] ?></td>
-                                    <td><a href="project_details.php?project_id=<?php echo $project['project_id'] ?>">Project Details</a></td>
+                                    <td><?php echo $project['project_name']; ?></td>
+                                    <td><?php echo $enrolled_since ?></td>
+                                    <td>
+                                        <?php if ($project_details_permission) : ?>
+                                            <a href="project_details.php?project_id=<?php echo $project['project_id'] ?>">Details</a>
+                                        <?php else : ?>
+                                            No permit
+                                        <?php endif ?>
+                                    </td>
                                 </tr>
                             <?php endforeach ?>
                         </table>
@@ -102,18 +111,25 @@ $tickets = $contr->get_user_tickets_details($user_id, 'Developer');
                                 <th>Submitter</th>
                                 <th>Developer</th>
                                 <th>Project</th>
-                                <th></th>
+                                <th>Ticket Details</th>
                             </tr>
 
                             <?php foreach ($tickets as $ticket) : ?>
+                                <?php $ticket_details_permission = $contr->check_ticket_details_permission($_SESSION['user_id'], $_SESSION['role_name'], $ticket); ?>
                                 <tr>
                                     <td><?php echo $ticket['title'] ?></td>
                                     <td><?php echo $ticket['submitter_name'] ?></td>
                                     <td><?php echo $ticket['developer_name'] ?></td>
                                     <td><?php echo $ticket['project_name'] ?></td>
-                                    <td><a href="ticket_details.php?ticket_id=<?php echo $ticket['ticket_id'] ?>">Ticket Details</a></td>
+                                    <td>
+                                        <?php if ($ticket_details_permission) : ?>
+                                            <a href="ticket_details.php?ticket_id=<?php echo $ticket['ticket_id'] ?>">Details</a>
+                                        <?php else : ?> No permit
+                                        <?php endif; ?>
+                                    </td>
                                 </tr>
                             <?php endforeach; ?>
+
                         </table>
                         <?php if (count($tickets) == 0) : ?>
                             <div class="empty-table-row">

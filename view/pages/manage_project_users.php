@@ -3,7 +3,8 @@ require('../../control/shared/login_check.inc.php');
 require_once('../../control/controller.class.php');
 
 $contr = new Controller;
-$projects = $contr->get_projects_by_user($_SESSION['user_id'], $_SESSION['role_name']);
+$project_ids = $contr->get_full_project_rights_ids($_SESSION['user_id'], $_SESSION['role_name']);
+$projects = $contr->get_project_details($project_ids);
 
 if ($_GET['project_id'] !== "none") {
     $project_id = $_GET['project_id'];

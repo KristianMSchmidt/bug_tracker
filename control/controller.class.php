@@ -38,12 +38,6 @@ class Controller extends Model
         $this->db_create_user($full_name, $pwd, $email, $role_id);
     }
 
-    public function get_projects_by_user($user_id, $role_name)
-    {
-        $projects = $this->db_get_projects_by_user($user_id, $role_name);
-        return $projects;
-    }
-
     public function get_user_tickets_details($user_id, $role_name)
     {
         $results = $this->db_get_user_tickets_details($user_id, $role_name);
@@ -270,12 +264,31 @@ class Controller extends Model
         }
     }
 
+    public function get_user_project_ids($user_id, $role_name)
+    {
+        /* Method used to select the projects that are relevant for a given user (not necessarily just the projects they are enrolled in).
+           Decides what projects will be shown in "My Projects" and to what projects the given user will have access to details.  
+
+           Who have permission to a project?
+          - All users should have permission to to details of the projects they are enrolled in
+          - All users who have a ticket in a given project (as developer or submitter) should also have access to project details, 
+            whether or not they are currently enrolled in the project (perhaps someone disenrolled them by accident)
+         - Admins will get permission to all projects
+        */
+
+        if ($role_name == "Admin") {
+            return ($this->db_get_all_project_ids());
+        } else {
+            return ($this->db_get_user_project_ids($user_id));
+        }
+    }
+
     public function check_project_details_permission($user_id, $role_name, $project_id)
     {
         if ($role_name == "Admin") {
             return true;
         } else {
-            $projects = $this->db_get_user_projects_ids($user_id, $role_name);
+            $projects = $this->get_user_project_ids($user_id, $role_name);
             foreach ($projects as $project) {
                 if ($project['project_id'] == $project_id) {
                     return True;
@@ -285,36 +298,40 @@ class Controller extends Model
         return false;
     }
 
-    public function get_user_projects_details($user_id, $role_name)
+    public function get_project_details($project_array)
     {
-        $projects = $this->db_get_user_projects_ids($user_id, $role_name);
-        if (count($projects) == 0) {
-            return $projects;
+        if (count($project_array) == 0) {
+            return $project_array;
         } else {
             $id_array = [];
-            foreach ($projects as $project) {
+            foreach ($project_array as $project) {
                 array_push($id_array, (string) $project['project_id']);
             }
             $details = $this->db_get_projects_details_from_project_id_array($id_array);
             return $details;
         }
-        exit();
     }
 
-    public function get_user_ticket_ids($user_id, $ticket_id, $role_name)
+    public function get_user_projects_details($user_id, $role_name)
+    {
+        $projects = $this->get_user_project_ids($user_id, $role_name);
+        return ($this->get_project_details($projects));
+    }
+
+    public function get_full_project_rights_ids($user_id, $role_name)
+    // selects the ids of the projects to which the user has edit rights
     {
         if ($role_name == "Admin") {
-            return true;
+            $projects = $this->db_get_all_project_ids();
+        } else if (in_array($role_name, ["Submitter", "Project Manager"])) { //Submitter actually should not have all these rights, but only the right to add tickets to his projects
+            $projects = $this->get_project_enrollments_by_user_id($_SESSION['user_id']);
         } else {
-            $user_tickets = $this->db_get_user_ticket_ids($user_id, $role_name);
-            foreach ($user_tickets as $user_ticket) {
-                if ($user_ticket['ticket_id'] == $ticket_id) {
-                    return True;
-                }
-            }
-            return false;
+            $projects = [];
         }
+        return $projects;
     }
+
+
 
     public function check_ticket_details_permission($user_id, $role_name, $ticket)
     {

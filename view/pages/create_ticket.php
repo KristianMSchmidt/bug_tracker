@@ -13,7 +13,8 @@ if ($_GET['project_id'] !== "none") {
     $enrolled_developers = $contr->get_project_users($_GET['project_id'], 3);
 }
 if ($_GET['project_options'] == "true") {
-    $projects = $contr->get_projects_by_user($_SESSION['user_id'], $_SESSION['role_name']);
+    $project_ids = $contr->get_full_project_rights_ids($_SESSION['user_id'], $_SESSION['role_name']);
+    $projects = $contr->get_project_details($project_ids);
 }
 
 $priorities = $contr->get_priorities();
@@ -199,9 +200,33 @@ require('page_frame/ui_frame.php');
         <div class="w3-container w3-center">
             <input type="submit" class="btn-primary below-card" value="Add Ticket to Project" form="create_ticket_form">
         </div>
+
+    <?php else : ?>
+        <p>You dont' have permission to create tickets. Please contact your local administrator or project manager.</p>
+    <?php endif ?>
 </div>
-<?php else : ?>
-    <p>You dont' have permission to create tickets. Please contact your local administrator or project manager.</p>
+
+<!-- Modal response message if no for enrolled users-->
+<?php if ($_GET['project_id'] !== "none") : ?>
+    <?php if (count($enrolled_developers) == 0) : ?>
+        <?php $num_changed = 0 ?>
+        <div id="enrolled_modal" class="w3-modal">
+            <div class="w3-modal-content">
+                <div class="w3-container">
+                    <span onclick="document.getElementById('enrolled_modal').style.display='none'" class="w3-button w3-display-topright">&times;</span>
+                    <div class="w3-container">
+                        <p>
+                            There are no developers enrolled in the project '<b><?php echo $selected_project['project_name'] ?>'</b>.<br>
+                            You need to <a href="manage_project_users.php?project_id=<?php echo $_GET['project_id']; ?>"> assign one or more developers</a> to this project, before you can create a ticket.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script>
+            document.getElementById('enrolled_modal').style.display = 'block';
+        </script>
+    <?php endif ?>
 <?php endif ?>
 
 <?php if ($_GET['project_options'] == "true") {
@@ -213,5 +238,5 @@ require('page_frame/closing_tags.php');
 ?>
 
 <script>
-    set_active_link("my_tickets");
+    set_active_link(" my_tickets");
 </script>

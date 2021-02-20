@@ -7,7 +7,6 @@ $contr = new Controller();
 if (!(isset($_GET['show_original']) || isset($_SESSION['ticket']['ticket_id']))) {
     header('location: dashboard.php');
 }
-
 if (isset($_GET['show_original'])) {
     $ticket_id = $_GET['ticket_id'];
     $_SESSION['ticket'] = $contr->get_ticket_by_id($ticket_id);
@@ -16,7 +15,6 @@ $project_id = $_SESSION['ticket']['project_id'];
 $ticket_id = $_SESSION['ticket']['ticket_id'];
 $project_permission = $contr->check_project_details_permission($_SESSION['user_id'], $_SESSION['role_name'], $project_id);
 $ticket_details_permission = $contr->check_ticket_details_permission($_SESSION['user_id'], $_SESSION['role_name'], $_SESSION['ticket']);
-$projects = $contr->get_projects_by_user($_SESSION['user_id'], $_SESSION['role_name']);
 $selected_project = $contr->get_project_by_id($project_id);
 $priorities = $contr->get_priorities();
 $types = $contr->get_ticket_types();

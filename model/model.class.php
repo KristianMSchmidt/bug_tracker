@@ -9,77 +9,34 @@ class Model extends Dbh
 
     */
 
-    protected function db_get_user_ticket_ids($user_id, $role_name)
+    protected function db_get_all_project_ids()
     {
-        /*
-            Method user to select the tickets that are relevant for a given user. 
-            Decides what tickets will be shown in "My Tickets" and to what tickets the given user will have access to details, 
-            without necessarily being enrolled in the parent project of the ticket.  
-
-            What tickets are chosen?
-            - All users will be shown the tickets where they are either the assigned developer or submitter.
-            - Project Managers will be shown all tickets to all the projects they are enrolled in.
-            - Admins will be shown all tickets.
-        */
-
-        if ($role_name == "Admin") {
-            $sql = "SELECT 
-                        projects.id as project_id
-                     FROM projects";
-        } else {
-            $sql = "SELECT 
-                        tickets.id as ticket_id
-                    FROM tickets
-                    WHERE tickets.submitter_id = {$user_id} 
-                    OR tickets.developer_assigned_id = {$user_id}";
-            if ($role_name == 'Project Manager') {
-                $sql .= " OR (tickets.project_id IN 
-                    (SELECT project_id FROM project_enrollments WHERE project_enrollments.user_id = {$user_id}))";
-            }
-        }
-        $sql .= " ORDER BY tickets.created_at DESC";
-
+        $sql = "SELECT projects.id as project_id FROM projects";
         $stmt = $this->connect()->query($sql);
         $result = $stmt->fetchAll();
         return $result;
     }
 
-    protected function db_get_user_projects_ids($user_id, $role_name)
+    protected function db_get_user_project_ids($user_id)
+    //Not to be used, when user is admin
     {
-        /* Method used to select the projects that are relevant for a given user (not necessarily just the projects they are enrolled in).
-           Decides what projects will be shown in "My Projects" and to what projects the given user will have access to details.  
-
-           Who have permission to a project?
-          - All users should have permission to to details of the projects they are enrolled in
-          - All users who have a ticket in a given project (as developer or submitter) should also have access to project details, 
-            whether or not they are currently enrolled in the project (perhaps someone disenrolled them by accident)
-         - Admins will get permission to all projects
-        */
-
-        if ($role_name == "Admin") {
-            $sql = "SELECT
-                 projects.id as project_id FROM projects";
-        } else {
-            $sql = "
-                SELECT tickets.project_id as project_id
-                            FROM tickets 
-                            WHERE (tickets.developer_assigned_id = {$user_id} 
-                                OR tickets.submitter_id = {$user_id})
+        $sql = "SELECT tickets.project_id as project_id
+                    FROM tickets 
+                    WHERE (tickets.developer_assigned_id = {$user_id} 
+                    OR tickets.submitter_id = {$user_id})
                 UNION 
                 SELECT projects.id as project_id
                     FROM projects 
                     WHERE projects.id IN 
-                                    (SELECT project_enrollments.project_id 
-                                    FROM project_enrollments 
-                                    WHERE project_enrollments.user_id = {$user_id})";
-        }
-
+                        (SELECT project_enrollments.project_id 
+                        FROM project_enrollments 
+                        WHERE project_enrollments.user_id = {$user_id})";
         $stmt = $this->connect()->query($sql);
         $result = $stmt->fetchAll();
         return $result;
     }
 
-    protected function db_get_projects_details_from_project_id_array($id_array)
+    protected function db_get_projects_details_from_project_id_array($project_id_array)
     {
         $sql = 'SELECT 
                     projects.id as project_id,
@@ -90,7 +47,7 @@ class Model extends Dbh
                     users.full_name as created_by
                 FROM projects 
                 JOIN users ON projects.created_by = users.id
-                WHERE projects.id IN (' . implode(',', $id_array) . ')';
+                WHERE projects.id IN (' . implode(',', $project_id_array) . ')';
         $stmt = $this->connect()->query($sql);
         $result = $stmt->fetchAll();
         return $result;
@@ -164,55 +121,6 @@ class Model extends Dbh
         $stmt->execute([$full_name, $pwd, $email, $role_id]);
     }
 
-    protected function db_get_projects_by_user($user_id, $role_name)
-    {   //TO DO: Phase out the use of this functino
-        $sql = "SELECT 
-                    projects.id as project_id,
-                    projects.project_name,
-                    projects.project_description,
-                    projects.created_at,
-                    projects.updated_at,
-                    users.full_name as created_by
-                FROM projects 
-                JOIN users ON projects.created_by = users.id";
-
-        if ($role_name !== 'Admin') {
-            $sql .= " WHERE projects.id IN 
-                    (SELECT project_id 
-                    FROM project_enrollments 
-                    WHERE project_enrollments.user_id = {$user_id})";
-        }
-
-        $sql .=  " ORDER BY created_at DESC";
-
-        $stmt = $this->connect()->query($sql);
-        $results = $stmt->fetchAll();
-        return $results;
-    }
-    /*
-    protected function db_get_user_tickets_ids($user_id, $role_name){
-        if ($role_name == "Admin") {
-            $sql = "SELECT projects.id as project_id FROM projects";
-        } else{
-            $sql = "SELECT projects.id as project_id FROM projects 
-                    WHERE tickets.submitter_id = {$user_id} OR tickets.developer_assigned_id = {$user_id}";
-            if($role_name == "Project Manager"){
-                $sql .= " OR (tickets.project_id IN 
-              (SELECT project_id FROM project_enrollments WHERE project_enrollments.user_id = {$user_id}))";
-            }
-        }
-    } */
-    /*
-    protected function db_get_ticket_details_permitted_ids($user_id, $project_id)
-    {   //Rolename is never admin when I call this methods, so I could simplify it
-        $sql = "SELECT tickets.id AS ticket_id 
-                FROM projects 
-                WHERE tickets.submitter_id = {$user_id} 
-                OR tickets.developer_assigned_id = {$user_id}
-                OR (tickets.project_id IN 
-                    (SELECT project_id FROM project_enrollments WHERE project_enrollments.user_id = {$user_id}))";
-    }
-    */
     protected function db_check_project_enrollment($user_id, $project_id)
     {
         $sql = "SELECT user_id, project_id 
@@ -230,6 +138,9 @@ class Model extends Dbh
                     tickets.title,
                     tickets.id as ticket_id,
                     tickets.created_at,
+                    tickets.developer_assigned_id,
+                    tickets.submitter_id,
+                    tickets.project_id,
                     projects.project_name,
                     ticket_priorities.priority_name as ticket_priority_name,
                     ticket_status_types.status_name as ticket_status_name,

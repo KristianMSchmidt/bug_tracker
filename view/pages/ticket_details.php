@@ -12,7 +12,6 @@ if (isset($_GET['ticket_id'])) {
 
 $ticket = $contr->get_ticket_by_id($ticket_id);
 $ticket_events = $contr->get_ticket_events($ticket_id);
-$files = array();
 $comments = $contr->get_ticket_comments($ticket_id);
 $ticket_details_permission = $contr->check_ticket_details_permission($_SESSION['user_id'], $_SESSION['role_name'], $ticket);
 ?>
