@@ -44,9 +44,9 @@ class Controller extends Model
         return $projects;
     }
 
-    public function get_tickets_by_user_and_role($user_id, $role_name)
+    public function get_user_tickets_details($user_id, $role_name)
     {
-        $results = $this->db_get_tickets_by_user_and_role($user_id, $role_name);
+        $results = $this->db_get_user_tickets_details($user_id, $role_name);
 
         return $results;
     }
@@ -255,7 +255,7 @@ class Controller extends Model
         if (count($result) == 1) {
             return $result[0]['enrollment_start'];
         } else if (count($result) == 0) {
-            return "Not personally enrolled";
+            return "Not enrolled";
         }
     }
 
@@ -267,6 +267,67 @@ class Controller extends Model
         } else {
             echo "Error: ticket title non-unique or non-existing";
             exit();
+        }
+    }
+
+    public function check_project_details_permission($user_id, $role_name, $project_id)
+    {
+        if ($role_name == "Admin") {
+            return true;
+        } else {
+            $projects = $this->db_get_user_projects_ids($user_id, $role_name);
+            foreach ($projects as $project) {
+                if ($project['project_id'] == $project_id) {
+                    return True;
+                }
+            }
+        }
+        return false;
+    }
+
+    public function get_user_projects_details($user_id, $role_name)
+    {
+        $projects = $this->db_get_user_projects_ids($user_id, $role_name);
+        if (count($projects) == 0) {
+            return $projects;
+        } else {
+            $id_array = [];
+            foreach ($projects as $project) {
+                array_push($id_array, (string) $project['project_id']);
+            }
+            $details = $this->db_get_projects_details_from_project_id_array($id_array);
+            return $details;
+        }
+        exit();
+    }
+
+    public function get_user_ticket_ids($user_id, $ticket_id, $role_name)
+    {
+        if ($role_name == "Admin") {
+            return true;
+        } else {
+            $user_tickets = $this->db_get_user_ticket_ids($user_id, $role_name);
+            foreach ($user_tickets as $user_ticket) {
+                if ($user_ticket['ticket_id'] == $ticket_id) {
+                    return True;
+                }
+            }
+            return false;
+        }
+    }
+
+    public function check_ticket_details_permission($user_id, $role_name, $ticket)
+    {
+        if (
+            $role_name == "Admin" ||
+            $ticket['developer_assigned_id'] == $user_id ||
+            $ticket['submitter_id'] == $user_id
+        ) {
+            return true;
+        } else if ($this->db_check_project_enrollment($user_id, $ticket['project_id'])) {
+            return true;
+        } else {
+            return false;
         }
     }
 }

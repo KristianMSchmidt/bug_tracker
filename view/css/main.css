@@ -391,6 +391,31 @@ html {
   }
 }
 
+.user_details span,
+.ticket_details span,
+.project_details span {
+  bottom: -5px;
+}
+
+@media only screen and (max-width: 735px) {
+  .user_details span,
+  .ticket_details span,
+  .project_details span {
+    left: -170px;
+  }
+}
+
+@media only screen and (max-width: 555px) {
+  .user_details span,
+  .ticket_details span,
+  .project_details span {
+    bottom: 0;
+    font-size: 12px;
+    left: -120px;
+    left: 60px;
+  }
+}
+
 .edit_ticket .top,
 .edit_project .top,
 .create_project .top {
@@ -1099,6 +1124,10 @@ input[type="number"] {
 }
 
 .w3-tag {
+  text-align: left;
+}
+
+.w3-tag.demo {
   padding: 0.5em;
   width: 250px;
   color: white;
@@ -1106,37 +1135,31 @@ input[type="number"] {
   text-align: center;
 }
 
-.w3-tag.admin {
+.w3-tag.demo.admin {
   background-color: black;
 }
 
-.w3-tag.pm {
+.w3-tag.demo.pm {
   background-color: green;
 }
 
-.w3-tag.dev {
+.w3-tag.demo.dev {
   background-color: red;
 }
 
-.w3-tag.sub {
+.w3-tag.demo.sub {
   background-color: blue;
 }
 
 @media only screen and (max-width: 735px) {
-  .w3-tag {
+  .w3-tag.demo {
     width: 150px;
   }
 }
 
 @media only screen and (max-width: 555px) {
-  .w3-tag {
+  .w3-tag.demo {
     width: 120px;
-  }
-}
-
-@media only screen and (max-width: 445px) {
-  .w3-tag {
-    width: 0;
   }
 }
 

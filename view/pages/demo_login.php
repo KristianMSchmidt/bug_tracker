@@ -19,14 +19,14 @@ if (isset($_SESSION['user_id'])) {
                 <div class="col one">
                     <!-- Admin -->
                     <a href="#" class="fa fa-fw fa-user fa-3x w3-tooltip" style="color:black" onclick="document.getElementById('admin_login').submit()">
-                        <span class="w3-text w3-tag admin">
-                            Admins have acces to all data and functionality of the site</span>
+                        <span class="w3-text w3-tag demo admin">
+                            Admins have access to all data and functionality of the site</span>
                     </a>
                     <p>Admin</p>
 
                     <!-- Project Manager -->
                     <a href="#" class="fa fa-fw fa-user fa-3x w3-tooltip" style="color:green" onclick="document.getElementById('pm_login').submit()">
-                        <span class="w3-text w3-tag pm">
+                        <span class="w3-text w3-tag demo pm">
                             Project Manager can assign users to projects</span>
                     </a>
                     <p>Project&nbspManager</p>
@@ -35,14 +35,14 @@ if (isset($_SESSION['user_id'])) {
                 <div class="col two">
                     <!-- Developer -->
                     <a href=" #" class="fa fa-fw fa-user fa-3x w3-tooltip" style="color:red" onclick="document.getElementById('dev_login').submit()">
-                        <span class="w3-text w3-tag dev">
+                        <span class="w3-text w3-tag demo dev">
                             Developers can see and comment on their tickets</span>
                     </a>
                     <p>Developer</p>
 
                     <!-- Submitter -->
                     <a href="#" class="fa fa-fw fa-user fa-3x w3-tooltip" style="color:blue" onclick="document.getElementById('submitter_login').submit()">
-                        <span class="w3-text w3-tag sub">
+                        <span class="w3-text w3-tag demo sub">
                             Submitter can create new tickets</span>
                     </a>
                     <p>Submitter</p>

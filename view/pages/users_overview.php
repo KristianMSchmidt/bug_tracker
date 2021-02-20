@@ -7,8 +7,7 @@ $users = $contr->get_users("all_users");
 ?>
 
 <div class="main">
-    <!-- Currently all users can see this page -->
-    <?php if (in_array($_SESSION['role_name'], ['Admin', 'Project Manager', 'Submitter', 'Developer'])) : ?>
+    <?php if (in_array($_SESSION['role_name'], ['Admin', 'Project Manager'])) : ?>
         <div class="users_overview">
             <div class="wrapper">
                 <div class="card w3-responsive">
@@ -52,7 +51,7 @@ $users = $contr->get_users("all_users");
             </div>
         </div>
     <?php else : ?>
-        <p>You don't have permission to this page. Please contact your local administrator or project manager</p>
+        <p>Only administrator and project managers have access to this page.</p>
     <?php endif ?>
 </div>
 

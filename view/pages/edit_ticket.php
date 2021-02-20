@@ -1,8 +1,5 @@
 <?php
 require('../../control/shared/login_check.inc.php');
-require('../../control/shared/check_ticket_permission.inc.php');
-require('../../control/shared/check_project_permission.inc.php');
-
 require_once('../../control/controller.class.php');
 
 $contr = new Controller();
@@ -17,8 +14,8 @@ if (isset($_GET['show_original'])) {
 }
 $project_id = $_SESSION['ticket']['project_id'];
 $ticket_id = $_SESSION['ticket']['ticket_id'];
-$ticket_permission = check_ticket_permission($contr, $_SESSION['user_id'], $ticket_id);
-$project_permission = check_project_permission($contr, $_SESSION['user_id'], $project_id);
+$project_permission = $contr->check_project_details_permission($_SESSION['user_id'], $_SESSION['role_name'], $project_id);
+$ticket_details_permission = $contr->check_ticket_details_permission($_SESSION['user_id'], $_SESSION['role_name'], $_SESSION['ticket']);
 $projects = $contr->get_projects_by_user($_SESSION['user_id'], $_SESSION['role_name']);
 $selected_project = $contr->get_project_by_id($project_id);
 $priorities = $contr->get_priorities();
@@ -31,11 +28,7 @@ require('page_frame/ui_frame.php');
 
 <div class="main">
     <!-- Only certain users are allowed edit ticket: -->
-    <?php if (
-        $_SESSION['role_name'] == 'Admin' ||
-        (($_SESSION['role_name'] == 'Project Manager') && $ticket_permission) ||
-        (($_SESSION['role_name'] == 'Submitter') && $ticket_permission)
-    ) : ?>
+    <?php if ($ticket_details_permission && in_array($_SESSION['role_name'], ['Admin', 'Project Manager', 'Submitter'])) : ?>
         <div class="edit_ticket">
             <div class="top">
                 <!-- Parent Project -->
@@ -173,9 +166,7 @@ require('page_frame/ui_frame.php');
             <input type="hidden" name="ticket_id" value="<?php echo $ticket_id ?>">
         </form>
     <?php else : ?>
-        <div class="main">
-            <p>You don't have permission to edit this ticket. Please contact your local administrator or project manager</p>
-        </div>
+        <p>You don't have permission to edit this ticket. Please contact your local administrator or project manager</p>
     <?php endif ?>
 </div>
 

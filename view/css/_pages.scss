@@ -93,6 +93,18 @@
             }
         }
     }
+    span {
+        bottom: -5px;
+        @media only screen and (max-width: 735px) {
+            left: -170px;
+        }
+        @media only screen and (max-width: 555px) {
+            bottom: 0;
+            font-size: 12px;
+            left: -120px;
+            left: 60px;
+        }
+    }
 }
 
 .edit_ticket,

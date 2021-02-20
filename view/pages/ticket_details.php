@@ -1,6 +1,5 @@
 <?php
 require('../../control/shared/login_check.inc.php');
-require('../../control/shared/check_permission.inc.php');
 
 require('page_frame/ui_frame.php');
 
@@ -15,14 +14,11 @@ $ticket = $contr->get_ticket_by_id($ticket_id);
 $ticket_events = $contr->get_ticket_events($ticket_id);
 $files = array();
 $comments = $contr->get_ticket_comments($ticket_id);
-
-$ticket_permission = check_ticket_permission($contr, $_SESSION['user_id'], $ticket_id);
-$project_permission = check_project_permission($contr, $_SESSION['user_id'], $ticket['project_id']);
+$ticket_details_permission = $contr->check_ticket_details_permission($_SESSION['user_id'], $_SESSION['role_name'], $ticket);
 ?>
 
 <div class="main">
-    <!-- Current all admins have acces. All PM's enrolled in ticket's parent project have acces. All who are devs or subs on the ticket have acces.-->
-    <?php if ($ticket_permission) : ?>
+    <?php if ($ticket_details_permission) : ?>
         <div class="ticket_details">
             <div class="card top">
                 <div class="w3-container card-head">
@@ -39,11 +35,7 @@ $project_permission = check_project_permission($contr, $_SESSION['user_id'], $ti
                         </tr>
                         <tr>
                             <td class="td-details">Project:</td>
-                            <?php if ($project_permission) : ?>
-                                <td><a href="project_details.php?project_id=<?php echo $ticket['project_id'] ?>"><?php echo $ticket['project_name'] ?> </a></td>
-                            <?php else : ?>
-                                <td><?php echo $ticket['project_name'] ?><i> (you are not enrolled)</i></td>
-                            <?php endif ?>
+                            <td><a href="project_details.php?project_id=<?php echo $ticket['project_id'] ?>"><?php echo $ticket['project_name'] ?> </a></td>
                         </tr>
                         <tr>
                             <td class="td-details">Developer:</td>
@@ -166,7 +158,7 @@ $project_permission = check_project_permission($contr, $_SESSION['user_id'], $ti
             </div>
         </div>
     <?php else : ?>
-        <p>You don't have permission to see the details of this ticket. Please contact your local admin or project manager.</p>
+        <p>You don't have permission to see the details of this ticket. Please contact your local admin.</p>
     <?php endif ?>
 </div>
 

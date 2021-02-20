@@ -1,7 +1,5 @@
 <?php
 require('../../control/shared/login_check.inc.php');
-require('../../control/shared/check_project_permission.inc.php');
-require('../../control/shared/check_ticket_permission.inc.php');
 
 require('page_frame/ui_frame.php');
 
@@ -12,15 +10,16 @@ if (isset($_GET['project_id'])) {
 }
 
 $contr = new controller;
-$project_permission = check_project_permission($contr, $_SESSION['user_id'], $project_id);
 
-$project = $contr->get_project_by_id($project_id);
+$project_permission = $contr->check_project_details_permission($_SESSION['user_id'], $_SESSION['role_name'], $project_id);
+$project = $contr->get_project_by_id($project_id); //TO DO: Her kan jeg bruge samme funktion, som jeg bruger i my
 $users = $contr->get_project_users($project_id, "all_roles");
 $tickets = $contr->get_tickets_by_project($project_id);
+$enrolled_since = $contr->get_enrollment_start_by_user_and_project($project_id, $_SESSION['user_id']);
+
 ?>
 
 <div class="main">
-    <!-- All admins have acces. PM's enrolled in this project also have acces -->
     <?php if ($project_permission) : ?>
         <div class="user_details">
             <div class="card top project">
@@ -56,6 +55,24 @@ $tickets = $contr->get_tickets_by_project($project_id);
                         <tr>
                             <td class="td-details">Last Update:</td>
                             <td><?php echo $project['updated_at'] ?></td>
+                        </tr>
+                        <tr>
+                            <td class="td-details">Enrolled Since:</td>
+                            <td>
+                                <?php echo $enrolled_since ?>
+                                <?php if ($enrolled_since == "Not enrolled") : ?>
+                                    <a href="#" class="w3-tooltip">(info?)
+                                        <span class="w3-text w3-tag no-enrollment-info">
+                                            <?php if ($_SESSION['role_name'] == 'Admin') : ?>
+                                                You are currently not enrolled in this project, but have access because you are Admin.
+                                            <?php else : ?>
+                                                You are currently not enrolled in this project, but you have one or more tickets connected to it.
+                                                You only have access to the details of your own tickets within this project.
+                                            <?php endif ?>
+                                        </span>
+                                    </a>
+                                <?php endif ?>
+                            </td>
                         </tr>
                     </table>
                 </div>
@@ -136,14 +153,14 @@ $tickets = $contr->get_tickets_by_project($project_id);
                                 </tr>
 
                                 <?php foreach ($tickets as $ticket) : ?>
-                                    <?php $ticket_permission = check_ticket_permission($contr, $_SESSION['user_id'], $ticket['id']); ?>
+                                    <?php $ticket_details_permission = $contr->check_ticket_details_permission($_SESSION['user_id'], $_SESSION['role_name'], $ticket); ?>
                                     <tr>
                                         <td><?php echo $ticket['title'] ?></td>
                                         <td><?php echo $ticket['submitter_name'] ?></td>
                                         <td><?php echo $ticket['developer_name'] ?></td>
                                         <td><?php echo $ticket['ticket_status_name'] ?></td>
                                         <td><?php echo explode(" ", $ticket['created_at'])[0] ?></td>
-                                        <?php if ($ticket_permission) : ?>
+                                        <?php if ($ticket_details_permission) : ?>
                                             <td><a href="ticket_details.php?ticket_id=<?php echo $ticket['id'] ?>">Details</a></td>
                                         <?php else : ?>
                                             <td>No permit</td>
@@ -165,7 +182,7 @@ $tickets = $contr->get_tickets_by_project($project_id);
             </div>
         </div>
     <?php else : ?>
-        <p>You don't have permission to see the details of this project. Please contact your local administrator or project manager.</p>
+        <p>You don't have permission to see the details of this project. Please contact your local administrator.</p>
     <?php endif ?>
 </div>
 

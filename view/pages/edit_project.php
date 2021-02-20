@@ -1,6 +1,5 @@
 <?php
 require('../../control/shared/login_check.inc.php');
-require('../../control/shared/check_permission.inc.php');
 require_once('../../control/controller.class.php');
 $contr = new Controller();
 
@@ -11,14 +10,14 @@ if (isset($_GET['show_original'])) {
 if (!isset($_SESSION['data']['project_id'])) {
     header("location: my_projects.php");
 }
-$project_permission = check_project_permission($contr, $_SESSION['user_id'], $_SESSION['data']['project_id']);
+$project_details_permission = $contr->check_project_details_permission($_SESSION['user_id'], $_SESSION['role_name'], $_SESSION['data']['project_id']);
 
 require('page_frame/ui_frame.php');
 ?>
 
 <div class="main">
-    <!-- All admins have acces. PM's enrolled in this project also have acces -->
-    <?php if ($_SESSION['role_name'] == 'Admin' || (($_SESSION['role_name'] == 'Project Manager') && $project_permission)) : ?>
+    <!-- All admins have acces. PM's with project details permission also have access -->
+    <?php if ($project_details_permission && (in_array($_SESSION['role_name'], ['Admin', 'Project Manager']))) : ?>
         <div class="edit_project">
             <div class="card">
                 <div class="w3-container card-head">
@@ -65,7 +64,7 @@ require('page_frame/ui_frame.php');
             </div>
         </div>
     <?php else : ?>
-        <div class="main">Only administrators and project managers have acces to this page. </div>
+        <p>You don't have permission to edit this ticket. Please contact your local administrator.</p>
     <?php endif ?>
 </div>
 

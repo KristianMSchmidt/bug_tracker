@@ -41,7 +41,7 @@ require('page_frame/ui_frame.php');
             </div>
         </div>
     <?php else : ?>
-        <p>You don't have acces to this page. Please contact your local administrator or project manager.</p>
+        <p>You don't have access to this page. Please contact your local administrator or project manager.</p>
     <?php endif ?>
 </div>
 

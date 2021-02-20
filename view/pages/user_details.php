@@ -12,7 +12,7 @@ $user = $contr->get_users($user_id)[0];
 $projects = $contr->get_project_enrollments_by_user_id($user_id);
 //Dirty fix to get the right tickets for Admin & PM using existing code. I'll clean this code later. 
 //Here I only want to show ticket where the user in questing is either developer assigned or submitter
-$tickets = $contr->get_tickets_by_user_and_role($user_id, 'Developer');
+$tickets = $contr->get_user_tickets_details($user_id, 'Developer');
 
 ?>
 

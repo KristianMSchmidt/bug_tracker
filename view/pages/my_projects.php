@@ -3,7 +3,9 @@ require('../../control/shared/login_check.inc.php');
 require('page_frame/ui_frame.php');
 
 $contr = new controller;
-$projects = $contr->get_projects_by_user($_SESSION['user_id'], $_SESSION['role_name']);
+
+// Get details of all relevant projects for the user in question 
+$projects = $contr->get_user_projects_details($_SESSION['user_id'], $_SESSION['role_name']);
 ?>
 
 <div class="main">

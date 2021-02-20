@@ -1,23 +1,24 @@
-    /* 
+/* 
         
         Overrides of some components of the w3-css library
 
     */
-    
-    .w3-modal {
-        padding-left: 100px;
+
+.w3-modal {
+    padding-left: 100px;
+}
+
+.w3-modal-content {
+    padding-top: 1em;
+    padding-bottom: 1em;
+    p {
+        margin-top: 0.5em;
+        padding: 0;
     }
-    
-    .w3-modal-content {
-        padding-top: 1em;
-        padding-bottom: 1em;
-        p {
-            margin-top: 0.5em;
-            padding: 0;
-        }
-    }
-    
-    .w3-tag {
+}
+
+.w3-tag {
+    &.demo {
         padding: 0.5em;
         width: 250px;
         color: white;
@@ -41,17 +42,16 @@
         @media only screen and (max-width: 555px) {
             width: 120px;
         }
-        @media only screen and (max-width: 445px) {
-            width: 0;
-        }
     }
-    
-    .w3-select {
-        padding-left: 0.2em;
+    text-align:left;
+}
+
+.w3-select {
+    padding-left: 0.2em;
+}
+
+.w3-input {
+    &.title {
+        width: 270px;
     }
-    
-    .w3-input {
-        &.title {
-            width: 270px;
-        }
-    }
+}

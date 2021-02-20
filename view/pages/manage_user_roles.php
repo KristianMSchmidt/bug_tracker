@@ -107,7 +107,7 @@ require('page_frame/ui_frame.php');
             </div>
         </div>
     <?php else : ?>
-        <p>Only administrators and project managers have acces to this page. </p>
+        <p>Only administrators and project managers have access to this page. </p>
     <?php endif ?>
 </div>
 
