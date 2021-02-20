@@ -1,5 +1,6 @@
 <?php
 require_once($_SERVER['DOCUMENT_ROOT'] . '/php/repos/bugtracker/model/model.class.php');
+/// document_root er 'opt/lampp/htdocs'
 
 class Controller extends Model
 {
@@ -258,9 +259,6 @@ class Controller extends Model
         $result = $this->db_get_ticket_id_by_title_and_project($ticket_title, $project_id);
         if (count($result) == 1) {
             return $result[0]['id'];
-        } else {
-            echo "Error: ticket title non-unique or non-existing";
-            exit();
         }
     }
 

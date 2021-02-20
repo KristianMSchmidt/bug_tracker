@@ -1,5 +1,4 @@
 <?php
-
 if (!isset($_SESSION)) {
     session_start();
 }
@@ -113,16 +112,16 @@ if (isset($_SESSION['user_id'])) {
                     </button>
 
                     <!-- user actions dropdown content -->
+                    <form action="../../control/logout.inc.php" method="post" id="logout_form"></form>
                     <div id="user_actions" class="dropdown-content user_actions">
                         <a href="profile_settings.php">Profile settings</a>
-                        <a href="../../control/logout.inc.php">Log out</a>
+                        <a href="#" onclick="document.getElementById('logout_form').submit()">Log out</a>
                     </div>
                 </div>
             <?php endif ?>
         </div> <!-- main_nav -->
     </div> <!-- my_navbar -->
-
-    <div class="sidebar_and_main_container">
+    <div class=" sidebar_and_main_container">
         <div class="sidebar">
             <?php if (isset($_SESSION['user_id'])) : ?>
                 <!-- Show sidebar links depending on role -->

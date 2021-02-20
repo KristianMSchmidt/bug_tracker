@@ -102,7 +102,7 @@ $tickets = $contr->get_user_tickets_details($user_id, 'Developer');
                         <h4>Tickets</h4>
                     </div>
                     <div class="w3-container">
-                        <h6>The selected user is developer assigned or submitter on these tickets</h6>
+                        <h6>The selected user is either the assigned developer or the submitter on these tickets</h6>
                     </div>
                     <div class="w3-container w3-responsive">
                         <table class="w3-table w3-striped w3-bordered">
