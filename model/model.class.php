@@ -530,12 +530,12 @@ class Model extends Dbh
 
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute([
-            $data['title'],
+            trim($data['title']),
             $data['developer_assigned_id'],
             $data['priority_id'],
             $data['status_id'],
             $data['type_id'],
-            $data['description'],
+            trim($data['description']),
             $data['ticket_id']
         ]);
     }
@@ -622,7 +622,7 @@ class Model extends Dbh
 
     protected function db_ticket_type_name_by_id($type_id)
     {
-        $sql = "SELECT type_name
+        $sql = "SELECT type_name as ticket_type_name
                 FROM ticket_types
                 WHERE ticket_types.id = ?";
         $stmt = $this->connect()->prepare($sql);

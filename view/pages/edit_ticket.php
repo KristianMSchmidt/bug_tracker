@@ -143,6 +143,9 @@ require('page_frame/ui_frame.php');
                                 <!-- Ticket Id -->
                                 <input type="hidden" name="ticket_id" value="<?php echo $ticket_id; ?>">
 
+                                <!-- Submitter Id -->
+                                <input type="hidden" name="submitter_id" value="<?php echo $_SESSION['ticket']['submitter_id']; ?>">
+
                                 <!-- Project Id -->
                                 <input type="hidden" name="project_id" value="<?php echo $project_id ?>">
                             </div>

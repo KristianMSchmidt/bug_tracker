@@ -240,7 +240,7 @@ class DbCreator extends Dbh
         ('Improve heuristics',6,12,1,2,3,'Open-ended task: Try to improve performance of ai player by changing weights in monotonicity heuristic function.',13),
         ('Make first attempts',7,14,2, 1,3,'Play around with dataset and try different classification algorithms. Get an idea about the difficulties and opportunities. Write report.',13),
         ('Fix labels in dougnut chart',2,3,2,1,2,'Labels in doughtnut chart for most busy users is not showing properly. Fix this.',13),
-        ('Table ordering options', 2, 3, 3, 1, 1,'Users should be able to altern orderings of all tables on the site by clicking on the table headers', 4),
+        ('Table ordering options', 2, 3, 3, 1, 1,'Users should be able to change ordering of all tables on the site by clicking on the table headers', 4),
         ('Make tables searchable', 2, 1, 4, 2, 1, 'It should be possible to search table entries in all tables in the bugtracker app', 4);";
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute();
@@ -252,7 +252,7 @@ class DbCreator extends Dbh
         $sql = "INSERT INTO project_enrollments (project_id, user_id) VALUES
        
                     /*demo admin=1*/ /*demo pm=2*/ /*demo dev=3*/ /*demo sub=4*/ /*schmidt admin=5*/ /*other devs 6-18*/ /*other sub 19*/                                                       /*sub 19*/
-       /*portfolio*/ (1,2),            (1,4),(1,6),(1,7),(1,19),
+       /*portfolio*/ (1,1),(1,2),            (1,4),(1,6),(1,7),(1,19),
       /*bug php*/          (2,1),(2,3),(2,4),(2,6),(2,7),(2,8),(2,9),(2,10),(2,13), (2,19),(2,20),    
       /*bug django*/             (3,3),(3,4),(3,6),(3,7),(3,8),(3,10),(3,14),(3,15),
      /*sudoku r*/                (4,3),(4,4),(4,6),(4,7),(4,8),(4,10),(4,11),(4,12),(4,14),

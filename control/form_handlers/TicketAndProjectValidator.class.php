@@ -7,8 +7,8 @@ class TicketAndProjectValidator
         $title = trim($title);
         if (empty($title)) {
             $this->add_error('title', "{$type} needs a title");
-        } else if (strlen($title) < 6 || strlen($title) > 30) {
-            $this->add_error('title', "Title must be 6-30 chars");
+        } else if (strlen($title) < 6 || strlen($title) > 40) {
+            $this->add_error('title', "Title must be 6-40 chars");
         }
     }
 
