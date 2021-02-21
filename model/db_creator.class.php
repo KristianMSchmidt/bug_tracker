@@ -4,9 +4,10 @@ require_once('dbh.class.php');
 class DbCreator extends Dbh
 {
     /*   
-        Class to (re)-generate database with a decent content. 
+        Class to (re)-generate database with a decent content.
+        
+        Used for testing and development purposes only.
 
-        This class is not used by the live web app.  
     */
 
     public function create_user_roles()
@@ -76,8 +77,9 @@ class DbCreator extends Dbh
                     ('Susan Pinker','{$pwd}','susan@mail.com', 3),
                     ('Rüdiger Safranski','{$pwd}','rödiger@mail.com', 3),
                     ('Peter Singer', '{$pwd}','psinger@mail.com',3),
-                    ('Nick Bostrom','{$pwd}','nbostrom@mail.com', 4),
-                    ('Niels Bohr', '{$pwd}','nbohr@gmail.com', 4)";
+                    ('Nick Bostrom','{$pwd}','nbostrom@mail.com', 2),
+                    ('Niels Bohr', '{$pwd}','nbohr@gmail.com', 4),
+                    ('Leonard Susskind','{$pwd}','susskind@gmail.com', 1)";
 
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute();
@@ -103,13 +105,13 @@ class DbCreator extends Dbh
     public function insert_projects()
     {
         $sql = "INSERT INTO projects(project_name, project_description, created_by) VALUES
-                ('Portfolio', 'An online portfolio to show some of my work', 1),
-                ('Bug_Tracker PHP', 'A full featured bug tracking system made with PHP and MySQL', 1),
-                ('Bug_Tracker Django', 'A Django version of my Bug_Tracker', 1),
-                ('Fast Soduko Solver', 'A speed-uptimized sudoku solver using backtracking search and an arc-consistency algorithm.', 1),
-                ('Puzzle solver', 'A web app that solves 8- and 15-puzzles backend and shows the solutions in the web page', 1),
-                ('2048 AI-player', 'An AI-player for the classic 2048 game. AI uses mini-max search and different heuristics', 1),
-                ('ML cancer diagnostics', 'A solution to the Kaggle cancer detection competition', 1)";
+                ('Portfolio', 'An online portfolio showing some of my work', 5),
+                ('Bug_Tracker PHP', 'A full-featured ticket tracking system made with PHP and MySQL',1),
+                ('Bug_Tracker Django', 'A Django version of my BugTracker', 1),
+                ('Fast Soduko Solver', 'A speed-uptimized sudoku solver using backtracking search and an arc-consistency algorithm.', 5),
+                ('Puzzle solver', 'A web app that solves 8- and 15-puzzles backend and shows the solutions in the web page', 2),
+                ('2048 AI-player', 'An AI-player for the classic 2048 game. AI uses mini-max search and different heuristics', 19),
+                ('ML cancer diagnostics', 'A solution to the Kaggle cancer detection competition', 19)";
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute();
         echo "Inserted values into projects<br>";
@@ -219,16 +221,16 @@ class DbCreator extends Dbh
     {
         $sql = "INSERT INTO tickets
         (title, project_id, developer_assigned_id, priority_id, status_id, type_id, description, submitter_id) VALUES 
-        ('Add links and documentation', 1, 7, 2, 3, 1, 'Add link to resume as PDF, add link to exam results and degrees',19),
-        ('Clean up CSS',1,3,2,3,3,'Clean up CSS: Remove outdated classes',4), 
+        ('Clean up deprecated CSS classes', 1, 7, 2, 3, 1, 'Check out SCSS warnings in VS-code and sort out the issues',19),
+        ('Clean up CSS',1,3,2,3,3,'Clean up CSS: Remove outdated classes',4),
         ('Add info to empty tableas', 2, 3,2,3,2,'Write No data available... ',4),
-        ('Fix notifications button', 2,3, 2, 3,2,'Notications button not working. Fix this.',4 ), 
+        ('Fix notifications dropdown', 2,3, 2, 3,2,'Only a limited number of notifications should be shown by default. Fix this.',4 ), 
         ('Test database',2,3,2, 3,3,'Write code to test if relational database works as expected - including various constraints and update rules',4),
         ('Make alternative frontend designs',2,3,2,3,3, 'Make 3 design proposals for layout of website - consider Bootstrap',19),
-        ('Make alternative frontend designs',2,6,2,3,2, 'Implement Show Next 10 Entries from database',20),
+        ('Limited table data',2,6,2,3,1, 'Implement Show Next 10 Entries from database. To make site scalable, user should not see all table data by default',20),
         ('Ticket dev constraints',2,10,4,3,1, 'Make sure that it is only possible to assign developers to a ticket, if the developer is assigned to the corresponding project',20),
         ('Demo acces to database',2,10,3,1,1,'Make sure that people logged in as demos do not mess up database. Two solutions possible: 1) regularly recreate database 2) Make a copy of database for each visitor',13),
-        ('Fix notifications button',3,10,2,4,2,'Set up database stucture on Pythonanywhere',15),
+        ('DB-structure',3,10,2,4,2,'Set up bugtracker database stucture on Pythonanywhere',15),
         ('Add Running Time Info',4,14,1,2,1,'Make backend running time visible on website',12),
         ('Warn users about illegal input', 4,11,1,2,1,'Warn users when they input values other than digits 0-9',3),
         ('About info',5, 9,2, 2, 1, 'Add link to about page on the different algorithms', 3),
@@ -237,7 +239,9 @@ class DbCreator extends Dbh
         every move taken in the game, which is sub-optimal',13),  
         ('Improve heuristics',6,12,1,2,3,'Open-ended task: Try to improve performance of ai player by changing weights in monotonicity heuristic function.',13),
         ('Make first attempts',7,14,2, 1,3,'Play around with dataset and try different classification algorithms. Get an idea about the difficulties and opportunities. Write report.',13),
-        ('Fix labels in dougnut chart',2,3,2,1,2,'Labels in doughtnut chart for most busy users is not showing properly. Fix this.',13)";
+        ('Fix labels in dougnut chart',2,3,2,1,2,'Labels in doughtnut chart for most busy users is not showing properly. Fix this.',13),
+        ('Table ordering options', 2, 3, 3, 1, 1,'Users should be able to altern orderings of all tables on the site by clicking on the table headers', 4),
+        ('Make tables searchable', 2, 1, 4, 2, 1, 'It should be possible to search table entries in all tables in the bugtracker app', 4);";
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute();
         echo "Inserted values into tickets<br>";
@@ -246,8 +250,15 @@ class DbCreator extends Dbh
     public function insert_project_enrollments()
     {   /* These values should correspond to the ones above, as users should be enrolled in the projects they are assigned to as devs or submitters */
         $sql = "INSERT INTO project_enrollments (project_id, user_id) VALUES
-                (1,3),(2,3),(2,7),(2,6),(2,5),(2,9),(3,14),(4,14),(4,10),(5,14),(5,11),(6,14),(6,12),(7,14),(2,8),
-                (1,4),(2,4),(3,4),(4,4),(5,4),(6,4),(7,4);"; /*demo sub (id=4) is enrolled in project 1-7 */
+       
+                    /*demo admin=1*/ /*demo pm=2*/ /*demo dev=3*/ /*demo sub=4*/ /*schmidt admin=5*/ /*other devs 6-18*/ /*other sub 19*/                                                       /*sub 19*/
+       /*portfolio*/ (1,2),            (1,4),(1,6),(1,7),(1,19),
+      /*bug php*/          (2,1),(2,3),(2,4),(2,6),(2,7),(2,8),(2,9),(2,10),(2,13), (2,19),(2,20),    
+      /*bug django*/             (3,3),(3,4),(3,6),(3,7),(3,8),(3,10),(3,14),(3,15),
+     /*sudoku r*/                (4,3),(4,4),(4,6),(4,7),(4,8),(4,10),(4,11),(4,12),(4,14),
+     /*puzzle*/            (5,2),(5,3),(5,4),(5,6),(5,7),(5,9),(5,10),(5,11),(5,12),(5,14),
+     /*2048*/                          (6,4),(6,6),(6,7),(6,12),(6,14),(6,16),(6,17),(6,18),
+     /*ML cancer*/               (7,3),(7,4),(7,6),(7,7),(7,14),(7,15),(7,16),(7,17),(7,18)";
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute();
         echo "Inserted values into project_enrollments<br>";
@@ -295,6 +306,28 @@ class DbCreator extends Dbh
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute();
         echo "Created notifications<br>";
+    }
+
+    public function insert_notifications()
+    {
+        $sql = "INSERT INTO notifications (user_id, notification_type_id, info_id, unseen, created_by) VALUES
+                /*Kristian Schmidt updated demo XX's role to demo XX*/
+                (1, 1, 1, 1, 5),
+                (2, 1, 2, 1, 5), 
+                (3, 1, 3, 1, 5),
+                (4, 1, 4, 1, 5),
+                /*Leonard Susskind enrolled you in the project XX*/
+                (1, 4, 1, 1, 21),
+                (2, 4, 5, 1, 21), 
+                (3, 4, 2, 1, 21),
+                (4, 4, 2, 1, 21),
+                 /*Nick Botrom assigned you to the tickett XX*/
+                (1, 2, 20, 1, 18), 
+                (3, 2, 19, 1, 18)";
+
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute();
+        echo "Inserted values into notifications<br>";
     }
 
     public function create_sessions()
@@ -435,6 +468,7 @@ class DbCreator extends Dbh
         $this->insert_ticket_event_types();
         $this->insert_tickets();
         $this->insert_project_enrollments();
+        $this->insert_notifications();
     }
 
     public function drop_create_insert_all()

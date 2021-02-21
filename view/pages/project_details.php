@@ -1,6 +1,5 @@
 <?php
 require('../../control/shared/login_check.inc.php');
-
 require('page_frame/ui_frame.php');
 
 if (isset($_GET['project_id'])) {
@@ -64,7 +63,7 @@ $enrolled_since = $contr->get_enrollment_start_by_user_and_project($project_id, 
                                     <a href="#" class="w3-tooltip">(info?)
                                         <span class="w3-text w3-tag no-enrollment-info">
                                             <?php if ($_SESSION['role_name'] == 'Admin') : ?>
-                                                You are currently not enrolled in this project, but have access because you are Admin.
+                                                You are currently not enrolled in this project, but have access to all details because you are Admin.
                                             <?php else : ?>
                                                 You are currently not enrolled in this project, but you have one or more tickets connected to it.
                                                 You only have access to the details of your own tickets within this project.

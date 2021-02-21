@@ -35,8 +35,10 @@ require('page_frame/ui_frame.php');
                             <?php foreach ($projects as $project) : ?>
                                 <p id="project_<?php echo $project['project_id'] ?>" class="searchable_project" onclick="choose_project(<?php echo $project['project_id'] ?>)"><?php echo $project['project_name'] ?></p>
                             <?php endforeach ?>
-                            <?php if (count($projects) == 0) : ?>
-                                <p>There are no projects in the database</p>
+                            <?php if (count($projects) == 0 && $_SESSION['role_name'] == 'Admin') : ?>
+                                <p><i>There are no projects in the database</i></p>
+                            <?php elseif (count($projects) == 0 && $_SESSION['role_name'] == 'Project Manager') : ?>
+                                <p><i>You have no projects in the database</i></p>
                             <?php endif ?>
                         </div>
                     </div>
@@ -85,7 +87,7 @@ require('page_frame/ui_frame.php');
                                 <?php endforeach ?>
 
                                 <?php if (count($non_project_users) == 0) : ?>
-                                    <p>All users are are currently enrolled in this project</p>
+                                    <p><i>All users are are currently enrolled in this project</i></p>
                                 <?php endif ?>
                             <?php else : ?>
                                 <p style="color:grey;"><i>Select project to see options</i></p>
@@ -115,7 +117,7 @@ require('page_frame/ui_frame.php');
                                     <p id="enrolled_user_<?php echo $pu['user_id'] ?>" class="searchable_disenroll" onclick="toggle_users_to_disenroll(<?php echo $pu['user_id'] ?>)"><?php echo $pu['full_name'] . ' | ' . $pu['role_name'] ?></p>
                                 <?php endforeach ?>
                                 <?php if (count($project_users) == 0) : ?>
-                                    <p>There are currently no users enrolled in this project</p>
+                                    <p><i>There are currently no users enrolled in this project</i></p>
                                 <?php endif ?>
                             <?php else : ?>
                                 <p style="color:grey;"><i>Select project to see options</i></p>
