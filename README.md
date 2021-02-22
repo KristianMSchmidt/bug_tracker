@@ -1,8 +1,8 @@
-# Bug Tracker Project - MYSQL, PHP, CSS, JAVASCRIPT, HTML
+# Bugtracker Project - MYSQL, PHP, CSS, JAVASCRIPT, HTML
 
-I've build this project from scratch - including relational database design, multi-role login system, backend and frontend.
+I've build this bug tracking system from scratch - including relational database design, multi-role login system, backend and frontend.
 
-My design of the website (overall functionality and user experience) has been inspired by this video-demo, showing another ticket tracking system from the outside: https://www.youtube.com/watch?v=eWl8VtuXQFM&t=839s
+My design of the website (overall functionality and user experience) has been inspired by this video-demo, showing another issue tracking system from the outside: https://www.youtube.com/watch?v=eWl8VtuXQFM&t=839s
 
 In my development, I've followed these design patterns and considerations:
 

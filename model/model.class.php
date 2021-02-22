@@ -18,7 +18,6 @@ class Model extends Dbh
     }
 
     protected function db_get_user_project_ids($user_id)
-    //Not to be used, when user is admin
     {
         $sql = "SELECT tickets.project_id as project_id
                     FROM tickets 
@@ -299,23 +298,6 @@ class Model extends Dbh
         $stmt->execute([$role_id, $updater, $user_id]);
     }
 
-    protected function db_get_project_by_id($project_id)
-    {
-        $sql = "SELECT 
-                    projects.project_name, 
-                    projects.project_description, 
-                    projects.created_at, 
-                    projects.updated_at, 
-                    projects.id as project_id,
-                    users.full_name as created_by
-                FROM projects JOIN users ON projects.created_by = users.id
-                WHERE projects.id = ?";
-        $stmt = $this->connect()->prepare($sql);
-        $stmt->execute([$project_id]);
-        $project = $stmt->fetch();
-        return $project;
-    }
-
     protected function db_check_project_name_unique($project_name, $project_id)
     {
         $sql = "SELECT projects.id 
@@ -467,18 +449,6 @@ class Model extends Dbh
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute([$ticket_id, $event_type_id, $old_value, $new_value]);
     }
-
-    protected function db_get_projects()
-    {
-        $sql = "SELECT 
-                    id as project_id, project_name
-                 FROM projects";
-        $stmt = $this->connect()->prepare($sql);
-        $stmt->execute();
-        $projects = $stmt->fetchAll();
-        return $projects;
-    }
-
 
     protected function db_get_priorities()
     {

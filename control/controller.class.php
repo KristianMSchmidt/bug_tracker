@@ -1,6 +1,5 @@
 <?php
 require_once($_SERVER['DOCUMENT_ROOT'] . '/php/repos/bugtracker/model/model.class.php');
-/// document_root er 'opt/lampp/htdocs'
 
 class Controller extends Model
 {
@@ -9,6 +8,49 @@ class Controller extends Model
     Public interface for the model class. 
     
     */
+
+    private function get_user_project_ids($user_id, $role_name)
+    {
+        /* Method used to select the ids off all the projects that are relevant for a given user (not necessarily just the projects they are enrolled in).
+           Decides what projects will be shown in "My Projects" and to what projects the given user will have access to details.  
+
+           Who have permission to a project?
+          - All users should have permission to to details of the projects they are enrolled in
+          - All users who have a ticket in a given project (as developer or submitter) should also have access to project details, 
+            whether or not they are currently enrolled in the project (perhaps someone disenrolled them by accident)
+         - Admins will get permission to all projects
+        */
+
+        if ($role_name == "Admin") {
+            return ($this->db_get_all_project_ids());
+        } else {
+            return ($this->db_get_user_project_ids($user_id));
+        }
+    }
+
+    public function check_project_details_permission($user_id, $role_name, $project_id)
+    {
+        /* Used by many pages to check user's permission to see details of a given project */
+        if ($role_name == "Admin") {
+            return true;
+        } else {
+            $projects = $this->get_user_project_ids($user_id, $role_name);
+            foreach ($projects as $project) {
+                if ($project['project_id'] == $project_id) {
+                    return True;
+                }
+            }
+        }
+        return false;
+    }
+
+    public function get_user_projects_details($user_id, $role_name)
+    /* Gets the details to all the projects relevant for a given user */
+
+    {
+        $projects = $this->get_user_project_ids($user_id, $role_name);
+        return ($this->get_project_details($projects));
+    }
 
     public function get_users($user_id)
     {
@@ -91,7 +133,7 @@ class Controller extends Model
 
     public function get_project_by_id($project_id)
     {
-        $results = $this->db_get_project_by_id($project_id);
+        $results = $this->db_get_projects_details_from_project_id_array([$project_id])[0];
         return $results;
     }
     public function get_project_users($project_id, $role_id)
@@ -130,12 +172,6 @@ class Controller extends Model
     {
         $ticket = $this->db_get_ticket_by_id($ticket_id);
         return $ticket;
-    }
-
-    public function get_projects()
-    {
-        $projects = $this->db_get_projects();
-        return $projects;
     }
 
     public function get_priorities()
@@ -262,39 +298,6 @@ class Controller extends Model
         }
     }
 
-    public function get_user_project_ids($user_id, $role_name)
-    {
-        /* Method used to select the projects that are relevant for a given user (not necessarily just the projects they are enrolled in).
-           Decides what projects will be shown in "My Projects" and to what projects the given user will have access to details.  
-
-           Who have permission to a project?
-          - All users should have permission to to details of the projects they are enrolled in
-          - All users who have a ticket in a given project (as developer or submitter) should also have access to project details, 
-            whether or not they are currently enrolled in the project (perhaps someone disenrolled them by accident)
-         - Admins will get permission to all projects
-        */
-
-        if ($role_name == "Admin") {
-            return ($this->db_get_all_project_ids());
-        } else {
-            return ($this->db_get_user_project_ids($user_id));
-        }
-    }
-
-    public function check_project_details_permission($user_id, $role_name, $project_id)
-    {
-        if ($role_name == "Admin") {
-            return true;
-        } else {
-            $projects = $this->get_user_project_ids($user_id, $role_name);
-            foreach ($projects as $project) {
-                if ($project['project_id'] == $project_id) {
-                    return True;
-                }
-            }
-        }
-        return false;
-    }
 
     public function get_project_details($project_array)
     {
@@ -310,26 +313,18 @@ class Controller extends Model
         }
     }
 
-    public function get_user_projects_details($user_id, $role_name)
-    {
-        $projects = $this->get_user_project_ids($user_id, $role_name);
-        return ($this->get_project_details($projects));
-    }
-
     public function get_full_project_rights_ids($user_id, $role_name)
     // selects the ids of the projects to which the user has edit rights
     {
         if ($role_name == "Admin") {
             $projects = $this->db_get_all_project_ids();
-        } else if (in_array($role_name, ["Submitter", "Project Manager"])) { //Submitter actually should not have all these rights, but only the right to add tickets to his projects
+        } else if (in_array($role_name, ["Submitter", "Project Manager"])) { //Submitters actually should not have all these rights, but only the right to add tickets to his projects
             $projects = $this->get_project_enrollments_by_user_id($_SESSION['user_id']);
         } else {
             $projects = [];
         }
         return $projects;
     }
-
-
 
     public function check_ticket_details_permission($user_id, $role_name, $ticket)
     {

@@ -11,7 +11,7 @@ if (isset($_GET['project_id'])) {
 $contr = new controller;
 
 $project_permission = $contr->check_project_details_permission($_SESSION['user_id'], $_SESSION['role_name'], $project_id);
-$project = $contr->get_project_by_id($project_id); //TO DO: Her kan jeg bruge samme funktion, som jeg bruger i my
+$project = $contr->get_project_by_id($project_id);
 $users = $contr->get_project_users($project_id, "all_roles");
 $tickets = $contr->get_tickets_by_project($project_id);
 $enrolled_since = $contr->get_enrollment_start_by_user_and_project($project_id, $_SESSION['user_id']);
