@@ -9,7 +9,7 @@ if ($_GET['project_id'] !== "none") {
     $project_id = $_GET['project_id'];
     $project_users = $contr->get_project_users($project_id, "all_roles");
     $non_project_users = $contr->get_users_not_enrolled_in_project($project_id);
-    $selected_project = $contr->get_project_by_id($project_id);
+    $selected_project = $contr->get_project_by_id($project_id, -1);
 }
 require('page_frame/ui_frame.php');
 ?>

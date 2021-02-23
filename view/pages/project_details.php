@@ -11,11 +11,9 @@ if (isset($_GET['project_id'])) {
 $contr = new controller;
 
 $project_permission = $contr->check_project_details_permission($_SESSION['user_id'], $_SESSION['role_name'], $project_id);
-$project = $contr->get_project_by_id($project_id);
+$project = $contr->get_project_by_id($project_id,  $_SESSION['user_id']);
 $users = $contr->get_project_users($project_id, "all_roles");
 $tickets = $contr->get_tickets_by_project($project_id);
-$enrolled_since = $contr->get_enrollment_start_by_user_and_project($project_id, $_SESSION['user_id']);
-
 ?>
 
 <div class="main">
@@ -58,8 +56,8 @@ $enrolled_since = $contr->get_enrollment_start_by_user_and_project($project_id, 
                         <tr>
                             <td class="td-details">Enrolled Since:</td>
                             <td>
-                                <?php echo $enrolled_since ?>
-                                <?php if ($enrolled_since == "Not enrolled") : ?>
+                                <?php echo $project['enrollment_start'] ?>
+                                <?php if ($project['enrollment_start'] == "Not enrolled") : ?>
                                     <a href="#" class="w3-tooltip">(info?)
                                         <span class="w3-text w3-tag no-enrollment-info">
                                             <?php if ($_SESSION['role_name'] == 'Admin') : ?>

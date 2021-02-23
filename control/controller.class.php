@@ -44,6 +44,11 @@ class Controller extends Model
         return false;
     }
 
+    private function get_project_enrollments_by_user_id($user_id)
+    {
+        return ($this->db_get_project_enrollments_by_user_id($user_id));
+    }
+
     private function get_user_edit_project_rights_ids($user_id, $role_name)
     // selects the ids of the projects to which the user has edit rights
     {
@@ -66,8 +71,13 @@ class Controller extends Model
             foreach ($project_array as $project) {
                 array_push($project_id_array, (string) $project['project_id']);
             }
-            $details = $this->db_get_projects_details_from_project_id_array($project_id_array, $user_id, $order_by, $order_direction);
-            return $details;
+            $projects = $this->db_get_projects_details_from_project_id_array($project_id_array, $user_id, $order_by, $order_direction);
+            for ($i = 0; $i < count($projects); $i++) {
+                if (!isset($projects[$i]['enrollment_start'])) {
+                    $projects[$i]['enrollment_start'] = 'Not enrolled';
+                }
+            }
+            return $projects;
         }
     }
 
@@ -97,8 +107,15 @@ class Controller extends Model
     public function get_users_enrolled_projects_details($user_id)
     {
         $project_ids = $this->get_project_enrollments_by_user_id($user_id);
-        $projects = $this->get_projects_details($project_ids, -1, 'projects.updated_at', 'DESC');
+        $projects = $this->get_projects_details($project_ids, $user_id, 'projects.updated_at', 'DESC');
         return $projects;
+    }
+
+    public function get_project_by_id($project_id, $user_id)
+    {
+        //parameter user_id is only needed, if project enrollment start is needed. Can be set to -1 otherwise. 
+        $results = $this->get_projects_details([array('project_id' => $project_id)], $user_id, 'projects.updated_at', 'DESC')[0];
+        return $results;
     }
 
 
@@ -181,11 +198,6 @@ class Controller extends Model
         $this->db_update_role($role_id, $updater, $user_id);
     }
 
-    public function get_project_by_id($project_id)
-    {
-        $results = $this->db_get_projects_details_from_project_id_array([$project_id], -1, 'projects.updated_at', 'DESC')[0];
-        return $results;
-    }
     public function get_project_users($project_id, $role_id)
     {
         $results = $this->db_get_project_users($project_id, $role_id);
@@ -323,21 +335,7 @@ class Controller extends Model
         $this->db_unassign_from_project($user_id, $project_id);
     }
 
-    public function get_project_enrollments_by_user_id($user_id)
-    {
-        return ($this->db_get_project_enrollments_by_user_id($user_id));
-    }
 
-    public function get_enrollment_start_by_user_and_project($project_id, $user_id)
-    {
-
-        $result = $this->db_get_enrollment_start_by_user_and_project($project_id, $user_id);
-        if (count($result) == 1) {
-            return $result[0]['enrollment_start'];
-        } else if (count($result) == 0) {
-            return "Not enrolled";
-        }
-    }
 
     public function get_ticket_id_by_title_and_project($ticket_title, $project_id)
     {

@@ -10,6 +10,7 @@ if (isset($_GET['user_id'])) {
 $contr = new controller;
 $user = $contr->get_users($user_id)[0];
 $projects = $contr->get_users_enrolled_projects_details($user_id);
+
 //Dirty fix to get the right tickets for Admin & PM using existing code. I'll clean this code later. 
 //Here I only want to show ticket where the user in questing is either developer assigned or submitter
 $tickets = $contr->get_user_tickets_details($user_id, 'Developer');
@@ -69,10 +70,9 @@ $tickets = $contr->get_user_tickets_details($user_id, 'Developer');
                             </tr>
                             <?php foreach ($projects as $project) : ?>
                                 <?php $project_details_permission = $contr->check_project_details_permission($_SESSION['user_id'], $_SESSION['role_name'], $project['project_id']); ?>
-                                <?php $enrolled_since = $contr->get_enrollment_start_by_user_and_project($project['project_id'], $user_id) ?>
                                 <tr>
                                     <td><?php echo $project['project_name']; ?></td>
-                                    <td><?php echo $enrolled_since ?></td>
+                                    <td><?php echo $project['enrollment_start']; ?></td>
                                     <td>
                                         <?php if ($project_details_permission) : ?>
                                             <a href="project_details.php?project_id=<?php echo $project['project_id'] ?>">Details</a>

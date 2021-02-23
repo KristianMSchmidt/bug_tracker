@@ -9,7 +9,7 @@ if (!(isset($_GET['project_id']) && isset($_GET['project_options']))) {
 $contr = new Controller;
 
 if ($_GET['project_id'] !== "none") {
-    $selected_project = $contr->get_project_by_id($_GET['project_id']);
+    $selected_project = $contr->get_project_by_id($_GET['project_id'], -1);
     $enrolled_developers = $contr->get_project_users($_GET['project_id'], 3);
 }
 if ($_GET['project_options'] == "true") {

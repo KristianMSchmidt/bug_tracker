@@ -60,11 +60,7 @@ $projects = $contr->get_user_projects_details($_SESSION['user_id'], $_SESSION['r
                                 <td class="hide_if_needed"><?php echo $project['created_by'] ?></td>
                                 <td class="hide_if_needed"><?php echo $project['created_at'] ?></th>
                                 <td><?php echo $project['updated_at'] ?></td>
-                                <?php if (isset($project['enrollment_start'])) : ?>
-                                    <td><?php echo $project['enrollment_start'] ?></td>
-                                <?php else : ?>
-                                    <td>Not enrolled</td>
-                                <?php endif ?>
+                                <td><?php echo $project['enrollment_start'] ?></td>
                                 <td>
                                     <a href="project_details.php?project_id=<?php echo $project['project_id'] ?>">Details</a>
                                 </td>

@@ -62,11 +62,6 @@ class EditTicketHandler extends TicketValidator
         }
 
         if ($old_ticket['developer_assigned_id'] !== $new_ticket['developer_assigned_id']) {
-            $developer_is_enrolled_in_project = $contr->get_enrollment_start_by_user_and_project($new_ticket['project_id'], $new_ticket['developer_assigned_id']);
-            if (!$developer_is_enrolled_in_project) {
-                echo "Error: The chosen developer is not enrolled in project";
-                exit();
-            }
             $contr->add_to_ticket_events($ticket_id, 6, $old_ticket['developer_name'], $new_ticket['developer_name']);
             $notification_type_id = 2; //notifify new developer assigned to ticket
             $contr->create_notification($notification_type_id, $this->ticket_id,  $new_ticket['developer_assigned_id'], $this->user_id);

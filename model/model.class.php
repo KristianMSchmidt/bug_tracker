@@ -679,17 +679,6 @@ class Model extends Dbh
         $stmt->execute([$user_id, $project_id]);
     }
 
-    protected function db_get_enrollment_start_by_user_and_project($project_id, $user_id)
-    {
-        $sql = "SELECT enrollment_start
-                FROM project_enrollments 
-                WHERE project_id = ? AND user_id = ?";
-        $stmt = $this->connect()->prepare($sql);
-        $stmt->execute([$project_id, $user_id]);
-        $result = $stmt->fetchAll();
-        return $result;
-    }
-
     protected function db_get_ticket_id_by_title_and_project($ticket_title, $project_id)
     {
 

@@ -9,7 +9,7 @@ class EditProjectHandler extends ProjectValidator
         $this->new_project = $post_data;
         $this->project_id = $post_data['project_id'];
         $this->contr = new Controller();
-        $this->old_project = $this->contr->get_project_by_id($this->project_id);
+        $this->old_project = $this->contr->get_project_by_id($this->project_id, -1);
     }
 
     public function edit_project()
@@ -31,8 +31,6 @@ class EditProjectHandler extends ProjectValidator
 
     private function validate_changes_made()
     {
-        $this->old_project = $this->contr->get_project_by_id($this->project_id);
-
         $changes = False;
 
         if ($this->old_project['project_name'] !== $this->new_project['project_name']) {
