@@ -1,5 +1,15 @@
-/* Scripts used by all pages after login*/
+/* Scripts used by all or several pages after login*/
 
+function reorder(page, order_by, order_direction) {
+    // function used to reorder tables upon click on header 
+    var url = page + ".php?order=" + order_by + "&dir=";
+    if (order_direction == "asc") {
+        url += "desc";
+    } else {
+        url += "asc";
+    }
+    window.location.href = url;
+}
 
 function set_active_link(new_active_item) {
     // Function used to higlight active sidebar menu links

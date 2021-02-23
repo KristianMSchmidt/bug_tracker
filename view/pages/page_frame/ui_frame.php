@@ -131,7 +131,7 @@ if (isset($_SESSION['user_id'])) {
                     <?php if ($_SESSION['role_name'] == 'Admin') : ?>
                         <a href="manage_user_roles.php" id="manage_user_roles_link"><i class="fas fa-users"></i> &nbsp;Manage User Roles</a>
                     <?php endif ?>
-                    <a href="users_overview.php" id="users_overview_link"><i class="fas fa-user-friends"></i> &nbsp;Users Overview</a>
+                    <a href="users_overview.php?order=full_name&dir=asc" id="users_overview_link"><i class="fas fa-user-friends"></i> &nbsp;Users Overview</a>
                 <?php endif ?>
                 <a href="my_projects.php?order=updated_at&dir=desc" id="my_projects_link"><i class="fas fa-industry"></i> &nbsp;My Projects</a>
                 <a href="my_tickets.php" id="my_tickets_link"><i class="fas fa-ticket-alt"></i> &nbsp;My Tickets</a>

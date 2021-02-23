@@ -8,9 +8,8 @@ if (isset($_GET['user_id'])) {
 }
 
 $contr = new controller;
-$user = $contr->get_users($user_id)[0];
+$user = $contr->get_user_details_by_id($user_id);
 $projects = $contr->get_users_enrolled_projects_details($user_id);
-
 //Dirty fix to get the right tickets for Admin & PM using existing code. I'll clean this code later. 
 //Here I only want to show ticket where the user in questing is either developer assigned or submitter
 $tickets = $contr->get_user_tickets_details($user_id, 'Developer');

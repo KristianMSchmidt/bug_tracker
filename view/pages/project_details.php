@@ -218,7 +218,7 @@ $tickets = $contr->get_tickets_by_project($project_id);
 <?php if (isset($_SESSION['edit_project_succes'])) : ?>
     <div id="id02" class="w3-modal">
         <div class="w3-modal-content">
-            <div class="w3-container modal-one-row-table">
+            <div class="w3-container">
                 <span onclick="document.getElementById('id02').style.display='none'" class="w3-button w3-display-topright">&times;</span>
                 <div class="w3-container">
                     <h5>

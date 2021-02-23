@@ -2,16 +2,16 @@
 session_start();
 require_once('controller.class.php');
 
-$selected_user_ids = json_decode($_POST['user_ids']);
-$demo_users = array("Demo Admin", "Demo PM", "Demo Dev", "Demo Sub");
-
 $contr = new Controller();
-$chosen_role_name = $contr->get_role_name_by_role_id($_POST['new_role']);
 
+$selected_user_ids = json_decode($_POST['user_ids']);
+$selected_users = $contr->get_users_details($selected_user_ids, 'full_name', 'asc');
+
+$demo_users = array("Demo Admin", "Demo PM", "Demo Dev", "Demo Sub");
+$chosen_role_name = $contr->get_role_name_by_role_id($_POST['new_role']);
 $_SESSION['feedback_users'] = [];
 
-foreach ($selected_user_ids as $user_id) {
-    $user = $contr->get_users($user_id)[0];
+foreach ($selected_users as $user) {
 
     // only update role, if new role is different than the old:
     if ($user['role_name'] !== $chosen_role_name) {

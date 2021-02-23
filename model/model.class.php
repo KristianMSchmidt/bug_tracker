@@ -37,7 +37,7 @@ class Model extends Dbh
 
     protected function db_get_projects_details_from_project_id_array($project_id_array, $user_id, $order_by, $order_direction)
     {
-        // sql uses this this syntax:  WHERE projects.id IN ('1', '2', '3', '4')
+        // sql uses the syntax:  WHERE projects.id IN ('1', '2', '3', '4')
         $sql = 'SELECT 
                     projects.id as project_id,
                     projects.project_name,
@@ -229,9 +229,17 @@ class Model extends Dbh
         return $results;
     }
 
-    protected function db_get_users($user_id)
+    protected function db_get_all_user_ids()
     {
-        $sql  = "SELECT 
+        $sql = "SELECT users.id as user_id FROM users";
+        $stmt = $this->connect()->query($sql);
+        $result = $stmt->fetchAll();
+        return $result;
+    }
+
+    protected function db_get_users_details_from_user_id_array($user_id_array, $order_by, $order_direction)
+    {
+        $sql = 'SELECT 
                     users.id as user_id,
                     users.full_name,
                     users.email, 
@@ -239,21 +247,89 @@ class Model extends Dbh
                     users.created_at,
                     user_roles.role_name,
                     ub.full_name AS updated_by 
-                 FROM users JOIN user_roles ON users.role_id = user_roles.id
-                 LEFT JOIN users ub ON users.updated_by = ub.id"; /* alias necessary */
+                FROM users JOIN user_roles ON users.role_id = user_roles.id
+                LEFT JOIN users ub ON users.updated_by = ub.id 
+                WHERE users.id IN (' . implode(',', $user_id_array) . ')
+                ORDER BY ' . "{$order_by}" . " {$order_direction}";
+        $stmt = $this->connect()->query($sql);
+        $result = $stmt->fetchAll();
+        return $result;
+    }
 
-        if ($user_id !== "all_users") {
-            $sql .= " WHERE users.id = ?";
-            $sql .= " ORDER by users.full_name";
+    protected function db_get_project_user_ids($project_id, $role_id)
+    //NOT IN USE
+    {
+        $sql =
+            "SELECT 
+                users.full_name,
+                users.email,
+                user_roles.role_name,
+                users.id as user_id,
+                project_enrollments.enrollment_start
+            FROM users 
+            JOIN project_enrollments ON users.id = project_enrollments.user_id
+            JOIN user_roles ON user_roles.id = users.role_id
+            WHERE project_enrollments.project_id = ?";
+
+        if ($role_id !== "all_roles") {
+            $sql .= " AND users.role_id = ? ORDER BY users.full_name";
             $stmt = $this->connect()->prepare($sql);
-            $stmt->execute([$user_id]);
+            $stmt->execute([$project_id, $role_id]);
         } else {
-            $sql .= " ORDER by users.full_name";
-            $stmt = $this->connect()->query($sql);
+            $sql .= " ORDER BY users.full_name";
+            $stmt = $this->connect()->prepare($sql);
+            $stmt->execute([$project_id]);
         }
-        $results = $stmt->fetchAll();
+        $users = $stmt->fetchAll();
+        return $users;
+    }
 
-        return $results;
+    protected function db_get_project_users($project_id, $role_id)
+    // SKAL UDFASES
+    // all users assigned to project
+    {
+        $sql =
+            "SELECT 
+                users.full_name,
+                users.email,
+                user_roles.role_name,
+                users.id as user_id,
+                project_enrollments.enrollment_start
+            FROM users 
+            JOIN project_enrollments ON users.id = project_enrollments.user_id
+            JOIN user_roles ON user_roles.id = users.role_id
+            WHERE project_enrollments.project_id = ?";
+
+        if ($role_id !== "all_roles") {
+            $sql .= " AND users.role_id = ? ORDER BY users.full_name";
+            $stmt = $this->connect()->prepare($sql);
+            $stmt->execute([$project_id, $role_id]);
+        } else {
+            $sql .= " ORDER BY users.full_name";
+            $stmt = $this->connect()->prepare($sql);
+            $stmt->execute([$project_id]);
+        }
+        $users = $stmt->fetchAll();
+        return $users;
+    }
+
+    protected function db_get_users_not_enrolled_in_project($project_id)
+    //SKAL UDFASES
+    {
+        $sql =
+            "SELECT 
+                users.full_name,
+                users.id as user_id,
+                user_roles.role_name
+            FROM users 
+            JOIN user_roles ON user_roles.id = users.role_id
+            WHERE users.id NOT IN 
+                (SELECT user_id FROM project_enrollments WHERE project_enrollments.project_id=?)
+            ORDER BY users.full_name";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute([$project_id]);
+        $users = $stmt->fetchAll();
+        return $users;
     }
 
     protected function db_get_notifications_by_user_id($user_id)
@@ -314,8 +390,6 @@ class Model extends Dbh
         return $result;
     }
 
-
-
     protected function db_check_ticket_title_unique($ticket_title, $ticket_id, $project_id)
     {
         $sql = "SELECT tickets.id 
@@ -325,52 +399,6 @@ class Model extends Dbh
         $stmt->execute([$ticket_title, $ticket_id, $project_id]);
         $project = $stmt->fetch();
         return $project;
-    }
-
-    protected function db_get_project_users($project_id, $role_id)
-    // all users assigned to project
-    {
-        $sql =
-            "SELECT 
-                users.full_name,
-                users.email,
-                user_roles.role_name,
-                users.id as user_id,
-                project_enrollments.enrollment_start
-            FROM users 
-            JOIN project_enrollments ON users.id = project_enrollments.user_id
-            JOIN user_roles ON user_roles.id = users.role_id
-            WHERE project_enrollments.project_id = ?";
-
-        if ($role_id !== "all_roles") {
-            $sql .= " AND users.role_id = ? ORDER BY users.full_name";
-            $stmt = $this->connect()->prepare($sql);
-            $stmt->execute([$project_id, $role_id]);
-        } else {
-            $sql .= " ORDER BY users.full_name";
-            $stmt = $this->connect()->prepare($sql);
-            $stmt->execute([$project_id]);
-        }
-        $users = $stmt->fetchAll();
-        return $users;
-    }
-
-    protected function db_get_users_not_enrolled_in_project($project_id)
-    {
-        $sql =
-            "SELECT 
-                users.full_name,
-                users.id as user_id,
-                user_roles.role_name
-            FROM users 
-            JOIN user_roles ON user_roles.id = users.role_id
-            WHERE users.id NOT IN 
-                (SELECT user_id FROM project_enrollments WHERE project_enrollments.project_id=?)
-            ORDER BY users.full_name";
-        $stmt = $this->connect()->prepare($sql);
-        $stmt->execute([$project_id]);
-        $users = $stmt->fetchAll();
-        return $users;
     }
 
     protected function db_get_tickets_by_project($project_id)
@@ -528,7 +556,7 @@ class Model extends Dbh
                 WHERE projects.id = ?";
 
         $stmt = $this->connect()->prepare($sql);
-        $stmt->execute([$project_title, $project_description, $project_id]);
+        $stmt->execute([trim($project_title), trim($project_description), $project_id]);
     }
 
     protected function db_get_role_name_by_role_id($role_id)

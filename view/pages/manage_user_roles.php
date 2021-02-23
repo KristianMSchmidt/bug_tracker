@@ -3,10 +3,11 @@ require('../../control/shared/login_check.inc.php');
 require_once('../../control/controller.class.php');
 
 $contr = new Controller;
-$users = $contr->get_users("all_users");
+$users = $contr->get_all_users_details('full_name', 'asc');
 
 require('page_frame/ui_frame.php');
 ?>
+
 <div class="main">
     <?php if (in_array($_SESSION['role_name'], ['Admin'])) : ?>
         <div class="manage_user_roles">

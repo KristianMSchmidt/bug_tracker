@@ -118,11 +118,40 @@ class Controller extends Model
         return $results;
     }
 
-
-    public function get_users($user_id)
+    public function get_users_details($some_users, $order_by, $order_direction)
     {
-        $results = $this->db_get_users($user_id);
-        return $results;
+        // $some_users can be either an array of users ids [1,3,7] or an array of arrays [('users_id':1),('user_id':3)]
+        if (count($some_users) == 0) {
+            return $some_users;
+        }
+        $user_id_array = [];
+        if (gettype($some_users[0]) !== "array") {
+            foreach ($some_users as $user_id) {
+                array_push($user_id_array, (string) $user_id);
+            }
+        } else {
+            foreach ($some_users as $user) {
+                array_push($user_id_array, (string) $user['user_id']);
+            }
+        }
+        return $this->db_get_users_details_from_user_id_array($user_id_array, $order_by, $order_direction);
+    }
+
+    public function get_user_details_by_id($user_id)
+    {
+        $user_details = $this->get_users_details([array('user_id' => $user_id)], 'full_name', 'asc')[0];
+        return $user_details;
+    }
+
+    public function get_all_users_details($order, $order_direction)
+    {
+        $all_user_ids = $this->db_get_all_user_ids();
+        if ($order == 'role_name') {
+            $order_by = 'user_roles.role_name';
+        } else {
+            $order_by = 'users.' . $order;
+        }
+        return $this->get_users_details($all_user_ids, $order_by, $order_direction);
     }
 
     public function get_user_by_email($email)
@@ -334,8 +363,6 @@ class Controller extends Model
     {
         $this->db_unassign_from_project($user_id, $project_id);
     }
-
-
 
     public function get_ticket_id_by_title_and_project($ticket_title, $project_id)
     {

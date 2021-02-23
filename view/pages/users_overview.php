@@ -3,7 +3,7 @@ require('../../control/shared/login_check.inc.php');
 require('page_frame/ui_frame.php');
 
 $contr = new controller;
-$users = $contr->get_users("all_users");
+$users = $contr->get_all_users_details($_GET['order'], $_GET['dir']);
 ?>
 
 <div class="main">
@@ -20,11 +20,11 @@ $users = $contr->get_users("all_users");
                     <div class="w3-container w3-responsive">
                         <table class="w3-table w3-small w3-striped w3-bordered">
                             <tr>
-                                <th>Name</th>
+                                <th><a href="#" onclick="reorder('users_overview', 'full_name','<?php echo $_GET['dir'] ?>')">Name</a></th>
                                 <th>Email</th>
-                                <th>Role</th>
-                                <th class="hide_last">Created</th>
-                                <th class="hide_if_needed">Last Update</th>
+                                <th><a href="#" onclick="reorder('users_overview', 'role_name','<?php echo $_GET['dir'] ?>')">Role</a></th>
+                                <th class="hide_last"><a href="#" onclick="reorder('users_overview', 'created_at','<?php echo $_GET['dir'] ?>')">Created</a></th>
+                                <th class="hide_if_needed"><a href="#" onclick="reorder('users_overview', 'updated_at','<?php echo $_GET['dir'] ?>')">Last Update</a></th>
                                 <th>User Details</th>
                             </tr>
                             <?php foreach ($users as $user) : ?>

@@ -121,7 +121,6 @@ require('page_frame/ui_frame.php');
                             <?php else : ?>
                                 <p style="color:grey;"><i>Select project to see options</i></p>
                             <?php endif ?>
-
                         </div>
                         <p id="disenroll_error" class="error"></p>
                         <input type="button" value="DIS-ENROLL" class="btn-primary" onclick="submit_disenroll_form()">
@@ -137,62 +136,20 @@ require('page_frame/ui_frame.php');
                 </div>
             </div>
         </div>
-
     <?php else : ?>
         <p>You dont' have permission manage user roles. Please contact your local administrator or project manager.</p>
     <?php endif ?>
 </div>
 
-<!-- Modal response message for enrolled users-->
-<?php if (isset($_SESSION['enroll_users_succes'])) : ?>
-    <?php $num_changed = 0 ?>
-    <div id="enrolled_modal" class="w3-modal">
-        <div class="w3-modal-content">
-            <div class="w3-container">
-                <span onclick="document.getElementById('enrolled_modal').style.display='none'" class="w3-button w3-display-topright">&times;</span>
-                <div class="w3-container">
-                    <h5>
-                        You succesfully enrolled the following users to the selected project:
-                    </h5>
-                    <div class="w3-container">
-                        <table class="w3-table w3-striped w3-bordered">
-                            <tr>
-                                <th>Name</th>
-                                <th>Email</th>
-                                <th>Role</th>
-                            </tr>
-                            <?php foreach ($_SESSION['selected_users'] as $user_id) : ?>
-                                <?php
-                                $user = $contr->get_users($user_id)[0];
-                                $num_changed += 1 ?>
-                                <tr>
-                                    <td><?php echo $user['full_name'] ?></td>
-                                    <td><?php echo $user['email'] ?></td>
-                                    <td><?php echo $user['role_name'] ?></td>
-                                </tr>
-                            <?php endforeach; ?>
-                        </table>
-                    </div>
-                    <p>Showing 1-<?php echo $num_changed; ?> of <?php echo $num_changed; ?> entries</p>
-                </div>
-            </div>
-        </div>
-    </div>
-    <script>
-        document.getElementById('enrolled_modal').style.display = 'block';
-    </script>
-<?php endif ?>
-
-<!-- Modal response message for dis-enrolled users-->
-<?php if (isset($_SESSION['disenroll_users_succes'])) : ?>
-    <?php $num_changed = 0 ?>
+<!-- Modal response message -->
+<?php if (isset($_SESSION['feedback_message'])) : ?>
     <div id="disenrolled_modal" class="w3-modal">
         <div class="w3-modal-content">
             <div class="w3-container">
                 <span onclick="document.getElementById('disenrolled_modal').style.display='none'" class="w3-button w3-display-topright">&times;</span>
                 <div class="w3-container">
                     <h5>
-                        You succesfully dis-enrolled the following users from the selected project:
+                        <?php echo $_SESSION['feedback_message']; ?>
                     </h5>
                     <div class="w3-container">
                         <table class="w3-table w3-striped w3-bordered">
@@ -201,9 +158,7 @@ require('page_frame/ui_frame.php');
                                 <th>Email</th>
                                 <th>New Role</th>
                             </tr>
-                            <?php foreach ($_SESSION['selected_users'] as $user_id) : ?>
-                                <?php $user = $contr->get_users($user_id)[0];
-                                $num_changed += 1 ?>
+                            <?php foreach ($_SESSION['selected_users'] as $user) : ?>
                                 <tr>
                                     <td><?php echo $user['full_name'] ?></td>
                                     <td><?php echo $user['email'] ?></td>
@@ -212,7 +167,7 @@ require('page_frame/ui_frame.php');
                             <?php endforeach; ?>
                         </table>
                     </div>
-                    <p>Showing 1-<?php echo $num_changed; ?> of <?php echo $num_changed; ?> entries</p>
+                    <p>Showing 1-<?php echo $_SESSION['num_changed']; ?> of <?php echo $_SESSION['num_changed']; ?> entries</p>
                 </div>
             </div>
         </div>

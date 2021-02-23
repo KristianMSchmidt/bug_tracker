@@ -2,6 +2,7 @@
 
 var selected_users_to_enroll = [];
 var selected_users_to_disenroll = [];
+console.log("JH");
 
 function choose_project(project_id) {
     search_input = document.getElementById("search_field_project").value;
