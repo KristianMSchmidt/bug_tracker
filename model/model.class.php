@@ -35,18 +35,22 @@ class Model extends Dbh
         return $result;
     }
 
-    protected function db_get_projects_details_from_project_id_array($project_id_array)
+    protected function db_get_projects_details_from_project_id_array($project_id_array, $user_id, $order_by, $order_direction)
     {
+        // sql uses this this syntax:  WHERE projects.id IN ('1', '2', '3', '4')
         $sql = 'SELECT 
                     projects.id as project_id,
                     projects.project_name,
                     projects.project_description,
                     projects.created_at,
                     projects.updated_at,
+                    project_enrollments.enrollment_start,
                     users.full_name as created_by
                 FROM projects 
                 JOIN users ON projects.created_by = users.id
-                WHERE projects.id IN (' . implode(',', $project_id_array) . ')';
+                LEFT JOIN project_enrollments ON project_enrollments.user_id=' . "{$user_id}" . ' AND project_enrollments.project_id = projects.id
+                WHERE projects.id IN (' . implode(',', $project_id_array) . ')
+                ORDER BY ' . "{$order_by}" . " {$order_direction}";
         $stmt = $this->connect()->query($sql);
         $result = $stmt->fetchAll();
         return $result;
@@ -137,6 +141,7 @@ class Model extends Dbh
                     tickets.title,
                     tickets.id as ticket_id,
                     tickets.created_at,
+                    tickets.updated_at,
                     tickets.developer_assigned_id,
                     tickets.submitter_id,
                     tickets.project_id,
@@ -308,6 +313,8 @@ class Model extends Dbh
         $result = $stmt->fetch();
         return $result;
     }
+
+
 
     protected function db_check_ticket_title_unique($ticket_title, $ticket_id, $project_id)
     {

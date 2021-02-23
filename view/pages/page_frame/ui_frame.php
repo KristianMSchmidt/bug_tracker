@@ -89,7 +89,7 @@ if (isset($_SESSION['user_id'])) {
                                     $news_item = $contr->get_project_name_by_id($notification['info_id']);
                                 } elseif ($notification['type'] == 5) {
                                     /* dis-enrolled from project */
-                                    $href = "my_projects.php";
+                                    $href = "my_projects.php?order=updated_at&dir=desc";
                                     $news_item = $contr->get_project_name_by_id($notification['info_id']);
                                 } elseif ($notification['type'] == 6) {
                                     /* new comment to your ticket */
@@ -133,7 +133,7 @@ if (isset($_SESSION['user_id'])) {
                     <?php endif ?>
                     <a href="users_overview.php" id="users_overview_link"><i class="fas fa-user-friends"></i> &nbsp;Users Overview</a>
                 <?php endif ?>
-                <a href="my_projects.php" id="my_projects_link"><i class="fas fa-industry"></i> &nbsp;My Projects</a>
+                <a href="my_projects.php?order=updated_at&dir=desc" id="my_projects_link"><i class="fas fa-industry"></i> &nbsp;My Projects</a>
                 <a href="my_tickets.php" id="my_tickets_link"><i class="fas fa-ticket-alt"></i> &nbsp;My Tickets</a>
             <?php endif ?>
         </div>

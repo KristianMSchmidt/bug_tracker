@@ -18,7 +18,6 @@ class ProjectValidator extends TicketAndProjectValidator
         }
     }
 
-
     protected function validate_title_and_description()
     {
         $this->validate_title_length($this->new_project['project_name'], 'Project');

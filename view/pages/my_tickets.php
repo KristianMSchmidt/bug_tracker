@@ -11,7 +11,6 @@ require('page_frame/ui_frame.php');
 
 $contr = new Controller;
 $tickets = $contr->get_user_tickets_details($_SESSION['user_id'], $_SESSION['role_name']);
-
 ?>
 
 <div class="main">
@@ -48,7 +47,7 @@ $tickets = $contr->get_user_tickets_details($_SESSION['user_id'], $_SESSION['rol
                             <th class="hide_if_needed">Ticket Type</th>
                             <th class="hide_if_needed">Developer Assigned</th>
                             <th class="hide_if_needed"> Submitter</th>
-                            <th class="hide_last">Created</th>
+                            <th class="hide_last">Last Update</th>
                             <th>Ticket Details</th>
                         </tr>
 
@@ -61,7 +60,7 @@ $tickets = $contr->get_user_tickets_details($_SESSION['user_id'], $_SESSION['rol
                                 <td class="hide_if_needed"><?php echo $ticket['ticket_type_name'] ?></td>
                                 <td class="hide_if_needed"><?php echo $ticket['developer_name'] ?></td>
                                 <td class="hide_if_needed"><?php echo $ticket['submitter_name'] ?></td>
-                                <td class="hide_last"><?php echo $ticket['created_at'] ?></td>
+                                <td class="hide_last"><?php echo $ticket['updated_at'] ?></td>
                                 <td><a href="ticket_details.php?ticket_id=<?php echo $ticket['ticket_id'] ?>">Details</a></td>
                             </tr>
                         <?php endforeach ?>

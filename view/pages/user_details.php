@@ -10,7 +10,7 @@ if (isset($_GET['user_id'])) {
 $contr = new controller;
 $user = $contr->get_users($user_id)[0];
 $project_ids = $contr->get_project_enrollments_by_user_id($user_id);
-$projects = $contr->get_project_details($project_ids);
+$projects = $contr->get_projects_details($project_ids, 'projects.updated_at', 'DESC');
 
 //Dirty fix to get the right tickets for Admin & PM using existing code. I'll clean this code later. 
 //Here I only want to show ticket where the user in questing is either developer assigned or submitter

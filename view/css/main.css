@@ -1092,6 +1092,10 @@ a {
   font-size: 12px;
 }
 
+th > a {
+  color: black;
+}
+
 /* Hide arrows from number input */
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {

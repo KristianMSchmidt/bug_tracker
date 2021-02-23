@@ -216,7 +216,6 @@ $enrolled_since = $contr->get_enrollment_start_by_user_and_project($project_id, 
     </script>
 <?php endif ?>
 
-
 <!-- Modal response message for edited project succes -->
 <?php if (isset($_SESSION['edit_project_succes'])) : ?>
     <div id="id02" class="w3-modal">
@@ -233,6 +232,36 @@ $enrolled_since = $contr->get_enrollment_start_by_user_and_project($project_id, 
     </div>
     <script>
         document.getElementById('id02').style.display = 'block';
+    </script>
+<?php endif ?>
+
+<!-- Modal response for created project succes -->
+<?php if (isset($_SESSION['create_project_succes'])) : ?>
+    <div id="id01" class="w3-modal">
+        <div class="w3-modal-content">
+            <div class="w3-container">
+                <span onclick="document.getElementById('id01').style.display='none'" class="w3-button w3-display-topright">&times;</span>
+                <div class="w3-container" style="padding-bottom:3em;">
+                    <h5>
+                        You succesfully created the following project:
+                    </h5>
+                    <div class="w3-container w3-responsive">
+                        <table class="w3-table w3-striped w3-bordered">
+                            <tr>
+                                <th>Project</th>
+                                <th>Description</th>
+                            </tr>
+                            <tr>
+                                <td><?php echo $_SESSION['data']['project_name'] ?></td>
+                                <td><?php echo $_SESSION['data']['project_description'] ?></td>
+                            </tr>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        document.getElementById('id01').style.display = 'block';
     </script>
 <?php endif ?>
 

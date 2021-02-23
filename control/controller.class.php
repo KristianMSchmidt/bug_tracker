@@ -44,12 +44,54 @@ class Controller extends Model
         return false;
     }
 
-    public function get_user_projects_details($user_id, $role_name)
-    /* Gets the details to all the projects relevant for a given user */
+    private function get_user_edit_project_rights_ids($user_id, $role_name)
+    // selects the ids of the projects to which the user has edit rights
+    {
+        if ($role_name == "Admin") {
+            $projects = $this->db_get_all_project_ids();
+        } else if (in_array($role_name, ["Submitter", "Project Manager"])) { //Submitters actually should not have all these rights, but only the right to add tickets to his projects
+            $projects = $this->get_project_enrollments_by_user_id($_SESSION['user_id']);
+        } else {
+            $projects = [];
+        }
+        return $projects;
+    }
+
+    private function get_projects_details($project_array, $user_id, $order_by, $order_direction)
+    {
+        if (count($project_array) == 0) {
+            return $project_array;
+        } else {
+            $project_id_array = [];
+            foreach ($project_array as $project) {
+                array_push($project_id_array, (string) $project['project_id']);
+            }
+            $details = $this->db_get_projects_details_from_project_id_array($project_id_array, $user_id, $order_by, $order_direction);
+            return $details;
+        }
+    }
+
+    public function get_user_projects_details($user_id, $role_name, $order, $order_direction)
+    /* Gets the details to all the projects relevant for a given user - that is, the projects shown in 'My Projects'*/
 
     {
-        $projects = $this->get_user_project_ids($user_id, $role_name);
-        return ($this->get_project_details($projects));
+        $project_ids = $this->get_user_project_ids($user_id, $role_name);
+        if ($order == 'enrollment_start') {
+            $order_by = 'project_enrollments.enrollment_start';
+        } else {
+            $order_by = 'projects.' . $order;
+        }
+        return ($this->get_projects_details($project_ids, $user_id, $order_by, $order_direction));
+    }
+
+    public function get_user_edit_project_rights_details($user_id, $role_name)
+    /* Gets the details to all the projects to which the user has edit rights */
+
+    {
+        $project_ids = $this->get_user_edit_project_rights_ids($user_id, $role_name);
+        $order_by = 'projects.project_name';
+        $order_direction = 'ASC';
+        return ($this->get_projects_details($project_ids, $user_id, $order_by, $order_direction));
     }
 
     public function get_users($user_id)
@@ -133,7 +175,7 @@ class Controller extends Model
 
     public function get_project_by_id($project_id)
     {
-        $results = $this->db_get_projects_details_from_project_id_array([$project_id])[0];
+        $results = $this->db_get_projects_details_from_project_id_array([$project_id], -1, 'projects.updated_at', 'DESC')[0];
         return $results;
     }
     public function get_project_users($project_id, $role_id)
@@ -247,7 +289,6 @@ class Controller extends Model
         return $this->db_ticket_status_name_by_id($status_id);
     }
 
-
     public function add_ticket_comment($user_id, $ticket_id, $comment)
     {
 
@@ -296,34 +337,6 @@ class Controller extends Model
         if (count($result) == 1) {
             return $result[0]['id'];
         }
-    }
-
-
-    public function get_project_details($project_array)
-    {
-        if (count($project_array) == 0) {
-            return $project_array;
-        } else {
-            $id_array = [];
-            foreach ($project_array as $project) {
-                array_push($id_array, (string) $project['project_id']);
-            }
-            $details = $this->db_get_projects_details_from_project_id_array($id_array);
-            return $details;
-        }
-    }
-
-    public function get_full_project_rights_ids($user_id, $role_name)
-    // selects the ids of the projects to which the user has edit rights
-    {
-        if ($role_name == "Admin") {
-            $projects = $this->db_get_all_project_ids();
-        } else if (in_array($role_name, ["Submitter", "Project Manager"])) { //Submitters actually should not have all these rights, but only the right to add tickets to his projects
-            $projects = $this->get_project_enrollments_by_user_id($_SESSION['user_id']);
-        } else {
-            $projects = [];
-        }
-        return $projects;
     }
 
     public function check_ticket_details_permission($user_id, $role_name, $ticket)

@@ -13,7 +13,10 @@ if ($errors) {
     header('location:../view/pages/create_project.php');
     exit();
 } else {
-    $_SESSION['create_project_succes'] = true;
-    header('location:../view/pages/my_projects.php');
+    $_SESSION['create_project_succes'] = true; //husk at ændre placeringen af denne
+    $contr = new Controller();
+    $project_id = $contr->check_project_name_unique(trim($_POST['project_name']), -1)['id'];
+    $contr->assign_to_project($_SESSION['user_id'], $project_id);
+    header("location:../view/pages/project_details.php?project_id={$project_id}");
     exit();
 }
