@@ -129,8 +129,8 @@ $tickets = $contr->get_tickets_by_project($project_id, $_GET['order2'], $_GET['d
                     </div>
                 </div>
                 <div class="right" style="flex:5">
-                    <!-- Only Admin and Project Managers should see this button -->
-                    <?php if ($_SESSION['role_name'] == 'Admin' || $_SESSION['role_name'] == 'Project Manager') : ?>
+                    <!-- Only Admin, Project Managers and Submitter should see this button -->
+                    <?php if (in_array($_SESSION['role_name'], ['Admin', 'Project Manager', 'Submitter'])) : ?>
                         <form action="create_ticket.php" method="get">
                             <input type="hidden" name="project_options" value="false">
                             <input type="hidden" name="project_id" value="<?php echo $project_id; ?>">

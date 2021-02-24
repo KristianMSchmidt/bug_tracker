@@ -156,7 +156,7 @@ require('page_frame/ui_frame.php');
                             <tr>
                                 <th>Name</th>
                                 <th>Email</th>
-                                <th>New Role</th>
+                                <th>Role</th>
                             </tr>
                             <?php foreach ($_SESSION['selected_users'] as $user) : ?>
                                 <tr>
