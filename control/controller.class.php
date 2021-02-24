@@ -112,15 +112,15 @@ class Controller extends Model
     }
 
     public function get_project_by_id($project_id, $user_id)
+    //parameter user_id is only needed, if project enrollment start is needed. Can be set to -1 otherwise. 
     {
-        //parameter user_id is only needed, if project enrollment start is needed. Can be set to -1 otherwise. 
         $results = $this->get_projects_details([array('project_id' => $project_id)], $user_id, 'projects.updated_at', 'DESC')[0];
         return $results;
     }
 
     public function get_users_details($some_users, $order_by, $order_direction)
+    // $some_users can be either an array of users ids [1,3,7] or an array of arrays [('users_id':1),('user_id':3)]
     {
-        // $some_users can be either an array of users ids [1,3,7] or an array of arrays [('users_id':1),('user_id':3)]
         if (count($some_users) == 0) {
             return $some_users;
         }

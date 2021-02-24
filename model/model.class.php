@@ -256,37 +256,7 @@ class Model extends Dbh
         return $result;
     }
 
-    protected function db_get_project_user_ids($project_id, $role_id)
-    //NOT IN USE
-    {
-        $sql =
-            "SELECT 
-                users.full_name,
-                users.email,
-                user_roles.role_name,
-                users.id as user_id,
-                project_enrollments.enrollment_start
-            FROM users 
-            JOIN project_enrollments ON users.id = project_enrollments.user_id
-            JOIN user_roles ON user_roles.id = users.role_id
-            WHERE project_enrollments.project_id = ?";
-
-        if ($role_id !== "all_roles") {
-            $sql .= " AND users.role_id = ? ORDER BY users.full_name";
-            $stmt = $this->connect()->prepare($sql);
-            $stmt->execute([$project_id, $role_id]);
-        } else {
-            $sql .= " ORDER BY users.full_name";
-            $stmt = $this->connect()->prepare($sql);
-            $stmt->execute([$project_id]);
-        }
-        $users = $stmt->fetchAll();
-        return $users;
-    }
-
     protected function db_get_project_users($project_id, $role_id)
-    // SKAL UDFASES
-    // all users assigned to project
     {
         $sql =
             "SELECT 
@@ -314,7 +284,6 @@ class Model extends Dbh
     }
 
     protected function db_get_users_not_enrolled_in_project($project_id)
-    //SKAL UDFASES
     {
         $sql =
             "SELECT 
