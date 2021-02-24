@@ -1,7 +1,10 @@
 <?php
 require('../../control/shared/login_check.inc.php');
 require('page_frame/ui_frame.php');
-
+if (!isset($_GET['order'])) {
+    $_GET['order'] = 'full_name';
+    $_GET['dir'] = 'desc';
+}
 $contr = new controller;
 $users = $contr->get_all_users_details($_GET['order'], $_GET['dir']);
 ?>
@@ -34,7 +37,7 @@ $users = $contr->get_all_users_details($_GET['order'], $_GET['dir']);
                                     <td><?php echo $user['role_name'] ?></td>
                                     <td class="hide_last"><?php echo $user['created_at'] ?></th>
                                     <td class="hide_if_needed"><?php echo $user['updated_at'] ?></td>
-                                    <td><a href="user_details.php?user_id=<?php echo $user['user_id'] ?>&order1=project_name&dir1=asc&order2=title&dir2=asc">Details</a></td>
+                                    <td><a href="user_details.php?user_id=<?php echo $user['user_id'] ?>">Details</a></td>
                                 </tr>
                             <?php endforeach ?>
                         </table>

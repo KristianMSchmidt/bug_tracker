@@ -3,9 +3,12 @@ require('../../control/shared/login_check.inc.php');
 require('page_frame/ui_frame.php');
 $contr = new controller;
 // Get details of all relevant projects for the user in question 
+if (!isset($_GET['order'])) {
+    $_GET['order'] = 'updated_at';
+    $_GET['dir'] = 'desc';
+}
 $projects = $contr->get_user_projects_details($_SESSION['user_id'], $_SESSION['role_name'], $_GET['order'], $_GET['dir']);
 ?>
-
 <div class="main">
     <div class="my_projects">
         <div class="wrapper">

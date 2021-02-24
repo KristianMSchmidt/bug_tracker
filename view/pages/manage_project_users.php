@@ -7,7 +7,7 @@ $projects = $contr->get_user_edit_project_rights_details($_SESSION['user_id'], $
 
 if ($_GET['project_id'] !== "none") {
     $project_id = $_GET['project_id'];
-    $project_users = $contr->get_project_users($project_id, "all_roles");
+    $project_users = $contr->get_project_users($project_id, 'all_roles', 'users.full_name', 'asc');
     $non_project_users = $contr->get_users_not_enrolled_in_project($project_id);
     $selected_project = $contr->get_project_by_id($project_id, -1);
 }

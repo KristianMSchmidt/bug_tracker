@@ -81,16 +81,11 @@ class Controller extends Model
         }
     }
 
-    public function get_user_projects_details($user_id, $role_name, $order, $order_direction)
+    public function get_user_projects_details($user_id, $role_name, $order_by, $order_direction)
     /* Gets the details to all the projects relevant for a given user - that is, the projects shown in 'My Projects'*/
 
     {
         $project_ids = $this->get_user_project_ids($user_id, $role_name);
-        if ($order == 'enrollment_start') {
-            $order_by = 'project_enrollments.enrollment_start';
-        } else {
-            $order_by = 'projects.' . $order;
-        }
         return ($this->get_projects_details($project_ids, $user_id, $order_by, $order_direction));
     }
 
@@ -99,7 +94,7 @@ class Controller extends Model
 
     {
         $project_ids = $this->get_user_edit_project_rights_ids($user_id, $role_name);
-        $order_by = 'projects.project_name';
+        $order_by = 'project_name';
         $order_direction = 'ASC';
         return ($this->get_projects_details($project_ids, $user_id, $order_by, $order_direction));
     }
@@ -226,9 +221,9 @@ class Controller extends Model
         $this->db_update_role($role_id, $updater, $user_id);
     }
 
-    public function get_project_users($project_id, $role_id)
+    public function get_project_users($project_id, $role_id, $order_by, $order_direction)
     {
-        $results = $this->db_get_project_users($project_id, $role_id);
+        $results = $this->db_get_project_users($project_id, $role_id, $order_by, $order_direction);
         return $results;
     }
     public function check_project_name_unique($project_name, $project_id)
@@ -248,9 +243,9 @@ class Controller extends Model
         $results = $this->db_get_users_not_enrolled_in_project($project_id);
         return $results;
     }
-    public function get_tickets_by_project($project_id)
+    public function get_tickets_by_project($project_id, $order_by, $order_direction)
     {
-        $results = $this->db_get_tickets_by_project($project_id);
+        $results = $this->db_get_tickets_by_project($project_id, $order_by, $order_direction);
         return $results;
     }
     public function create_notification($notification_type_id, $info_id, $user_id, $created_by)
@@ -302,14 +297,14 @@ class Controller extends Model
         $this->db_add_to_ticket_events($ticket_id, $event_type, $old_value, $new_value);
     }
 
-    public function get_ticket_events($ticket_id)
+    public function get_ticket_events($ticket_id, $order_by, $order_direction)
     {
-        return $this->db_get_ticket_events($ticket_id);
+        return $this->db_get_ticket_events($ticket_id, $order_by, $order_direction);
     }
 
-    public function get_ticket_comments($ticket_id)
+    public function get_ticket_comments($ticket_id, $order_by, $order_direction)
     {
-        return $this->db_get_ticket_comments($ticket_id);
+        return $this->db_get_ticket_comments($ticket_id, $order_by, $order_direction);
     }
 
     public function get_project_name_by_id($project_id)

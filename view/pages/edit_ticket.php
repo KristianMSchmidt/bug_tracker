@@ -19,7 +19,7 @@ $selected_project = $contr->get_project_by_id($project_id, -1);
 $priorities = $contr->get_priorities();
 $types = $contr->get_ticket_types();
 $status_types = $contr->get_ticket_status_types();
-$enrolled_developers = $contr->get_project_users($project_id, 3);
+$enrolled_developers = $contr->get_project_users($project_id, 3, 'users.full_name', 'asc');
 require('page_frame/ui_frame.php');
 
 ?>

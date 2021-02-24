@@ -9,10 +9,15 @@ if (isset($_GET['ticket_id'])) {
 } else {
     header('location: dashboard.php');
 }
-
+if (!isset($_GET['order1'])) {
+    $_GET['order1'] = 'created_at';
+    $_GET['dir1'] = 'desc';
+    $_GET['order2'] = 'created_at';
+    $_GET['dir2'] = 'desc';
+}
 $ticket = $contr->get_ticket_by_id($ticket_id);
-$ticket_events = $contr->get_ticket_events($ticket_id);
-$comments = $contr->get_ticket_comments($ticket_id);
+$comments = $contr->get_ticket_comments($ticket_id, $_GET['order1'], $_GET['dir1']);
+$ticket_events = $contr->get_ticket_events($ticket_id, $_GET['order2'], $_GET['dir2']);
 $ticket_details_permission = $contr->check_ticket_details_permission($_SESSION['user_id'], $_SESSION['role_name'], $ticket);
 ?>
 
@@ -95,9 +100,9 @@ $ticket_details_permission = $contr->check_ticket_details_permission($_SESSION['
                         <div class="w3-container w3-responsive">
                             <table class="w3-table w3-small w3-striped w3-bordered">
                                 <tr>
-                                    <th>Commenter</th>
-                                    <th>Message</th>
-                                    <th>Created</th>
+                                    <th><a href="#" onclick="double_reorder(1, 'commenter', '<?php echo $_GET['dir1']; ?>')">Commenter</a></th>
+                                    <th><a href="#" onclick="double_reorder(1, 'comment', '<?php echo $_GET['dir1']; ?>')">Message</a></th>
+                                    <th><a href="#" onclick="double_reorder(1, 'created_at', '<?php echo $_GET['dir1']; ?>')">Created</a></th>
                                 </tr>
                                 <?php foreach ($comments as $comment) : ?>
                                     <tr>
@@ -128,10 +133,10 @@ $ticket_details_permission = $contr->check_ticket_details_permission($_SESSION['
                         <div class="w3-container">
                             <table class="w3-table w3-small w3-striped w3-bordered">
                                 <tr>
-                                    <th>Property</th>
-                                    <th>Old Value</th>
-                                    <th>New Value</th>
-                                    <th>Date Changed</th>
+                                    <th><a href="#" onclick="double_reorder(2, 'ticket_event_type', '<?php echo $_GET['dir2']; ?>')">Property</a></th>
+                                    <th><a href="#" onclick="double_reorder(2, 'old_value', '<?php echo $_GET['dir2']; ?>')">Old Value</a></th>
+                                    <th><a href="#" onclick="double_reorder(2, 'new_value', '<?php echo $_GET['dir2']; ?>')">New Value</a></th>
+                                    <th><a href="#" onclick="double_reorder(2, 'created_at', '<?php echo $_GET['dir2']; ?>')">Date Changed</a></th>
                                 </tr>
                                 <?php foreach ($ticket_events as $ticket_event) : ?>
                                     <tr>
@@ -160,6 +165,14 @@ $ticket_details_permission = $contr->check_ticket_details_permission($_SESSION['
         <p>You don't have permission to see the details of this ticket. Please contact your local admin.</p>
     <?php endif ?>
 </div>
+
+<form action="" method="get" id="reorder_form">
+    <input type="hidden" name="ticket_id" value="<?php echo $ticket_id ?>">
+    <input type="hidden" name="order1" id="order1" value="<?php echo $_GET['order1'] ?>">
+    <input type="hidden" name="dir1" id="dir1" value="<?php echo $_GET['dir1'] ?>">
+    <input type="hidden" name="order2" id="order2" value="<?php echo $_GET['order2'] ?>">
+    <input type="hidden" name="dir2" id="dir2" value="<?php echo $_GET['dir2'] ?>">
+</form>
 
 <!-- Modal response message -->
 <?php if (isset($_SESSION['edit_ticket_succes'])) : ?>

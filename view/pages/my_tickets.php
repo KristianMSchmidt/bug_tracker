@@ -7,7 +7,10 @@ Project managers should in addition see all tickets to all the projects they are
 
 require('../../control/shared/login_check.inc.php');
 require('page_frame/ui_frame.php');
-
+if (!isset($_GET['order'])) {
+    $_GET['order'] = 'updated_at';
+    $_GET['dir'] = 'desc';
+}
 $contr = new Controller;
 $tickets = $contr->get_user_tickets_details($_SESSION['user_id'], $_SESSION['role_name'], $_GET['order'], $_GET['dir']);
 ?>

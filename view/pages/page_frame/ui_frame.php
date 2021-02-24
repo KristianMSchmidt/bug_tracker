@@ -81,7 +81,7 @@ if (isset($_SESSION['user_id'])) {
                                     $news_item = $contr->get_ticket_by_id($notification['info_id'])['title'];
                                 } elseif ($notification['type'] == 3) {
                                     /* un-assigned from ticket */
-                                    $href = "my_tickets.php?order=updated_at&dir=desc";
+                                    $href = "my_tickets.php";
                                     $news_item = $contr->get_ticket_by_id($notification['info_id'])['title'];
                                 } elseif ($notification['type'] == 4) {
                                     /* enrolled in project */
@@ -89,7 +89,7 @@ if (isset($_SESSION['user_id'])) {
                                     $news_item = $contr->get_project_name_by_id($notification['info_id']);
                                 } elseif ($notification['type'] == 5) {
                                     /* dis-enrolled from project */
-                                    $href = "my_projects.php?order=updated_at&dir=desc";
+                                    $href = "my_projects.php";
                                     $news_item = $contr->get_project_name_by_id($notification['info_id']);
                                 } elseif ($notification['type'] == 6) {
                                     /* new comment to your ticket */
@@ -131,9 +131,9 @@ if (isset($_SESSION['user_id'])) {
                     <?php if ($_SESSION['role_name'] == 'Admin') : ?>
                         <a href="manage_user_roles.php" id="manage_user_roles_link"><i class="fas fa-users"></i> &nbsp;Manage User Roles</a>
                     <?php endif ?>
-                    <a href="users_overview.php?order=full_name&dir=asc" id="users_overview_link"><i class="fas fa-user-friends"></i> &nbsp;Users Overview</a>
+                    <a href="users_overview.php" id="users_overview_link"><i class="fas fa-user-friends"></i> &nbsp;Users Overview</a>
                 <?php endif ?>
-                <a href="my_projects.php?order=updated_at&dir=desc" id="my_projects_link"><i class="fas fa-industry"></i> &nbsp;My Projects</a>
-                <a href="my_tickets.php?order=updated_at&dir=desc" id="my_tickets_link"><i class="fas fa-ticket-alt"></i> &nbsp;My Tickets</a>
+                <a href="my_projects.php" id="my_projects_link"><i class="fas fa-industry"></i> &nbsp;My Projects</a>
+                <a href="my_tickets.php" id="my_tickets_link"><i class="fas fa-ticket-alt"></i> &nbsp;My Tickets</a>
             <?php endif ?>
         </div>

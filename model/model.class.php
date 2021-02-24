@@ -256,7 +256,7 @@ class Model extends Dbh
         return $result;
     }
 
-    protected function db_get_project_users($project_id, $role_id)
+    protected function db_get_project_users($project_id, $role_id, $order_by, $order_direction)
     {
         $sql =
             "SELECT 
@@ -271,11 +271,11 @@ class Model extends Dbh
             WHERE project_enrollments.project_id = ?";
 
         if ($role_id !== "all_roles") {
-            $sql .= " AND users.role_id = ? ORDER BY users.full_name";
+            $sql .= " AND users.role_id = ? ORDER BY {$order_by} {$order_direction}";
             $stmt = $this->connect()->prepare($sql);
             $stmt->execute([$project_id, $role_id]);
         } else {
-            $sql .= " ORDER BY users.full_name";
+            $sql .= " ORDER BY {$order_by} {$order_direction}";
             $stmt = $this->connect()->prepare($sql);
             $stmt->execute([$project_id]);
         }
@@ -370,7 +370,7 @@ class Model extends Dbh
         return $project;
     }
 
-    protected function db_get_tickets_by_project($project_id)
+    protected function db_get_tickets_by_project($project_id, $order_by, $order_direction)
     // all tickets to given project
     // TODO: merge this function with db_get_tickets_by_id
     {
@@ -394,7 +394,7 @@ class Model extends Dbh
         JOIN ticket_priorities ON tickets.priority_id = ticket_priorities.id
         JOIN ticket_types ON tickets.type_id =ticket_types.id
         WHERE tickets.project_id = ?
-        ORDER BY created_at DESC";
+        ORDER BY {$order_by} {$order_direction}";
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute([$project_id]);
         $tickets = $stmt->fetchAll();
@@ -539,7 +539,7 @@ class Model extends Dbh
         return $role_name;
     }
 
-    protected function db_get_ticket_events($ticket_id)
+    protected function db_get_ticket_events($ticket_id, $order_by, $order_direction)
     {
         $sql = "SELECT 
                     ticket_events.old_value, 
@@ -548,14 +548,14 @@ class Model extends Dbh
                     ticket_event_types.ticket_event_type 
                 FROM ticket_events LEFT JOIN ticket_event_types ON ticket_events.type_id = ticket_event_types.id
                 WHERE ticket_events.ticket_id = ?
-                ORDER BY created_at DESC";
+                ORDER BY {$order_by} {$order_direction}";
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute([$ticket_id]);
         $ticket_events = $stmt->fetchAll();
         return $ticket_events;
     }
 
-    protected function db_get_ticket_comments($ticket_id)
+    protected function db_get_ticket_comments($ticket_id, $order_by, $order_direction)
     {
         $sql = "SELECT 
                     ticket_comments.comment, 
@@ -564,7 +564,7 @@ class Model extends Dbh
                 FROM ticket_comments
                 LEFT JOIN users on ticket_comments.commenter_user_id = users.id
                 WHERE ticket_comments.ticket_id = ?
-                ORDER BY created_at DESC";
+                ORDER BY {$order_by} {$order_direction}";
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute([$ticket_id]);
         $comments = $stmt->fetchAll();

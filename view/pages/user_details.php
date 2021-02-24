@@ -6,7 +6,12 @@ if (isset($_GET['user_id'])) {
 } else {
     header('location: dashboard.php');
 }
-
+if (!isset($_GET['order1'])) {
+    $_GET['order1'] = 'project_name';
+    $_GET['dir1'] = 'asc';
+    $_GET['order2'] = 'title';
+    $_GET['dir2'] = 'asc';
+}
 $contr = new controller;
 $user = $contr->get_user_details_by_id($user_id);
 $projects = $contr->get_users_enrolled_projects_details($user_id, $_GET['order1'], $_GET['dir1']);
@@ -149,7 +154,6 @@ $tickets = $contr->get_user_tickets_details($user_id, 'Developer', $_GET['order2
     <input type="hidden" name="order2" id="order2" value="<?php echo $_GET['order2'] ?>">
     <input type="hidden" name="dir2" id="dir2" value="<?php echo $_GET['dir2'] ?>">
 </form>
-
 
 <?php
 require('page_frame/closing_tags.php');

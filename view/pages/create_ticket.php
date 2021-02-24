@@ -10,7 +10,7 @@ $contr = new Controller;
 
 if ($_GET['project_id'] !== "none") {
     $selected_project = $contr->get_project_by_id($_GET['project_id'], -1);
-    $enrolled_developers = $contr->get_project_users($_GET['project_id'], 3);
+    $enrolled_developers = $contr->get_project_users($_GET['project_id'], 3, 'users.full_name', 'asc');
 }
 if ($_GET['project_options'] == "true") {
     $projects = $contr->get_user_edit_project_rights_details($_SESSION['user_id'], $_SESSION['role_name']);
@@ -237,5 +237,5 @@ require('page_frame/closing_tags.php');
 ?>
 
 <script>
-    set_active_link(" my_tickets");
+    set_active_link("my_tickets");
 </script>

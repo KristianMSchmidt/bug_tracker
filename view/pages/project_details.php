@@ -7,13 +7,18 @@ if (isset($_GET['project_id'])) {
 } else {
     header('location: dashboard.php');
 }
-
+if (!isset($_GET['order1'])) {
+    $_GET['order1'] = 'full_name';
+    $_GET['dir1'] = 'asc';
+    $_GET['order2'] = 'created_at';
+    $_GET['dir2'] = 'desc';
+}
 $contr = new controller;
 
 $project_permission = $contr->check_project_details_permission($_SESSION['user_id'], $_SESSION['role_name'], $project_id);
 $project = $contr->get_project_by_id($project_id,  $_SESSION['user_id']);
-$users = $contr->get_project_users($project_id, "all_roles");
-$tickets = $contr->get_tickets_by_project($project_id);
+$users = $contr->get_project_users($project_id, "all_roles", $_GET['order1'], $_GET['dir1']);
+$tickets = $contr->get_tickets_by_project($project_id, $_GET['order2'], $_GET['dir2']);
 ?>
 
 <div class="main">
@@ -95,10 +100,13 @@ $tickets = $contr->get_tickets_by_project($project_id);
                         <div class="w3-container w3-small w3-responsive">
                             <table class="w3-table w3-striped w3-bordered">
                                 <tr>
-                                    <th>Name</th>
+                                    <th><a href="#" onclick="double_reorder(1, 'full_name', '<?php echo $_GET['dir1']; ?>')">
+                                            Name</a></th>
                                     <th>Email</th>
-                                    <th>Role</th>
-                                    <th>Enrolled since</th>
+                                    <th><a href="#" onclick="double_reorder(1, 'role_name', '<?php echo $_GET['dir1']; ?>')">
+                                            Role</a></th>
+                                    <th><a href="#" onclick="double_reorder(1, 'enrollment_start', '<?php echo $_GET['dir1']; ?>')">
+                                            Enrolled since</a></th>
                                 </tr>
                                 <?php foreach ($users as $user) : ?>
                                     <tr>
@@ -141,11 +149,11 @@ $tickets = $contr->get_tickets_by_project($project_id);
                         <div class="w3-container w3-responsive">
                             <table class="w3-table w3-striped w3-small w3-bordered">
                                 <tr>
-                                    <th>Title</th>
-                                    <th>Submitter</th>
-                                    <th>Developer</th>
-                                    <th>Status</th>
-                                    <th>Created</th>
+                                    <th><a href="#" onclick="double_reorder(2, 'title', '<?php echo $_GET['dir2']; ?>')">Title</a></th>
+                                    <th><a href="#" onclick="double_reorder(2, 'submitter_name', '<?php echo $_GET['dir2']; ?>')">Submitter</a></th>
+                                    <th><a href="#" onclick="double_reorder(2, 'developer_name', '<?php echo $_GET['dir2']; ?>')">Developer</a></th>
+                                    <th><a href="#" onclick="double_reorder(2, 'ticket_status_name', '<?php echo $_GET['dir2']; ?>')">Status</a></th>
+                                    <th><a href="#" onclick="double_reorder(2, 'created_at', '<?php echo $_GET['dir2']; ?>')">Created</a></th>
                                     <th>Ticket Details</th>
                                 </tr>
 
@@ -184,7 +192,7 @@ $tickets = $contr->get_tickets_by_project($project_id);
 </div>
 
 <form action="" method="get" id="reorder_form">
-    <input type="hidden" name="user_id" value="<?php echo $user_id ?>">
+    <input type="hidden" name="project_id" value="<?php echo $project_id ?>">
     <input type="hidden" name="order1" id="order1" value="<?php echo $_GET['order1'] ?>">
     <input type="hidden" name="dir1" id="dir1" value="<?php echo $_GET['dir1'] ?>">
     <input type="hidden" name="order2" id="order2" value="<?php echo $_GET['order2'] ?>">

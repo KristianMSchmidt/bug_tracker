@@ -8,7 +8,7 @@ if (isset($_GET['show_original'])) {
     $_SESSION['data'] = $contr->get_project_by_id($project_id, -1);
 }
 if (!isset($_SESSION['data']['project_id'])) {
-    header("location: my_projects.php?order=updated_at&dir=desc");
+    header("location: my_projects.php");
 }
 $project_details_permission = $contr->check_project_details_permission($_SESSION['user_id'], $_SESSION['role_name'], $_SESSION['data']['project_id']);
 
