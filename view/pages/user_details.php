@@ -9,11 +9,10 @@ if (isset($_GET['user_id'])) {
 
 $contr = new controller;
 $user = $contr->get_user_details_by_id($user_id);
-$projects = $contr->get_users_enrolled_projects_details($user_id);
+$projects = $contr->get_users_enrolled_projects_details($user_id, $_GET['order1'], $_GET['dir1']);
 //Dirty fix to get the right tickets for Admin & PM using existing code. I'll clean this code later. 
 //Here I only want to show ticket where the user in questing is either developer assigned or submitter
-$tickets = $contr->get_user_tickets_details($user_id, 'Developer', 'project_name', 'asc');
-
+$tickets = $contr->get_user_tickets_details($user_id, 'Developer', $_GET['order2'], $_GET['dir2']);
 ?>
 
 <div class="main">
@@ -32,7 +31,7 @@ $tickets = $contr->get_user_tickets_details($user_id, 'Developer', 'project_name
                         <td><?php echo $user['full_name'] ?></td>
                     </tr>
                     <tr>
-                        <td class="td-details">Email:</td>
+                        <td class=" td-details">Email:</td>
                         <td><?php echo $user['email'] ?></td>
                     </tr>
                     <tr>
@@ -63,8 +62,8 @@ $tickets = $contr->get_user_tickets_details($user_id, 'Developer', 'project_name
                     <div class="w3-container">
                         <table class="w3-table w3-striped w3-bordered">
                             <tr>
-                                <th>Project Name</th>
-                                <th>Enrolled Since</th>
+                                <th><a href="#" onclick="double_reorder(1, 'project_name', '<?php echo $_GET['dir1']; ?>')">Project Name</a></th>
+                                <th><a href="#" onclick="double_reorder(1, 'enrollment_start', '<?php echo $_GET['dir1']; ?>')">Enrolled Since</a></th>
                                 <th>Project Details</th>
                             </tr>
                             <?php foreach ($projects as $project) : ?>
@@ -104,10 +103,10 @@ $tickets = $contr->get_user_tickets_details($user_id, 'Developer', 'project_name
                     <div class="w3-container w3-responsive">
                         <table class="w3-table w3-striped w3-bordered">
                             <tr>
-                                <th>Title</th>
-                                <th>Submitter</th>
-                                <th>Developer</th>
-                                <th>Project</th>
+                                <th><a href="#" onclick="double_reorder(2, 'title', '<?php echo $_GET['dir2']; ?>')">Title</a></th>
+                                <th><a href="#" onclick="double_reorder(2, 'submitter_name','<?php echo $_GET['dir2']; ?>')">Submitter</a></th>
+                                <th><a href="#" onclick="double_reorder(2, 'developer_name','<?php echo $_GET['dir2']; ?>')">Developer</a></th>
+                                <th><a href="#" onclick="double_reorder(2, 'project_name','<?php echo $_GET['dir2']; ?>')">Project</a></th>
                                 <th>Ticket Details</th>
                             </tr>
 
@@ -142,6 +141,15 @@ $tickets = $contr->get_user_tickets_details($user_id, 'Developer', 'project_name
         </div>
     </div>
 </div>
+
+<form action="" method="get" id="reorder_form">
+    <input type="hidden" name="user_id" value="<?php echo $user_id ?>">
+    <input type="hidden" name="order1" id="order1" value="<?php echo $_GET['order1'] ?>">
+    <input type="hidden" name="dir1" id="dir1" value="<?php echo $_GET['dir1'] ?>">
+    <input type="hidden" name="order2" id="order2" value="<?php echo $_GET['order2'] ?>">
+    <input type="hidden" name="dir2" id="dir2" value="<?php echo $_GET['dir2'] ?>">
+</form>
+
 
 <?php
 require('page_frame/closing_tags.php');

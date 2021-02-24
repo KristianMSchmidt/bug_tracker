@@ -11,6 +11,17 @@ function reorder(page, order_by, order_direction) {
     window.location.href = url;
 }
 
+function double_reorder(table_num, order_by, current_direction) {
+    // Function used to reorder tables on pages two tables
+    document.getElementById('order' + table_num).value = order_by;
+    if (current_direction == "asc") {
+        document.getElementById('dir' + table_num).value = "desc";
+    } else {
+        document.getElementById('dir' + table_num).value = "asc";
+    }
+    document.getElementById('reorder_form').submit();
+}
+
 function set_active_link(new_active_item) {
     // Function used to higlight active sidebar menu links
 

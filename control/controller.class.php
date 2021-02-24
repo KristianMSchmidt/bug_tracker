@@ -104,10 +104,10 @@ class Controller extends Model
         return ($this->get_projects_details($project_ids, $user_id, $order_by, $order_direction));
     }
 
-    public function get_users_enrolled_projects_details($user_id)
+    public function get_users_enrolled_projects_details($user_id, $order_by, $order_direction)
     {
         $project_ids = $this->get_project_enrollments_by_user_id($user_id);
-        $projects = $this->get_projects_details($project_ids, $user_id, 'projects.updated_at', 'DESC');
+        $projects = $this->get_projects_details($project_ids, $user_id, $order_by, $order_direction);
         return $projects;
     }
 

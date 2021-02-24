@@ -183,6 +183,15 @@ $tickets = $contr->get_tickets_by_project($project_id);
     <?php endif ?>
 </div>
 
+<form action="" method="get" id="reorder_form">
+    <input type="hidden" name="user_id" value="<?php echo $user_id ?>">
+    <input type="hidden" name="order1" id="order1" value="<?php echo $_GET['order1'] ?>">
+    <input type="hidden" name="dir1" id="dir1" value="<?php echo $_GET['dir1'] ?>">
+    <input type="hidden" name="order2" id="order2" value="<?php echo $_GET['order2'] ?>">
+    <input type="hidden" name="dir2" id="dir2" value="<?php echo $_GET['dir2'] ?>">
+</form>
+
+
 <!-- Modal response message for created ticket -->
 <?php if (isset($_SESSION['created_ticket_succes'])) : ?>
     <div id="id01" class="w3-modal">

@@ -1,9 +1,8 @@
 <?php
 /* How it should work 
 Administrators should see all tickets in the database
-Project Managers should see all tickets to the projects they are enrolled in or are submitter 
-Developers should seea ll tickets that they are assigned to as 'assigned developer' OR submitteer (change this)
-Submitters should see all tickets they have submitted (os are dev assigned)
+All users should see all the tickets to which they are developer assigned or submitter. 
+Project managers should in addition see all tickets to all the projects they are enrolled in 
 */
 
 require('../../control/shared/login_check.inc.php');
