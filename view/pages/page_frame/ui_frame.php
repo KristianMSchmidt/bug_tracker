@@ -81,7 +81,7 @@ if (isset($_SESSION['user_id'])) {
                                     $news_item = $contr->get_ticket_by_id($notification['info_id'])['title'];
                                 } elseif ($notification['type'] == 3) {
                                     /* un-assigned from ticket */
-                                    $href = "my_tickets.php";
+                                    $href = "my_tickets.php?order=updated_at&dir=desc";
                                     $news_item = $contr->get_ticket_by_id($notification['info_id'])['title'];
                                 } elseif ($notification['type'] == 4) {
                                     /* enrolled in project */
@@ -134,6 +134,6 @@ if (isset($_SESSION['user_id'])) {
                     <a href="users_overview.php?order=full_name&dir=asc" id="users_overview_link"><i class="fas fa-user-friends"></i> &nbsp;Users Overview</a>
                 <?php endif ?>
                 <a href="my_projects.php?order=updated_at&dir=desc" id="my_projects_link"><i class="fas fa-industry"></i> &nbsp;My Projects</a>
-                <a href="my_tickets.php" id="my_tickets_link"><i class="fas fa-ticket-alt"></i> &nbsp;My Tickets</a>
+                <a href="my_tickets.php?order=updated_at&dir=desc" id="my_tickets_link"><i class="fas fa-ticket-alt"></i> &nbsp;My Tickets</a>
             <?php endif ?>
         </div>

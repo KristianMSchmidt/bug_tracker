@@ -177,10 +177,9 @@ class Controller extends Model
         $this->db_create_user($full_name, $pwd, $email, $role_id);
     }
 
-    public function get_user_tickets_details($user_id, $role_name)
+    public function get_user_tickets_details($user_id, $role_name, $order, $dir)
     {
-        $results = $this->db_get_user_tickets_details($user_id, $role_name);
-
+        $results = $this->db_get_user_tickets_details($user_id, $role_name, $order, $dir);
         return $results;
     }
 

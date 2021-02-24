@@ -10,7 +10,7 @@ require('../../control/shared/login_check.inc.php');
 require('page_frame/ui_frame.php');
 
 $contr = new Controller;
-$tickets = $contr->get_user_tickets_details($_SESSION['user_id'], $_SESSION['role_name']);
+$tickets = $contr->get_user_tickets_details($_SESSION['user_id'], $_SESSION['role_name'], $_GET['order'], $_GET['dir']);
 ?>
 
 <div class="main">
@@ -40,17 +40,16 @@ $tickets = $contr->get_user_tickets_details($_SESSION['user_id'], $_SESSION['rol
                 <div class="w3-container w3-responsive">
                     <table class="w3-table w3-small w3-striped w3-bordered">
                         <tr>
-                            <th>Title</th>
-                            <th> Project Name</th>
-                            <th class="hide_last">Ticket Priority</th>
-                            <th>Ticket Status</th>
-                            <th class="hide_if_needed">Ticket Type</th>
-                            <th class="hide_if_needed">Developer Assigned</th>
-                            <th class="hide_if_needed"> Submitter</th>
-                            <th class="hide_last">Last Update</th>
+                            <th><a href="#" onclick="reorder('my_tickets','title','<?php echo $_GET['dir'] ?>')">Title</a></th>
+                            <th><a href="#" onclick="reorder('my_tickets','project_name','<?php echo $_GET['dir'] ?>')"> Project Name</a></th>
+                            <th class="hide_last"><a href="#" onclick="reorder('my_tickets','ticket_priority_name','<?php echo $_GET['dir'] ?>')">Ticket Priority</a></th>
+                            <th><a href="#" onclick="reorder('my_tickets','ticket_status_name','<?php echo $_GET['dir'] ?>')">Ticket Status</a></th>
+                            <th class="hide_if_needed"><a href="#" onclick="reorder('my_tickets','ticket_type_name','<?php echo $_GET['dir'] ?>')">Ticket Type</a></th>
+                            <th class="hide_if_needed"><a href="#" onclick="reorder('my_tickets','developer_name','<?php echo $_GET['dir'] ?>')">Developer Assigned</a></th>
+                            <th class="hide_if_needed"><a href="#" onclick="reorder('my_tickets','submitter_name','<?php echo $_GET['dir'] ?>')"> Submitter</a></th>
+                            <th class="hide_last"><a href="#" onclick="reorder('my_tickets','updated_at','<?php echo $_GET['dir'] ?>')">Last Update</a></th>
                             <th>Ticket Details</th>
                         </tr>
-
                         <?php foreach ($tickets as $ticket) : ?>
                             <tr>
                                 <td><?php echo $ticket['title'] ?></td>

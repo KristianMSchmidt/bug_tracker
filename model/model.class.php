@@ -135,7 +135,7 @@ class Model extends Dbh
         return $results;
     }
 
-    protected function db_get_user_tickets_details($user_id, $role_name)
+    protected function db_get_user_tickets_details($user_id, $role_name, $order_by, $order_direction)
     {
         $sql = "SELECT 
                     tickets.title,
@@ -172,7 +172,7 @@ class Model extends Dbh
               (SELECT project_id FROM project_enrollments WHERE project_enrollments.user_id = {$user_id}))";
         endif;
 
-        $sql .= " ORDER BY tickets.created_at DESC";
+        $sql .= " ORDER BY {$order_by} {$order_direction}";
 
         $stmt = $this->connect()->prepare($sql);
 
