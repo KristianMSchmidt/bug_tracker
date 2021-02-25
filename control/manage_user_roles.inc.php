@@ -19,14 +19,15 @@ foreach ($selected_users as $user) {
         // demo users can't have their role changed
         if (!in_array($user['full_name'], $demo_users)) {
             // update role
-            $contr->update_role($_POST['new_role'], $_SESSION['user_id'], $user_id);
+
+            $contr->update_role($_POST['new_role'], $_SESSION['user_id'], $user['user_id']);
             $new_role_name = $chosen_role_name;
             $message = "Yes";
             $color = "green";
 
             // create notification
             $notification_type_id = 1; // role update
-            $contr->create_notification($notification_type_id, $_POST['new_role'], $user_id, $_SESSION['user_id']);
+            $contr->create_notification($notification_type_id, $_POST['new_role'], $user['user_id'], $_SESSION['user_id']);
         } else {
             $new_role_name = $user['role_name'];
             $message = "No (immutable role)";
