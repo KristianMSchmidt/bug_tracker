@@ -19,6 +19,8 @@ $project_permission = $contr->check_project_details_permission($_SESSION['user_i
 $project = $contr->get_project_by_id($project_id,  $_SESSION['user_id']);
 $users = $contr->get_project_users($project_id, "all_roles", $_GET['order1'], $_GET['dir1']);
 $tickets = $contr->get_tickets_by_project($project_id, $_GET['order2'], $_GET['dir2']);
+$ticket_count = count($tickets);
+$ticket_details_permissions = $contr->check_multiple_ticket_details_permission($_SESSION['user_id'], $_SESSION['role_name'], $tickets);
 ?>
 
 <div class="main">
@@ -82,7 +84,6 @@ $tickets = $contr->get_tickets_by_project($project_id, $_GET['order2'], $_GET['d
 
             <div class="wrapper bottom project">
                 <div class="left" style="flex:4;">
-
                     <!-- Only Admin and Project Managers should see this button -->
                     <?php if ($_SESSION['role_name'] == 'Admin' || $_SESSION['role_name'] == 'Project Manager') : ?>
                         <form action="manage_project_users.php" method="get">
@@ -158,28 +159,27 @@ $tickets = $contr->get_tickets_by_project($project_id, $_GET['order2'], $_GET['d
                                 </tr>
 
                                 <?php foreach ($tickets as $ticket) : ?>
-                                    <?php $ticket_details_permission = $contr->check_ticket_details_permission($_SESSION['user_id'], $_SESSION['role_name'], $ticket); ?>
                                     <tr>
                                         <td><?php echo $ticket['title'] ?></td>
                                         <td><?php echo $ticket['submitter_name'] ?></td>
                                         <td><?php echo $ticket['developer_name'] ?></td>
                                         <td><?php echo $ticket['ticket_status_name'] ?></td>
                                         <td><?php echo explode(" ", $ticket['created_at'])[0] ?></td>
-                                        <?php if ($ticket_details_permission) : ?>
-                                            <td><a href="ticket_details.php?ticket_id=<?php echo $ticket['id'] ?>">Details</a></td>
+                                        <?php if ($ticket_details_permissions[$ticket['ticket_id']]) : ?>
+                                            <td><a href="ticket_details.php?ticket_id=<?php echo $ticket['ticket_id'] ?>">Details</a></td>
                                         <?php else : ?>
                                             <td>No permit</td>
                                         <?php endif; ?>
                                     </tr>
                                 <?php endforeach; ?>
                             </table>
-                            <?php if (count($tickets) == 0) : ?>
+                            <?php if ($ticket_count == 0) : ?>
                                 <div class="empty-table-row">
                                     <p>There are no tickets for this project in the database</p>
                                 </div>
                                 <p class="entry-info">Showing 0-0 of 0 entries</p>
                             <?php else : ?>
-                                <p class="entry-info">Showing 1-<?php echo count($tickets); ?> of <?php echo count($tickets); ?> entries</p>
+                                <p class="entry-info">Showing 1-<?php echo $ticket_count; ?> of <?php $ticket_count; ?> entries</p>
                             <?php endif ?>
                         </div>
                     </div>

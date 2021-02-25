@@ -15,9 +15,13 @@ if (!isset($_GET['order1'])) {
 $contr = new controller;
 $user = $contr->get_user_details_by_id($user_id);
 $projects = $contr->get_users_enrolled_projects_details($user_id, $_GET['order1'], $_GET['dir1']);
+$project_details_permissions = $contr->check_multiple_project_details_permission($_SESSION['user_id'], $_SESSION['role_name'], $projects);
 //Dirty fix to get the right tickets for Admin & PM using existing code. I'll clean this code later. 
 //Here I only want to show ticket where the user in questing is either developer assigned or submitter
 $tickets = $contr->get_user_tickets_details($user_id, 'Developer', $_GET['order2'], $_GET['dir2']);
+$ticket_details_permissions = $contr->check_multiple_ticket_details_permission($_SESSION['user_id'], $_SESSION['role_name'], $tickets);
+$project_count = count($projects);
+$ticket_count = count($tickets);
 ?>
 
 <div class="main">
@@ -72,12 +76,11 @@ $tickets = $contr->get_user_tickets_details($user_id, 'Developer', $_GET['order2
                                 <th>Project Details</th>
                             </tr>
                             <?php foreach ($projects as $project) : ?>
-                                <?php $project_details_permission = $contr->check_project_details_permission($_SESSION['user_id'], $_SESSION['role_name'], $project['project_id']); ?>
                                 <tr>
                                     <td><?php echo $project['project_name']; ?></td>
                                     <td><?php echo $project['enrollment_start']; ?></td>
                                     <td>
-                                        <?php if ($project_details_permission) : ?>
+                                        <?php if ($project_details_permissions[$project['project_id']]) : ?>
                                             <a href="project_details.php?project_id=<?php echo $project['project_id'] ?>">Details</a>
                                         <?php else : ?>
                                             No permit
@@ -86,13 +89,13 @@ $tickets = $contr->get_user_tickets_details($user_id, 'Developer', $_GET['order2
                                 </tr>
                             <?php endforeach ?>
                         </table>
-                        <?php if (count($projects) == 0) : ?>
+                        <?php if ($project_count == 0) : ?>
                             <div class=" empty-table-row">
                                 <p>This user is not enrolled in any projects</p>
                             </div>
                             <p class="entry-info">Showing 0-0 of 0 entries</p>
                         <?php else : ?>
-                            <p class="entry-info">Showing 1-<?php echo count($projects); ?> of <?php echo count($projects); ?> entries</p>
+                            <p class="entry-info">Showing 1-<?php echo $project_count; ?> of <?php echo $project_count; ?> entries</p>
                         <?php endif ?>
                     </div>
                 </div>
@@ -116,14 +119,13 @@ $tickets = $contr->get_user_tickets_details($user_id, 'Developer', $_GET['order2
                             </tr>
 
                             <?php foreach ($tickets as $ticket) : ?>
-                                <?php $ticket_details_permission = $contr->check_ticket_details_permission($_SESSION['user_id'], $_SESSION['role_name'], $ticket); ?>
                                 <tr>
                                     <td><?php echo $ticket['title'] ?></td>
                                     <td><?php echo $ticket['submitter_name'] ?></td>
                                     <td><?php echo $ticket['developer_name'] ?></td>
                                     <td><?php echo $ticket['project_name'] ?></td>
                                     <td>
-                                        <?php if ($ticket_details_permission) : ?>
+                                        <?php if ($ticket_details_permissions[$ticket['ticket_id']]) : ?>
                                             <a href="ticket_details.php?ticket_id=<?php echo $ticket['ticket_id'] ?>">Details</a>
                                         <?php else : ?> No permit
                                         <?php endif; ?>
@@ -132,13 +134,13 @@ $tickets = $contr->get_user_tickets_details($user_id, 'Developer', $_GET['order2
                             <?php endforeach; ?>
 
                         </table>
-                        <?php if (count($tickets) == 0) : ?>
+                        <?php if ($ticket_count == 0) : ?>
                             <div class="empty-table-row">
                                 <p>There are no tickets for this user in the database</p>
                             </div>
                             <p class="entry-info">Showing 0-0 of 0 entries</p>
                         <?php else : ?>
-                            <p class="entry-info">Showing 1-<?php echo count($tickets); ?> of <?php echo count($tickets); ?> entries</p>
+                            <p class="entry-info">Showing 1-<?php echo $ticket_count; ?> of <?php echo $ticket_count; ?> entries</p>
                         <?php endif ?>
                     </div>
                 </div>

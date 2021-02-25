@@ -15,7 +15,7 @@ class Controller extends Model
            Decides what projects will be shown in "My Projects" and to what projects the given user will have access to details.  
 
            Who have permission to a project?
-          - All users should have permission to to details of the projects they are enrolled in
+          - All users should have permission to details of the projects they are enrolled in
           - All users who have a ticket in a given project (as developer or submitter) should also have access to project details, 
             whether or not they are currently enrolled in the project (perhaps someone disenrolled them by accident)
          - Admins will get permission to all projects
@@ -34,9 +34,9 @@ class Controller extends Model
         if ($role_name == "Admin") {
             return true;
         } else {
-            $projects = $this->get_user_project_ids($user_id, $role_name);
-            foreach ($projects as $project) {
-                if ($project['project_id'] == $project_id) {
+            $user_projects = $this->get_user_project_ids($user_id, $role_name);
+            foreach ($user_projects as $user_project) {
+                if ($user_project['project_id'] == $project_id) {
                     return True;
                 }
             }
@@ -44,9 +44,28 @@ class Controller extends Model
         return false;
     }
 
-    private function get_project_enrollments_by_user_id($user_id)
+    public function check_multiple_project_details_permission($user_id, $role_name, $projects)
     {
-        return ($this->db_get_project_enrollments_by_user_id($user_id));
+
+        $project_detail_permissions = [];
+        if ($role_name == "Admin") {
+            foreach ($projects as $project) {
+                $project_detail_permissions[$project['project_id']] = true;
+            }
+        } else {
+            $user_projects = $this->get_user_project_ids($user_id, $role_name);
+            foreach ($projects as $project) {
+                //print_r($project['project_id']);
+                //exit();
+                $project_detail_permissions[$project['project_id']] = false;
+                foreach ($user_projects as $user_project) {
+                    if ($user_project['project_id'] == $project['project_id']) {
+                        $project_detail_permissions[$project['project_id']] = true;
+                    }
+                }
+            }
+        }
+        return $project_detail_permissions;
     }
 
     private function get_user_edit_project_rights_ids($user_id, $role_name)
@@ -55,7 +74,7 @@ class Controller extends Model
         if ($role_name == "Admin") {
             $projects = $this->db_get_all_project_ids();
         } else if (in_array($role_name, ["Submitter", "Project Manager"])) { //Submitters actually should not have all these rights, but only the right to add tickets to his projects
-            $projects = $this->get_project_enrollments_by_user_id($_SESSION['user_id']);
+            $projects = $this->db_get_project_enrollments_by_user_id($_SESSION['user_id']);
         } else {
             $projects = [];
         }
@@ -101,7 +120,7 @@ class Controller extends Model
 
     public function get_users_enrolled_projects_details($user_id, $order_by, $order_direction)
     {
-        $project_ids = $this->get_project_enrollments_by_user_id($user_id);
+        $project_ids = $this->db_get_project_enrollments_by_user_id($user_id);
         $projects = $this->get_projects_details($project_ids, $user_id, $order_by, $order_direction);
         return $projects;
     }
@@ -379,5 +398,37 @@ class Controller extends Model
         } else {
             return false;
         }
+    }
+
+    public function check_multiple_ticket_details_permission($user_id, $role_name, $tickets)
+    {
+        $ticket_detail_permissions = [];
+        //Admins have permission to details of all tickets
+        if ($role_name == "Admin") {
+            foreach ($tickets as $ticket) {
+                $ticket_detail_permissions[$ticket['ticket_id']] = true;
+            }
+        } else {
+            $user_project_enrollments = $this->db_get_project_enrollments_by_user_id($user_id);
+            foreach ($tickets as $ticket) {
+                $ticket_detail_permissions[$ticket['ticket_id']] = false;
+                // If user is developer or submitter on ticket, he/she also have acces to details
+                if (
+                    $ticket['developer_assigned_id'] == $user_id ||
+                    $ticket['submitter_id'] == $user_id
+                ) {
+                    $ticket_detail_permissions[$ticket['ticket_id']] = true;
+                }
+                // If user is enrolled in parent project, user also has acces to ticket details
+                else {
+                    foreach ($user_project_enrollments as $user_project) {
+                        if ($user_project['project_id'] == $ticket['project_id']) {
+                            $ticket_detail_permissions[$ticket['ticket_id']] = true;
+                        }
+                    }
+                }
+            }
+        }
+        return $ticket_detail_permissions;
     }
 }

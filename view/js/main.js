@@ -12,7 +12,7 @@ function reorder(page, order_by, order_direction) {
 }
 
 function double_reorder(table_num, order_by, current_direction) {
-    // Function used to reorder tables on pages two tables
+    // Function used to reorder tables on pages with two tables
     document.getElementById('order' + table_num).value = order_by;
     if (current_direction == "asc") {
         document.getElementById('dir' + table_num).value = "desc";
@@ -24,7 +24,6 @@ function double_reorder(table_num, order_by, current_direction) {
 
 function set_active_link(new_active_item) {
     // Function used to higlight active sidebar menu links
-
     sidebar_items = sidebar_items = [
         "dashboard",
         "manage_project_users",

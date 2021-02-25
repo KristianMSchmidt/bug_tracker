@@ -136,6 +136,10 @@ class Model extends Dbh
     }
 
     protected function db_get_user_tickets_details($user_id, $role_name, $order_by, $order_direction)
+    /* Collects details to all the tickets to be shown in "My Tickets"
+       Admins should see all tickets
+       Project Managers, Developers and Submitters should see all tickets where they are submitter or developer assigned
+       Project Managers should in addition see all ticket to all the projects are part of.  */
     {
         $sql = "SELECT 
                     tickets.title,
@@ -159,9 +163,6 @@ class Model extends Dbh
                 JOIN ticket_priorities ON tickets.priority_id = ticket_priorities.id
                 JOIN ticket_types ON tickets.type_id =ticket_types.id";
 
-        // Admins should see all tickets
-        // Project Managers, Developers and Submitters should see all tickets where they are submitter or developer assigned
-        // Project Managers should in addition see all ticket to all the projects are part of. 
 
         if ($role_name !== 'Admin') :
             $sql .= " WHERE tickets.submitter_id = {$user_id} OR tickets.developer_assigned_id = {$user_id}";
@@ -375,7 +376,7 @@ class Model extends Dbh
     // TODO: merge this function with db_get_tickets_by_id
     {
         $sql = "SELECT
-            tickets.id,
+            tickets.id as ticket_id,
             tickets.title,
             tickets.created_at,
             tickets.developer_assigned_id,

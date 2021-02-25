@@ -73,7 +73,6 @@ require('page_frame/ui_frame.php');
 
                     </div>
                 </div>
-
             </div>
             <div class="wrapper">
                 <!-- Select Role -->

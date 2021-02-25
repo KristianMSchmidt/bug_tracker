@@ -22,16 +22,13 @@ if (isset($_SESSION['user_id'])) {
     <title>Bug_Tracker</title>
 
     <!-- font awesome icon library -->
-    <link href="../css/font-awesome/css/all.css" rel="stylesheet">
+    <link href="../css/font-awesome/css/all.min.css" rel="stylesheet">
 
     <!-- w3-css style sheet -->
     <link rel="stylesheet" href="../css/w3.css">
 
     <!-- My custom css -->
     <link rel="stylesheet" href="../css/main.css">
-
-    <!-- JS chart library -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.bundle.min.js"></script>
 </head>
 
 <body>
