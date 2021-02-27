@@ -18,8 +18,8 @@ foreach ($selected_users as $user) {
 
         // demo users can't have their role changed
         if (!in_array($user['full_name'], $demo_users)) {
-            // update role
 
+            // update role
             $contr->update_role($_POST['new_role'], $_SESSION['user_id'], $user['user_id']);
             $new_role_name = $chosen_role_name;
             $message = "Yes";
