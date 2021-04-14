@@ -1,4 +1,4 @@
-# Bugtracker Project - MYSQL, PHP, CSS, JAVASCRIPT, HTML
+# Bugtracker Project - MySQL, PHP, CSS, JavaScript, HTML
 
 I've build this bug tracking system from scratch - including relational database design, multi-role login system, backend and frontend.
 
