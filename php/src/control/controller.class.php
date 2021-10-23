@@ -1,5 +1,5 @@
 <?php
-require_once($_SERVER['DOCUMENT_ROOT'] . '/php/repos/bugtracker/model/model.class.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/model/model.class.php');
 
 class Controller extends Model
 {

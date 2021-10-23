@@ -122,7 +122,7 @@ class DbCreator extends Dbh
         $sql = "CREATE TABLE project_enrollments(
                     user_id INT,
                     project_id INT, 
-                    enrollment_start DATE DEFAULT CURRENT_TIMESTAMP, 
+                    enrollment_start TIMESTAMP DEFAULT CURRENT_TIMESTAMP, 
                     PRIMARY KEY (user_id, project_id),
                     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE ON UPDATE CASCADE,
                     FOREIGN KEY (project_id) REFERENCES projects(id) ON DELETE CASCADE ON UPDATE CASCADE)";

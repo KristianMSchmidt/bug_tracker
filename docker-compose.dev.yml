@@ -3,7 +3,7 @@ services:
     php-apache-environment:
         container_name: php-apache
         build:
-            context: ./php
+            context: .
             dockerfile: Dockerfile
         depends_on:
             - db
@@ -17,7 +17,7 @@ services:
         restart: always
         environment:
             MYSQL_ROOT_PASSWORD: MYSQL_ROOT_PASSWORD
-            MYSQL_DATABASE: MYSQL_DATABASE
+            MYSQL_DATABASE: MY_DATABASE
             MYSQL_USER: MYSQL_USER
             MYSQL_PASSWORD: MYSQL_PASSWORD
         ports:

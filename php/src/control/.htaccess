@@ -1,0 +1,9 @@
+# Hide files list
+Options -Indexes
+
+# Only allow POST requests to files. Files can still be included
+#(This worked in 000webhost but not here, for some reason)
+#<LimitExcept POST>
+#  Order Allow,Deny
+#  Deny from all
+#</LimitExcept>
