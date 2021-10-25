@@ -6,22 +6,18 @@ class Dbh
         Database handler. Takes care of database connection. 
     */
 
-    #private $host = "localhost";
-    #private $user = "kimarokko";
-    #private $pwd = "stjerne";
-    #private $dbName = "bug_tracker";
-
+  
     // The MySQL service named in the docker-compose.yml.
     private $host = 'db';
 
     // Database username
-    private $user = 'MYSQL_USER';
+    private $user = 'root';
 
     // database user password
-    private $pwd = 'MYSQL_PASSWORD';
+    private $pwd = 'MYSQL_ROOT_PASSWORD';
 
     // database name
-    private $dbName = 'MYSQL_DATABASE';
+    private $dbName = 'bug_tracker';
 
     private $charset = 'utf8mb4';
 
