@@ -1,0 +1,85 @@
+
+### Denne fil skal redigeres, så dne passer til applikationen!
+
+version: "3.3"
+   
+services:
+  web:
+    restart: always
+    build: .
+    command: /bin/sh -c /code/entrypoint.prod.sh
+    volumes:
+      - static_volume:/code/static
+    expose:
+      - 8000
+    env_file:
+      - ./.env.prod
+    depends_on:
+      - db
+    networks:
+      - reverseproxy_proxynet
+
+  nginx:
+    image: nginx:latest
+    restart: always
+    hostname: markedsspillet.dk
+    volumes:
+      - static_volume:/code/static
+      - type: bind
+        source: ./nginx_config/nginx.conf
+        target: /etc/nginx/conf.d/default.conf
+    expose:
+      - 1337
+    depends_on:
+      - web
+    environment:
+      - VIRTUAL_HOST=markedsspillet.dk
+      - VIRTUAL_PORT=1337
+      - LETSENCRYPT_HOST=markedsspillet.dk
+      - LETSENCRYPT_EMAIL=dybber@di.ku.dk
+      - url=https://markedsspillet.dk
+    networks:
+      - reverseproxy_proxynet
+
+  db:
+    image: postgres:14
+    restart: always
+    volumes:
+     - database_volume:/var/lib/postgresql/data/
+    environment:
+     - "POSTGRES_HOST_AUTH_METHOD=trust"
+    env_file:
+      - .env.prod
+    user: postgres:postgres
+    networks:
+      - reverseproxy_proxynet
+
+  pgbackups:
+    image: prodrigestivill/postgres-backup-local:14
+    restart: always
+    user: postgres:postgres
+    volumes:
+      - ./backups:/backups:rw
+    links:
+      - db
+    depends_on:
+      - db
+    env_file:
+      - .env.prod
+    environment:
+      - POSTGRES_EXTRA_OPTS=-Z6 --schema=public --blobs --clean
+      - SCHEDULE=@daily
+      - BACKUP_KEEP_DAYS=7
+      - BACKUP_KEEP_WEEKS=4
+      - BACKUP_KEEP_MONTHS=6
+      - HEALTHCHECK_PORT=8080
+    networks:
+      - reverseproxy_proxynet
+
+volumes:
+  database_volume: {}
+  static_volume: {}
+
+networks:
+  reverseproxy_proxynet:
+    external: true

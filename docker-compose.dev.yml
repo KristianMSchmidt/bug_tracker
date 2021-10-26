@@ -15,17 +15,27 @@ services:
     db:
         container_name: db
         image: mysql
+        # documentation on the image: "https://hub.docker.com/_/mysql"
         restart: always
         environment:
-            MYSQL_ROOT_PASSWORD: MYSQL_ROOT_PASSWORD
-            MYSQL_DATABASE: bug_tracker
+            # mandatory (root user will be created with this password)
+            MYSQL_ROOT_PASSWORD: insecure_dev_pwd
 
+            # create additional database on image start up and a user with superuser priviledges
+            MYSQL_DATABASE: bug_tracker
+            MYSQL_USER: kristian
+            MYSQL_PASSWORD: dev123
         ports:
             - "9906:3306"
-
-        command: --init-file /data/application/init.sql
+        
+        # Uncomment below line to build database from scratch - and populate tables. 
+        #command: --init-file /data/application/init.sql
+        
         volumes:
             - ./src/model/sql:/data/application/
+            - my-datavolume:/var/lib/mysql
+
+        # there should be one more db-volume - to store data in database?
     
     phpmyadmin:
       image: phpmyadmin/phpmyadmin
@@ -36,3 +46,6 @@ services:
           PMA_HOST: db
       depends_on:
           - db
+
+volumes:
+  my-datavolume:
