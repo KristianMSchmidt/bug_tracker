@@ -1,7 +1,6 @@
 version: '3.8'
 services:
-    php-apache-environment:
-        container_name: php-apache
+    web:
         build:
             context: .
             dockerfile: Dockerfile
@@ -13,7 +12,6 @@ services:
         ports:
             - 8000:80
     db:
-        container_name: db
         image: mysql
         # documentation on the image: "https://hub.docker.com/_/mysql"
         restart: always
@@ -34,8 +32,6 @@ services:
         volumes:
             - ./src/model/sql:/data/application/
             - my-datavolume:/var/lib/mysql
-
-        # there should be one more db-volume - to store data in database?
     
     phpmyadmin:
       image: phpmyadmin/phpmyadmin
