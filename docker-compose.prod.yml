@@ -38,42 +38,42 @@ services:
     networks:
       - reverseproxy_proxynet
 
-   db:
-      image: mysql
-      # documentation on the image: "https://hub.docker.com/_/mysql"
-      restart: always
-      environment:
-          # mandatory (root user will be created with this password)
-          MYSQL_ROOT_PASSWORD: insecure_dev_pwd
+  db:
+    image: mysql
+    # documentation on the image: "https://hub.docker.com/_/mysql"
+    restart: always
+    environment:
+        # mandatory (root user will be created with this password)
+        MYSQL_ROOT_PASSWORD: insecure_dev_pwd
 
-          # create additional database on image start up and a user with superuser priviledges
-          MYSQL_DATABASE: bug_tracker
-          MYSQL_USER: kristian
-          MYSQL_PASSWORD: dev123
-      ports:
-          - "9906:3306"
+        # create additional database on image start up and a user with superuser priviledges
+        MYSQL_DATABASE: bug_tracker
+        MYSQL_USER: kristian
+        MYSQL_PASSWORD: dev123
+    ports:
+      - "9906:3306"
       
       # Uncomment below line to build database from scratch - and populate tables. 
       #command: --init-file /data/application/init.sql
       
-      volumes:
-          - ./src/model/sql:/data/application/
-          - my-datavolume:/var/lib/mysql
-      networks:
+    volumes:
+      - ./src/model/sql:/data/application/
+      - my-datavolume:/var/lib/mysql
+    networks:
       - reverseproxy_proxynet
 
     
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
     ports:
-        - '8080:80'
+      - '8080:80'
     restart: always
     environment:
         PMA_HOST: db
     depends_on:
-        - db
+      - db
     networks:
-    - reverseproxy_proxynet
+      - reverseproxy_proxynet
 
 
 volumes:
