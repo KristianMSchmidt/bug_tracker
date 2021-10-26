@@ -17,8 +17,6 @@ develop:  ## Run development server
 shell:  ## Open shell in running docker development container
 	docker-compose -f docker-compose.dev.yml exec php-apache-environment /bin/bash
 
-
-
 # ---------- Production ---------- #
 production_stop: ## Stop production server
 	docker-compose -f docker-compose.prod.yml down --remove-orphans
