@@ -74,10 +74,6 @@ services:
       - traefik.port=8080
     networks:
       - internal
-      - bug-tracker-php
+      - reverseproxynet
     depends_on:
       - mysql
-
-networks:
-  reverseproxynet:
-    external: true
