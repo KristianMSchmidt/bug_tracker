@@ -1,77 +1,83 @@
-
-### Denne fil skal redigeres, så dne passer til applikationen!
-
-version: "3.3"
-   
-services:
-  web:
-    restart: always
-    build: .
-      expose:
-      - 8000
-    depends_on:
-      - db
-    networks:
-      - reverseproxy_proxynet
-
-  nginx:
-    image: nginx:latest
-    restart: always
-    hostname: bug-tracker-php.kristian.codes
-    expose:
-      - 1337
-    depends_on:
-      - web
-    environment:
-      - VIRTUAL_HOST=bug-tracker-php.kristian.codes
-      - VIRTUAL_PORT=1337
-      - LETSENCRYPT_HOST=bug-tracker-php.kristian.codes
-      - LETSENCRYPT_EMAIL=kmollerschmidt@gmail.com
-      - url=https://bug-tracker-php.kristian.codes
-    networks:
-      - reverseproxy_proxynet
-
-  db:
-    image: mysql
-    # documentation on the image: "https://hub.docker.com/_/mysql"
-    restart: always
-    environment:
-        # mandatory (root user will be created with this password)
-        MYSQL_ROOT_PASSWORD: insecure_dev_pwd
-
-        # create additional database on image start up and a user with superuser priviledges
-        MYSQL_DATABASE: bug_tracker
-        MYSQL_USER: kristian
-        MYSQL_PASSWORD: dev123
-    ports:
-      - "9906:3306"
-      
-      # Uncomment below line to build database from scratch - and populate tables. 
-      #command: --init-file /data/application/init.sql
-      
-    volumes:
-      - ./src/model/sql:/data/application/
-      - my-datavolume:/var/lib/mysql
-    networks:
-      - reverseproxy_proxynet
-
-    
-  phpmyadmin:
-    image: phpmyadmin/phpmyadmin
-    ports:
-      - '8080:80'
-    restart: always
-    environment:
-        PMA_HOST: db
-    depends_on:
-      - db
-    networks:
-      - reverseproxy_proxynet
-
-
-volumes:
-  my-datavolume:
+version: "3"
 
 networks:
-  reverseproxy_proxynet:
+  # join the externally defined reverse proxy net 
+  reverseproxynet:
+    external: true
+  
+  # define an internal network called 'internal'
+  internal:
+    external: false
+
+services:
+  bug-tracker-php:
+    build:
+      context: .
+      dockerfile: Dockerfile
+
+    # configuration values for traefik
+    labels:
+      # create a new router for my container and specify
+      # the routing rule used to determine if a request matches this container
+      # (with this configuration, all traffic sent to my Docker host 
+      # on port 80 or 443 with the domain of bug-tracker-php
+      # will be routed to the bug-tracker-php container)
+      - traefik.http.routers.bug-tracker-php=Host(`bug-tracker-php.kristianms.com`)
+      # this router should use TLS
+      - traefik.http.routers.bug-tracker-php.tls=true
+      # the certificates resolver 'lets-encrypt' should be used to
+      # get a certificate for this route
+      - traefik.http.routers.bug-tracker-php.tls.certresolver=lets-encrypt
+      # the exposed port that Traefik should use to route traffic to this container
+      - traefik.port=80
+    networks:
+      - internal
+      - reverseproxynet
+    depends_on:
+      # this container should be started after the mysql container has been started
+      - mysql
+    volumes:
+      - ./src:/var/www/html/
+
+  mysql:
+    image: mysql:5.7
+    
+    # The environment key lets you specify environment
+    # variables that will be set inside of the container.
+    environment:
+      # By not setting a value for MYSQL_ROOT_PASSWORD, I'm not
+      # telling Docker Compose to get the value from your shell
+      # and pass it through when you create the container. 
+      # I will define this environment variable in my shell
+      # before starting the containers. This way I don’t hard-code
+      # passwords into the configuration file.
+      MYSQL_ROOT_PASSWORD:
+      # I don’t want to expose the mysql container to Traefik 
+      # or the outside world, so I'm only assigning this container
+      # to the internal network. Since Traefik has access to the
+      # Docker socket, the process will still expose a router for
+      # the mysql container by default, 
+      # so you’ll add the label traefik.enable=false to specify that Traefik 
+      # should not expose this container.
+    networks:
+      - internal
+    labels:
+      # configuration values for Traefik
+      - traefik.enable=false
+
+  adminer:
+    image: adminer:4.6.3-standalone
+    labels:
+      - traefik.http.routers.adminer.rule=Host(`db-admin.your_domain`)
+      - traefik.http.routers.adminer.tls=true
+      - traefik.http.routers.adminer.tls.certresolver=lets-encrypt
+      - traefik.port=8080
+    networks:
+      - internal
+      - bug-tracker-php
+    depends_on:
+      - mysql
+
+networks:
+  reverseproxynet:
     external: true
