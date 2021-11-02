@@ -1,47 +1,78 @@
-version: '3.8'
-services:
-    web:
-        build:
-            context: .
-            dockerfile: Dockerfile
-        depends_on:
-            - db
-        volumes:
-            - ./src:/var/www/html/
+version: "3"
 
-        ports:
-            - 8000:80
-    db:
-        image: mysql
-        # documentation on the image: "https://hub.docker.com/_/mysql"
-        restart: always
-        environment:
-            # mandatory (root user will be created with this password)
-            MYSQL_ROOT_PASSWORD: insecure_dev_pwd
-
-            # create additional database on image start up and a user with superuser priviledges
-            MYSQL_DATABASE: bug_tracker
-            MYSQL_USER: kristian
-            MYSQL_PASSWORD: dev123
-        ports:
-            - "9906:3306"
-        
-        # Uncomment below line to build database from scratch - and populate tables. 
-        #command: --init-file /data/application/init.sql
-        
-        volumes:
-            - ./src/model/sql:/data/application/
-            - my-datavolume:/var/lib/mysql
-    
-    phpmyadmin:
-      image: phpmyadmin/phpmyadmin
-      ports:
-          - '8080:80'
-      restart: always
-      environment:
-          PMA_HOST: db
-      depends_on:
-          - db
+networks:
+  # join the externally defined net 'traefik' 
+  traefik:
+    external: true
+  
+  # define an internal network called 'internal'
+  internal:
+    external: false
 
 volumes:
-  my-datavolume:
+  db:
+    external: false
+
+
+services:
+  
+  ################################################
+  ####     Bug-tracker-php service            ####
+  ################################################
+  
+  bug-tracker-php:
+    build: .
+    restart: always
+    container_name: bug-tracker-php
+
+    # configuration values for traefik
+    labels:
+      # create a new router for my container and specify
+      # the routing rule used to determine if a request matches this container
+      # (with this configuration, all traffic sent to my Docker host 
+      # on port 80 or 443 with the domain of bug-tracker-php
+      # will be routed to the bug-tracker-php container)
+      - traefik.http.routers.bug-tracker-php.rule=Host(`bug-tracker-php.kristianms.com`)
+      # this router should use TLS
+      - traefik.http.routers.bug-tracker-php.tls=true
+      # the certificates resolver 'lets-encrypt' should be used to
+      # get a certificate for this route
+      - traefik.http.routers.bug-tracker-php.tls.certresolver=lets-encrypt
+      # the exposed port that Traefik should use to route traffic to this container
+      - traefik.port=80
+    networks:
+      - internal
+      - traefik
+    depends_on:
+      # this container should be started after the db container has been started
+      - db
+    volumes:
+      - ./src:/var/www/html/
+
+
+  ################################################
+  ####     DB service not on traefik        ####
+  ################################################
+
+  db:
+    image: mysql:5.7
+    # documentation on the image: "https://hub.docker.com/_/mysql"
+    restart: always
+    environment:
+        # mandatory (root user will be created with this password)
+        MYSQL_ROOT_PASSWORD: insecure_test_pwd
+
+        # create database on image start up and a user with superuser priviledges
+        MYSQL_DATABASE: bug_tracker
+        MYSQL_USER: testuser
+        MYSQL_PASSWORD: test123
+    
+    # Uncomment below line to build database from scratch - and populate tables. 
+    # command: --init-file /data/application/init.sql
+    
+    volumes:
+      - ./src/model/sql:/data/application/
+      - db:/var/lib/mysql
+    networks:
+      - internal
+
