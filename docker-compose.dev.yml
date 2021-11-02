@@ -64,8 +64,8 @@ services:
 
         # create database on image start up and a user with superuser priviledges
         MYSQL_DATABASE: bug_tracker
-        MYSQL_USER: testuser
-        MYSQL_PASSWORD: test123
+        MYSQL_USER: testuser      # <== has to be the same in dbh.class.php
+        MYSQL_PASSWORD: test123   # <== has to be the same in dbh.class.php
       
     # Uncomment below line to build database from scratch - and populate tables. 
     # command: --init-file /data/application/init.sql

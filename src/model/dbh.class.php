@@ -11,10 +11,10 @@ class Dbh
     private $host = 'db';
 
     // Database username
-    private $user = 'kristian';
+    private $user = 'testuser';
 
     // database user password
-    private $pwd = 'dev123';
+    private $pwd = 'test123';
 
     // database name
     private $dbName = 'bug_tracker';

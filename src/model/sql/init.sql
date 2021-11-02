@@ -1,7 +1,8 @@
--- DROP DATABASE IF EXISTS bug_tracker;
--- CREATE DATABASE IF NOT EXISTS bug_tracker;
+DROP DATABASE IF EXISTS bug_tracker;
 
-CREATE TABLE bug_tracker.user_roles(
+CREATE DATABASE bug_tracker;
+
+CREATE TABLE IF NOT EXISTS bug_tracker.user_roles(
      id INT AUTO_INCREMENT PRIMARY KEY,
      role_name TINYTEXT NOT NULL
 );
