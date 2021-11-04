@@ -23,6 +23,9 @@ production_traefiklogs: ## Show traefik access logs
 production_dblogs: ## Show database access logs
 	docker logs bug_tracker_db_1
 
+production_pmalogs: ## Show phpmyadmin access logs
+	docker logs phpmyadmin
+
 production_shell: # Open shell in running docker production container
 	docker-compose -f docker-compose.prod.yml exec bug-tracker-php /bin/bash
 
