@@ -1,0 +1,47 @@
+version: "3.3"
+
+
+services:
+  web:
+    restart: always
+    build: .
+    expose:
+      - 80 #<-- could this be another port?
+    env_file:
+      - .env.prod
+    environment:
+      - VIRTUAL_HOST=bug-tracker-php.kristianms.com
+      - VIRTUAL_PORT=80 #<-- could this be another port?
+      - LETSENCRYPT_HOST=bug-tracker-php.kristianms.com
+      - LETSENCRYPT_EMAIL=kmollerschmidt@gmail.com
+      - url=https://bug-tracker-php.kristianms.com
+    volumes:
+      - ./src:/var/www/html/
+    depends_on:
+      - db
+    networks:
+      - reverse-proxy_proxynet  
+
+  db:
+    image: mysql:5.7
+    # documentation on the image: "https://hub.docker.com/_/mysql"
+    restart: always
+    env_file:
+      - .env.prod
+    
+    # Uncomment below line to destroy and rebuild database from scratch - and populate tables. 
+    # command: --init-file /data/application/init.sql
+    
+    volumes:
+      - ./src/model/sql:/data/application/
+      - database_volume:/var/lib/mysql
+
+    networks:
+      - reverse-proxy_proxynet
+
+volumes:
+  database_volume: {}
+
+networks:
+  reverse-proxy_proxynet:
+    external: true
