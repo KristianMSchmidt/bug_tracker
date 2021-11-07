@@ -8,13 +8,13 @@ help:   # Show this help.
 	@sed -ne '/@sed/!s/## //p' $(MAKEFILE_LIST)
 
 # ---------- Development  ---------- #
-dev_stop: ## Stop production server
+dev_stop: ## Stop development server
 	docker-compose -f docker-compose.env.yml down --remove-orphans
 
-dev_start: ## Start production server as daemon
+dev_start: ## Start development server
 	docker-compose -f docker-compose.env.yml up --build --remove-orphans
 
-dev_shell: # Open shell in running docker production container
+dev_shell: # Open shell in running docker development container
 	docker exec -it bug_tracker_web_1 /bin/bash
 
 production_db_shell: # Open shell in running docker production container
@@ -29,13 +29,13 @@ production_start: ## Start production server as daemon
 	docker-compose -f docker-compose.prod.yml up --build --remove-orphans -d
 
 production_weblogs: ## Show logs from web container
-	docker logs bug-tracker-php
+	docker logs bug_tracker_web_1
 
 production_dblogs: ## Show database access logs
 	docker logs bug_tracker_db_1
 
 production_shell: # Open shell in running docker production container
-	docker-compose -f docker-compose.prod.yml exec bug-tracker-php /bin/bash
+	docker exec -it bug_tracker_web_1 /bin/bash
 
 production_db_shell: # Open shell in running docker production container
 	docker exec -it bug_tracker_db_1 /bin/bash
