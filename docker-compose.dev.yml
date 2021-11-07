@@ -1,78 +1,33 @@
-version: "3"
-
-networks:
-  # join the externally defined net 'traefik' 
-  traefik:
-    external: true
-  
-  # define an internal network called 'internal'
-  internal:
-    external: false
-
-volumes:
-  db:
-    external: false
-
+version: "3.3"
 
 services:
-  
-  ################################################
-  ####     Bug-tracker-php service            ####
-  ################################################
-  
-  bug-tracker-php:
+    
+  web:
     build: .
-    restart: always
-    container_name: bug-tracker-php
+    volumes:
+      - ./src:/var/www/html/
+    ports:
+      - "8000:80"  
+    
+    env_file:
+    - .env.dev
 
-    # configuration values for traefik
-    labels:
-      # create a new router for my container and specify
-      # the routing rule used to determine if a request matches this container
-      # (with this configuration, all traffic sent to my Docker host 
-      # on port 80 or 443 with the domain of bug-tracker-php
-      # will be routed to the bug-tracker-php container)
-      - traefik.http.routers.bug-tracker-php.rule=Host(`bug-tracker-php.kristianms.com`)
-      # this router should use TLS
-      - traefik.http.routers.bug-tracker-php.tls=true
-      # the certificates resolver 'lets-encrypt' should be used to
-      # get a certificate for this route
-      - traefik.http.routers.bug-tracker-php.tls.certresolver=lets-encrypt
-      # the exposed port that Traefik should use to route traffic to this container
-      - traefik.port=80
-    networks:
-      - internal
-      - traefik
     depends_on:
       # this container should be started after the db container has been started
       - db
-    volumes:
-      - ./src:/var/www/html/
-
-
-  ################################################
-  ####     DB service not on traefik        ####
-  ################################################
 
   db:
     image: mysql:5.7
-    # documentation on the image: "https://hub.docker.com/_/mysql"
-    restart: always
-    environment:
-        # mandatory (root user will be created with this password)
-        MYSQL_ROOT_PASSWORD: insecure_test_pwd
-
-        # create database on image start up and a user with superuser priviledges
-        MYSQL_DATABASE: bug_tracker
-        MYSQL_USER: testuser      # <== has to be the same in dbh.class.php
-        MYSQL_PASSWORD: test123   # <== has to be the same in dbh.class.php
-      
+    env_file:
+      - .env.dev
     # Uncomment below line to build database from scratch - and populate tables. 
-    # command: --init-file /data/application/init.sql
+    # (do this once, then comment out line again)
+    #command: --init-file /data/application/init.sql
     
     volumes:
       - ./src/model/sql:/data/application/
-      - db:/var/lib/mysql
-    networks:
-      - internal
+      - database_volume:/var/lib/mysql
+  
+volumes:
+  database_volume: {}
 
