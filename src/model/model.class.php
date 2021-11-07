@@ -1,6 +1,6 @@
 <?php
-include_once('dbh.class.dev.php'); # <== change this to dbh.class.prod.php in production
-      
+include_once('dbh.class.php');
+
 class Model extends Dbh
 {
     /*

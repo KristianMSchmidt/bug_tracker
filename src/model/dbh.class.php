@@ -5,30 +5,17 @@ class Dbh
     /*
         Database handler. Takes care of database connection. 
     */
-
   
-    // The MySQL service named in the docker-compose.yml.
-    private $host = 'db';
-
-    // Database username
-    private $user = 'testuser';
-
-    // database user password
-    private $pwd = 'test123';
-
-    // database name
-    private $dbName = 'bug_tracker';
-
     private $charset = 'utf8mb4';
 
     protected function connect()
     {
-        $dsn = 'mysql:host=' . $this->host . ';dbname=' . $this->dbName . ';charset=' .  $this->charset;
+        $dsn = 'mysql:host=' . $_ENV['MYSQL_DATABASE_HOST'] . ';dbname=' . $_ENV['MYSQL_DATABASE'] . ';charset=' .  $this->charset;
 
         // Create PDO ('Php Data Object'). 
         // Try->catch is important here, as password might otherwise get shown to users.
         try {
-            $pdo = new PDO($dsn, $this->user, $this->pwd);
+            $pdo = new PDO($dsn, $_ENV['MYSQL_USER'], $_ENV['MYSQL_PASSWORD']);
         } catch (\PDOException $e) {
             throw new \PDOException($e->getMessage(), (int)$e->getCode());
         }
