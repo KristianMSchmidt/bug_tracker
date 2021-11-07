@@ -9,10 +9,10 @@ help:   # Show this help.
 
 # ---------- Development  ---------- #
 dev_stop: ## Stop development server
-	docker-compose -f docker-compose.env.yml down --remove-orphans
+	docker-compose -f docker-compose.dev.yml down --remove-orphans
 
 dev_start: ## Start development server
-	docker-compose -f docker-compose.env.yml up --build --remove-orphans
+	docker-compose -f docker-compose.dev.yml up --build --remove-orphans
 
 dev_shell: # Open shell in running docker development container
 	docker exec -it bug_tracker_web_1 /bin/bash
